@@ -3,87 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store</title>
+<title>Reem Store | Premium</title>
 
 <style>
 body{
-    font-family: Arial;
-    background:#111;
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#141e30,#243b55);
     color:white;
     text-align:center;
 }
+
+.container{
+    padding:30px;
+}
+
+h1{
+    font-size:34px;
+    margin-bottom:5px;
+}
+
+.glass{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.4);
+}
+
 button{
-    width:80%;
+    width:85%;
     padding:15px;
     margin:10px;
     font-size:18px;
     border:none;
-    border-radius:10px;
+    border-radius:15px;
     cursor:pointer;
+    transition:0.3s;
 }
-.games{background:#27ae60;}
-.subs{background:#8e44ad;}
-.balance{background:#2980b9;}
-.services{background:#e67e22;}
+
+button:hover{
+    transform:scale(1.07);
+}
+
+.games{background:#00c853;}
+.subs{background:#aa00ff;}
+.balance{background:#2979ff;}
+.services{background:#ff6d00;}
+.whatsapp{background:#25D366;}
+.send{background:#ff1744;}
+
 form{
     display:none;
     margin-top:20px;
 }
+
 input,textarea{
-    width:80%;
-    padding:10px;
+    width:85%;
+    padding:12px;
     margin:10px;
-    border-radius:8px;
+    border-radius:12px;
     border:none;
 }
-.send{
-    background:red;
-    color:white;
+
+.success{
+    color:#00e676;
+    margin-top:10px;
+}
+
+.footer{
+    margin-top:30px;
+    opacity:0.6;
+    font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="container">
+<div class="glass">
+
 <h1>💎 ريم ستور</h1>
+<p>متجرك الملكي للخدمات الرقمية ⚡</p>
 
 <button class="games" onclick="openForm('🎮 شحن ألعاب')">🎮 شحن الألعاب</button>
-<button class="subs" onclick="openForm('📺 اشتراكات')">📺 الاشتراكات</button>
+<button class="subs" onclick="openForm('📺 اشتراكات رقمية')">📺 الاشتراكات</button>
 <button class="balance" onclick="openForm('📱 تعبئة رصيد')">📱 تعبئة رصيد</button>
 <button class="services" onclick="openForm('💻 خدمات وبرامج')">💻 خدمات وبرامج</button>
 
+<button class="whatsapp" onclick="window.open('https://wa.me/XXXXXXXXXX')">
+📞 تواصل واتساب مباشر
+</button>
+
 <form id="orderForm">
-    <h3 id="serviceName"></h3>
-    <input type="text" id="name" placeholder="اسمك" required><br>
-    <textarea id="details" placeholder="اكتب تفاصيل الطلب" required></textarea><br>
-    <button type="button" class="send" onclick="sendOrder()">إرسال الطلب</button>
+<h3 id="serviceName"></h3>
+<input type="text" id="name" placeholder="اسمك" required>
+<textarea id="details" placeholder="تفاصيل الطلب..." required></textarea>
+<input type="file" id="receipt">
+<button type="button" class="send" onclick="sendOrder()">إرسال الطلب</button>
+<div class="success" id="successMsg"></div>
 </form>
+
+</div>
+
+<div class="footer">
+© 2026 Reem Store - Premium Version 👑
+</div>
+</div>
 
 <script>
 
-let selectedService = "";
+let selectedService="";
 
 function openForm(service){
-    selectedService = service;
-    document.getElementById("orderForm").style.display = "block";
-    document.getElementById("serviceName").innerText = service;
+    selectedService=service;
+    document.getElementById("orderForm").style.display="block";
+    document.getElementById("serviceName").innerText=service;
+}
+
+function generateOrderID(){
+    return "RS"+Math.floor(Math.random()*999999);
 }
 
 function sendOrder(){
-    let name = document.getElementById("name").value;
-    let details = document.getElementById("details").value;
 
-    let message = `طلب جديد 🔥%0Aالخدمة: ${selectedService}%0Aالاسم: ${name}%0Aالتفاصيل: ${details}`;
+    let name=document.getElementById("name").value;
+    let details=document.getElementById("details").value;
+    let orderID=generateOrderID();
+    let now=new Date().toLocaleString();
 
-    let token = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
-    let chat_id = "7741275208";
+    let message=
+`👑 طلب ملكي جديد
+🆔 رقم الطلب: ${orderID}
+📦 الخدمة: ${selectedService}
+👤 الاسم: ${name}
+📝 التفاصيل: ${details}
+🕒 الوقت: ${now}`;
 
-    fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${message}`)
-    .then(response => {
-        alert("تم إرسال الطلب بنجاح ✅");
+    let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
+    let chat_id="7741275208";
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            chat_id:chat_id,
+            text:message
+        })
+    })
+    .then(()=>{
+        document.getElementById("successMsg").innerText=
+        "✅ تم إرسال طلبك بنجاح! سيتم التواصل معك خلال دقائق.";
         document.getElementById("orderForm").reset();
     })
-    .catch(error => {
+    .catch(()=>{
         alert("حدث خطأ ❌");
     });
 }
