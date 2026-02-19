@@ -3,35 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store | Premium</title>
+<title>Reem Store | Ultimate</title>
 
 <style>
 body{
     margin:0;
     font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#141e30,#243b55);
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     color:white;
     text-align:center;
 }
-
 .container{
     padding:30px;
 }
-
 h1{
-    font-size:34px;
+    font-size:36px;
     margin-bottom:5px;
 }
-
 .glass{
     background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 0 25px rgba(0,0,0,0.4);
+    backdrop-filter:blur(12px);
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 0 30px rgba(0,0,0,0.5);
 }
-
-button{
+.buttons button{
     width:85%;
     padding:15px;
     margin:10px;
@@ -41,60 +37,48 @@ button{
     cursor:pointer;
     transition:0.3s;
 }
-
-button:hover{
-    transform:scale(1.07);
-}
-
+.buttons button:hover{transform:scale(1.07);}
 .games{background:#00c853;}
 .subs{background:#aa00ff;}
 .balance{background:#2979ff;}
 .services{background:#ff6d00;}
 .whatsapp{background:#25D366;}
 .send{background:#ff1744;}
-
-form{
+form{display:none;margin-top:20px;}
+input,textarea{width:85%;padding:12px;margin:10px;border-radius:12px;border:none;}
+.success{color:#00e676;margin-top:10px;}
+.admin-panel{
     display:none;
     margin-top:20px;
+    padding:15px;
+    background:rgba(0,0,0,0.3);
+    border-radius:15px;
 }
-
-input,textarea{
-    width:85%;
-    padding:12px;
-    margin:10px;
-    border-radius:12px;
+.admin-panel h3{margin-bottom:15px;}
+.admin-panel input, .admin-panel button{
+    width:80%;
+    padding:10px;
+    margin:5px;
+    border-radius:10px;
     border:none;
 }
-
-.success{
-    color:#00e676;
-    margin-top:10px;
-}
-
-.footer{
-    margin-top:30px;
-    opacity:0.6;
-    font-size:14px;
-}
+.footer{margin-top:30px;opacity:0.6;font-size:14px;}
 </style>
 </head>
-
 <body>
 
 <div class="container">
 <div class="glass">
+<h1>💎 ريم ستور Ultimate</h1>
+<p>متجرك الأسطوري للخدمات الرقمية ⚡</p>
 
-<h1>💎 ريم ستور</h1>
-<p>متجرك الملكي للخدمات الرقمية ⚡</p>
-
+<div class="buttons">
 <button class="games" onclick="openForm('🎮 شحن ألعاب')">🎮 شحن الألعاب</button>
 <button class="subs" onclick="openForm('📺 اشتراكات رقمية')">📺 الاشتراكات</button>
 <button class="balance" onclick="openForm('📱 تعبئة رصيد')">📱 تعبئة رصيد</button>
 <button class="services" onclick="openForm('💻 خدمات وبرامج')">💻 خدمات وبرامج</button>
-
-<button class="whatsapp" onclick="window.open('https://wa.me/XXXXXXXXXX')">
-📞 تواصل واتساب مباشر
-</button>
+<button class="whatsapp" onclick="window.open('https://wa.me/963968493135')">📞 تواصل واتساب مباشر</button>
+</div>
 
 <form id="orderForm">
 <h3 id="serviceName"></h3>
@@ -105,16 +89,27 @@ input,textarea{
 <div class="success" id="successMsg"></div>
 </form>
 
+<div class="admin-panel" id="adminPanel">
+<h3>لوحة الإدارة السرية</h3>
+<input type="text" id="adminPass" placeholder="كلمة سر الإدارة">
+<button onclick="loginAdmin()">دخول</button>
+<div id="adminContent" style="display:none;">
+<h4>الطلبات المخزنة</h4>
+<ul id="ordersList"></ul>
+</div>
+</div>
+
 </div>
 
 <div class="footer">
-© 2026 Reem Store - Premium Version 👑
+© 2026 Reem Store Ultimate 👑
 </div>
 </div>
 
 <script>
 
 let selectedService="";
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
 
 function openForm(service){
     selectedService=service;
@@ -122,43 +117,52 @@ function openForm(service){
     document.getElementById("serviceName").innerText=service;
 }
 
-function generateOrderID(){
-    return "RS"+Math.floor(Math.random()*999999);
-}
+function generateOrderID(){return "RS"+Math.floor(Math.random()*999999);}
 
 function sendOrder(){
-
     let name=document.getElementById("name").value;
     let details=document.getElementById("details").value;
+    if(!name || !details){alert("املأ كل الحقول!");return;}
+    
     let orderID=generateOrderID();
     let now=new Date().toLocaleString();
-
-    let message=
-`👑 طلب ملكي جديد
-🆔 رقم الطلب: ${orderID}
-📦 الخدمة: ${selectedService}
-👤 الاسم: ${name}
-📝 التفاصيل: ${details}
-🕒 الوقت: ${now}`;
-
+    
+    // تخزين محلي
+    orders.push({id:orderID,service:selectedService,name:name,details:details,time:now});
+    localStorage.setItem("orders",JSON.stringify(orders));
+    
+    // إرسال للبوت
     let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
     let chat_id="7741275208";
-
+    let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🕒 الوقت: ${now}`;
     fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            chat_id:chat_id,
-            text:message
-        })
-    })
-    .then(()=>{
-        document.getElementById("successMsg").innerText=
-        "✅ تم إرسال طلبك بنجاح! سيتم التواصل معك خلال دقائق.";
+        body:JSON.stringify({chat_id:chat_id,text:message})
+    }).then(()=>{
+        document.getElementById("successMsg").innerText="✅ تم إرسال طلبك بنجاح! سيتم التواصل خلال دقائق.";
         document.getElementById("orderForm").reset();
-    })
-    .catch(()=>{
-        alert("حدث خطأ ❌");
+    }).catch(()=>alert("حدث خطأ ❌"));
+}
+
+// إدارة لوحة التحكم
+let adminLogged=false;
+function loginAdmin(){
+    let pass=document.getElementById("adminPass").value;
+    if(pass==="1234"){ // غيّر كلمة السر حسب رغبتك
+        adminLogged=true;
+        document.getElementById("adminContent").style.display="block";
+        renderOrders();
+    }else{alert("كلمة سر خاطئة ❌");}
+}
+
+function renderOrders(){
+    let list=document.getElementById("ordersList");
+    list.innerHTML="";
+    orders.forEach(o=>{
+        let li=document.createElement("li");
+        li.innerText=`#${o.id} | ${o.service} | ${o.name} | ${o.details} | ${o.time}`;
+        list.appendChild(li);
     });
 }
 
