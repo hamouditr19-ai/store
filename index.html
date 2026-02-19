@@ -3,154 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ريم ستوري | Reem Store</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Reem Store</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:#0f0f1a;
-color:white;
+    font-family: Arial;
+    background:#111;
+    color:white;
+    text-align:center;
 }
-header{
-background:linear-gradient(90deg,#6a00ff,#00c3ff);
-padding:20px;
-text-align:center;
-font-size:22px;
-font-weight:bold;
-position:relative;
-}
-.admin-btn{
-position:absolute;
-left:15px;
-top:20px;
-background:#111;
-padding:5px 10px;
-border-radius:6px;
-cursor:pointer;
-font-size:12px;
-}
-.container{padding:20px;}
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-gap:15px;
-}
-.card{
-background:#1a1a2e;
-padding:15px;
-border-radius:12px;
-text-align:center;
-}
-.price{color:#00ffcc;font-weight:bold;margin:10px 0;}
 button{
-background:#6a00ff;
-border:none;
-color:white;
-padding:6px 10px;
-border-radius:6px;
-cursor:pointer;
-margin:3px;
+    width:80%;
+    padding:15px;
+    margin:10px;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
 }
-button:hover{background:#00c3ff;}
-.admin-panel{
-display:none;
-background:#111;
-padding:15px;
-margin-top:20px;
-border-radius:10px;
+.games{background:#27ae60;}
+.subs{background:#8e44ad;}
+.balance{background:#2980b9;}
+.services{background:#e67e22;}
+form{
+    display:none;
+    margin-top:20px;
 }
-input{
-width:100%;
-padding:8px;
-margin:5px 0;
-border-radius:6px;
-border:none;
+input,textarea{
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border-radius:8px;
+    border:none;
+}
+.send{
+    background:red;
+    color:white;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-🎮 ريم ستوري | Reem Store
-<div class="admin-btn" onclick="adminLogin()">Admin</div>
-</header>
+<h1>💎 ريم ستور</h1>
 
-<div class="container">
+<button class="games" onclick="openForm('🎮 شحن ألعاب')">🎮 شحن الألعاب</button>
+<button class="subs" onclick="openForm('📺 اشتراكات')">📺 الاشتراكات</button>
+<button class="balance" onclick="openForm('📱 تعبئة رصيد')">📱 تعبئة رصيد</button>
+<button class="services" onclick="openForm('💻 خدمات وبرامج')">💻 خدمات وبرامج</button>
 
-<h3>🛒 المنتجات</h3>
-<div class="products" id="productList"></div>
-
-<div class="admin-panel" id="adminPanel">
-<h3>لوحة التحكم</h3>
-<input type="text" id="name" placeholder="اسم المنتج">
-<input type="text" id="price" placeholder="السعر">
-<button onclick="addProduct()">إضافة منتج</button>
-</div>
-
-</div>
+<form id="orderForm">
+    <h3 id="serviceName"></h3>
+    <input type="text" id="name" placeholder="اسمك" required><br>
+    <textarea id="details" placeholder="اكتب تفاصيل الطلب" required></textarea><br>
+    <button type="button" class="send" onclick="sendOrder()">إرسال الطلب</button>
+</form>
 
 <script>
-let defaultProducts = [
-{name:"PUBG 60 UC",price:"$1.5"},
-{name:"Free Fire 100 Diamonds",price:"$1.2"},
-{name:"Netflix شهر",price:"$4"}
-];
 
-let products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
+let selectedService = "";
 
-function renderProducts(){
-let list = document.getElementById("productList");
-list.innerHTML="";
-products.forEach((p,index)=>{
-list.innerHTML+=`
-<div class="card">
-<h4>${p.name}</h4>
-<div class="price">${p.price}</div>
-<button onclick="order('${p.name}')">اطلب الآن</button>
-${isAdmin ? `<button onclick="deleteProduct(${index})">حذف</button>` : ""}
-</div>`;
-});
+function openForm(service){
+    selectedService = service;
+    document.getElementById("orderForm").style.display = "block";
+    document.getElementById("serviceName").innerText = service;
 }
 
-function addProduct(){
-let name=document.getElementById("name").value;
-let price=document.getElementById("price").value;
-if(name && price){
-products.push({name,price});
-localStorage.setItem("products",JSON.stringify(products));
-renderProducts();
-}
+function sendOrder(){
+    let name = document.getElementById("name").value;
+    let details = document.getElementById("details").value;
+
+    let message = `طلب جديد 🔥%0Aالخدمة: ${selectedService}%0Aالاسم: ${name}%0Aالتفاصيل: ${details}`;
+
+    let token = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
+    let chat_id = "7741275208";
+
+    fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${message}`)
+    .then(response => {
+        alert("تم إرسال الطلب بنجاح ✅");
+        document.getElementById("orderForm").reset();
+    })
+    .catch(error => {
+        alert("حدث خطأ ❌");
+    });
 }
 
-function deleteProduct(index){
-products.splice(index,1);
-localStorage.setItem("products",JSON.stringify(products));
-renderProducts();
-}
-
-function order(product){
-if(window.Telegram.WebApp){
-Telegram.WebApp.showAlert("طلب: " + product);
-}else{
-alert("طلب: " + product);
-}
-}
-
-let isAdmin=false;
-
-function adminLogin(){
-let pass=prompt("ادخل كلمة السر:");
-if(pass==="1234"){
-isAdmin=true;
-document.getElementById("adminPanel").style.display="block";
-renderProducts();
-}
-}
-
-renderProducts();
 </script>
 
 </body>
