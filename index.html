@@ -1,10 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-  <title>متجري</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ريم ستوري | Reem Store</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0f0f1a;
+color:white;
+}
+
+header{
+background:linear-gradient(90deg,#6a00ff,#00c3ff);
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+.container{
+padding:20px;
+}
+
+.section-title{
+margin-top:30px;
+font-size:20px;
+border-bottom:2px solid #6a00ff;
+padding-bottom:5px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:15px;
+margin-top:15px;
+}
+
+.card{
+background:#1a1a2e;
+padding:15px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 0 10px #000;
+}
+
+.card h3{
+margin:10px 0;
+font-size:16px;
+}
+
+.price{
+color:#00ffcc;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+button{
+background:#6a00ff;
+border:none;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+}
+
+button:hover{
+background:#00c3ff;
+}
+
+footer{
+text-align:center;
+padding:15px;
+margin-top:30px;
+font-size:14px;
+color:#aaa;
+}
+</style>
 </head>
+
 <body>
-  <h1>أهلاً في متجري</h1>
-  <p>الموقع شغال 100%</p>
+
+<header>
+🎮 ريم ستوري | Reem Store
+</header>
+
+<div class="container">
+
+<div class="section-title">🔥 شحن الألعاب</div>
+<div class="products">
+
+<div class="card">
+<h3>PUBG Mobile 60 UC</h3>
+<div class="price">$1.5</div>
+<button onclick="order('PUBG 60 UC')">اطلب الآن</button>
+</div>
+
+<div class="card">
+<h3>Free Fire 100 Diamonds</h3>
+<div class="price">$1.2</div>
+<button onclick="order('Free Fire 100 Diamonds')">اطلب الآن</button>
+</div>
+
+</div>
+
+<div class="section-title">💎 الاشتراكات</div>
+<div class="products">
+
+<div class="card">
+<h3>Netflix شهر</h3>
+<div class="price">$4</div>
+<button onclick="order('Netflix شهر')">اطلب الآن</button>
+</div>
+
+<div class="card">
+<h3>Spotify شهر</h3>
+<div class="price">$2</div>
+<button onclick="order('Spotify شهر')">اطلب الآن</button>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+جميع الحقوق محفوظة © Reem Store
+</footer>
+
+<script>
+function order(product){
+if(window.Telegram.WebApp){
+Telegram.WebApp.showAlert("تم اختيار: " + product);
+}else{
+alert("تم اختيار: " + product);
+}
+}
+</script>
+
 </body>
 </html>
