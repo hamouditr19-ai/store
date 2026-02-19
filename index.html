@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ريم ستوري | Reem Store</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
@@ -14,71 +13,60 @@ font-family:Arial;
 background:#0f0f1a;
 color:white;
 }
-
 header{
 background:linear-gradient(90deg,#6a00ff,#00c3ff);
 padding:20px;
 text-align:center;
 font-size:22px;
 font-weight:bold;
+position:relative;
 }
-
-.container{
-padding:20px;
+.admin-btn{
+position:absolute;
+left:15px;
+top:20px;
+background:#111;
+padding:5px 10px;
+border-radius:6px;
+cursor:pointer;
+font-size:12px;
 }
-
-.section-title{
-margin-top:30px;
-font-size:20px;
-border-bottom:2px solid #6a00ff;
-padding-bottom:5px;
-}
-
+.container{padding:20px;}
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
 gap:15px;
-margin-top:15px;
 }
-
 .card{
 background:#1a1a2e;
 padding:15px;
 border-radius:12px;
 text-align:center;
-box-shadow:0 0 10px #000;
 }
-
-.card h3{
-margin:10px 0;
-font-size:16px;
-}
-
-.price{
-color:#00ffcc;
-font-weight:bold;
-margin-bottom:10px;
-}
-
+.price{color:#00ffcc;font-weight:bold;margin:10px 0;}
 button{
 background:#6a00ff;
 border:none;
 color:white;
-padding:8px 12px;
-border-radius:8px;
+padding:6px 10px;
+border-radius:6px;
 cursor:pointer;
+margin:3px;
 }
-
-button:hover{
-background:#00c3ff;
-}
-
-footer{
-text-align:center;
+button:hover{background:#00c3ff;}
+.admin-panel{
+display:none;
+background:#111;
 padding:15px;
-margin-top:30px;
-font-size:14px;
-color:#aaa;
+margin-top:20px;
+border-radius:10px;
+}
+input{
+width:100%;
+padding:8px;
+margin:5px 0;
+border-radius:6px;
+border:none;
 }
 </style>
 </head>
@@ -87,58 +75,82 @@ color:#aaa;
 
 <header>
 🎮 ريم ستوري | Reem Store
+<div class="admin-btn" onclick="adminLogin()">Admin</div>
 </header>
 
 <div class="container">
 
-<div class="section-title">🔥 شحن الألعاب</div>
-<div class="products">
+<h3>🛒 المنتجات</h3>
+<div class="products" id="productList"></div>
 
-<div class="card">
-<h3>PUBG Mobile 60 UC</h3>
-<div class="price">$1.5</div>
-<button onclick="order('PUBG 60 UC')">اطلب الآن</button>
-</div>
-
-<div class="card">
-<h3>Free Fire 100 Diamonds</h3>
-<div class="price">$1.2</div>
-<button onclick="order('Free Fire 100 Diamonds')">اطلب الآن</button>
+<div class="admin-panel" id="adminPanel">
+<h3>لوحة التحكم</h3>
+<input type="text" id="name" placeholder="اسم المنتج">
+<input type="text" id="price" placeholder="السعر">
+<button onclick="addProduct()">إضافة منتج</button>
 </div>
 
 </div>
-
-<div class="section-title">💎 الاشتراكات</div>
-<div class="products">
-
-<div class="card">
-<h3>Netflix شهر</h3>
-<div class="price">$4</div>
-<button onclick="order('Netflix شهر')">اطلب الآن</button>
-</div>
-
-<div class="card">
-<h3>Spotify شهر</h3>
-<div class="price">$2</div>
-<button onclick="order('Spotify شهر')">اطلب الآن</button>
-</div>
-
-</div>
-
-</div>
-
-<footer>
-جميع الحقوق محفوظة © Reem Store
-</footer>
 
 <script>
+let defaultProducts = [
+{name:"PUBG 60 UC",price:"$1.5"},
+{name:"Free Fire 100 Diamonds",price:"$1.2"},
+{name:"Netflix شهر",price:"$4"}
+];
+
+let products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
+
+function renderProducts(){
+let list = document.getElementById("productList");
+list.innerHTML="";
+products.forEach((p,index)=>{
+list.innerHTML+=`
+<div class="card">
+<h4>${p.name}</h4>
+<div class="price">${p.price}</div>
+<button onclick="order('${p.name}')">اطلب الآن</button>
+${isAdmin ? `<button onclick="deleteProduct(${index})">حذف</button>` : ""}
+</div>`;
+});
+}
+
+function addProduct(){
+let name=document.getElementById("name").value;
+let price=document.getElementById("price").value;
+if(name && price){
+products.push({name,price});
+localStorage.setItem("products",JSON.stringify(products));
+renderProducts();
+}
+}
+
+function deleteProduct(index){
+products.splice(index,1);
+localStorage.setItem("products",JSON.stringify(products));
+renderProducts();
+}
+
 function order(product){
 if(window.Telegram.WebApp){
-Telegram.WebApp.showAlert("تم اختيار: " + product);
+Telegram.WebApp.showAlert("طلب: " + product);
 }else{
-alert("تم اختيار: " + product);
+alert("طلب: " + product);
 }
 }
+
+let isAdmin=false;
+
+function adminLogin(){
+let pass=prompt("ادخل كلمة السر:");
+if(pass==="1234"){
+isAdmin=true;
+document.getElementById("adminPanel").style.display="block";
+renderProducts();
+}
+}
+
+renderProducts();
 </script>
 
 </body>
