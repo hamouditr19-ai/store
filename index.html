@@ -3,37 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store | Ultimate Modern</title>
+<title>Reem Store | Ultimate Design</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
-body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
-a{color:white;text-decoration:none;}
+body{margin:0;font-family: Segoe UI ,sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
+a{text-decoration:none;color:white;}
 .container{max-width:1200px;margin:auto;padding:20px;}
-button{cursor:pointer;transition:0.3s;border:none;border-radius:12px;}
+h1,h2,h3{margin:0;padding:0;}
+button{cursor:pointer;transition:0.3s;border:none;border-radius:12px;font-weight:bold;font-size:16px;}
 button:hover{transform:scale(1.05);}
 
 /* Navbar */
 .navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
-.navbar .logo{font-size:24px;font-weight:bold;}
+.navbar .logo{font-size:28px;font-weight:bold;}
+
+/* Banner */
+.banner{margin-top:20px;position:relative;height:180px;border-radius:20px;overflow:hidden;}
+.banner img{width:100%;height:100%;object-fit:cover;transition:1s;opacity:0;position:absolute;top:0;left:0;}
+.banner img.active{opacity:1;}
 
 /* Slider */
-.slider{position:relative;margin-top:20px;height:220px;border-radius:20px;overflow:hidden;}
-.slide{position:absolute;width:100%;height:100%;background-size:cover;background-position:center;opacity:0;transition:1s;}
+.slider{position:relative;margin-top:20px;height:240px;border-radius:20px;overflow:hidden;}
+.slide{position:absolute;width:100%;height:100%;background-size:cover;background-position:center;opacity:0;transition:1s;border-radius:20px;}
 .slide.active{opacity:1;}
+.slide-text{position:absolute;bottom:20px;left:20px;font-size:24px;font-weight:bold;background:rgba(0,0,0,0.5);padding:10px 15px;border-radius:10px;}
 
 /* Cards Grid */
 .cards{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;justify-content:center;}
-.card{flex:1 1 200px;min-width:150px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:20px;border-radius:20px;box-shadow:0 0 25px rgba(0,0,0,0.4);text-align:center;}
-.card button{width:100%;padding:12px;background:#ff1744;color:white;}
+.card{flex:1 1 200px;min-width:150px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:20px;border-radius:20px;box-shadow:0 0 25px rgba(0,0,0,0.4);text-align:center;transition:0.3s;}
+.card:hover{transform:scale(1.05);box-shadow:0 0 35px rgba(255,255,255,0.3);}
+.card button{width:100%;padding:12px;background:linear-gradient(45deg,#ff416c,#ff4b2b);color:white;display:flex;justify-content:space-between;align-items:center;}
+
+/* Bottom Menu */
+.bottom-menu{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;justify-content:center;}
+.bottom-menu button{padding:12px 20px;background:rgba(0,0,0,0.4);backdrop-filter:blur(10px);}
 
 /* Modal */
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
 .modal-content{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:30px;border-radius:20px;max-width:500px;width:90%;text-align:center;}
 .modal input, .modal textarea{width:90%;padding:12px;margin:10px;border-radius:10px;border:none;}
-.modal button.send{background:#ff1744;color:white;padding:12px 20px;margin-top:10px;width:50%;}
-
-/* Bottom Menu */
-.bottom-menu{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;justify-content:center;}
-.bottom-menu button{padding:12px 20px;background:rgba(0,0,0,0.4);backdrop-filter:blur(10px);}
+.modal button.send{background:linear-gradient(45deg,#ff416c,#ff4b2b);color:white;padding:12px 20px;margin-top:10px;width:50%;}
 
 /* Footer */
 .footer{text-align:center;margin-top:40px;opacity:0.7;font-size:14px;padding:15px;}
@@ -47,33 +56,38 @@ button:hover{transform:scale(1.05);}
 
 <div class="container">
 
+<!-- Banner -->
+<div class="banner" id="banner">
+    <img src="https://i.ibb.co/4fYx8yj/slide1.jpg" class="active">
+    <img src="https://i.ibb.co/MBTt5Jq/slide2.jpg">
+    <img src="https://i.ibb.co/8N0wPRB/slide3.jpg">
+</div>
+
 <!-- Slider -->
 <div class="slider">
-    <div class="slide active" style="background-image:url('https://i.ibb.co/4fYx8yj/slide1.jpg')"></div>
-    <div class="slide" style="background-image:url('https://i.ibb.co/MBTt5Jq/slide2.jpg')"></div>
-    <div class="slide" style="background-image:url('https://i.ibb.co/8N0wPRB/slide3.jpg')"></div>
+    <div class="slide active" style="background-image:url( https://i.ibb.co/4fYx8yj/slide1.jpg )"><div class="slide-text">أفضل العروض الآن!</div></div>
+    <div class="slide" style="background-image:url( https://i.ibb.co/MBTt5Jq/slide2.jpg )"><div class="slide-text">شحن الألعاب بسهولة 🎮</div></div>
+    <div class="slide" style="background-image:url( https://i.ibb.co/8N0wPRB/slide3.jpg )"><div class="slide-text">تفعيل الاشتراكات 💳</div></div>
 </div>
 
-<!-- الصف الأول -->
+<!-- الصفوف الأقسام -->
 <div class="cards">
-    <div class="card"><button onclick="openModal('الألعاب')">الألعاب 🎮</button></div>
-    <div class="card"><button onclick="openModal('التطبيقات')">التطبيقات 📱</button></div>
-    <div class="card"><button onclick="openModal('الرصيد')">الرصيد 💰</button></div>
-    <div class="card"><button onclick="openModal('الأكواد')">الأكواد 🎟️</button></div>
+    <div class="card"><button onclick="openModal( الألعاب )">الألعاب <i class="fa-solid fa-gamepad"></i></button></div>
+    <div class="card"><button onclick="openModal( التطبيقات )">التطبيقات <i class="fa-solid fa-mobile-screen-button"></i></button></div>
+    <div class="card"><button onclick="openModal( الرصيد )">الرصيد <i class="fa-solid fa-wallet"></i></button></div>
+    <div class="card"><button onclick="openModal( الأكواد )">الأكواد <i class="fa-solid fa-ticket"></i></button></div>
 </div>
 
-<!-- الصف الثاني -->
 <div class="cards">
-    <div class="card"><button onclick="openModal('خدمات سوشل ميديا')">خدمات سوشل ميديا 📱</button></div>
-    <div class="card"><button onclick="openModal('خدمات تلجرام')">خدمات تلجرام 📲</button></div>
-    <div class="card"><button onclick="openModal('الأرقام الإفتراضية')">الأرقام الإفتراضية 📞</button></div>
-    <div class="card"><button onclick="openModal('خدمات الإنترنت')">خدمات الإنترنت 🌐</button></div>
+    <div class="card"><button onclick="openModal( خدمات سوشل ميديا )">خدمات سوشل ميديا <i class="fa-solid fa-thumbs-up"></i></button></div>
+    <div class="card"><button onclick="openModal( خدمات تلجرام )">خدمات تلجرام <i class="fa-solid fa-paper-plane"></i></button></div>
+    <div class="card"><button onclick="openModal( الأرقام الإفتراضية )">الأرقام الإفتراضية <i class="fa-solid fa-phone"></i></button></div>
+    <div class="card"><button onclick="openModal( خدمات الإنترنت )">خدمات الإنترنت <i class="fa-solid fa-globe"></i></button></div>
 </div>
 
-<!-- الصف الثالث -->
 <div class="cards">
-    <div class="card"><button onclick="openModal('الحسابات')">الحسابات 👤</button></div>
-    <div class="card"><button onclick="openModal('الإشتراكات')">الإشتراكات 📺</button></div>
+    <div class="card"><button onclick="openModal( الحسابات )">الحسابات <i class="fa-solid fa-user"></i></button></div>
+    <div class="card"><button onclick="openModal( الإشتراكات )">الإشتراكات <i class="fa-solid fa-tv"></i></button></div>
 </div>
 
 <!-- Bottom Menu -->
@@ -84,9 +98,6 @@ button:hover{transform:scale(1.05);}
     <button>سجل الشحن 📜</button>
     <button>اتصل بنا 📞</button>
 </div>
-
-<!-- Order Counter -->
-<div class="order-counter" id="orderCounter">عدد الطلبات: 0</div>
 
 <!-- Modal -->
 <div class="modal" id="orderModal">
@@ -101,43 +112,49 @@ button:hover{transform:scale(1.05);}
     </div>
 </div>
 
-<!-- Footer حقوق الطبع والنشر -->
+<!-- Footer -->
 <div class="footer">© 2026 Reem Store. جميع الحقوق محفوظة.</div>
 
+</div>
+
 <script>
-// Slider
-let slides=document.querySelectorAll('.slide');let currentSlide=0;
-setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},4000);
+// Banner متحرك
+let bannerImgs=document.querySelectorAll( #banner img );let bIndex=0;
+setInterval(()=>{bannerImgs.forEach(img=>img.classList.remove( active ));bIndex=(bIndex+1)%bannerImgs.length;bannerImgs[bIndex].classList.add( active );},4000);
+
+// Slider متحرك
+let slides=document.querySelectorAll( .slide );let currentSlide=0;
+setInterval(()=>{slides[currentSlide].classList.remove( active );currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add( active );},5000);
 
 // Modal
 let selectedService="";
-function openModal(service){selectedService=service;document.getElementById('modalService').innerText=service;document.getElementById('orderModal').style.display='flex';}
-document.getElementById('orderModal').onclick=e=>{if(e.target==document.getElementById('orderModal'))document.getElementById('orderModal').style.display='none';}
+function openModal(service){selectedService=service;document.getElementById( modalService ).innerText=service;document.getElementById( orderModal ).style.display= flex ;}
+document.getElementById( orderModal ).onclick=e=>{if(e.target==document.getElementById( orderModal ))document.getElementById( orderModal ).style.display= none ;}
 
 // Orders
-let orders=JSON.parse(localStorage.getItem('orders'))||[];
+let orders=JSON.parse(localStorage.getItem( orders ))||[];
 updateOrderCounter();
 function generateOrderID(){return "RS"+Math.floor(Math.random()*999999);}
 function sendOrder(){
-    let name=document.getElementById('modalName').value;
-    let details=document.getElementById('modalDetails').value;
-    let coupon=document.getElementById('coupon').value;
-    if(!name||!details){alert('املأ كل الحقول!');return;}
+    let name=document.getElementById( modalName ).value;
+    let details=document.getElementById( modalDetails ).value;
+    let coupon=document.getElementById( coupon ).value;
+    if(!name||!details){alert( املأ كل الحقول! );return;}
     if(!coupon){coupon="NOCOUPON";}
     let orderID=generateOrderID();
     let now=new Date().toLocaleString();
     orders.push({id:orderID,service:selectedService,name:name,details:details,time:now,coupon:coupon});
-    localStorage.setItem('orders',JSON.stringify(orders));
+    localStorage.setItem( orders ,JSON.stringify(orders));
     updateOrderCounter();
-    let token="YOUR_NEW_TOKEN";
+    let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
     let chat_id="7741275208";
     let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🎟️ كوبون: ${coupon}\n🕒 الوقت: ${now}`;
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat_id,text:message})})
-    .then(()=>{document.getElementById('modalSuccess').innerText='✅ تم إرسال طلبك بنجاح!';document.getElementById('modalName').value='';document.getElementById('modalDetails').value='';document.getElementById('modalReceipt').value='';document.getElementById('coupon').value='';})
-    .catch(()=>alert('حدث خطأ ❌'));
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method: POST ,headers:{ Content-Type : application/json },body:JSON.stringify({chat_id:chat_id,text:message})})
+    .then(()=>{document.getElementById( modalSuccess ).innerText= ✅ تم إرسال طلبك بنجاح! ;document.getElementById( modalName ).value=  ;document.getElementById( modalDetails ).value=  ;document.getElementById( modalReceipt ).value=  ;document.getElementById( coupon ).value=  ;})
+    .catch(()=>alert( حدث خطأ ❌ ));
 }
 
-function updateOrderCounter(){document.getElementById('orderCounter').innerText="عدد الطلبات: "+orders.length;}
+function updateOrderCounter(){document.getElementById( orderCounter ).innerText="عدد الطلبات: "+orders.length;}
 </script>
 </body>
 </html>
