@@ -8,14 +8,12 @@
 body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
 a{color:white;text-decoration:none;}
 .container{max-width:1200px;margin:auto;padding:20px;}
-h1,h2,h3{margin:0;padding:0;}
 button{cursor:pointer;transition:0.3s;border:none;border-radius:12px;}
 button:hover{transform:scale(1.05);}
 
 /* Navbar */
 .navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
 .navbar .logo{font-size:24px;font-weight:bold;}
-.navbar .links button{margin-left:10px;padding:10px 15px;}
 
 /* Slider */
 .slider{position:relative;margin-top:20px;height:220px;border-radius:20px;overflow:hidden;}
@@ -23,13 +21,9 @@ button:hover{transform:scale(1.05);}
 .slide.active{opacity:1;}
 
 /* Cards Grid */
-.cards{display:grid;gap:20px;margin-top:30px;}
-.cards.row{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
-
-/* Card */
-.card{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:20px;border-radius:20px;box-shadow:0 0 25px rgba(0,0,0,0.4);text-align:center;}
-.card h3{margin-bottom:10px;}
-.card button{width:100%;padding:12px;margin-top:10px;background:#ff1744;color:white;}
+.cards{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;justify-content:center;}
+.card{flex:1 1 200px;min-width:150px;background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:20px;border-radius:20px;box-shadow:0 0 25px rgba(0,0,0,0.4);text-align:center;}
+.card button{width:100%;padding:12px;background:#ff1744;color:white;}
 
 /* Modal */
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
@@ -37,28 +31,18 @@ button:hover{transform:scale(1.05);}
 .modal input, .modal textarea{width:90%;padding:12px;margin:10px;border-radius:10px;border:none;}
 .modal button.send{background:#ff1744;color:white;padding:12px 20px;margin-top:10px;width:50%;}
 
-/* Footer & Nav Bottom */
-.footer{display:flex;justify-content:space-around;padding:15px 0;margin-top:40px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);}
-.footer button{background:rgba(255,255,255,0.08);width:auto;padding:10px 15px;}
+/* Bottom Menu */
+.bottom-menu{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;justify-content:center;}
+.bottom-menu button{padding:12px 20px;background:rgba(0,0,0,0.4);backdrop-filter:blur(10px);}
 
-/* Admin Panel */
-.admin-panel{display:none;background:rgba(0,0,0,0.3);padding:15px;border-radius:15px;margin-top:20px;}
-.admin-panel input, .admin-panel button{width:80%;padding:10px;margin:5px;border-radius:10px;border:none;}
-#ordersList{list-style:none;padding:0;}
-#ordersList li{margin:5px 0;background:rgba(255,255,255,0.05);padding:8px;border-radius:8px;}
-
-/* Order Counter */
-.order-counter{margin-top:15px;font-size:18px;color:#00e676;}
+/* Footer */
+.footer{text-align:center;margin-top:40px;opacity:0.7;font-size:14px;padding:15px;}
 </style>
 </head>
 <body>
 
 <div class="navbar">
     <div class="logo">💎 ريم ستور</div>
-    <div class="links">
-        <button onclick="window.open('https://wa.me/963968493135')">واتساب مباشر</button>
-        <button onclick="toggleAdmin()">لوحة الإدارة</button>
-    </div>
 </div>
 
 <div class="container">
@@ -70,26 +54,35 @@ button:hover{transform:scale(1.05);}
     <div class="slide" style="background-image:url('https://i.ibb.co/8N0wPRB/slide3.jpg')"></div>
 </div>
 
-<!-- Row 1 -->
-<div class="cards row">
-    <div class="card"><button onclick="openModal('🎮 الألعاب')">الألعاب 🎮</button></div>
-    <div class="card"><button onclick="openModal('📱 التطبيقات')">التطبيقات 📱</button></div>
-    <div class="card"><button onclick="openModal('💰 الرصيد')">الرصيد 💰</button></div>
-    <div class="card"><button onclick="openModal('🎟️ الأكواد')">الأكواد 🎟️</button></div>
+<!-- الصف الأول -->
+<div class="cards">
+    <div class="card"><button onclick="openModal('الألعاب')">الألعاب 🎮</button></div>
+    <div class="card"><button onclick="openModal('التطبيقات')">التطبيقات 📱</button></div>
+    <div class="card"><button onclick="openModal('الرصيد')">الرصيد 💰</button></div>
+    <div class="card"><button onclick="openModal('الأكواد')">الأكواد 🎟️</button></div>
 </div>
 
-<!-- Row 2 -->
-<div class="cards row">
-    <div class="card"><button onclick="openModal('📱 خدمات سوشال ميديا')">خدمات سوشال ميديا 📱</button></div>
-    <div class="card"><button onclick="openModal('📲 خدمات تلجرام')">خدمات تلجرام 📲</button></div>
-    <div class="card"><button onclick="openModal('📞 الأرقام الإفتراضية')">الأرقام الإفتراضية 📞</button></div>
-    <div class="card"><button onclick="openModal('🌐 خدمات الإنترنت')">خدمات الإنترنت 🌐</button></div>
+<!-- الصف الثاني -->
+<div class="cards">
+    <div class="card"><button onclick="openModal('خدمات سوشل ميديا')">خدمات سوشل ميديا 📱</button></div>
+    <div class="card"><button onclick="openModal('خدمات تلجرام')">خدمات تلجرام 📲</button></div>
+    <div class="card"><button onclick="openModal('الأرقام الإفتراضية')">الأرقام الإفتراضية 📞</button></div>
+    <div class="card"><button onclick="openModal('خدمات الإنترنت')">خدمات الإنترنت 🌐</button></div>
 </div>
 
-<!-- Row 3 -->
-<div class="cards row">
-    <div class="card"><button onclick="openModal('👤 الحسابات')">الحسابات 👤</button></div>
-    <div class="card"><button onclick="openModal('📺 الإشتراكات')">الإشتراكات 📺</button></div>
+<!-- الصف الثالث -->
+<div class="cards">
+    <div class="card"><button onclick="openModal('الحسابات')">الحسابات 👤</button></div>
+    <div class="card"><button onclick="openModal('الإشتراكات')">الإشتراكات 📺</button></div>
+</div>
+
+<!-- Bottom Menu -->
+<div class="bottom-menu">
+    <button>الرئيسية 🏠</button>
+    <button>طلباتي 📝</button>
+    <button>شحن 💳</button>
+    <button>سجل الشحن 📜</button>
+    <button>اتصل بنا 📞</button>
 </div>
 
 <!-- Order Counter -->
@@ -108,27 +101,8 @@ button:hover{transform:scale(1.05);}
     </div>
 </div>
 
-<!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-    <h3>لوحة الإدارة السرية</h3>
-    <input type="text" id="adminPass" placeholder="كلمة السر">
-    <button onclick="loginAdmin()">دخول</button>
-    <div id="adminContent" style="display:none;">
-        <h4>الطلبات المخزنة</h4>
-        <ul id="ordersList"></ul>
-    </div>
-</div>
-
-<!-- Footer Nav -->
-<div class="footer">
-    <button>الرئيسية 🏠</button>
-    <button>طلباتي 📝</button>
-    <button>شحن 💳</button>
-    <button>سجل الشحن 📜</button>
-    <button>اتصل بنا 📞</button>
-</div>
-
-</div>
+<!-- Footer حقوق الطبع والنشر -->
+<div class="footer">© 2026 Reem Store. جميع الحقوق محفوظة.</div>
 
 <script>
 // Slider
@@ -155,7 +129,7 @@ function sendOrder(){
     orders.push({id:orderID,service:selectedService,name:name,details:details,time:now,coupon:coupon});
     localStorage.setItem('orders',JSON.stringify(orders));
     updateOrderCounter();
-    let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
+    let token="YOUR_NEW_TOKEN";
     let chat_id="7741275208";
     let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🎟️ كوبون: ${coupon}\n🕒 الوقت: ${now}`;
     fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat_id,text:message})})
@@ -164,12 +138,6 @@ function sendOrder(){
 }
 
 function updateOrderCounter(){document.getElementById('orderCounter').innerText="عدد الطلبات: "+orders.length;}
-
-// Admin Panel
-let adminLogged=false;
-function toggleAdmin(){document.getElementById('adminPanel').style.display='block';}
-function loginAdmin(){let pass=document.getElementById('adminPass').value;if(pass==='1234'){adminLogged=true;document.getElementById('adminContent').style.display='block';renderOrders();}else{alert('كلمة سر خاطئة ❌');}}
-function renderOrders(){let list=document.getElementById('ordersList');list.innerHTML='';orders.forEach(o=>{let li=document.createElement('li');li.innerText=`#${o.id} | ${o.service} | ${o.name} | ${o.details} | ${o.coupon} | ${o.time}`;list.appendChild(li);});}
 </script>
 </body>
 </html>
