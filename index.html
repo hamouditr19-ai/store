@@ -5,13 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reem Store | Ultimate Modern</title>
 <style>
-/* عام */
-body{
-    margin:0;
-    font-family:'Segoe UI',sans-serif;
-    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-    color:white;
-}
+body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
 a{color:white;text-decoration:none;}
 .container{max-width:1200px;margin:auto;padding:20px;}
 h1,h2,h3{margin:0;padding:0;}
@@ -19,17 +13,7 @@ button{cursor:pointer;transition:0.3s;border:none;border-radius:12px;}
 button:hover{transform:scale(1.05);}
 
 /* Navbar */
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 20px;
-    background:rgba(0,0,0,0.5);
-    backdrop-filter:blur(10px);
-    position:sticky;
-    top:0;
-    z-index:100;
-}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
 .navbar .logo{font-size:24px;font-weight:bold;}
 .navbar .links button{margin-left:10px;padding:10px 15px;}
 
@@ -38,41 +22,33 @@ button:hover{transform:scale(1.05);}
 .slide{position:absolute;width:100%;height:100%;background-size:cover;background-position:center;opacity:0;transition:1s;}
 .slide.active{opacity:1;}
 
-/* Cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:30px;}
-.card{
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 0 25px rgba(0,0,0,0.4);
-    text-align:center;
-}
+/* Cards Grid */
+.cards{display:grid;gap:20px;margin-top:30px;}
+.cards.row{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+
+/* Card */
+.card{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:20px;border-radius:20px;box-shadow:0 0 25px rgba(0,0,0,0.4);text-align:center;}
 .card h3{margin-bottom:10px;}
 .card button{width:100%;padding:12px;margin-top:10px;background:#ff1744;color:white;}
 
 /* Modal */
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);justify-content:center;align-items:center;}
-.modal-content{
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    padding:30px;
-    border-radius:20px;
-    max-width:500px;
-    width:90%;
-    text-align:center;
-}
+.modal-content{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);padding:30px;border-radius:20px;max-width:500px;width:90%;text-align:center;}
 .modal input, .modal textarea{width:90%;padding:12px;margin:10px;border-radius:10px;border:none;}
 .modal button.send{background:#ff1744;color:white;padding:12px 20px;margin-top:10px;width:50%;}
 
-/* Footer */
-.footer{text-align:center;margin-top:40px;opacity:0.6;font-size:14px;}
+/* Footer & Nav Bottom */
+.footer{display:flex;justify-content:space-around;padding:15px 0;margin-top:40px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);}
+.footer button{background:rgba(255,255,255,0.08);width:auto;padding:10px 15px;}
 
 /* Admin Panel */
 .admin-panel{display:none;background:rgba(0,0,0,0.3);padding:15px;border-radius:15px;margin-top:20px;}
 .admin-panel input, .admin-panel button{width:80%;padding:10px;margin:5px;border-radius:10px;border:none;}
 #ordersList{list-style:none;padding:0;}
 #ordersList li{margin:5px 0;background:rgba(255,255,255,0.05);padding:8px;border-radius:8px;}
+
+/* Order Counter */
+.order-counter{margin-top:15px;font-size:18px;color:#00e676;}
 </style>
 </head>
 <body>
@@ -94,25 +70,30 @@ button:hover{transform:scale(1.05);}
     <div class="slide" style="background-image:url('https://i.ibb.co/8N0wPRB/slide3.jpg')"></div>
 </div>
 
-<!-- Cards Sections -->
-<div class="cards">
-    <div class="card">
-        <h3>🎮 شحن الألعاب</h3>
-        <button onclick="openModal('🎮 شحن الألعاب')">اطلب الآن</button>
-    </div>
-    <div class="card">
-        <h3>📺 الاشتراكات</h3>
-        <button onclick="openModal('📺 اشتراكات رقمية')">اطلب الآن</button>
-    </div>
-    <div class="card">
-        <h3>📱 تعبئة رصيد</h3>
-        <button onclick="openModal('📱 تعبئة رصيد')">اطلب الآن</button>
-    </div>
-    <div class="card">
-        <h3>💻 خدمات وبرامج</h3>
-        <button onclick="openModal('💻 خدمات وبرامج')">اطلب الآن</button>
-    </div>
+<!-- Row 1 -->
+<div class="cards row">
+    <div class="card"><button onclick="openModal('🎮 الألعاب')">الألعاب 🎮</button></div>
+    <div class="card"><button onclick="openModal('📱 التطبيقات')">التطبيقات 📱</button></div>
+    <div class="card"><button onclick="openModal('💰 الرصيد')">الرصيد 💰</button></div>
+    <div class="card"><button onclick="openModal('🎟️ الأكواد')">الأكواد 🎟️</button></div>
 </div>
+
+<!-- Row 2 -->
+<div class="cards row">
+    <div class="card"><button onclick="openModal('📱 خدمات سوشال ميديا')">خدمات سوشال ميديا 📱</button></div>
+    <div class="card"><button onclick="openModal('📲 خدمات تلجرام')">خدمات تلجرام 📲</button></div>
+    <div class="card"><button onclick="openModal('📞 الأرقام الإفتراضية')">الأرقام الإفتراضية 📞</button></div>
+    <div class="card"><button onclick="openModal('🌐 خدمات الإنترنت')">خدمات الإنترنت 🌐</button></div>
+</div>
+
+<!-- Row 3 -->
+<div class="cards row">
+    <div class="card"><button onclick="openModal('👤 الحسابات')">الحسابات 👤</button></div>
+    <div class="card"><button onclick="openModal('📺 الإشتراكات')">الإشتراكات 📺</button></div>
+</div>
+
+<!-- Order Counter -->
+<div class="order-counter" id="orderCounter">عدد الطلبات: 0</div>
 
 <!-- Modal -->
 <div class="modal" id="orderModal">
@@ -121,6 +102,7 @@ button:hover{transform:scale(1.05);}
         <input type="text" id="modalName" placeholder="اسمك" required>
         <textarea id="modalDetails" placeholder="تفاصيل الطلب..." required></textarea>
         <input type="file" id="modalReceipt">
+        <input type="text" id="coupon" placeholder="كود خصم (إن وجد)">
         <button class="send" onclick="sendOrder()">إرسال الطلب</button>
         <div class="success" id="modalSuccess"></div>
     </div>
@@ -137,71 +119,57 @@ button:hover{transform:scale(1.05);}
     </div>
 </div>
 
-<div class="footer">© 2026 Reem Store Ultimate 👑</div>
+<!-- Footer Nav -->
+<div class="footer">
+    <button>الرئيسية 🏠</button>
+    <button>طلباتي 📝</button>
+    <button>شحن 💳</button>
+    <button>سجل الشحن 📜</button>
+    <button>اتصل بنا 📞</button>
+</div>
+
 </div>
 
 <script>
 // Slider
-let slides=document.querySelectorAll('.slide');
-let currentSlide=0;
-setInterval(()=>{
-    slides[currentSlide].classList.remove('active');
-    currentSlide=(currentSlide+1)%slides.length;
-    slides[currentSlide].classList.add('active');
-},4000);
+let slides=document.querySelectorAll('.slide');let currentSlide=0;
+setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},4000);
 
 // Modal
 let selectedService="";
-function openModal(service){
-    selectedService=service;
-    document.getElementById('modalService').innerText=service;
-    document.getElementById('orderModal').style.display='flex';
-}
-document.getElementById('orderModal').onclick=e=>{
-    if(e.target==document.getElementById('orderModal'))
-        document.getElementById('orderModal').style.display='none';
-}
+function openModal(service){selectedService=service;document.getElementById('modalService').innerText=service;document.getElementById('orderModal').style.display='flex';}
+document.getElementById('orderModal').onclick=e=>{if(e.target==document.getElementById('orderModal'))document.getElementById('orderModal').style.display='none';}
 
 // Orders
 let orders=JSON.parse(localStorage.getItem('orders'))||[];
+updateOrderCounter();
 function generateOrderID(){return "RS"+Math.floor(Math.random()*999999);}
 function sendOrder(){
     let name=document.getElementById('modalName').value;
     let details=document.getElementById('modalDetails').value;
+    let coupon=document.getElementById('coupon').value;
     if(!name||!details){alert('املأ كل الحقول!');return;}
+    if(!coupon){coupon="NOCOUPON";}
     let orderID=generateOrderID();
     let now=new Date().toLocaleString();
-    orders.push({id:orderID,service:selectedService,name:name,details:details,time:now});
+    orders.push({id:orderID,service:selectedService,name:name,details:details,time:now,coupon:coupon});
     localStorage.setItem('orders',JSON.stringify(orders));
-    
+    updateOrderCounter();
     let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
     let chat_id="7741275208";
-    let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🕒 الوقت: ${now}`;
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({chat_id:chat_id,text:message})
-    }).then(()=>{
-        document.getElementById('modalSuccess').innerText='✅ تم إرسال طلبك بنجاح!';
-        document.getElementById('modalName').value='';
-        document.getElementById('modalDetails').value='';
-        document.getElementById('modalReceipt').value='';
-    }).catch(()=>alert('حدث خطأ ❌'));
+    let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🎟️ كوبون: ${coupon}\n🕒 الوقت: ${now}`;
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat_id,text:message})})
+    .then(()=>{document.getElementById('modalSuccess').innerText='✅ تم إرسال طلبك بنجاح!';document.getElementById('modalName').value='';document.getElementById('modalDetails').value='';document.getElementById('modalReceipt').value='';document.getElementById('coupon').value='';})
+    .catch(()=>alert('حدث خطأ ❌'));
 }
+
+function updateOrderCounter(){document.getElementById('orderCounter').innerText="عدد الطلبات: "+orders.length;}
 
 // Admin Panel
 let adminLogged=false;
 function toggleAdmin(){document.getElementById('adminPanel').style.display='block';}
-function loginAdmin(){
-    let pass=document.getElementById('adminPass').value;
-    if(pass==='1234'){adminLogged=true;document.getElementById('adminContent').style.display='block';renderOrders();}
-    else{alert('كلمة سر خاطئة ❌');}
-}
-function renderOrders(){
-    let list=document.getElementById('ordersList');list.innerHTML='';
-    orders.forEach(o=>{let li=document.createElement('li');li.innerText=`#${o.id} | ${o.service} | ${o.name} | ${o.details} | ${o.time}`;list.appendChild(li);});
-}
-
+function loginAdmin(){let pass=document.getElementById('adminPass').value;if(pass==='1234'){adminLogged=true;document.getElementById('adminContent').style.display='block';renderOrders();}else{alert('كلمة سر خاطئة ❌');}}
+function renderOrders(){let list=document.getElementById('ordersList');list.innerHTML='';orders.forEach(o=>{let li=document.createElement('li');li.innerText=`#${o.id} | ${o.service} | ${o.name} | ${o.details} | ${o.coupon} | ${o.time}`;list.appendChild(li);});}
 </script>
 </body>
 </html>
