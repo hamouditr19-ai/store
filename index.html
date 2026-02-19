@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store | Ultimate Design</title>
+<title>Reem Store | Ultimate Modern</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
-body{margin:0;font-family: Segoe UI ,sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
+body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:white;}
 a{text-decoration:none;color:white;}
 .container{max-width:1200px;margin:auto;padding:20px;}
 h1,h2,h3{margin:0;padding:0;}
@@ -46,6 +46,12 @@ button:hover{transform:scale(1.05);}
 
 /* Footer */
 .footer{text-align:center;margin-top:40px;opacity:0.7;font-size:14px;padding:15px;}
+
+/* Responsive */
+@media(max-width:768px){
+    .cards{flex-direction:column;align-items:center;}
+    .bottom-menu{flex-direction:column;}
+}
 </style>
 </head>
 <body>
@@ -65,29 +71,29 @@ button:hover{transform:scale(1.05);}
 
 <!-- Slider -->
 <div class="slider">
-    <div class="slide active" style="background-image:url( https://i.ibb.co/4fYx8yj/slide1.jpg )"><div class="slide-text">أفضل العروض الآن!</div></div>
-    <div class="slide" style="background-image:url( https://i.ibb.co/MBTt5Jq/slide2.jpg )"><div class="slide-text">شحن الألعاب بسهولة 🎮</div></div>
-    <div class="slide" style="background-image:url( https://i.ibb.co/8N0wPRB/slide3.jpg )"><div class="slide-text">تفعيل الاشتراكات 💳</div></div>
+    <div class="slide active" style="background-image:url('https://i.ibb.co/4fYx8yj/slide1.jpg')"><div class="slide-text">أفضل العروض الآن!</div></div>
+    <div class="slide" style="background-image:url('https://i.ibb.co/MBTt5Jq/slide2.jpg')"><div class="slide-text">شحن الألعاب بسهولة 🎮</div></div>
+    <div class="slide" style="background-image:url('https://i.ibb.co/8N0wPRB/slide3.jpg')"><div class="slide-text">تفعيل الاشتراكات 💳</div></div>
 </div>
 
 <!-- الصفوف الأقسام -->
 <div class="cards">
-    <div class="card"><button onclick="openModal( الألعاب )">الألعاب <i class="fa-solid fa-gamepad"></i></button></div>
-    <div class="card"><button onclick="openModal( التطبيقات )">التطبيقات <i class="fa-solid fa-mobile-screen-button"></i></button></div>
-    <div class="card"><button onclick="openModal( الرصيد )">الرصيد <i class="fa-solid fa-wallet"></i></button></div>
-    <div class="card"><button onclick="openModal( الأكواد )">الأكواد <i class="fa-solid fa-ticket"></i></button></div>
+    <div class="card"><button onclick="openModal('الألعاب')">الألعاب <i class="fa-solid fa-gamepad"></i></button></div>
+    <div class="card"><button onclick="openModal('التطبيقات')">التطبيقات <i class="fa-solid fa-mobile-screen-button"></i></button></div>
+    <div class="card"><button onclick="openModal('الرصيد')">الرصيد <i class="fa-solid fa-wallet"></i></button></div>
+    <div class="card"><button onclick="openModal('الأكواد')">الأكواد <i class="fa-solid fa-ticket"></i></button></div>
 </div>
 
 <div class="cards">
-    <div class="card"><button onclick="openModal( خدمات سوشل ميديا )">خدمات سوشل ميديا <i class="fa-solid fa-thumbs-up"></i></button></div>
-    <div class="card"><button onclick="openModal( خدمات تلجرام )">خدمات تلجرام <i class="fa-solid fa-paper-plane"></i></button></div>
-    <div class="card"><button onclick="openModal( الأرقام الإفتراضية )">الأرقام الإفتراضية <i class="fa-solid fa-phone"></i></button></div>
-    <div class="card"><button onclick="openModal( خدمات الإنترنت )">خدمات الإنترنت <i class="fa-solid fa-globe"></i></button></div>
+    <div class="card"><button onclick="openModal('خدمات سوشل ميديا')">خدمات سوشل ميديا <i class="fa-solid fa-thumbs-up"></i></button></div>
+    <div class="card"><button onclick="openModal('خدمات تلجرام')">خدمات تلجرام <i class="fa-solid fa-paper-plane"></i></button></div>
+    <div class="card"><button onclick="openModal('الأرقام الإفتراضية')">الأرقام الإفتراضية <i class="fa-solid fa-phone"></i></button></div>
+    <div class="card"><button onclick="openModal('خدمات الإنترنت')">خدمات الإنترنت <i class="fa-solid fa-globe"></i></button></div>
 </div>
 
 <div class="cards">
-    <div class="card"><button onclick="openModal( الحسابات )">الحسابات <i class="fa-solid fa-user"></i></button></div>
-    <div class="card"><button onclick="openModal( الإشتراكات )">الإشتراكات <i class="fa-solid fa-tv"></i></button></div>
+    <div class="card"><button onclick="openModal('الحسابات')">الحسابات <i class="fa-solid fa-user"></i></button></div>
+    <div class="card"><button onclick="openModal('الإشتراكات')">الإشتراكات <i class="fa-solid fa-tv"></i></button></div>
 </div>
 
 <!-- Bottom Menu -->
@@ -119,42 +125,43 @@ button:hover{transform:scale(1.05);}
 
 <script>
 // Banner متحرك
-let bannerImgs=document.querySelectorAll( #banner img );let bIndex=0;
-setInterval(()=>{bannerImgs.forEach(img=>img.classList.remove( active ));bIndex=(bIndex+1)%bannerImgs.length;bannerImgs[bIndex].classList.add( active );},4000);
+let bannerImgs=document.querySelectorAll('#banner img');let bIndex=0;
+setInterval(()=>{bannerImgs.forEach(img=>img.classList.remove('active'));bIndex=(bIndex+1)%bannerImgs.length;bannerImgs[bIndex].classList.add('active');},4000);
 
 // Slider متحرك
-let slides=document.querySelectorAll( .slide );let currentSlide=0;
-setInterval(()=>{slides[currentSlide].classList.remove( active );currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add( active );},5000);
+let slides=document.querySelectorAll('.slide');let currentSlide=0;
+setInterval(()=>{slides[currentSlide].classList.remove('active');currentSlide=(currentSlide+1)%slides.length;slides[currentSlide].classList.add('active');},5000);
 
 // Modal
 let selectedService="";
-function openModal(service){selectedService=service;document.getElementById( modalService ).innerText=service;document.getElementById( orderModal ).style.display= flex ;}
-document.getElementById( orderModal ).onclick=e=>{if(e.target==document.getElementById( orderModal ))document.getElementById( orderModal ).style.display= none ;}
+function openModal(service){selectedService=service;document.getElementById('modalService').innerText=service;document.getElementById('orderModal').style.display='flex';}
+document.getElementById('orderModal').onclick=e=>{if(e.target==document.getElementById('orderModal'))document.getElementById('orderModal').style.display='none';}
 
 // Orders
-let orders=JSON.parse(localStorage.getItem( orders ))||[];
-updateOrderCounter();
+let orders=JSON.parse(localStorage.getItem('orders'))||[];
 function generateOrderID(){return "RS"+Math.floor(Math.random()*999999);}
 function sendOrder(){
-    let name=document.getElementById( modalName ).value;
-    let details=document.getElementById( modalDetails ).value;
-    let coupon=document.getElementById( coupon ).value;
-    if(!name||!details){alert( املأ كل الحقول! );return;}
+    let name=document.getElementById('modalName').value;
+    let details=document.getElementById('modalDetails').value;
+    let coupon=document.getElementById('coupon').value;
+    if(!name||!details){alert('املأ كل الحقول!');return;}
     if(!coupon){coupon="NOCOUPON";}
     let orderID=generateOrderID();
     let now=new Date().toLocaleString();
     orders.push({id:orderID,service:selectedService,name:name,details:details,time:now,coupon:coupon});
-    localStorage.setItem( orders ,JSON.stringify(orders));
-    updateOrderCounter();
+    localStorage.setItem('orders',JSON.stringify(orders));
+    document.getElementById('modalSuccess').innerText='✅ تم إرسال طلبك بنجاح!';
+    document.getElementById('modalName').value='';document.getElementById('modalDetails').value='';document.getElementById('modalReceipt').value='';document.getElementById('coupon').value='';
     let token="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
     let chat_id="7741275208";
     let message=`👑 طلب ملكي جديد\n🆔 رقم الطلب: ${orderID}\n📦 الخدمة: ${selectedService}\n👤 الاسم: ${name}\n📝 التفاصيل: ${details}\n🎟️ كوبون: ${coupon}\n🕒 الوقت: ${now}`;
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method: POST ,headers:{ Content-Type : application/json },body:JSON.stringify({chat_id:chat_id,text:message})})
-    .then(()=>{document.getElementById( modalSuccess ).innerText= ✅ تم إرسال طلبك بنجاح! ;document.getElementById( modalName ).value=  ;document.getElementById( modalDetails ).value=  ;document.getElementById( modalReceipt ).value=  ;document.getElementById( coupon ).value=  ;})
-    .catch(()=>alert( حدث خطأ ❌ ));
+    fetch(`https://api.telegram.org/bot${token}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:chat_id,text:message})})
+    .catch(()=>alert('حدث خطأ ❌'));
 }
 
-function updateOrderCounter(){document.getElementById( orderCounter ).innerText="عدد الطلبات: "+orders.length;}
+// Orders counter
+function updateOrderCounter(){document.getElementById('orderCounter')?.innerText="عدد الطلبات: "+orders.length;}
+updateOrderCounter();
 </script>
 </body>
 </html>
