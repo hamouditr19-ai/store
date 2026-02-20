@@ -32,7 +32,7 @@
         .ticker-text { white-space: nowrap; animation: ticker-anim 20s linear infinite; color: #030712; font-weight: 900; }
         @keyframes ticker-anim { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
-        /* استايل الفوتر الجديد */
+        /* استايل الفوتر */
         .footer-social-icon {
             width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
             background: rgba(255,255,255,0.05); border-radius: 12px; transition: 0.3s;
@@ -94,20 +94,19 @@
             </div>
 
             <div class="flex gap-4 mb-8">
-                <a href="#" class="footer-social-icon"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="#" class="footer-social-icon"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" class="footer-social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="footer-social-icon"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://wa.me/963968493135" target="_blank" class="footer-social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://t.me/ReemStore4" target="_blank" class="footer-social-icon"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://www.facebook.com/share/1LThsgbBbt/" target="_blank" class="footer-social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@reem_m272" target="_blank" class="footer-social-icon"><i class="fa-brands fa-tiktok"></i></a>
             </div>
 
             <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm font-bold text-gray-400">
                 <a href="#" class="hover:text-cyan-400 transition underline underline-offset-4">سياسة الخصوصية</a>
                 <a href="#" class="hover:text-cyan-400 transition underline underline-offset-4">شروط الاستخدام</a>
-                <a href="#" class="hover:text-cyan-400 transition underline underline-offset-4">تواصل معنا</a>
             </div>
 
             <div class="text-gray-500 text-xs tracking-widest leading-relaxed border-t border-white/5 pt-6 w-full">
-                <p class="mb-2">نسخ التعليمات البرمجية</p>
+                <p class="mb-2 uppercase">REEM STORE CODE BASE</p>
                 <p class="font-bold text-gray-400">© 2026 Reem Store. جميع الحقوق محفوظة.</p>
             </div>
         </div>
@@ -131,14 +130,14 @@
                 </div>
                 <input id="in-ref" type="text" placeholder="رقم المرجع بعد التحويل" class="w-full p-4 bg-black/60 border border-white/5 rounded-xl text-sm outline-none">
             </div>
-            <button onclick="sendOrder()" class="w-full bg-cyan-400 text-black py-5 rounded-[30px] font-black text-xl shadow-[0_10px_40px_rgba(6,182,212,0.4)] transition hover:brightness-110">تأكيد عملية الشحن</button>
+            <button onclick="sendOrder()" class="w-full bg-cyan-400 text-black py-5 rounded-[30px] font-black text-xl shadow-[0_10px_40px_rgba(6,182,212,0.4)] transition">تأكيد عملية الشحن</button>
         </div>
     </div>
 
     <div id="admin-overlay" class="fixed inset-0 z-[3000] hidden flex items-center justify-center p-4">
         <div class="bg-[#0f172a] border border-cyan-500/30 w-full max-w-lg rounded-[40px] p-8 relative">
             <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-black text-white">لوحة الإدارة</h2>
+                <h2 class="text-2xl font-black text-white italic">إدارة المنتجات</h2>
                 <button onclick="closeAdmin()" class="text-gray-400 hover:text-red-500"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <div class="space-y-5">
@@ -152,8 +151,8 @@
                     </select>
                 </div>
                 <input type="text" id="add-i" placeholder="رابط الصورة" class="w-full p-4 bg-white/5 border border-white/10 rounded-2xl outline-none text-white focus:border-cyan-500">
-                <button onclick="pushProduct()" class="w-full bg-cyan-500 text-black py-5 rounded-2xl font-black shadow-lg shadow-cyan-500/20">نشر المنتج</button>
-                <button onclick="exitAdminMode()" class="w-full text-gray-500 font-bold text-sm">خروج من وضع الإدارة</button>
+                <button onclick="pushProduct()" class="w-full bg-cyan-500 text-black py-5 rounded-2xl font-black">إضافة للمتجر</button>
+                <button onclick="exitAdminMode()" class="w-full text-gray-500 font-bold text-xs uppercase tracking-widest">خروج من الإدارة</button>
             </div>
         </div>
     </div>
@@ -168,13 +167,13 @@
             if(btn) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
             const list = cat === 'all' ? products : products.filter(x => x.cat === cat);
             container.innerHTML = list.map(p => `
-                <div class="product-card" id="p-${p.id}">
+                <div class="product-card">
                     <button class="del-btn" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
                     <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.src='https://via.placeholder.com/200'">
                     <h3 class="text-sm font-bold h-10 overflow-hidden">${p.name}</h3>
                     <div class="flex justify-between items-center mt-4">
                         <span class="text-xl font-black text-cyan-400">${p.price}$</span>
-                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20"><i class="fa-solid fa-plus"></i></button>
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
             `).join('');
