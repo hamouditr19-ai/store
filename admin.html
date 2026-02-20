@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>لوحة التحكم</title>
+</head>
+<body>
+
+<h2>إضافة منتج</h2>
+<input id="name" placeholder="اسم المنتج">
+<input id="price" placeholder="السعر">
+<input id="image" placeholder="رابط الصورة">
+<button onclick="add()">إضافة</button>
+
+<h2>حذف منتج</h2>
+<input id="deleteId" placeholder="ID المنتج">
+<button onclick="del()">حذف</button>
+
+<script>
+function add(){
+  fetch("/add-product", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      name: name.value,
+      price: price.value,
+      image: image.value
+    })
+  }).then(()=>alert("تمت الإضافة"));
+}
+
+function del(){
+  fetch("/delete-product", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      id: deleteId.value
+    })
+  }).then(()=>alert("تم الحذف"));
+}
+</script>
+
+</body>
+</html>
