@@ -11,7 +11,7 @@
     <style>
         :root { --main-cyan: #06b6d4; --dark-bg: #030712; }
         body { 
-            font-family:  Tajawal , sans-serif; 
+            font-family: 'Tajawal', sans-serif; 
             background-color: var(--dark-bg); 
             color: white; 
             margin: 0;
@@ -72,10 +72,10 @@
     </div>
 
     <div class="flex gap-3 overflow-x-auto px-5 py-6 no-scrollbar">
-        <button class="cat-item active" onclick="updateProducts( all , this)">الكل</button>
-        <button class="cat-item" onclick="updateProducts( apps , this)">تطبيقات</button>
-        <button class="cat-item" onclick="updateProducts( nums , this)">أرقام</button>
-        <button class="cat-item" onclick="updateProducts( games , this)">ألعاب</button>
+        <button class="cat-item active" onclick="updateProducts('all', this)">الكل</button>
+        <button class="cat-item" onclick="updateProducts('apps', this)">تطبيقات</button>
+        <button class="cat-item" onclick="updateProducts('nums', this)">أرقام</button>
+        <button class="cat-item" onclick="updateProducts('games', this)">ألعاب</button>
     </div>
 
     <main class="p-4 grid grid-cols-2 md:grid-cols-4 gap-6" id="products-container"></main>
@@ -117,7 +117,7 @@
             <input id="in-name" type="text" placeholder="الاسم الكامل للعميل" class="w-full p-4 bg-black/40 border border-white/5 rounded-2xl outline-none focus:border-cyan-500">
             <input id="in-id" type="text" placeholder="الآيدي (ID) المطلوب شحنه" class="w-full p-4 bg-black/40 border border-white/5 rounded-2xl outline-none focus:border-cyan-500">
             <div class="p-5 bg-cyan-500/10 rounded-3xl border border-cyan-500/20">
-                <p class="text-[10px] text-gray-400 mb-2">رقم تحويل شام كاش: 17ac4a94cb1ed493e47a8526892294dd</p>
+                <p class="text-[10px] text-gray-400 mb-2">رقم تحويل شام كاش: 0968493135</p>
                 <div class="relative mb-3">
                     <label class="text-[9px] text-cyan-400 absolute top-2 right-4">المبلغ الذي ستحوله</label>
                     <input id="in-amount" type="number" class="w-full pt-6 pb-2 px-4 bg-black/60 rounded-xl font-bold text-cyan-400 border border-white/5 outline-none">
@@ -153,71 +153,71 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        let products = JSON.parse(localStorage.getItem( reem_db_v5 )) || [];
+        let products = JSON.parse(localStorage.getItem('reem_db_v5')) || [];
         let cart = [];
 
-        function updateProducts(cat =  all , btn = null) {
-            const container = document.getElementById( products-container );
-            if(btn) { document.querySelectorAll( .cat-item ).forEach(b => b.classList.remove( active )); btn.classList.add( active ); }
-            const list = cat ===  all  ? products : products.filter(x => x.cat === cat);
+        function updateProducts(cat = 'all', btn = null) {
+            const container = document.getElementById('products-container');
+            if(btn) { document.querySelectorAll('.cat-item').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+            const list = cat === 'all' ? products : products.filter(x => x.cat === cat);
             container.innerHTML = list.map(p => `
                 <div class="product-card">
                     <button class="del-btn" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
-                    <img src="${p.img ||  https://via.placeholder.com/200 }" onerror="this.src= https://via.placeholder.com/200 ">
+                    <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.src='https://via.placeholder.com/200'">
                     <h3 class="text-sm font-bold h-10 overflow-hidden">${p.name}</h3>
                     <div class="flex justify-between items-center mt-4">
                         <span class="text-xl font-black text-cyan-400">${p.price}$</span>
-                        <button onclick="addToCart( ${p.name} , ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-plus"></i></button>
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center"><i class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
-            `).join(  );
+            `).join('');
         }
 
         function addToCart(name, price) {
             cart.push({name, price});
-            document.getElementById( cart-count ).innerText = cart.length;
+            document.getElementById('cart-count').innerText = cart.length;
             refreshCart();
             toggleCart();
         }
 
         function refreshCart() {
-            const list = document.getElementById( cart-list );
+            const list = document.getElementById('cart-list');
             list.innerHTML = cart.map((item, i) => `
                 <div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
                     <span class="text-xs font-bold">${item.name}</span>
                     <div class="flex items-center gap-3">
                         <span class="text-cyan-400 font-bold">${item.price}$</span>
-                        <button onclick="cart.splice(${i},1);refreshCart();document.getElementById( cart-count ).innerText=cart.length;" class="text-red-500"><i class="fa-solid fa-xmark"></i></button>
+                        <button onclick="cart.splice(${i},1);refreshCart();document.getElementById('cart-count').innerText=cart.length;" class="text-red-500"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                 </div>
-            `).join(  );
+            `).join('');
             let total = cart.reduce((s, x) => s + x.price, 0).toFixed(2);
-            document.getElementById( total-price ).innerText = total + "$";
-            document.getElementById( in-amount ).value = total;
+            document.getElementById('total-price').innerText = total + "$";
+            document.getElementById('in-amount').value = total;
         }
 
-        function toggleCart() { document.getElementById( cart-drawer ).classList.toggle( open ); }
-        function requestAdmin() { if(prompt("كلمة سر الإدارة:") === "reem2026") { document.getElementById( admin-overlay ).style.display =  flex ; document.body.classList.add( admin-mode ); } }
-        function closeAdmin() { document.getElementById( admin-overlay ).style.display =  none ; }
-        function exitAdminMode() { document.body.classList.remove( admin-mode ); closeAdmin(); }
+        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('open'); }
+        function requestAdmin() { if(prompt("كلمة سر الإدارة:") === "reem2026") { document.getElementById('admin-overlay').style.display = 'flex'; document.body.classList.add('admin-mode'); } }
+        function closeAdmin() { document.getElementById('admin-overlay').style.display = 'none'; }
+        function exitAdminMode() { document.body.classList.remove('admin-mode'); closeAdmin(); }
 
         function pushProduct() {
-            const n = document.getElementById( add-n ).value, p = document.getElementById( add-p ).value, i = document.getElementById( add-i ).value, c = document.getElementById( add-c ).value;
+            const n = document.getElementById('add-n').value, p = document.getElementById('add-p').value, i = document.getElementById('add-i').value, c = document.getElementById('add-c').value;
             products.push({ id: Date.now(), name: n, price: parseFloat(p), img: i, cat: c });
-            localStorage.setItem( reem_db_v5 , JSON.stringify(products));
+            localStorage.setItem('reem_db_v5', JSON.stringify(products));
             updateProducts(); closeAdmin();
         }
 
         function deleteProduct(id) {
             products = products.filter(x => x.id !== id);
-            localStorage.setItem( reem_db_v5 , JSON.stringify(products));
+            localStorage.setItem('reem_db_v5', JSON.stringify(products));
             updateProducts();
         }
 
         function sendOrder() {
-            const n = document.getElementById( in-name ).value, id = document.getElementById( in-id ).value, am = document.getElementById( in-amount ).value, ref = document.getElementById( in-ref ).value;
+            const n = document.getElementById('in-name').value, id = document.getElementById('in-id').value, am = document.getElementById('in-amount').value, ref = document.getElementById('in-ref').value;
             if(!n || !id || !ref || cart.length === 0) return alert("يرجى إكمال البيانات!");
-            let text = `🚀 طلب شحن جديد%0A👤 العميل: ${n}%0A🆔 الآيدي: ${id}%0A💰 مبلغ التحويل: ${am}$%0A🧾 المرجع: ${ref}%0A🛒 الخدمات:%0A${cart.map(x => `• ${x.name}`).join( %0A )}`;
+            let text = `🚀 طلب شحن جديد%0A👤 العميل: ${n}%0A🆔 الآيدي: ${id}%0A💰 مبلغ التحويل: ${am}$%0A🧾 المرجع: ${ref}%0A🛒 الخدمات:%0A${cart.map(x => `• ${x.name}`).join('%0A')}`;
             window.open(`https://wa.me/963968493135?text=${text}`);
         }
 
