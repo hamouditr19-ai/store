@@ -3,133 +3,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store PRO</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<title>Reem Store</title>
 
 <style>
-body{margin:0;font-family:'Cairo';background:#0f172a;color:white}
-.container{padding:20px}
-input,button{padding:10px;border-radius:8px;border:none;margin:5px 0;width:100%}
-button{background:linear-gradient(45deg,#00c6ff,#0072ff);color:white}
-.card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:10px}
-.hidden{display:none}
-.admin{background:#111827;padding:15px}
+body{
+margin:0;
+font-family: 'Segoe UI', Tahoma;
+background:#f4f6fb;
+overflow-x:hidden;
+}
+
+h2{margin:10px 0}
+
+header{
+position:relative;
+height:300px;
+overflow:hidden;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+transition:opacity 1s;
+opacity:0;
+}
+
+.slide.active{opacity:1;}
+
+.overlay{
+position:absolute;
+bottom:20px;
+right:20px;
+color:#fff;
+background:rgba(0,0,0,0.5);
+padding:15px;
+border-radius:10px;
+}
+
+.sections{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+padding:20px;
+}
+
+.card{
+background:#fff;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+text-align:center;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+transform:rotateY(10deg) scale(1.05);
+}
+
+.gradient-btn{
+background:linear-gradient(45deg,#4e73ff,#00c6ff);
+color:#fff;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+margin-top:5px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.modal-content{
+background:#fff;
+width:95%;
+max-width:500px;
+padding:20px;
+border-radius:15px;
+max-height:90vh;
+overflow:auto;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin:5px 0;
+}
+
+.bottom-menu{
+position:fixed;
+bottom:0;
+width:100%;
+background:#fff;
+display:flex;
+justify-content:space-around;
+box-shadow:0 -5px 15px rgba(0,0,0,0.1);
+padding:10px 0;
+}
+
+.footer{
+background:#111;
+color:#fff;
+padding:20px;
+text-align:center;
+margin-top:50px;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin:5px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+<div class="slide active" style="background-image:url('https://picsum.photos/1200/400?1')"></div>
+<div class="slide" style="background-image:url('https://picsum.photos/1200/400?2')"></div>
+<div class="slide" style="background-image:url('https://picsum.photos/1200/400?3')"></div>
+<div class="overlay">🔥 أفضل العروض الرقمية</div>
+</header>
 
-<h2>تسجيل الدخول</h2>
-<div id="authBox">
-<input type="email" id="email" placeholder="الإيميل">
-<input type="password" id="password" placeholder="كلمة المرور">
-<button onclick="login()">دخول</button>
-<button onclick="register()">إنشاء حساب</button>
+<div class="sections" id="sections"></div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<h2 id="modalTitle"></h2>
+<div id="modalProducts"></div>
+<button class="gradient-btn" onclick="closeModal()">إغلاق</button>
+</div>
 </div>
 
-<div id="store" class="hidden">
-<h2>المتجر</h2>
-<div id="products"></div>
-<button onclick="logout()">تسجيل خروج</button>
+<!-- Cart Modal -->
+<div class="modal" id="cartModal">
+<div class="modal-content">
+<h2>🛒 سلة الطلبات</h2>
+<div id="cartItems"></div>
+<h3 id="total"></h3>
+<input type="text" id="customerName" placeholder="اسمك">
+<input type="file" id="fileUpload">
+<button class="gradient-btn" onclick="sendOrder()">📤 إرسال الطلب</button>
+<button class="gradient-btn" onclick="closeCart()">إغلاق</button>
+</div>
 </div>
 
-<div id="adminPanel" class="hidden admin">
-<h2>لوحة تحكم الأدمن</h2>
-<div id="ordersList"></div>
+<div class="bottom-menu">
+<button onclick="location.reload()">🏠 الرئيسية</button>
+<button onclick="viewOrders()">📦 طلباتي</button>
+<button onclick="openCart()">🛒 السلة</button>
+<button onclick="contact()">📞 اتصل بنا</button>
 </div>
 
+<div class="footer">
+© 2026 Reem Store. جميع الحقوق محفوظة.
 </div>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
+<script>
+/* بيانات */
+let sectionsData={
+"الألعاب":[{name:"لعبة 1",price:10},{name:"لعبة 2",price:15}],
+"التطبيقات":[{name:"تطبيق 1",price:5}],
+"الرصيد":[{name:"رصيد 10$",price:10}],
+"الأكواد":[{name:"كود خصم",price:3}],
+"خدمات سوشال ميديا":[{name:"1000 متابع",price:7}],
+"خدمات تلجرام":[{name:"500 عضو",price:6}],
+"الأرقام الإفتراضية":[{name:"رقم أمريكي",price:2}],
+"خدمات الإنترنت":[{name:"VPN شهر",price:4}],
+"الحسابات":[{name:"حساب مميز",price:12}],
+"الاشتراكات":[{name:"اشتراك شهر",price:9}]
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+let cart=[];
+let orders=JSON.parse(localStorage.getItem("orders"))||[];
 
-window.login = async function(){
-const email=emailInput.value;
-const pass=password.value;
-await signInWithEmailAndPassword(auth,email,pass);
-}
-
-window.register = async function(){
-const email=emailInput.value;
-const pass=password.value;
-await createUserWithEmailAndPassword(auth,email,pass);
-}
-
-window.logout = function(){signOut(auth)}
-
-onAuthStateChanged(auth,user=>{
-if(user){
-document.getElementById("authBox").classList.add("hidden");
-document.getElementById("store").classList.remove("hidden");
-
-if(user.email==="admin@email.com"){
-document.getElementById("adminPanel").classList.remove("hidden");
-loadOrders();
-}
-
-}else{
-document.getElementById("authBox").classList.remove("hidden");
-document.getElementById("store").classList.add("hidden");
-}
+/* إنشاء الأقسام */
+let container=document.getElementById("sections");
+Object.keys(sectionsData).forEach(sec=>{
+container.innerHTML+=`<div class="card" onclick="openSection('${sec}')">${sec}</div>`;
 });
 
-const products=[{name:"شحن ببجي",price:5},{name:"اشتراك نتفلكس",price:4}];
-const productsDiv=document.getElementById("products");
-
-products.forEach(p=>{
-productsDiv.innerHTML+=`
+/* فتح قسم */
+function openSection(section){
+document.getElementById("modal").style.display="flex";
+document.getElementById("modalTitle").innerText=section;
+let html="";
+sectionsData[section].forEach(p=>{
+html+=`
 <div class="card">
-${p.name} - ${p.price}$
-<button onclick="order('${p.name}',${p.price})">طلب</button>
+<h3>${p.name}</h3>
+<p>${p.price}$</p>
+<button class="gradient-btn" onclick="addToCart('${section}','${p.name}',${p.price})">➕ إضافة</button>
 </div>`;
 });
-
-window.order=async function(name,price){
-await addDoc(collection(db,"orders"),{
-name,price,time:new Date().toLocaleString()
-});
-alert("تم إرسال الطلب");
+document.getElementById("modalProducts").innerHTML=html;
 }
 
-async function loadOrders(){
-const querySnapshot=await getDocs(collection(db,"orders"));
-const list=document.getElementById("ordersList");
-list.innerHTML="";
-querySnapshot.forEach(docSnap=>{
-list.innerHTML+=`
-<div class="card">
-${docSnap.data().name} - ${docSnap.data().price}$
-<button onclick="deleteOrder('${docSnap.id}')">حذف</button>
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* سلة */
+function addToCart(section,name,price){
+cart.push({section,name,price,qty:1});
+alert("تمت الإضافة ✅");
+}
+
+function openCart(){
+document.getElementById("cartModal").style.display="flex";
+renderCart();
+}
+
+function closeCart(){
+document.getElementById("cartModal").style.display="none";
+}
+
+function renderCart(){
+let html="";
+let total=0;
+cart.forEach((item,i)=>{
+total+=item.price*item.qty;
+html+=`
+<div class="cart-item">
+${item.name} x 
+<input type="number" value="${item.qty}" min="1" onchange="updateQty(${i},this.value)">
+<button onclick="removeItem(${i})">❌</button>
 </div>`;
 });
+document.getElementById("cartItems").innerHTML=html;
+document.getElementById("total").innerText="الإجمالي: "+total+"$";
 }
 
-window.deleteOrder=async function(id){
-await deleteDoc(doc(db,"orders",id));
-loadOrders();
+function updateQty(i,val){
+cart[i].qty=parseInt(val);
+renderCart();
 }
+
+function removeItem(i){
+cart.splice(i,1);
+renderCart();
+}
+
+/* إرسال الطلب لتلجرام */
+function sendOrder(){
+if(cart.length==0)return alert("السلة فارغة");
+
+let name=document.getElementById("customerName").value;
+let orderId="ORD"+Date.now();
+let time=new Date().toLocaleString();
+let text="🛒 طلب جديد\nرقم: "+orderId+"\nالاسم: "+name+"\nالوقت: "+time+"\n\n";
+cart.forEach(i=>{
+text+=i.section+" - "+i.name+" x"+i.qty+"\n";
+});
+
+fetch("https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id:"YOUR_CHAT_ID",
+text:text
+})
+});
+
+orders.push({orderId,name,time,items:cart});
+localStorage.setItem("orders",JSON.stringify(orders));
+cart=[];
+closeCart();
+alert("تم إرسال الطلب 🚀");
+}
+
+/* عرض طلباتي */
+function viewOrders(){
+let text="طلباتي:\n\n";
+orders.forEach(o=>{
+text+=o.orderId+" - "+o.time+"\n";
+});
+alert(text);
+}
+
+/* اتصل بنا */
+function contact(){
+let msg=prompt("اكتب رسالتك:");
+fetch("https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id:"YOUR_CHAT_ID",
+text:"📩 رسالة جديدة:\n"+msg
+})
+});
+alert("تم الإرسال");
+}
+
+/* سلايدر */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+setInterval(()=>{
+slides[index].classList.remove("active");
+index=(index+1)%slides.length;
+slides[index].classList.add("active");
+},4000);
 
 </script>
-
 </body>
 </html>
