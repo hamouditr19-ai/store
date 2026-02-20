@@ -6,24 +6,40 @@
     <title>Reem Store | ريم ستور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; margin: 0; }
         .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(6, 182, 212, 0.2); }
         .cyan-text { color: #06b6d4; }
         .cyan-bg { background-color: #06b6d4; }
         .neon-border { border: 1px solid #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.1); }
         
-        @keyframes subtle-glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
-            50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+        /* شريط الترحيب العلوي المطابق للصورة */
+        .top-announce {
+            background: linear-gradient(90deg, #083344, #06b6d4, #083344);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-        .admin-active { animation: subtle-glow 3s infinite ease-in-out; border: 1px solid #ef4444; }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        /* تنسيق السلايدر (البنر المتحرك) */
+        .swiper { width: 100%; height: 200px; margin-bottom: 20px; }
+        .swiper-slide { position: relative; overflow: hidden; }
+        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 20px; text-align: right;
+        }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 25px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
         
-        /* زر واتساب */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 25px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
         #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 10000; }
         .toast { background: #06b6d4; color: #000; padding: 12px 20px; border-radius: 10px; font-weight: bold; margin-top: 8px; animation: slideIn 0.3s forwards; }
         @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -32,6 +48,10 @@
 <body class="min-h-screen pb-20">
 
     <div id="toast-container"></div>
+
+    <div class="top-announce">
+        🌟 أهلاً بكم في Reem Store | ريم ستور - وجهتكم الأولى لشحن الألعاب والبطاقات الرقمية بأفضل الأسعار 🌟
+    </div>
 
     <div id="password-modal" class="modal-overlay">
         <div class="modal-content bg-slate-800 p-8 rounded-2xl border border-cyan-500 w-80 text-center relative">
@@ -49,33 +69,52 @@
         </button>
     </nav>
 
-    <main class="container mx-auto px-4 py-8">
-        <div id="admin-panel" class="hidden glass-card p-6 rounded-2xl mb-10 admin-active relative">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://w0.peakpx.com/wallpaper/105/104/HD-wallpaper-battlegrounds-mobile-india-pubg-battlegrounds-battle-royale-games-pubg-mobile.jpg" alt="PUBG">
+                <div class="slide-overlay">
+                    <h2 class="text-xl font-bold">شحن شدات ببجي UC</h2>
+                    <p class="text-xs cyan-text">تسليم فوري وتلقائي 24/7</p>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="https://img.freepik.com/free-vector/social-media-icons-pattern-background_53876-81067.jpg" alt="Apps">
+                <div class="slide-overlay">
+                    <h2 class="text-xl font-bold">اشتراكات تطبيقات الشات</h2>
+                    <p class="text-xs cyan-text">تفعيل برامج لايكي، تيك توك، وغيرها</p>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <main class="container mx-auto px-4">
+        <div id="admin-panel" class="hidden glass-card p-6 rounded-2xl mb-10 relative border-red-500">
             <button onclick="closeAdmin()" class="absolute top-4 left-4 bg-red-600 text-white w-8 h-8 rounded-full">✕</button>
-            <h2 class="text-lg font-bold mb-6 text-red-400">لوحة التحكم الشاملة</h2>
+            <h2 class="text-lg font-bold mb-4 text-red-400">لوحة التحكم</h2>
             
-            <div class="mb-8 p-4 border border-slate-700 rounded-xl">
-                <p class="mb-2 text-sm font-bold">📂 إضافة قسم جديد (مثل: تطبيقات، ألعاب..)</p>
+            <div class="mb-6 p-4 border border-slate-700 rounded-xl">
+                <p class="mb-2 text-sm font-bold">📂 إضافة قسم جديد</p>
                 <div class="flex gap-2">
-                    <input type="text" id="new-cat-name" placeholder="اسم القسم الجديد" class="flex-1 p-2 rounded bg-white text-black">
-                    <button onclick="addNewCategory()" class="bg-green-600 px-4 py-2 rounded font-bold text-white text-sm">إضافة القسم</button>
+                    <input type="text" id="new-cat-name" placeholder="مثال: قسم التطبيقات" class="flex-1 p-2 rounded bg-white text-black">
+                    <button onclick="addNewCategory()" class="bg-green-600 px-4 py-2 rounded font-bold text-white">إضافة</button>
                 </div>
             </div>
 
             <div class="p-4 border border-slate-700 rounded-xl">
-                <p class="mb-2 text-sm font-bold">🛍 إضافة منتج لقسم معين</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3 text-black">
+                <p class="mb-2 text-sm font-bold">🛍 إضافة منتج لقسم</p>
+                <div class="grid grid-cols-1 gap-3 mb-3 text-black">
                     <input type="text" id="new-p-name" placeholder="اسم المنتج" class="p-2 rounded">
-                    <input type="number" id="new-p-price" placeholder="السعر $" class="p-2 rounded">
-                    <input type="text" id="new-p-img" placeholder="رابط الصورة" class="p-2 rounded">
+                    <input type="number" id="new-p-price" placeholder="السعر" class="p-2 rounded">
+                    <input type="text" id="new-p-img" placeholder="رابط صورة المنتج" class="p-2 rounded">
                     <select id="new-p-cat-select" class="p-2 rounded font-bold bg-white"></select>
                 </div>
-                <button onclick="addNewProduct()" class="w-full bg-cyan-600 py-2 rounded font-bold text-white">إضافة المنتج للمتجر</button>
+                <button onclick="addNewProduct()" class="w-full bg-cyan-600 py-2 rounded font-bold text-white">تأكيد الإضافة</button>
             </div>
         </div>
 
-        <div id="category-filters" class="flex flex-wrap gap-2 mb-8 justify-center">
-            </div>
+        <div id="category-filters" class="flex flex-wrap gap-2 mb-8 justify-center"></div>
 
         <div id="store-content"></div>
     </main>
@@ -90,7 +129,7 @@
             <div class="flex justify-between text-lg font-bold mb-4"><span>الإجمالي:</span><span id="cart-total" class="cyan-text">0</span> $</div>
             <input type="text" id="cust-name" placeholder="اسم العميل" class="w-full p-2 mb-2 rounded bg-white text-black font-bold">
             <input type="text" id="cust-id" placeholder="ID الحساب" class="w-full p-2 mb-4 rounded bg-white text-black font-bold">
-            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-xl shadow-lg">إرسال الطلب واتساب</button>
+            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-xl shadow-lg">تأكيد الطلب عبر واتساب</button>
         </div>
     </div>
 
@@ -98,13 +137,19 @@
         <svg fill="white" width="35" height="35" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.161 1.237 8.404 3.48s3.481 5.229 3.481 8.405c0 6.556-5.333 11.888-11.889 11.888-2.016 0-3.998-.512-5.759-1.487l-6.224 1.811zm6.273-3.414l.348.207c1.472.873 3.18 1.336 4.935 1.336 5.232 0 9.492-4.259 9.492-9.491 0-2.535-.987-4.918-2.778-6.709s-4.175-2.779-6.709-2.779c-5.233 0-9.492 4.259-9.492 9.491 0 1.831.526 3.618 1.521 5.165l.226.35-.998 3.644 3.731-.976zm11.33-6.805c-.272-.136-1.61-.795-1.86-.886-.25-.091-.432-.136-.613.136-.182.273-.705.886-.864 1.068-.159.182-.318.204-.59.068-.273-.136-1.15-.424-2.19-1.354-.809-.722-1.355-1.614-1.514-1.886-.159-.272-.017-.42.119-.556.123-.122.272-.318.409-.477.136-.159.182-.272.272-.454.091-.182.045-.341-.023-.477-.068-.136-.613-1.477-.84-2.022-.222-.534-.446-.462-.613-.47h-.523c-.182 0-.477.068-.727.341-.25.273-.954.932-.954 2.272 0 1.341.977 2.636 1.114 2.818.136.182 1.92 2.932 4.651 4.113.65.28 1.157.448 1.551.573.653.208 1.248.178 1.718.108.523-.078 1.61-.659 1.837-1.295.227-.636.227-1.181.159-1.295-.068-.113-.25-.181-.523-.317z"/></svg>
     </a>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // تفعيل السلايدر
+        var swiper = new Swiper(".mySwiper", {
+            autoplay: { delay: 3000 },
+            pagination: { el: ".swiper-pagination", clickable: true },
+        });
+
         // البيانات
         let storeData = JSON.parse(localStorage.getItem('reemStoreFull')) || [
-            { id: "cat_1", name: "قسم الألعاب", products: [] },
-            { id: "cat_2", name: "قسم التطبيقات", products: [] }
+            { id: "cat_1", name: "شحن ببجي موبايل | PUBG", products: [] },
+            { id: "cat_2", name: "قسم تطبيقات الشات", products: [] }
         ];
-
         let cart = [];
 
         function showToast(m) {
@@ -124,65 +169,35 @@
                 closeModal('password-modal');
                 updateAdminSelectors();
                 renderStore();
-                showToast("🔓 أهلاً ريم، لوحة التحكم كاملة بين يديكِ");
+                showToast("🔓 أهلاً ريم، لوحة التحكم جاهزة");
             } else { showToast("❌ كلمة السر خطأ"); }
         }
 
-        // إضافة قسم جديد
         function addNewCategory() {
             const name = document.getElementById('new-cat-name').value;
-            if(!name) return showToast("⚠️ اكتبي اسم القسم");
-            const newCat = { id: "cat_" + Date.now(), name: name, products: [] };
-            storeData.push(newCat);
-            save();
-            updateAdminSelectors();
-            renderStore();
+            if(!name) return;
+            storeData.push({ id: "cat_" + Date.now(), name: name, products: [] });
+            save(); updateAdminSelectors(); renderStore();
             document.getElementById('new-cat-name').value = '';
-            showToast("✅ تم إضافة قسم: " + name);
         }
 
-        // حذف قسم بالكامل
-        function deleteCategory(catId) {
-            if(confirm("هل أنتِ متأكدة من حذف القسم وكل منتجاته؟")) {
-                storeData = storeData.filter(c => c.id !== catId);
-                save();
-                updateAdminSelectors();
-                renderStore();
-                showToast("🗑 تم حذف القسم");
-            }
-        }
-
-        // إضافة منتج لقسم
         function addNewProduct() {
-            const n = document.getElementById('new-p-name').value;
-            const p = parseFloat(document.getElementById('new-p-price').value);
-            const img = document.getElementById('new-p-img').value;
-            const catId = document.getElementById('new-p-cat-select').value;
-            
-            if(!n || !p || !img || !catId) return showToast("⚠️ أكملي بيانات المنتج");
-
-            const catIndex = storeData.findIndex(c => c.id === catId);
-            storeData[catIndex].products.push({ id: Date.now(), name: n, price: p, img: img });
-            
-            save();
-            renderStore();
+            const n = document.getElementById('new-p-name').value, p = parseFloat(document.getElementById('new-p-price').value), img = document.getElementById('new-p-img').value, catId = document.getElementById('new-p-cat-select').value;
+            if(!n || !p || !img) return;
+            const catIdx = storeData.findIndex(c => c.id === catId);
+            storeData[catIdx].products.push({ id: Date.now(), name: n, price: p, img: img });
+            save(); renderStore();
             document.getElementById('new-p-name').value = '';
-            document.getElementById('new-p-price').value = '';
-            document.getElementById('new-p-img').value = '';
-            showToast("✅ تم إضافة المنتج للقسم");
         }
 
         function deleteProduct(catId, prodId) {
-            const catIndex = storeData.findIndex(c => c.id === catId);
-            storeData[catIndex].products = storeData[catIndex].products.filter(p => p.id !== prodId);
-            save();
-            renderStore();
-            showToast("🗑 تم حذف المنتج");
+            const catIdx = storeData.findIndex(c => c.id === catId);
+            storeData[catIdx].products = storeData[catIdx].products.filter(p => p.id !== prodId);
+            save(); renderStore();
         }
 
         function updateAdminSelectors() {
-            const select = document.getElementById('new-p-cat-select');
-            select.innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            document.getElementById('new-p-cat-select').innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
         function renderStore() {
@@ -190,24 +205,17 @@
             const content = document.getElementById('store-content');
             const filters = document.getElementById('category-filters');
 
-            // توليد الفلاتر
-            filters.innerHTML = storeData.map(c => `
-                <button onclick="scrollToCat('${c.id}')" class="px-4 py-2 bg-slate-800 rounded-full border border-cyan-500/30 text-xs font-bold hover:bg-cyan-500 hover:text-black transition">
-                    ${c.name}
-                </button>
-            `).join('');
+            filters.innerHTML = storeData.map(c => `<button onclick="scrollToCat('${c.id}')" class="px-4 py-2 bg-slate-800 rounded-full border border-cyan-500/30 text-xs font-bold hover:bg-cyan-500 hover:text-black transition">${c.name}</button>`).join('');
 
-            // توليد المحتوى
             content.innerHTML = storeData.map(cat => `
                 <div id="${cat.id}" class="mb-12">
                     <div class="flex justify-between items-center mb-6 border-r-4 border-cyan-500 pr-3">
-                        <h3 class="text-xl font-bold">${cat.name}</h3>
-                        ${isAdmin ? `<button onclick="deleteCategory('${cat.id}')" class="text-xs bg-red-900/50 text-red-400 px-2 py-1 rounded border border-red-500">حذف القسم بالكامل</button>` : ''}
+                        <h3 class="text-lg font-bold">${cat.name}</h3>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        ${cat.products.length === 0 ? '<p class="text-slate-500 text-xs">لا يوجد منتجات هنا بعد..</p>' : cat.products.map(p => `
-                            <div class="glass-card p-3 rounded-2xl neon-border relative group">
-                                ${isAdmin ? `<button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-[10px] px-2 py-1 rounded-full z-10">حذف</button>` : ''}
+                        ${cat.products.map(p => `
+                            <div class="glass-card p-3 rounded-2xl neon-border relative">
+                                ${isAdmin ? `<button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-[10px] px-2 py-1 rounded-full z-10 font-bold">حذف</button>` : ''}
                                 <img src="${p.img}" class="w-full h-32 object-cover rounded-xl mb-3">
                                 <h4 class="font-bold text-xs mb-1">${p.name}</h4>
                                 <p class="cyan-text font-bold text-lg mb-3">$ ${p.price}</p>
@@ -221,24 +229,18 @@
 
         function scrollToCat(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
         function save() { localStorage.setItem('reemStoreFull', JSON.stringify(storeData)); }
-        function addToCart(n, p) { cart.push({n, p}); updateCartUI(); showToast("🛒 تمت الإضافة لسلتك"); }
+        function addToCart(n, p) { cart.push({n, p}); updateCartUI(); showToast(`تمت إضافة ${n}`); }
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            document.getElementById('cart-items').innerHTML = cart.map((item, i) => `
-                <div class="flex justify-between bg-slate-800 p-2 rounded-lg text-xs">
-                    <span>${item.n}</span>
-                    <button onclick="cart.splice(${i},1);updateCartUI()" class="text-red-500">حذف</button>
-                </div>
-            `).join('');
+            document.getElementById('cart-items').innerHTML = cart.map((item, i) => `<div class="flex justify-between bg-slate-800 p-2 rounded-lg text-xs"><span>${item.n}</span><button onclick="cart.splice(${i},1);updateCartUI()" class="text-red-500 font-bold">إلغاء</button></div>`).join('');
             document.getElementById('cart-total').innerText = cart.reduce((s, i) => s + i.p, 0).toFixed(2);
         }
         function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('-translate-x-full'); }
 
         async function sendOrder() {
-            const name = document.getElementById('cust-name').value;
-            const id = document.getElementById('cust-id').value;
-            if(!name || cart.length === 0) return showToast("⚠️ البيانات ناقصة");
-            const text = `طلب جديد:%0Aالاسم: ${name}%0Aالآيدي: ${id}%0Aالطلبات:%0A${cart.map(i => `- ${i.n}`).join('%0A')}`;
+            const name = document.getElementById('cust-name').value, id = document.getElementById('cust-id').value;
+            if(!name || cart.length === 0) return showToast("⚠️ يرجى ملء البيانات");
+            const text = `طلب جديد من ريم ستور:%0A👤 الاسم: ${name}%0A🆔 الآيدي: ${id}%0A📦 الطلبات:%0A${cart.map(i => `- ${i.n}`).join('%0A')}`;
             window.open(`https://wa.me/963968493135?text=${text}`, '_blank');
         }
 
