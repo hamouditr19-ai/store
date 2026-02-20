@@ -1,109 +1,44 @@
-/* الألوان الأساسية والتخطيط */
-body {
-    background-color: #0d1b2a; /* لون الخلفية الداكن */
-    color: white;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding-bottom: 80px; /* مسافة عشان القائمة السفلية ما تغطي المحتوى */
-    direction: rtl;
-}
-
-/* الهيدر العلوي */
-.main-header {
-    background: linear-gradient(to right, #1b263b, #0d1b2a);
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #1b263b;
-}
-
-.logo {
-    font-weight: bold;
-    font-size: 20px;
-    color: #00d4ff; /* لون سماوي متوهج */
-}
-
-/* البانر الإعلاني */
-.banner {
-    padding: 15px;
-}
-.banner img {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-}
-
-/* شبكة الأقسام (مثل صورتك تماماً) */
+/* تحسين شكل الكروت والكتابة */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* عمودين للجوال */
-    gap: 15px;
+    grid-template-columns: repeat(4, 1fr); /* 4 أعمدة مثل الصورة الأصلية */
+    gap: 10px;
     padding: 15px;
 }
 
 .card {
-    background: #16243a;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s;
-    border: 1px solid #1b263b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
 }
 
-.card:hover {
-    transform: scale(0.95);
-    background: #1b263b;
-}
-
-.icon-bg {
-    background: white; /* خلفية الأيقونات كما في الصورة */
+/* المربع الأبيض الصغير خلف الأيقونة */
+.icon-box {
+    background-color: #ffffff;
     border-radius: 12px;
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 10px;
+    width: 65px;
+    height: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-.icon-bg img {
-    width: 50px;
+.icon-box img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
 }
 
-/* القائمة السفلية */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
+/* تنسيق النص ليكون واضح وما يتقطع */
+.card span {
+    color: #ffffff;
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap; /* يمنع نزول النص لسطر جديد بشكل مشوه */
     width: 100%;
-    background: #0b1421;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0;
-    border-top: 1px solid #1b263b;
-}
-
-.nav-item {
-    font-size: 12px;
-    color: #888;
-}
-
-.nav-item.active {
-    color: #00d4ff;
-}
-
-.add-btn {
-    background: #00d4ff;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    color: white;
-    margin-top: -30px;
-    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    overflow: hidden;
+    text-overflow: ellipsis; /* يضع نقاط إذا كان النص طويل جداً */
 }
