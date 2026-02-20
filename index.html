@@ -3,171 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store PRO 🚀</title>
+<title>Reem Store PRO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #0f172a, #0b1120);
-  color: white;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-  font-size: 22px;
-  font-weight: bold;
-  background: #111827;
-}
-
-.container {
-  padding: 15px;
-}
-
-.card {
-  background: #1e293b;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card h3 {
-  margin: 0;
-  font-size: 16px;
-}
-
-.price {
-  color: #22c55e;
-  font-weight: bold;
-}
-
-button {
-  background: #22c55e;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 14px;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-.cart {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #111827;
-  padding: 15px;
-  border-top: 2px solid #22c55e;
-}
-
-.cart h3 {
-  margin-top: 0;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.remove-btn {
-  background: red;
-  padding: 3px 8px;
-  font-size: 12px;
-}
-
-.total {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #22c55e;
-}
+body{margin:0;font-family:'Cairo';background:#0f172a;color:white}
+.container{padding:20px}
+input,button{padding:10px;border-radius:8px;border:none;margin:5px 0;width:100%}
+button{background:linear-gradient(45deg,#00c6ff,#0072ff);color:white}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:10px}
+.hidden{display:none}
+.admin{background:#111827;padding:15px}
 </style>
 </head>
 
 <body>
 
-<header>Reem Store PRO 🚀</header>
-
 <div class="container">
-  <div id="products"></div>
+
+<h2>تسجيل الدخول</h2>
+<div id="authBox">
+<input type="email" id="email" placeholder="الإيميل">
+<input type="password" id="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+<button onclick="register()">إنشاء حساب</button>
 </div>
 
-<div class="cart">
-  <h3>🛒 السلة</h3>
-  <div id="cart-items"></div>
-  <div class="total" id="total-price">المجموع: 0$</div>
+<div id="store" class="hidden">
+<h2>المتجر</h2>
+<div id="products"></div>
+<button onclick="logout()">تسجيل خروج</button>
 </div>
 
-<script>
-const products = [
-  { id: 1, name: "حساب تيك توك", price: 5 },
-  { id: 2, name: "اشتراك نتفلكس", price: 3 },
-  { id: 3, name: "حساب ببجي", price: 10 },
-  { id: 4, name: "كود فري فاير", price: 2 }
-];
+<div id="adminPanel" class="hidden admin">
+<h2>لوحة تحكم الأدمن</h2>
+<div id="ordersList"></div>
+</div>
 
-const productsContainer = document.getElementById("products");
-const cartItemsContainer = document.getElementById("cart-items");
-const totalPriceElement = document.getElementById("total-price");
+</div>
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+<script type="module">
 
-function renderProducts() {
-  products.forEach(product => {
-    productsContainer.innerHTML += `
-      <div class="card">
-        <div>
-          <h3>${product.name}</h3>
-          <div class="price">${product.price}$</div>
-        </div>
-        <button onclick="addToCart(${product.id})">شراء</button>
-      </div>
-    `;
-  });
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.login = async function(){
+const email=emailInput.value;
+const pass=password.value;
+await signInWithEmailAndPassword(auth,email,pass);
 }
 
-function addToCart(id) {
-  const product = products.find(p => p.id === id);
-  cart.push(product);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+window.register = async function(){
+const email=emailInput.value;
+const pass=password.value;
+await createUserWithEmailAndPassword(auth,email,pass);
 }
 
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+window.logout = function(){signOut(auth)}
+
+onAuthStateChanged(auth,user=>{
+if(user){
+document.getElementById("authBox").classList.add("hidden");
+document.getElementById("store").classList.remove("hidden");
+
+if(user.email==="admin@email.com"){
+document.getElementById("adminPanel").classList.remove("hidden");
+loadOrders();
 }
 
-function renderCart() {
-  cartItemsContainer.innerHTML = "";
-  let total = 0;
+}else{
+document.getElementById("authBox").classList.remove("hidden");
+document.getElementById("store").classList.add("hidden");
+}
+});
 
-  cart.forEach((item, index) => {
-    total += item.price;
-    cartItemsContainer.innerHTML += `
-      <div class="cart-item">
-        <span>${item.name} - ${item.price}$</span>
-        <button class="remove-btn" onclick="removeFromCart(${index})">حذف</button>
-      </div>
-    `;
-  });
+const products=[{name:"شحن ببجي",price:5},{name:"اشتراك نتفلكس",price:4}];
+const productsDiv=document.getElementById("products");
 
-  totalPriceElement.innerText = "المجموع: " + total + "$";
+products.forEach(p=>{
+productsDiv.innerHTML+=`
+<div class="card">
+${p.name} - ${p.price}$
+<button onclick="order('${p.name}',${p.price})">طلب</button>
+</div>`;
+});
+
+window.order=async function(name,price){
+await addDoc(collection(db,"orders"),{
+name,price,time:new Date().toLocaleString()
+});
+alert("تم إرسال الطلب");
 }
 
-renderProducts();
-renderCart();
+async function loadOrders(){
+const querySnapshot=await getDocs(collection(db,"orders"));
+const list=document.getElementById("ordersList");
+list.innerHTML="";
+querySnapshot.forEach(docSnap=>{
+list.innerHTML+=`
+<div class="card">
+${docSnap.data().name} - ${docSnap.data().price}$
+<button onclick="deleteOrder('${docSnap.id}')">حذف</button>
+</div>`;
+});
+}
+
+window.deleteOrder=async function(id){
+await deleteDoc(doc(db,"orders",id));
+loadOrders();
+}
+
 </script>
 
 </body>
