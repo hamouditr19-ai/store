@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع - REEM STORE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tahoma', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💳 إتمام الطلب</h1>
+        
+        <div id="cartSummary"></div>
+        
+        <form id="checkoutForm">
+            <div class="form-group">
+                <label>الاسم كامل</label>
+                <input type="text" id="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>رقم الواتساب</label>
+                <input type="tel" id="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label>معرف اللعبة</label>
+                <input type="text" id="playerId" required>
+            </div>
+            
+            <button type="button" class="submit-btn" onclick="submitOrder()">تأكيد الطلب</button>
+        </form>
+        
+        <a href="index.html" class="back-btn">← العودة للمنتجات</a>
+    </div>
+    
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function submitOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const playerId = document.getElementById('playerId').value;
+            
+            if(!name || !phone || !playerId) {
+                alert('الرجاء تعبئة جميع الحقول');
+                return;
+            }
+            
+            const order = {
+                id: 'ORD' + Date.now(),
+                name, phone, playerId,
+                items: cart,
+                total: cart.reduce((sum, item) => sum + item.price, 0),
+                date: new Date().toLocaleString(),
+                status: 'جديد'
+            };
+            
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            localStorage.removeItem('cart');
+            
+            window.location.href = 'success.html?order=' + order.id;
+        }
+    </script>
+</body>
+</html>
