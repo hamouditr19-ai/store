@@ -7,7 +7,6 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
 font-family:Arial;
 background:linear-gradient(135deg,#0f172a,#1e293b);
@@ -16,7 +15,6 @@ min-height:100vh;
 display:flex;
 flex-direction:column;
 }
-
 header{
 padding:20px;
 text-align:center;
@@ -25,15 +23,14 @@ font-weight:bold;
 background:#0f172a;
 color:#00f7ff;
 }
-
 nav{
 display:flex;
 justify-content:center;
-gap:15px;
-padding:15px;
+gap:10px;
 background:#111827;
+padding:10px;
+flex-wrap:wrap;
 }
-
 nav button{
 background:#00f7ff;
 border:none;
@@ -43,7 +40,6 @@ font-weight:bold;
 cursor:pointer;
 color:black;
 }
-
 .section{
 display:none;
 padding:30px;
@@ -51,82 +47,82 @@ flex-wrap:wrap;
 gap:20px;
 justify-content:center;
 }
-
 .active{display:flex;}
-
 .card{
 background:#1e293b;
-width:240px;
-border-radius:15px;
+width:230px;
 padding:15px;
+border-radius:15px;
 text-align:center;
 box-shadow:0 0 15px #00f7ff33;
 }
-
 .card img{
 width:100%;
-height:150px;
+height:140px;
 object-fit:cover;
 border-radius:10px;
 }
-
-.price{
-color:#00f7ff;
-margin:10px 0;
-}
-
-button{
+.price{color:#00f7ff;margin:10px 0;}
+button{cursor:pointer}
+.buy{
 background:#00f7ff;
 border:none;
-padding:8px;
-border-radius:8px;
-cursor:pointer;
+padding:6px;
+border-radius:6px;
+color:black;
 font-weight:bold;
+}
+.cart-btn{
+background:#ffcc00;
 color:black;
 }
-
-#cart{
+footer{
 background:#0f172a;
 padding:15px;
 text-align:center;
-}
-
-footer{
-background:#0f172a;
-padding:20px;
-text-align:center;
 font-size:14px;
-color:#aaa;
 margin-top:auto;
+color:#aaa;
 }
 
 /* Modal */
 .modal{
 display:none;
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+top:0;left:0;
+width:100%;height:100%;
 background:rgba(0,0,0,0.7);
 justify-content:center;
 align-items:center;
 }
-
 .modal-content{
 background:#1e293b;
 padding:20px;
 border-radius:15px;
-width:300px;
+width:320px;
 text-align:center;
+max-height:90vh;
+overflow:auto;
+}
+input{
+width:100%;
+padding:6px;
+margin:5px 0;
+border:none;
+border-radius:5px;
 }
 
-.modal input{
-width:100%;
-padding:8px;
-margin:8px 0;
-border:none;
-border-radius:6px;
+/* Notification */
+#notify{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#00f7ff;
+color:black;
+padding:10px 15px;
+border-radius:8px;
+display:none;
+font-weight:bold;
 }
 </style>
 </head>
@@ -138,68 +134,66 @@ border-radius:6px;
 <nav>
 <button onclick="showSection('games')">🎮 ألعاب</button>
 <button onclick="showSection('apps')">📱 تطبيقات</button>
-<button onclick="openCart()">🛒 السلة (<span id="cartCount">0</span>)</button>
+<button class="cart-btn" onclick="openCart()">🛒 السلة (<span id="cartCount">0</span>)</button>
 </nav>
 
 <div id="games" class="section active">
-
 <div class="card">
 <img src="https://i.imgur.com/6X4z9kN.png">
 <h3>PUBG 60 UC</h3>
 <div class="price">5$</div>
-<button onclick="addToCart('PUBG 60 UC',5)">إضافة للسلة</button>
+<button class="buy" onclick="addToCart('PUBG 60 UC',5)">إضافة</button>
 </div>
-
 </div>
 
 <div id="apps" class="section">
-
 <div class="card">
 <img src="https://i.imgur.com/zYIlgBl.png">
 <h3>Netflix</h3>
 <div class="price">3$</div>
-<button onclick="addToCart('Netflix',3)">إضافة للسلة</button>
+<button class="buy" onclick="addToCart('Netflix',3)">إضافة</button>
 </div>
-
 </div>
 
 <footer>
 © 2026 Reem Store. جميع الحقوق محفوظة.
 </footer>
 
-<!-- Cart Modal -->
 <div class="modal" id="cartModal">
 <div class="modal-content">
 <h3>🛒 سلة المشتريات</h3>
 <div id="cartItems"></div>
 <p>الإجمالي: <span id="totalPrice">0</span>$</p>
-<button onclick="goToPayment()">الدفع</button>
+<button onclick="goPayment()">الدفع</button>
 <button onclick="closeCart()">إغلاق</button>
 </div>
 </div>
 
-<!-- Payment Modal -->
 <div class="modal" id="paymentModal">
 <div class="modal-content">
 <h3>💳 الدفع عبر شام كاش</h3>
-
 <p>كود الحساب:</p>
 <input value="17ac4a94cb1ed493e47a8526892294dd" readonly onclick="this.select()">
-
-<p>امسح الباركود:</p>
-<img src="https://via.placeholder.com/200x200.png?text=Barcode+Here">
-
-<input type="text" id="transactionId" placeholder="ادخل رقم عملية الدفع">
+<img src="https://via.placeholder.com/200x200.png?text=Barcode" style="margin:10px 0;">
+<input id="transactionId" placeholder="رقم العملية">
 <button onclick="confirmOrder()">تأكيد الطلب</button>
 </div>
 </div>
 
-<script>
+<div id="notify"></div>
 
-const BOT_TOKEN="8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
+<script>
+const BOT_TOKEN="PUT_YOUR_NEW_TOKEN_HERE";
 const CHAT_ID="7741275208";
 
 let cart=[];
+
+function notify(msg){
+let n=document.getElementById("notify");
+n.innerText=msg;
+n.style.display="block";
+setTimeout(()=>n.style.display="none",2000);
+}
 
 function showSection(id){
 document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
@@ -207,14 +201,21 @@ document.getElementById(id).classList.add("active");
 }
 
 function addToCart(name,price){
-cart.push({name,price});
-document.getElementById("cartCount").innerText=cart.length;
-alert("تمت الإضافة للسلة");
+let item=cart.find(i=>i.name===name);
+if(item){item.qty++;}
+else{cart.push({name,price,qty:1});}
+updateCartCount();
+notify("تمت الإضافة للسلة");
+}
+
+function updateCartCount(){
+let count=cart.reduce((sum,i)=>sum+i.qty,0);
+document.getElementById("cartCount").innerText=count;
 }
 
 function openCart(){
-document.getElementById("cartModal").style.display="flex";
 updateCart();
+document.getElementById("cartModal").style.display="flex";
 }
 
 function closeCart(){
@@ -224,35 +225,43 @@ document.getElementById("cartModal").style.display="none";
 function updateCart(){
 let html="";
 let total=0;
-cart.forEach(item=>{
-html+=`<p>${item.name} - ${item.price}$</p>`;
-total+=item.price;
+cart.forEach((item,index)=>{
+total+=item.price*item.qty;
+html+=`
+<p>${item.name} (${item.qty}) - ${item.price*item.qty}$
+<button onclick="removeItem(${index})">❌</button>
+</p>`;
 });
-document.getElementById("cartItems").innerHTML=html;
+document.getElementById("cartItems").innerHTML=html||"السلة فارغة";
 document.getElementById("totalPrice").innerText=total;
 }
 
-function goToPayment(){
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
+updateCartCount();
+notify("تم الحذف");
+}
+
+function goPayment(){
 closeCart();
 document.getElementById("paymentModal").style.display="flex";
 }
 
 function confirmOrder(){
 let transaction=document.getElementById("transactionId").value;
-if(!transaction){alert("ادخل رقم العملية");return;}
+if(!transaction){notify("ادخل رقم العملية");return;}
 
-let total=cart.reduce((sum,i)=>sum+i.price,0);
+let total=cart.reduce((sum,i)=>sum+i.price*i.qty,0);
 
-let message=`
-🛒 طلب جديد - Reem Store
+let message=`🛒 طلب جديد - Reem Store
 
-المنتجات:
-${cart.map(i=>i.name).join("\n")}
+${cart.map(i=>`${i.name} x${i.qty}`).join("\n")}
 
 💰 الإجمالي: ${total}$
-💳 طريقة الدفع: شام كاش
+💳 شام كاش
 🔢 رقم العملية: ${transaction}
-⏰ الوقت: ${new Date().toLocaleString()}
+⏰ ${new Date().toLocaleString()}
 `;
 
 fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
@@ -264,14 +273,13 @@ text:message
 })
 })
 .then(()=>{
-alert("تم إرسال الطلب ✅");
+notify("تم إرسال الطلب ✅");
 cart=[];
-document.getElementById("cartCount").innerText=0;
+updateCartCount();
 document.getElementById("paymentModal").style.display="none";
 })
-.catch(()=>alert("حدث خطأ ❌"));
+.catch(()=>notify("خطأ بالإرسال"));
 }
-
 </script>
 
 </body>
