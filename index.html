@@ -1,190 +1,174 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reem Store PRO</title>
+<title>Reem Store PRO 🚀</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:white}
-header{padding:15px;text-align:center;background:#1e293b;font-size:20px}
-.products{padding:15px;margin-bottom:70px}
-.prod-item{background:#1e293b;padding:15px;margin-bottom:10px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
-button{border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
-.buy{background:#22c55e;color:white}
-.delete{background:red;color:white}
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#1e293b;display:flex;justify-content:space-around;padding:10px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center}
-.modal.active{display:flex}
-.sheet{background:#1e293b;padding:20px;width:90%;max-width:400px;border-radius:15px}
-input{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:none}
-.small{font-size:13px;opacity:.6}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #0f172a, #0b1120);
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: bold;
+  background: #111827;
+}
+
+.container {
+  padding: 15px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.price {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+button {
+  background: #22c55e;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.cart {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #111827;
+  padding: 15px;
+  border-top: 2px solid #22c55e;
+}
+
+.cart h3 {
+  margin-top: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.remove-btn {
+  background: red;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+
+.total {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #22c55e;
+}
 </style>
 </head>
+
 <body>
 
 <header>Reem Store PRO 🚀</header>
 
-<div class="products" id="productList"></div>
-
-<div class="bottom-bar">
-<button onclick="openWallet()">💰</button>
-<button onclick="openOrders()">📦</button>
-<button onclick="openAdmin()">⚙️</button>
+<div class="container">
+  <div id="products"></div>
 </div>
 
-<!-- LOGIN -->
-<div id="loginModal" class="modal">
-<div class="sheet">
-<h3>تسجيل دخول</h3>
-<input id="username" placeholder="اكتب اسمك">
-<button onclick="login()" class="buy">دخول</button>
-</div>
-</div>
-
-<!-- WALLET -->
-<div id="walletModal" class="modal" onclick="closeModals()">
-<div class="sheet" onclick="event.stopPropagation()">
-<h3>المحفظة</h3>
-<h4 id="walletBalance"></h4>
-<input id="chargeAmount" placeholder="مبلغ الشحن">
-<button onclick="chargeWallet()" class="buy">شحن</button>
-</div>
-</div>
-
-<!-- ORDERS -->
-<div id="ordersModal" class="modal" onclick="closeModals()">
-<div class="sheet" onclick="event.stopPropagation()">
-<h3>طلباتي</h3>
-<div id="ordersList"></div>
-</div>
-</div>
-
-<!-- ADMIN -->
-<div id="adminModal" class="modal" onclick="closeModals()">
-<div class="sheet" onclick="event.stopPropagation()">
-<h3>لوحة الأدمن</h3>
-<input id="adminPass" placeholder="كلمة السر">
-<button onclick="adminLogin()" class="buy">دخول</button>
-<div id="adminPanel" style="display:none">
-<input id="prodName" placeholder="اسم المنتج">
-<input id="prodPrice" placeholder="السعر">
-<button onclick="addProduct()" class="buy">إضافة</button>
-</div>
-</div>
+<div class="cart">
+  <h3>🛒 السلة</h3>
+  <div id="cart-items"></div>
+  <div class="total" id="total-price">المجموع: 0$</div>
 </div>
 
 <script>
+const products = [
+  { id: 1, name: "حساب تيك توك", price: 5 },
+  { id: 2, name: "اشتراك نتفلكس", price: 3 },
+  { id: 3, name: "حساب ببجي", price: 10 },
+  { id: 4, name: "كود فري فاير", price: 2 }
+];
 
-const ADMIN_PASSWORD="1234";
+const productsContainer = document.getElementById("products");
+const cartItemsContainer = document.getElementById("cart-items");
+const totalPriceElement = document.getElementById("total-price");
 
-let user=localStorage.getItem("user");
-let database=JSON.parse(localStorage.getItem("db"))||[];
-let wallet=parseFloat(localStorage.getItem("wallet"))||0;
-let orders=JSON.parse(localStorage.getItem("orders"))||[];
-let isAdmin=false;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-function save(){
-localStorage.setItem("db",JSON.stringify(database));
-localStorage.setItem("wallet",wallet);
-localStorage.setItem("orders",JSON.stringify(orders));
+function renderProducts() {
+  products.forEach(product => {
+    productsContainer.innerHTML += `
+      <div class="card">
+        <div>
+          <h3>${product.name}</h3>
+          <div class="price">${product.price}$</div>
+        </div>
+        <button onclick="addToCart(${product.id})">شراء</button>
+      </div>
+    `;
+  });
 }
 
-if(!user){
-document.getElementById("loginModal").classList.add("active");
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
-function login(){
-let name=document.getElementById("username").value;
-if(!name)return;
-user=name;
-localStorage.setItem("user",name);
-closeModals();
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
 }
 
-function renderProducts(){
-const list=document.getElementById("productList");
-if(database.length===0){
-list.innerHTML="<p class='small'>لا يوجد منتجات</p>";
-return;
-}
-list.innerHTML=database.map((p,i)=>`
-<div class="prod-item">
-<span>${p.name} - ${p.price}</span>
-<div>
-<button class="buy" onclick="buy(${i})">شراء</button>
-${isAdmin?`<button class="delete" onclick="deleteProduct(${i})">X</button>`:""}
-</div>
-</div>`).join("");
-}
+function renderCart() {
+  cartItemsContainer.innerHTML = "";
+  let total = 0;
 
-function buy(i){
-let price=parseFloat(database[i].price);
-if(wallet<price) return alert("رصيد غير كافي");
-wallet-=price;
-orders.push(database[i]);
-save();
-alert("تم الشراء بنجاح");
-renderProducts();
-}
+  cart.forEach((item, index) => {
+    total += item.price;
+    cartItemsContainer.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name} - ${item.price}$</span>
+        <button class="remove-btn" onclick="removeFromCart(${index})">حذف</button>
+      </div>
+    `;
+  });
 
-function openWallet(){
-document.getElementById("walletBalance").innerText="الرصيد: "+wallet;
-document.getElementById("walletModal").classList.add("active");
-}
-
-function chargeWallet(){
-let amount=parseFloat(document.getElementById("chargeAmount").value);
-if(!amount)return;
-wallet+=amount;
-save();
-openWallet();
-}
-
-function openOrders(){
-const list=document.getElementById("ordersList");
-if(orders.length===0){
-list.innerHTML="لا يوجد طلبات";
-}else{
-list.innerHTML=orders.map(o=>`<div class="prod-item">${o.name} - ${o.price}</div>`).join("");
-}
-document.getElementById("ordersModal").classList.add("active");
-}
-
-function openAdmin(){
-document.getElementById("adminModal").classList.add("active");
-}
-
-function adminLogin(){
-let pass=document.getElementById("adminPass").value;
-if(pass===ADMIN_PASSWORD){
-isAdmin=true;
-document.getElementById("adminPanel").style.display="block";
-renderProducts();
-}else alert("كلمة السر غلط");
-}
-
-function addProduct(){
-let name=document.getElementById("prodName").value;
-let price=document.getElementById("prodPrice").value;
-if(!name||!price)return;
-database.push({name,price});
-save();
-renderProducts();
-}
-
-function deleteProduct(i){
-database.splice(i,1);
-save();
-renderProducts();
-}
-
-function closeModals(){
-document.querySelectorAll(".modal").forEach(m=>m.classList.remove("active"));
+  totalPriceElement.innerText = "المجموع: " + total + "$";
 }
 
 renderProducts();
-
+renderCart();
 </script>
+
 </body>
 </html>
