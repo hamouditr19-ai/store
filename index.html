@@ -3,251 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | ريم ستوري</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Reem Store | تجربة تسوق ذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --main-gradient: linear-gradient(135deg, #1e3a8a, #3b82f6);
-            --accent-color: #00d4ff;
-            --dark-bg: #0b0f19;
-            --glass: rgba(255, 255, 255, 0.05);
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --accent: #00d4ff;
+            --bg: #030712;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--dark-bg); color: white; overflow-x: hidden; padding-bottom: 80px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; padding-bottom: 90px; }
 
-        /* Header */
-        header { padding: 15px; text-align: center; background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 1.5rem; font-weight: 900; background: var(--main-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* الأنيميشن */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Banner */
-        .banner { position: relative; width: 100%; height: 200px; overflow: hidden; }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: 1s ease; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
-        .slide.active { opacity: 1; }
-        .slide-text { background: rgba(0,0,0,0.4); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        /* الهيدر الفخم */
+        header { padding: 20px; background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(12px); sticky: top; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-size: 1.5rem; font-weight: 900; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
 
-        /* Grid الأقسام */
-        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px; }
-        .cat-card { background: var(--glass); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; cursor: pointer; text-align: center; padding-bottom: 15px; }
-        .cat-card:hover { transform: scale(1.05); border-color: var(--accent-color); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
-        .cat-card img { width: 100%; height: 140px; object-fit: cover; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .cat-card h3 { font-size: 0.9rem; margin-top: 10px; }
+        /* البنر الديناميكي */
+        .hero-slider { width: 92%; margin: 15px auto; height: 180px; border-radius: 24px; overflow: hidden; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1); background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 25px; }
+        .slide.active { opacity: 1; transform: scale(1.05); }
+        .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+        .slide-content { position: relative; z-index: 2; animation: fadeIn 0.8s ease-out; }
+        .slide-content h2 { font-size: 1.4rem; color: var(--accent); }
 
-        /* Modals */
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); }
-        .modal-content { background: #161b28; margin: 15% auto; padding: 20px; width: 90%; max-width: 450px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
-        .close { position: absolute; left: 20px; top: 15px; font-size: 24px; cursor: pointer; }
+        /* شبكة الأقسام الحديثة (تطابق الصورة تماماً) */
+        .section-label { padding: 0 25px; margin-top: 25px; font-size: 1.1rem; font-weight: 700; color: #94a3b8; }
+        .main-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 15px 20px; }
+        .glass-card { 
+            background: var(--card-bg); border-radius: 28px; padding: 8px; border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .glass-card:active { transform: scale(0.92); }
+        .glass-card img { width: 100%; height: 140px; border-radius: 22px; object-fit: cover; display: block; }
+        .glass-card .info { padding: 12px 5px; text-align: center; }
+        .glass-card h3 { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; }
 
-        /* Buttons & Inputs */
-        .btn { width: 100%; padding: 12px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-main { background: var(--main-gradient); color: white; }
-        .btn-copy { background: #22c55e; color: white; margin-top: 5px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0f19; color: white; }
+        /* المودال الاحترافي */
+        .modal { position: fixed; inset: 0; z-index: 2000; display: none; align-items: flex-end; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+        .modal-sheet { 
+            width: 100%; background: #111827; border-radius: 32px 32px 0 0; padding: 30px 20px; 
+            transform: translateY(100%); transition: transform 0.4s ease; max-height: 85vh; overflow-y: auto;
+        }
+        .modal.open { display: flex; }
+        .modal.open .modal-sheet { transform: translateY(0); }
+        .handle { width: 40px; height: 5px; background: #374151; border-radius: 10px; margin: -15px auto 20px; }
 
-        /* Bottom Menu */
-        .nav-bottom { position: fixed; bottom: 0; width: 100%; background: #161b28; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #334155; }
-        .nav-item { text-align: center; color: #64748b; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
-        .nav-item.active { color: var(--accent-color); }
-        .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+        /* منتجات السلة */
+        .product-row { display: flex; align-items: center; justify-content: space-between; background: #1f2937; padding: 15px; border-radius: 18px; margin-bottom: 12px; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
 
-        /* Copy Box */
-        .copy-box { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; border: 1px dashed var(--accent-color); text-align: center; margin: 10px 0; }
+        /* القائمة السفلية (Floating Menu) */
+        .bottom-nav { 
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; 
+            background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(20px); border-radius: 24px;
+            display: flex; justify-content: space-around; padding: 12px; border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5); z-index: 1500;
+        }
+        .nav-link { color: #94a3b8; text-decoration: none; font-size: 0.75rem; text-align: center; flex: 1; transition: 0.3s; }
+        .nav-link.active { color: var(--accent); }
+        .nav-link i { font-size: 1.3rem; display: block; margin-bottom: 4px; }
 
-        .notif { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: #22c55e; color: white; padding: 10px 20px; border-radius: 50px; display: none; z-index: 2000; }
+        /* صندوق النسخ للدفع */
+        .payment-box { background: #0f172a; padding: 20px; border-radius: 20px; border: 1px solid var(--primary); margin: 15px 0; }
+        .code-display { font-family: monospace; font-size: 1.1rem; color: var(--accent); display: block; margin-bottom: 15px; word-break: break-all; }
+
+        /* التنبيهات */
+        #toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 12px 24px; border-radius: 50px; font-weight: bold; display: none; z-index: 3000; box-shadow: 0 10px 20px rgba(0,212,255,0.3); }
     </style>
 </head>
 <body>
 
+    <div id="toast">تم النسخ بنجاح! ⚡</div>
+
     <header>
-        <div class="logo">ريم ستوري | Reem Store</div>
+        <div class="brand">REEM STORE</div>
+        <div onclick="openCart()" style="position:relative; cursor:pointer;">
+            <i class="fa-solid fa-bag-shopping" style="font-size: 1.4rem;"></i>
+            <span id="cart-count" style="position:absolute; top:-8px; right:-8px; background:var(--primary); font-size:0.6rem; padding:2px 6px; border-radius:50%;">0</span>
+        </div>
     </header>
 
-    <div class="banner">
-        <div class="slide active" style="background-image: url('https://i.ibb.co/VWB8YFf/games-bg.jpg');">
-            <div class="slide-text"><h2>أفضل خدمات الشحن الرقمي</h2><p>سرعة، أمان، وضمان</p></div>
+    <div class="hero-slider">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=1000')">
+            <div class="slide-content"><h2>عالم الألعاب بين يديك</h2><p>شحن فوري لأكثر من 100 لعبة</p></div>
         </div>
-        <div class="slide" style="background-image: url('https://i.ibb.co/L5hYfT7/apps-bg.jpg');">
-            <div class="slide-text"><h2>اشتراكات ترفيهية مميزة</h2><p>شاهد، نتفليكس، يوتيوب والمزيد</p></div>
-        </div>
-    </div>
-
-    <div class="grid-container">
-        <div class="cat-card" onclick="openCat('الألعاب')">
-            <img src="https://i.ibb.co/Rz9kZkz/games.png" alt="الألعاب">
-            <h3>الألعاب 🎮</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('التطبيقات')">
-            <img src="https://i.ibb.co/sK0tFfQ/apps.png" alt="التطبيقات">
-            <h3>التطبيقات 📱</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الرصيد')">
-            <img src="https://i.ibb.co/x7RzZ8m/balance.png" alt="الرصيد">
-            <h3>الرصيد 💳</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الأكواد')">
-            <img src="https://i.ibb.co/mRT2P5f/cards.png" alt="الأكواد">
-            <h3>الأكواد 🔑</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('سوشال ميديا')">
-            <img src="https://i.ibb.co/zH8zQ8W/social.png" alt="سوشال ميديا">
-            <h3>خدمات سوشال ميديا 🚀</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('تلجرام')">
-            <img src="https://i.ibb.co/jT8z8mZ/telegram.png" alt="تلجرام">
-            <h3>خدمات تلجرام ✈️</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الأرقام')">
-            <img src="https://i.ibb.co/0Ym9z8m/virtual-num.png" alt="الأرقام الإفتراضية">
-            <h3>الأرقام الإفتراضية 📞</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الإنترنت')">
-            <img src="https://i.ibb.co/Wf9z8mZ/dsl.png" alt="خدمات الإنترنت">
-            <h3>خدمات الإنترنت 🌐</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الحسابات')">
-            <img src="https://i.ibb.co/Qf9z8mZ/accounts.png" alt="الحسابات">
-            <h3>الحسابات 👤</h3>
-        </div>
-        <div class="cat-card" onclick="openCat('الإشتراكات')">
-            <img src="https://i.ibb.co/Pf9z8mZ/subs.png" alt="الإشتراكات">
-            <h3>الإشتراكات 📺</h3>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000')">
+            <div class="slide-content"><h2>اشتراكات VIP</h2><p>استمتع بأفضل المحتوى بدون إعلانات</p></div>
         </div>
     </div>
 
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="catTitle"></h2>
-            <div id="productList" style="margin-top:20px;"></div>
+    <div class="section-label">الأقسام المميزة</div>
+
+    <div class="main-grid">
+        <div class="glass-card" onclick="showProducts('الألعاب')">
+            <img src="https://i.ibb.co/Rz9kZkz/games.png">
+            <div class="info"><h3>الألعاب 🎮</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('التطبيقات')">
+            <img src="https://i.ibb.co/sK0tFfQ/apps.png">
+            <div class="info"><h3>التطبيقات 📱</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('الرصيد')">
+            <img src="https://i.ibb.co/x7RzZ8m/balance.png">
+            <div class="info"><h3>الرصيد 💳</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('الأكواد')">
+            <img src="https://i.ibb.co/mRT2P5f/cards.png">
+            <div class="info"><h3>الأكواد 🔑</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('سوشال ميديا')">
+            <img src="https://i.ibb.co/zH8zQ8W/social.png">
+            <div class="info"><h3>سوشال ميديا 🚀</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('تلجرام')">
+            <img src="https://i.ibb.co/jT8z8mZ/telegram.png">
+            <div class="info"><h3>تلجرام ✈️</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('الأرقام')">
+            <img src="https://i.ibb.co/0Ym9z8m/virtual-num.png">
+            <div class="info"><h3>الأرقام 📞</h3></div>
+        </div>
+        <div class="glass-card" onclick="showProducts('الحسابات')">
+            <img src="https://i.ibb.co/Qf9z8mZ/accounts.png">
+            <div class="info"><h3>الحسابات 👤</h3></div>
         </div>
     </div>
 
-    <div id="rechargeModal" class="modal">
-        <div class="modal-content" style="text-align:center;">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <i class="fas fa-wallet" style="font-size:3rem; color:var(--accent-color);"></i>
-            <h3>شحن رصيد (شام كاش)</h3>
-            <p style="font-size:0.8rem; margin:10px 0;">انسخ الكود وادفع في التطبيق</p>
-            <div class="copy-box">
-                <small>كود الدفع:</small><br>
-                <b id="pCode">17ac4a94cb1ed493e47a8526892294dd</b><br>
-                <button class="btn btn-copy" onclick="copyText()">نسخ الكود 📋</button>
+    <div id="product-modal" class="modal" onclick="closeAllModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="handle"></div>
+            <h2 id="modal-title" style="margin-bottom: 20px;">المنتجات</h2>
+            <div id="modal-items-list"></div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal" onclick="closeAllModals(event)">
+        <div class="modal-sheet" onclick="event.stopPropagation()">
+            <div class="handle"></div>
+            <h2>🛒 سلة طلباتك</h2>
+            <div id="cart-content" style="margin: 20px 0;"></div>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                    <span>الإجمالي:</span>
+                    <span id="total-price" style="color:var(--accent); font-weight:900; font-size:1.2rem;">0</span>
+                </div>
+                <input type="text" id="user-name" placeholder="أدخل اسمك الكريم">
+                <button class="btn-add" style="width:100%; padding:15px;" onclick="checkout()">تأكيد الطلب عبر تلجرام 🚀</button>
             </div>
-            <p style="font-size:0.7rem; color:#94a3b8;">بعد الدفع، أرسل صورة الإيصال للدعم لتأكيد الرصيد.</p>
         </div>
     </div>
 
-    <div id="cartModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>🛒 السلة</h3>
-            <div id="cartItems"></div>
-            <hr style="opacity:0.1; margin:10px 0;">
-            <h4>الإجمالي: <span id="totalPrice">0</span> ر.س</h4>
-            <input type="text" id="userName" placeholder="اكتب اسمك هنا...">
-            <button class="btn btn-main" onclick="sendToTelegram()">إرسال الطلب عبر تلجرام 🚀</button>
+    <div id="recharge-modal" class="modal" onclick="closeAllModals(event)">
+        <div class="modal-sheet" style="text-align: center;">
+            <div class="handle"></div>
+            <i class="fa-solid fa-shield-heart" style="font-size: 3rem; color: var(--accent); margin-bottom: 15px;"></i>
+            <h3>بوابة الدفع - شام كاش</h3>
+            <div class="payment-box">
+                <span class="code-display" id="pay-code">17ac4a94cb1ed493e47a8526892294dd</span>
+                <button class="btn-add" onclick="copyPaymentCode()">نسخ الكود ولصقه في التطبيق 📋</button>
+            </div>
+            <p style="font-size: 0.8rem; color: #64748b;">بعد إتمام التحويل، يرجى تزويدنا بصورة الإيصال عبر "اتصل بنا".</p>
         </div>
     </div>
 
-    <div id="toast" class="notif">تم النسخ بنجاح ✅</div>
-
-    <div class="nav-bottom">
-        <div class="nav-item active" onclick="location.reload()"><i class="fas fa-home"></i>الرئيسية</div>
-        <div class="nav-item" onclick="openCart()"><i class="fas fa-shopping-basket"></i>سلة الطلبات</div>
-        <div class="nav-item" onclick="openRecharge()"><i class="fas fa-bolt"></i>شحن</div>
-        <div class="nav-item" onclick="alert('سجل الشحن فارغ حالياً')"><i class="fas fa-list"></i>السجل</div>
-        <div class="nav-item" onclick="window.open('https://t.me/ReemAdmin')"><i class="fas fa-headset"></i>اتصل بنا</div>
+    <div class="bottom-nav">
+        <a href="#" class="nav-link active" onclick="location.reload()"><i class="fa-solid fa-house-chimney"></i>الرئيسية</a>
+        <a href="#" class="nav-link" onclick="openCart()"><i class="fa-solid fa-cart-shopping"></i>طلباتي</a>
+        <a href="#" class="nav-link" onclick="openRecharge()"><i class="fa-solid fa-bolt-lightning"></i>شحن</a>
+        <a href="#" class="nav-link" onclick="window.open('https://t.me/ReemAdmin')"><i class="fa-solid fa-comments"></i>دعم</a>
     </div>
 
     <script>
-        // داتا المنتجات
-        const products = {
-            'الألعاب': [{n:'ببجي 660 شدة', p:45}, {n:'جواهر فري فاير', p:30}],
-            'الإشتراكات': [{n:'يوتيوب سنة', p:80}, {n:'نتفليكس شهر', p:25}],
-            'الحسابات': [{n:'حساب تيك توك جاهز', p:50}]
+        // داتابيس المنتجات (سهل التعديل)
+        const storeData = {
+            'الألعاب': [{n:'ببجي 660 شدة', p:45}, {n:'فري فاير 100 جوهرة', p:10}, {n:'كول اوف ديوتي', p:55}],
+            'التطبيقات': [{n:'شاهد VIP شهر', p:30}, {n:'يوتيوب بريميوم سنة', p:90}],
+            'سوشال ميديا': [{n:'1000 متابع انستا', p:12}, {n:'دعم تيك توك', p:40}]
         };
 
         let cart = [];
-        let slideIndex = 0;
 
-        // البنر المتحرك
-        function showSlides() {
-            let slides = document.querySelectorAll(".slide");
-            slides.forEach(s => s.classList.remove("active"));
-            slideIndex++;
-            if (slideIndex > slides.length) slideIndex = 1;
-            slides[slideIndex-1].classList.add("active");
-            setTimeout(showSlides, 4000);
-        }
-        showSlides();
+        // تحريك البنر
+        let slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
 
-        function openCat(name) {
-            const modal = document.getElementById('productModal');
-            document.getElementById('catTitle').innerText = name;
-            const list = document.getElementById('productList');
-            list.innerHTML = '';
-            
-            if(products[name]) {
-                products[name].forEach(prod => {
-                    list.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px; border-radius:10px; margin-bottom:10px;">
-                        <span>${prod.n} - ${prod.p} ر.س</span>
-                        <button class="btn btn-main" style="width:auto; padding:5px 15px;" onclick="addToCart('${prod.n}', ${prod.p})">إضافة</button>
-                    </div>`;
+        // وظائف المودال
+        function showProducts(cat) {
+            const modal = document.getElementById('product-modal');
+            document.getElementById('modal-title').innerText = cat;
+            const container = document.getElementById('modal-items-list');
+            container.innerHTML = '';
+
+            if(storeData[cat]) {
+                storeData[cat].forEach(p => {
+                    container.innerHTML += `
+                        <div class="product-row">
+                            <div>
+                                <div style="font-weight:700;">${p.n}</div>
+                                <div style="color:var(--accent); font-size:0.8rem;">${p.p} ر.س</div>
+                            </div>
+                            <button class="btn-add" onclick="addToCart('${p.n}', ${p.p})">إضافة +</button>
+                        </div>
+                    `;
                 });
-            } else { list.innerHTML = 'قريباً...'; }
-            modal.style.display = 'block';
+            } else { container.innerHTML = '<p style="text-align:center; opacity:0.5;">سيتم توفير المنتجات قريباً...</p>'; }
+            
+            modal.classList.add('open');
         }
 
         function addToCart(name, price) {
-            cart.push({name, price});
-            showToast("تمت الإضافة للسلة 🛒");
+            cart.push({name, price, id: Date.now()});
+            updateCartUI();
+            showToast("تمت الإضافة للسلة ✅");
         }
 
-        function openCart() {
-            const modal = document.getElementById('cartModal');
-            const list = document.getElementById('cartItems');
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const content = document.getElementById('cart-content');
             let total = 0;
-            list.innerHTML = '';
-            cart.forEach((item, index) => {
-                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${item.name}</span><span>${item.price} ر.س</span></div>`;
+            content.innerHTML = '';
+            cart.forEach(item => {
+                content.innerHTML += `
+                    <div class="product-row">
+                        <span>${item.name}</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span>${item.price}</span>
+                            <i class="fa-solid fa-circle-xmark" style="color:#ef4444;" onclick="removeFromCart(${item.id})"></i>
+                        </div>
+                    </div>
+                `;
                 total += item.price;
             });
-            document.getElementById('totalPrice').innerText = total;
-            modal.style.display = 'block';
+            document.getElementById('total-price').innerText = total + " ر.س";
         }
 
-        function openRecharge() { document.getElementById('rechargeModal').style.display = 'block'; }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
 
-        function copyText() {
-            const text = document.getElementById('pCode').innerText;
-            navigator.clipboard.writeText(text);
-            showToast("تم نسخ الكود ✅");
+        function openCart() { document.getElementById('cart-modal').classList.add('open'); }
+        function openRecharge() { document.getElementById('recharge-modal').classList.add('open'); }
+
+        function closeAllModals(e) {
+            if(e) { document.querySelectorAll('.modal').forEach(m => m.classList.remove('open')); }
+        }
+
+        function copyPaymentCode() {
+            navigator.clipboard.writeText("17ac4a94cb1ed493e47a8526892294dd");
+            showToast("تم النسخ! توجه لتطبيق شام كاش 💳");
         }
 
         function showToast(msg) {
             const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2000);
+            t.innerText = msg; t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
         }
 
-        async function sendToTelegram() {
-            const user = document.getElementById('userName').value;
-            if(!user || cart.length === 0) return alert("أكمل البيانات أولاً");
-            
+        async function checkout() {
+            const user = document.getElementById('user-name').value;
+            if(!user || cart.length === 0) return showToast("يرجى ملء البيانات أولاً ⚠️");
+
             const token = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
             const chat_id = "7741275208";
-            let details = cart.map(i => `• ${i.name} (${i.price}ر.س)`).join('%0A');
-            let total = document.getElementById('totalPrice').innerText;
+            let details = cart.map(i => `• ${i.name} (${i.price} ر.س)`).join('%0A');
+            let total = document.getElementById('total-price').innerText;
             
-            let text = `📦 طلب جديد من Reem Store%0A👤 العميل: ${user}%0A🧾 الطلبات:%0A${details}%0A💰 الإجمالي: ${total} ر.س`;
-            
-            await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`);
-            alert("تم إرسال طلبك! سيتم التواصل معك قريباً.");
-            cart = [];
-            closeModal();
+            let text = `🚀 *طلب جديد من Reem Store*%0A%0A👤 *العميل:* ${user}%0A🧾 *الطلبات:*%0A${details}%0A%0A💰 *الإجمالي:* ${total}%0A⏰ *التوقيت:* ${new Date().toLocaleString('ar-EG')}`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}&parse_mode=Markdown`);
+                showToast("تم إرسال طلبك بنجاح! ✅");
+                cart = []; updateCartUI(); closeAllModals(true);
+            } catch (e) { alert("خطأ في الاتصال"); }
         }
     </script>
 </body>
