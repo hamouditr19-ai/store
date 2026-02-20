@@ -3,268 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reem Store Ultimate V5</title>
+    <title>Reem Store Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        :root { --p: #3b82f6; --s: #8b5cf6; --bg: #070b14; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: white; -webkit-tap-highlight-color: transparent; user-select: none; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .active-tab { background: linear-gradient(90deg, var(--p), var(--s)); border: none; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* نظام الإشعارات الجديد */
-        #notification-box { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 350px; pointer-events: none; }
-        .toast { background: rgba(59, 130, 246, 0.9); backdrop-filter: blur(10px); color: white; padding: 12px 20px; border-radius: 15px; margin-bottom: 10px; font-size: 12px; font-weight: bold; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); animation: slideDown 0.4s ease-out, fadeOut 0.4s ease-in 2.5s forwards; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: #0d141f; /* اللون الكحلي الغامق نفس الصورة */
+            color: #e2e8f0;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        .order-card { border-right: 4px solid var(--p); transition: transform 0.2s; }
-        .order-card:active { transform: scale(0.98); }
+        .max-card {
+            background: #1a2431;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 18px;
+        }
+
+        .wallet-gradient {
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+        }
+
+        .cyan-text { color: #00f2ff; }
+        
+        .tab-active { color: #00f2ff; position: relative; }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            width: 5px;
+            height: 5px;
+            background: #00f2ff;
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .alert-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 15px;
+        }
+
+        .service-card {
+            background: #1a2431;
+            border-radius: 15px;
+            text-align: center;
+            padding: 15px 10px;
+        }
+
+        .bottom-nav {
+            background: #161f2c;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
 </head>
 <body class="pb-32">
 
-    <div id="notification-box"></div>
-
-    <header class="sticky top-0 z-[100] glass p-4 border-b border-white/5 backdrop-blur-2xl">
-        <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center gap-3">
-                <div class="relative">
-                    <img id="u_photo" src="https://ui-avatars.com/api/?name=User" class="w-10 h-10 rounded-full border-2 border-blue-500 shadow-lg">
-                    <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#070b14] rounded-full"></div>
+    <div class="p-4">
+        <div class="max-card p-5 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+                <div class="z-10">
+                    <p class="text-gray-400 text-xs mb-1">رصيدك الحالي</p>
+                    <h2 class="text-3xl font-black">0.656 <span class="text-sm font-normal">USD</span></h2>
+                    <div class="flex gap-2 mt-4">
+                        <span class="bg-green-500/20 text-green-400 text-[10px] px-2 py-1 rounded-md border border-green-500/30 font-bold">● تم التحقق</span>
+                        <span id="u_id" class="bg-white/5 text-gray-300 text-[10px] px-2 py-1 rounded-md border border-white/10 font-bold">7741275208</span>
+                    </div>
                 </div>
-                <div>
-                    <h1 id="u_name" class="text-sm font-bold">مرحباً بك.. 👋</h1>
-                    <p class="text-[10px] text-blue-400 font-bold tracking-widest uppercase">Verified Account</p>
+                <div class="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center border border-cyan-500/30">
+                    <i class="fas fa-wallet text-3xl text-cyan-400"></i>
                 </div>
             </div>
-            <div onclick="openCart()" class="relative bg-white/5 p-3 rounded-2xl">
-                <i class="fas fa-shopping-basket text-lg text-gray-300"></i>
-                <span id="cart_count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            <button class="w-full wallet-gradient mt-5 py-3 rounded-2xl font-bold text-white flex items-center justify-center gap-2">
+                <i class="fas fa-plus-circle"></i> شحن الرصيد
+            </button>
+        </div>
+    </div>
+
+    <div class="px-4 grid grid-cols-4 gap-3">
+        <div class="service-card border-b-2 border-transparent hover:border-cyan-500 transition-all">
+            <div class="text-xl mb-1">🎮</div>
+            <p class="text-[10px] font-bold">ألعاب</p>
+        </div>
+        <div class="service-card border-b-2 border-cyan-500">
+            <div class="text-xl mb-1">🚀</div>
+            <p class="text-[10px] font-bold">ترويج</p>
+        </div>
+        <div class="service-card">
+            <div class="text-xl mb-1">💬</div>
+            <p class="text-[10px] font-bold">تواصل</p>
+        </div>
+        <div class="service-card">
+            <div class="text-xl mb-1">💎</div>
+            <p class="text-[10px] font-bold">بريميوم</p>
+        </div>
+    </div>
+
+    <div class="p-4">
+        <div class="alert-box p-4">
+            <h3 class="text-red-500 text-xs font-bold mb-3 flex items-center gap-2">
+                <i class="fas fa-exclamation-triangle"></i> تنبيهات هامة
+            </h3>
+            <ul class="text-[10px] text-gray-300 space-y-2">
+                <li class="flex items-center gap-2">
+                    <i class="fas fa-eye-slash text-red-400"></i> الرجاء عدم استخدام خيار إخفاء الهوية عند التحويل.
+                </li>
+                <li class="flex items-center gap-2">
+                    <i class="fas fa-comment-slash text-red-400"></i> الرجاء عدم كتابة أي ملاحظة عند إرسال المبلغ.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="px-4">
+        <h3 class="text-xs font-bold mb-4 flex items-center gap-2">
+            <i class="fas fa-shopping-bag text-cyan-400"></i> عرض المنتجات
+        </h3>
+        <div id="product-list" class="space-y-3">
             </div>
-        </div>
-        <div class="relative">
-            <input type="text" id="q" onkeyup="search()" placeholder="ابحث عن شدات، حسابات، أو خدمات..." class="w-full bg-white/5 p-3 pr-10 rounded-2xl outline-none focus:ring-1 ring-blue-500 border border-white/5 text-sm transition-all">
-            <i class="fas fa-search absolute left-4 top-3.5 text-gray-500"></i>
-        </div>
-    </header>
-
-    <div id="home_sec">
-        <div class="p-4">
-            <div id="slides" class="relative h-44 rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/10 shadow-blue-500/10"></div>
-        </div>
-
-        <div class="flex overflow-x-auto gap-3 px-4 mb-6 no-scrollbar">
-            <button onclick="filter('all')" class="c-btn active-tab px-6 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all">الكل ✨</button>
-            <button onclick="filter('games')" class="c-btn glass px-6 py-2 rounded-xl text-xs font-bold whitespace-nowrap">ألعاب 🎮</button>
-            <button onclick="filter('social')" class="c-btn glass px-6 py-2 rounded-xl text-xs font-bold whitespace-nowrap">سوشال 🚀</button>
-            <button onclick="filter('subs')" class="c-btn glass px-6 py-2 rounded-xl text-xs font-bold whitespace-nowrap">اشتراكات 💎</button>
-        </div>
-
-        <div id="grid" class="grid grid-cols-2 gap-4 px-4"></div>
     </div>
 
-    <div id="orders_sec" class="hidden p-6">
-        <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-            <i class="fas fa-receipt text-blue-500"></i> سجل طلباتي
-        </h2>
-        <div id="orders_list" class="space-y-4"></div>
-    </div>
-
-    <div id="cart_modal" class="fixed inset-0 bg-black/98 z-[200] hidden flex-col p-6 animate-fade-in overflow-y-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-black italic">الحقيبة 🛍</h2>
-            <button onclick="openCart()" class="text-gray-400 text-3xl">&times;</button>
+    <nav class="fixed bottom-0 left-0 right-0 h-20 bottom-nav flex justify-around items-center px-2 z-50">
+        <div class="flex flex-col items-center tab-active">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px] mt-1 font-bold">الرئيسية</span>
         </div>
-        <div id="cart_list" class="flex-grow space-y-4"></div>
-        <div class="mt-8 border-t border-white/10 pt-6">
-            <div class="flex justify-between text-xl font-black mb-6">
-                <span>المجموع النهائي:</span>
-                <span id="total_price" class="text-blue-400">0$</span>
-            </div>
-            <form id="pay_form" class="space-y-4">
-                <input type="text" id="c_info" placeholder="رقم المعرف أو رقم الهاتف" required class="w-full bg-white/5 p-4 rounded-2xl outline-none border border-white/10 focus:border-blue-500">
-                <button type="submit" class="w-full active-tab py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-500/20 transition-transform active:scale-95">تأكيد وإرسال 🚀</button>
-            </form>
+        <div class="flex flex-col items-center text-gray-500">
+            <i class="fas fa-file-invoice text-lg"></i>
+            <span class="text-[9px] mt-1 font-bold">طلباتي</span>
         </div>
-    </div>
-
-    <nav class="fixed bottom-6 left-4 right-4 h-16 glass rounded-[2rem] flex justify-around items-center px-2 z-[150] shadow-2xl border-t border-white/10">
-        <button id="nav_home" onclick="showSec('home')" class="text-blue-500 w-12 h-12 flex items-center justify-center transition-all"><i class="fas fa-home text-lg"></i></button>
-        <button id="nav_orders" onclick="showSec('orders')" class="text-gray-500 w-12 h-12 flex items-center justify-center transition-all"><i class="fas fa-history text-lg"></i></button>
-        <div onclick="openCart()" class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center -mt-10 border-[5px] border-[#070b14] shadow-xl text-white transition-transform active:scale-90"><i class="fas fa-shopping-basket"></i></div>
-        <button class="text-gray-500 w-12 h-12 flex items-center justify-center"><i class="fas fa-wallet text-lg"></i></button>
-        <button class="text-gray-500 w-12 h-12 flex items-center justify-center"><i class="fas fa-headset text-lg"></i></button>
+        <div class="w-14 h-14 bg-cyan-500 rounded-full flex items-center justify-center -mt-10 border-[6px] border-[#0d141f] shadow-lg text-white">
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="flex flex-col items-center text-gray-500">
+            <i class="fas fa-history text-lg"></i>
+            <span class="text-[9px] mt-1 font-bold">السجل</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-500">
+            <i class="fas fa-headset text-lg"></i>
+            <span class="text-[9px] mt-1 font-bold">الدعم</span>
+        </div>
     </nav>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-
-        const BOT_TOKEN = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
-        const CHAT_ID = "7741275208";
-
-        // 🟡 إشعار مخصص
-        function notify(text) {
-            const box = document.getElementById('notification-box');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = text;
-            box.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // 🟡 تهيئة المستخدم
-        if (tg.initDataUnsafe?.user) {
-            const u = tg.initDataUnsafe.user;
-            document.getElementById('u_name').innerText = u.first_name;
-            if (u.photo_url) document.getElementById('u_photo').src = u.photo_url;
-            notify(`أهلاً بك يا ${u.first_name} في متجر ريم ✨`);
-        }
+        tg.headerColor = '#0d141f';
 
         const products = [
-            { id: 1, name: "باقة 660 شدة ببجي", price: 10, icon: "🔫", cat: "games", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e" },
-            { id: 2, name: "تلجرام بريميوم سنة", price: 25, icon: "💎", cat: "subs", img: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41" },
-            { id: 3, name: "10k متابع انستقرام", price: 15, icon: "🚀", cat: "social", img: "https://images.unsplash.com/photo-1611162617474-5b21e879e113" },
-            { id: 4, name: "تفعيل نيتفلكس شهر", price: 9, icon: "🎬", cat: "subs", img: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85" }
+            { name: "Units MTN 500", price: "201", status: "تم التحقق", icon: "📱" },
+            { name: "USDT AUTO", price: "1.0", status: "متوفر", icon: "💵" },
+            { name: "Telegram Premium", price: "4.99", status: "فوري", icon: "💎" }
         ];
 
-        let cart = [];
-        let myOrders = JSON.parse(localStorage.getItem('reem_orders_v5')) || [];
-
-        function showSec(s) {
-            document.getElementById('home_sec').classList.toggle('hidden', s !== 'home');
-            document.getElementById('orders_sec').classList.toggle('hidden', s !== 'orders');
-            document.getElementById('nav_home').classList.toggle('text-blue-500', s === 'home');
-            document.getElementById('nav_orders').classList.toggle('text-blue-500', s === 'orders');
-            if(s === 'orders') renderOrders();
-            tg.HapticFeedback.impactOccurred('light');
-        }
-
-        function render(items) {
-            document.getElementById('grid').innerHTML = items.map(p => `
-                <div class="glass p-4 rounded-[2.5rem] flex flex-col gap-3 fade-in border border-white/5 hover:border-blue-500 transition-all">
-                    <img src="${p.img}" class="h-24 w-full object-cover rounded-[1.8rem]">
-                    <h3 class="text-[11px] font-bold truncate">${p.name}</h3>
-                    <div class="flex justify-between items-center">
-                        <span class="text-blue-400 font-black text-sm">${p.price}$</span>
-                        <button onclick="addToCart(${p.id})" class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg active:scale-90 transition-transform">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
+        function render() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = products.map(p => `
+                <div class="max-card p-4 flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-xl">${p.icon}</div>
+                        <div>
+                            <h4 class="text-xs font-bold">${p.name}</h4>
+                            <span class="text-[9px] text-green-400 font-bold">${p.status}</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-cyan-400 font-black text-sm">${p.price} $</p>
+                        <button class="text-[9px] bg-white/5 px-3 py-1 rounded-md mt-1 border border-white/10">شراء</button>
                     </div>
                 </div>
             `).join('');
         }
-        render(products);
+        render();
 
-        function filter(c) {
-            document.querySelectorAll('.c-btn').forEach(b => b.classList.remove('active-tab'));
-            event.target.classList.add('active-tab');
-            render(c === 'all' ? products : products.filter(p => p.cat === c));
+        if (tg.initDataUnsafe?.user) {
+            document.getElementById('u_id').innerText = tg.initDataUnsafe.user.id;
         }
-
-        function search() {
-            const v = document.getElementById('q').value.toLowerCase();
-            render(products.filter(p => p.name.toLowerCase().includes(v)));
-        }
-
-        function addToCart(id) {
-            const p = products.find(x => x.id === id);
-            cart.push(p);
-            updateUI();
-            notify(`تمت إضافة ${p.name} للسلة ✅`);
-            tg.HapticFeedback.notificationOccurred('success');
-        }
-
-        function updateUI() {
-            document.getElementById('cart_count').innerText = cart.length;
-            document.getElementById('cart_list').innerHTML = cart.map((p, i) => `
-                <div class="flex items-center gap-4 glass p-4 rounded-3xl border-r-4 border-blue-500">
-                    <span class="text-2xl">${p.icon}</span>
-                    <div class="flex-grow">
-                        <h4 class="text-xs font-bold">${p.name}</h4>
-                        <p class="text-blue-400 text-[10px] font-black">${p.price}$</p>
-                    </div>
-                    <button onclick="remove(${i})" class="text-red-500 p-2"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            `).join('');
-            document.getElementById('total_price').innerText = cart.reduce((s, p) => s + p.price, 0) + '$';
-        }
-
-        function remove(i) {
-            notify("تم حذف المنتج من السلة 🗑");
-            cart.splice(i, 1);
-            updateUI();
-        }
-
-        function openCart() {
-            const m = document.getElementById('cart_modal');
-            m.classList.toggle('hidden'); m.classList.toggle('flex');
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-
-        function renderOrders() {
-            const list = document.getElementById('orders_list');
-            if (myOrders.length === 0) {
-                list.innerHTML = `<div class="text-center p-20 opacity-20"><i class="fas fa-box-open text-6xl mb-4 block"></i>لا توجد طلبات</div>`;
-                return;
-            }
-            list.innerHTML = myOrders.map(o => `
-                <div class="glass p-5 rounded-[2rem] order-card">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-[9px] bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full font-black uppercase tracking-widest">${o.id}</span>
-                        <span class="text-[9px] text-gray-500">${o.date}</span>
-                    </div>
-                    <div class="text-[11px] font-bold text-gray-300 mb-2">${o.items}</div>
-                    <div class="text-xs text-green-400 font-black">المجموع: ${o.total}</div>
-                </div>
-            `).reverse().join('');
-        }
-
-        document.getElementById('pay_form').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.disabled = true; btn.innerText = "جاري الإرسال...";
-
-            const orderId = "#REEM-" + Math.floor(10000 + Math.random() * 90000);
-            const total = document.getElementById('total_price').innerText;
-            const items = cart.map(p => p.name).join(' + ');
-
-            const msg = `🚀 *تأكيد طلب جديد* \n\n🆔 الرقم: \`${orderId}\` \n📦 الخدمات: *${items}* \n💰 السعر: *${total}* \n📱 التواصل: \`${document.getElementById('c_info').value}\``;
-
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown' })
-                });
-
-                const newOrder = { id: orderId, items: items, total: total, date: new Date().toLocaleDateString('ar-EG') };
-                myOrders.push(newOrder);
-                localStorage.setItem('reem_orders_v5', JSON.stringify(myOrders));
-
-                notify("تم إرسال طلبك بنجاح! 🚀");
-                tg.showPopup({ title: 'تم الطلب!', message: 'سيتم مراجعة طلبك والتواصل معك قريباً.', buttons: [{type:'ok'}] });
-                
-                cart = []; updateUI(); openCart(); e.target.reset();
-            } catch (err) {
-                notify("فشل الإرسال، حاول لاحقاً ❌");
-            } finally {
-                btn.disabled = false; btn.innerText = "تأكيد وإرسال 🚀";
-            }
-        };
-
-        // Slider
-        const b_imgs = ["https://img.freepik.com/free-vector/gaming-store-youtube-header_23-2150111162.jpg", "https://img.freepik.com/free-vector/social-media-concept-illustration_114360-1510.jpg"];
-        let b_i = 0;
-        const rotate = () => {
-            document.getElementById('slides').innerHTML = `<img src="${b_imgs[b_i]}" class="w-full h-full object-cover fade-in">`;
-            b_i = (b_i + 1) % b_imgs.length;
-        };
-        rotate(); setInterval(rotate, 4000);
     </script>
 </body>
 </html>
