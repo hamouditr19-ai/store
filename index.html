@@ -3,178 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store Ultimate | متجر ريم الشامل</title>
+    <title>Reem Store | النسخة الاحترافية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0b1421; --card-bg: #16243a; --accent: #00d4ff; 
-            --success: #4caf50; --warning: #ff9800; --error: #f44336; --text: #ffffff;
+            --bg: #070d16; --card: #121c2c; --accent: #00d4ff; 
+            --grad: linear-gradient(135deg, #00d4ff, #0055ff);
+            --success: #00ff88; --text: #ffffff;
         }
+
         * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 90px; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
 
-        /* --- نظام التنبيهات (Notifications) --- */
-        #inAppNotif {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: var(--accent); color: #000; padding: 12px 25px;
-            border-radius: 50px; font-weight: bold; z-index: 5000;
-            box-shadow: 0 5px 15px rgba(0,212,255,0.4);
+        /* --- تأثير النيون والتحميل --- */
+        .glow-text {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            animation: neon 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes neon { from { opacity: 0.8; } to { opacity: 1; text-shadow: 0 0 20px var(--accent); } }
+
+        /* --- Header & Wallet --- */
+        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a2a3a; }
+        .wallet-box { 
+            background: var(--card); padding: 15px 20px; margin: 15px; border-radius: 25px; 
+            border: 1px solid rgba(0,212,255,0.2); display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .bal-val { font-size: 26px; font-weight: 900; color: var(--accent); }
+
+        /* --- الأقسام المتطورة (Grid) --- */
+        .section-title { margin: 20px 20px 10px; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
+        .cat-card { 
+            background: var(--card); border-radius: 20px; padding: 20px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.03); cursor: pointer; position: relative; overflow: hidden;
+        }
+        .cat-card:active { transform: scale(0.95); }
+        .cat-card i { font-size: 35px; margin-bottom: 10px; display: block; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .cat-card b { font-size: 14px; }
+        .badge { position: absolute; top: 10px; left: -20px; background: var(--success); color: #000; font-size: 9px; padding: 2px 20px; transform: rotate(-45deg); font-weight: bold; }
+
+        /* --- شريط الآراء (Ticker) --- */
+        .ticker { background: #121c2c; padding: 8px 0; margin-top: 25px; border-y: 1px solid #1a2a3a; overflow: hidden; }
+        .ticker-wrap { display: flex; animation: slide 25s linear infinite; width: max-content; }
+        .ticker-item { padding: 0 30px; font-size: 12px; color: #888; border-left: 1px solid #333; }
+        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(50%); } }
+
+        /* --- الزر العائم (FAB) --- */
+        .fab { 
+            position: fixed; bottom: 90px; left: 20px; width: 55px; height: 55px; 
+            background: var(--grad); border-radius: 50%; display: flex; align-items: center; 
+            justify-content: center; font-size: 24px; color: #fff; z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,212,255,0.5);
         }
 
-        /* --- واجهة الرصيد --- */
-        .wallet-card { 
-            background: linear-gradient(135deg, #16243a, #0b1421); 
-            padding: 20px; margin: 15px; border-radius: 20px; 
-            border: 1px solid rgba(0,212,255,0.3); display: flex; 
-            justify-content: space-between; align-items: center;
-        }
-        .balance-amount { font-size: 28px; font-weight: 900; }
+        /* --- Modals & Styling --- */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 2000; padding: 20px; align-items: center; justify-content: center; }
+        .modal-content { background: #121c2c; width: 100%; max-width: 400px; border-radius: 30px; padding: 30px; border: 1px solid var(--accent); position: relative; }
+        .input-group { background: #070d16; border-radius: 15px; padding: 5px 15px; margin-bottom: 15px; border: 1px solid #1a2a3a; }
+        .input-group input { background: none; border: none; color: #fff; width: 100%; padding: 12px 0; outline: none; }
+        .btn-confirm { background: var(--grad); border: none; color: #fff; padding: 15px; width: 100%; border-radius: 15px; font-weight: 900; cursor: pointer; font-size: 16px; }
 
-        /* --- الأقسام --- */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .card { background: var(--card-bg); border-radius: 18px; padding: 15px 5px; text-align: center; cursor: pointer; border: 1px solid transparent; }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .icon-box { background: #fff; width: 55px; height: 55px; border-radius: 15px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; }
-        .icon-box img { width: 40px; }
-        .card span { font-size: 11px; font-weight: bold; }
-
-        /* --- المودال وشام كاش --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 3000; padding: 20px; }
-        .modal-content { background: var(--bg); width: 100%; max-width: 450px; border-radius: 25px; padding: 25px; border: 1px solid var(--accent); max-height: 90vh; overflow-y: auto; }
-        .qr-box { background: white; padding: 10px; border-radius: 15px; width: 180px; margin: 10px auto; border: 4px solid var(--accent); }
-        .file-input-wrapper { background: var(--card-bg); padding: 15px; border-radius: 12px; border: 2px dashed #333; margin: 10px 0; text-align: center; position: relative; }
-        .file-input-wrapper input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-
-        /* --- سجل العمليات الملون --- */
-        .history-card { background: var(--card-bg); padding: 15px; border-radius: 15px; margin: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-right: 5px solid var(--warning); }
-        .status-badge { padding: 4px 12px; border-radius: 50px; font-size: 11px; font-weight: bold; }
-        .status-pending { background: rgba(255, 152, 0, 0.2); color: var(--warning); }
-        .status-completed { background: rgba(76, 175, 80, 0.2); color: var(--success); border-right-color: var(--success); }
-        .status-rejected { background: rgba(244, 67, 54, 0.2); color: var(--error); }
-
-        /* --- القائمة السفلية --- */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #070d16; display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #16243a; }
-        .nav-item { text-align: center; color: #666; font-size: 11px; flex: 1; cursor: pointer; }
-        .nav-item.active { color: var(--accent); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 4px; }
-
-        .btn-main { background: var(--accent); color: #000; border: none; padding: 15px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; font-size: 16px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: var(--card-bg); border: 1px solid #333; border-radius: 10px; color: white; outline: none; }
+        /* --- سجل العمليات --- */
+        .history-card { background: var(--card); margin: 10px 15px; border-radius: 15px; padding: 15px; display: flex; justify-content: space-between; border-left: 4px solid var(--success); }
+        
+        /* --- Bottom Nav --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(7,13,22,0.95); display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #1a2a3a; backdrop-filter: blur(10px); }
+        .nav-link { color: #555; text-align: center; font-size: 10px; text-decoration: none; cursor: pointer; }
+        .nav-link.active { color: var(--accent); }
+        .nav-link i { font-size: 22px; display: block; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-<div id="inAppNotif">🔔 تم تحديث النظام!</div>
+<header>
+    <div style="font-weight: 900; font-size: 20px; letter-spacing: 1px;" onclick="showAdmin()">💎 REEM STORE</div>
+    <i class="fas fa-bell" onclick="alert('لا توجد إشعارات جديدة')"></i>
+</header>
 
-<div class="wallet-card">
+<div class="wallet-box">
     <div>
-        <small style="color:#888;">رصيدك المتوفر</small>
-        <div class="balance-amount"><span id="userBalance">0.456</span> $</div>
+        <small style="color:#666; font-weight: bold;">الرصيد المتوفر</small>
+        <div class="bal-val glow-text"><span id="userBalance">0.456</span> $</div>
     </div>
-    <button class="btn-main" style="width:auto; padding:8px 20px; border-radius:50px;" onclick="openDeposit()">+ شحن</button>
+    <button style="background:var(--grad); border:none; color:#fff; padding:10px 25px; border-radius:15px; font-weight:bold;" onclick="openDeposit()">شحن +</button>
 </div>
 
+<div class="section-title">🚀 الخدمات السريعة</div>
 <div class="grid">
-    <div class="card" onclick="showNotif('جاري تجهيز قسم الألعاب...')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/controller.png"></div><span>الألعاب</span></div>
-    <div class="card" onclick="showNotif('جاري تجهيز قسم التطبيقات...')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/apps.png"></div><span>التطبيقات</span></div>
-    <div class="card" onclick="showNotif('جاري تجهيز قسم الرصيد...')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/money-bag.png"></div><span>الرصيد</span></div>
-    <div class="card" onclick="showNotif('جاري تجهيز قسم الأكواد...')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/gift-card.png"></div><span>الأكواد</span></div>
+    <div class="cat-card" onclick="openCat('الألعاب')">
+        <div class="badge">الأكثر طلباً</div>
+        <i class="fas fa-gamepad"></i>
+        <b>شحن ألعاب</b>
+    </div>
+    <div class="cat-card" onclick="openCat('التطبيقات')">
+        <i class="fas fa-mobile-alt"></i>
+        <b>تطبيقات VIP</b>
+    </div>
+    <div class="cat-card" onclick="openCat('سوشال ميديا')">
+        <i class="fas fa-share-alt"></i>
+        <b>رشق متابعين</b>
+    </div>
+    <div class="cat-card" onclick="openCat('الأرقام')">
+        <i class="fas fa-sim-card"></i>
+        <b>أرقام وهمية</b>
+    </div>
+</div>
+
+<div class="ticker">
+    <div class="ticker-wrap">
+        <div class="ticker-item">✅ تم شحن 660 شدة للعميل **محمد**</div>
+        <div class="ticker-item">✅ انضمام 5000 متابع لحساب **ريم**</div>
+        <div class="ticker-item">✅ تفعيل رقم أمريكي للعميل **أحمد**</div>
+        <div class="ticker-item">✅ شحن رصيد بقيمة 50$ عبر شام كاش</div>
+    </div>
+</div>
+
+<div class="section-title">🕒 آخر العمليات</div>
+<div id="historyList">
+    <div class="history-card">
+        <div><b>شحن رصيد - شام كاش</b><br><small style="color:#666;">اليوم، 10:30 AM</small></div>
+        <div style="color:var(--success); font-weight: bold;">+5.00$</div>
+    </div>
+</div>
+
+<div class="fab" onclick="window.open('https://wa.me/963900000000')">
+    <i class="fab fa-whatsapp"></i>
 </div>
 
 <div id="depositModal" class="modal">
     <div class="modal-content">
-        <h3 style="text-align: center; margin: 0 0 15px;">إيداع شام كاش 💳</h3>
-        <div class="qr-box"><img src="https://raw.githubusercontent.com/YourRepo/main/58152.jpg" style="width:100%;"></div>
-        <div style="background:#070d16; padding:12px; border-radius:12px; border:1px dashed var(--accent); color:var(--accent); font-size:11px; text-align:center; cursor:pointer;" onclick="copyWallet()">
-            <span id="walletAddr">17ac4a94cb1ed493e47a8526892294dd</span> <i class="fas fa-copy"></i>
-        </div>
-        
-        <input type="number" id="payAmt" placeholder="المبلغ المدفوع ($)">
-        <input type="text" id="payID" placeholder="رقم المعاملة">
-        
-        <div class="file-input-wrapper">
-            <i class="fas fa-camera" style="font-size: 24px; color: var(--accent);"></i>
-            <p id="fileStatus" style="font-size: 12px; margin-top: 5px;">ارفع صورة الإيصال (اختياري)</p>
-            <input type="file" id="payImg" onchange="updateFileStatus()">
-        </div>
-
-        <button class="btn-main" onclick="sendFullDeposit()">تأكيد وإرسال الطلب 🚀</button>
-        <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#666; margin-top:10px;">إلغاء</button>
-    </div>
-</div>
-
-<div id="historySection">
-    <h4 style="margin: 20px 15px 10px;">📊 سجل العمليات الأخير</h4>
-    <div class="history-card">
-        <div>
-            <div style="font-size:14px; font-weight:bold;">شحن رصيد - شام كاش</div>
-            <small style="color:#888;">#TX-992831 | 12:40 PM</small>
-        </div>
-        <div class="status-badge status-pending">قيد الانتظار</div>
+        <h3 style="text-align: center;">إيداع شام كاش 💳</h3>
+        <center>
+            <img src="https://raw.githubusercontent.com/YourRepo/main/58152.jpg" style="width:150px; border-radius:15px; border:2px solid var(--accent);">
+            <div style="background:#070d16; padding:10px; margin:15px 0; border-radius:10px; border:1px dashed var(--accent); font-size:11px; color:var(--accent);">
+                17ac4a94cb1ed493e47a8526892294dd
+            </div>
+        </center>
+        <div class="input-group"><input type="number" id="payAmt" placeholder="المبلغ المودع ($)"></div>
+        <div class="input-group"><input type="text" id="payID" placeholder="رقم العملية"></div>
+        <button class="btn-confirm" onclick="submitPay()">تأكيد وإرسال 🚀</button>
+        <button onclick="closeModals()" style="width:100%; background:none; border:none; color:#555; margin-top:10px;">إغلاق</button>
     </div>
 </div>
 
 <nav class="bottom-nav">
-    <div class="nav-item active"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="nav-item" onclick="window.open('https://wa.me/963900000000')"><i class="fab fa-whatsapp"></i>واتساب</div>
-    <div class="nav-item" onclick="openDeposit()" style="color:var(--accent); font-size:26px;"><i class="fas fa-plus-circle"></i></div>
-    <div class="nav-item" onclick="showAdmin()"><i class="fas fa-user-shield"></i>الأدمن</div>
-    <div class="nav-item" onclick="location.reload()"><i class="fas fa-sync-alt"></i>تحديث</div>
+    <div class="nav-link active"><i class="fas fa-th-large"></i>الرئيسية</div>
+    <div class="nav-link" onclick="alert('قريباً: متجر الحسابات المباشر')"><i class="fas fa-shopping-bag"></i>المتجر</div>
+    <div class="nav-link" onclick="openDeposit()"><i class="fas fa-wallet"></i>الشحن</div>
+    <div class="nav-link" onclick="window.open('https://t.me/YourUser')"><i class="fas fa-headset"></i>الدعم</div>
 </nav>
 
 <script>
-    const WALLET_CODE = "17ac4a94cb1ed493e47a8526892294dd";
+    const WALLET = "17ac4a94cb1ed493e47a8526892294dd";
     let balance = parseFloat(localStorage.getItem('reem_bal')) || 0.456;
-
-    // تحديث الواجهة
     document.getElementById('userBalance').innerText = balance.toFixed(3);
 
     function openDeposit() { document.getElementById('depositModal').style.display = 'flex'; }
-    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
 
-    function copyWallet() {
-        navigator.clipboard.writeText(WALLET_CODE);
-        showNotif("✅ تم نسخ الكود!");
-    }
-
-    function updateFileStatus() {
-        const file = document.getElementById('payImg').files[0];
-        if(file) document.getElementById('fileStatus').innerText = "✅ تم اختيار الصورة";
-    }
-
-    function showNotif(text) {
-        const n = document.getElementById('inAppNotif');
-        n.innerText = text;
-        n.style.top = "20px";
-        setTimeout(() => n.style.top = "-100px", 3000);
-    }
-
-    function sendFullDeposit() {
+    function submitPay() {
         const amt = document.getElementById('payAmt').value;
-        const id = document.getElementById('payID').value;
-        if(!amt || !id) return alert("الرجاء إكمال البيانات!");
+        const tid = document.getElementById('payID').value;
+        if(!amt || !tid) return alert("أكمل البيانات!");
+        alert("✅ تم إرسال طلب الشحن للمراجعة!");
+        closeModals();
+    }
 
-        // هنا يتم إرسال البيانات + صورة الإيصال (عبر API تليجرام)
-        showNotif("🚀 جاري إرسال طلبك للبوت...");
-        setTimeout(() => {
-            alert("✅ تم إرسال الطلب! سيظهر في سجلك كـ 'قيد الانتظار'.");
-            closeModal();
-        }, 1500);
+    function openCat(name) {
+        alert("فتح قسم: " + name + "\nسيتم عرض المنتجات هنا.");
     }
 
     function showAdmin() {
-        const p = prompt("كلمة سر الأدمن:");
-        if(p === "reem2026") {
-            const nb = prompt("أدخل الرصيد الجديد للعميل:");
+        const pass = prompt("كلمة مرور الأدمن:");
+        if(pass === "reem2026") {
+            const nb = prompt("تعديل رصيد العميل:");
             if(nb) {
                 balance = parseFloat(nb);
                 localStorage.setItem('reem_bal', balance);
                 document.getElementById('userBalance').innerText = balance.toFixed(3);
-                showNotif("💰 تم تحديث الرصيد بنجاح!");
+                alert("💰 تم التحديث!");
             }
         }
     }
 </script>
+
 </body>
 </html>
