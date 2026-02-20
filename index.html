@@ -2,194 +2,62 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reem Store | النسخة الأصلية</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
-        
-        body { 
-            font-family: 'Cairo', sans-serif; 
-            background: #0a101a; /* لون الخلفية الغامق جداً نفس الصورة */
-            color: white;
-            user-select: none;
-            overflow-x: hidden;
-        }
-
-        /* تصميم الكارد الخاص بالقسم */
-        .category-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .icon-box {
-            width: 75px;
-            height: 75px;
-            background: #161f2c; /* لون المربع الخلفي */
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.2s;
-        }
-
-        .icon-box:active { transform: scale(0.9); }
-
-        .icon-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .category-text {
-            font-size: 11px;
-            font-weight: 600;
-            color: #e2e8f0;
-        }
-
-        /* البانر العلوي */
-        .main-banner {
-            width: 100%;
-            height: 160px;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 25px;
-        }
-
-        /* القائمة السفلية */
-        .nav-bottom {
-            background: #0f1724;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            height: 75px;
-        }
-
-        .plus-btn {
-            width: 55px;
-            height: 55px;
-            background: #00d2ff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: -35px;
-            border: 5px solid #0a101a;
-            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.3);
-            color: white;
-            font-size: 24px;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #64748b;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        .nav-item.active { color: #00d2ff; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ريم | Reem Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="p-4 pb-32">
+<body>
 
-    <div class="text-center mb-4">
-        <h1 class="text-lg font-bold">` `《 《《Reem Store》 》》 ` `</h1>
-    </div>
+    <header class="main-header">
+        <div class="logo">💎 متجر ريم</div>
+        <div class="status">رصيدك: 0.00 $</div>
+    </header>
 
-    <div class="main-banner shadow-lg">
-        <img src="https://img.freepik.com/free-vector/gaming-store-youtube-header_23-2150111162.jpg" class="w-full h-full object-cover">
-    </div>
+    <section class="banner">
+        <img src="https://i.ibb.co/pW6mX3P/banner-placeholder.jpg" alt="Banner" onerror="this.src='https://via.placeholder.com/800x350/16243a/ffffff?text=RECHARGE+GAMES'">
+    </section>
 
-    <div class="grid grid-cols-4 gap-y-8 gap-x-2">
-        
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gamepad.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الألعاب</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/mobile-screen.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">التطبيقات</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/money-bill-transfer.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الرصيد</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/qrcode.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الأكواد</span>
+    <main class="grid-container">
+        <div class="card" onclick="sendOrder('الألعاب')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/controller.png"/></div>
+            <span>الألعاب</span>
         </div>
 
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/instagram.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">خدمات سوشيال</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/brands/telegram.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">خدمات تلجرام</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/sim-card.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">أرقام افتراضية</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/wifi.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الإنترنت</span>
+        <div class="card" onclick="sendOrder('الأكواد')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/gift-card.png"/></div>
+            <span>الأكواد</span>
         </div>
 
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/users-gear.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الحسابات</span>
-        </div>
-        <div class="category-item">
-            <div class="icon-box"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/gem.svg" style="padding:15px; filter: invert(1);"></div>
-            <span class="category-text">الاشتراكات</span>
+        <div class="card" onclick="sendOrder('الأرقام الوهمية')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/sim-card-chip.png"/></div>
+            <span>الأرقام</span>
         </div>
 
-    </div>
-
-    <nav class="fixed bottom-0 left-0 right-0 nav-bottom flex justify-around items-center z-50">
-        <div class="nav-item active">
-            <i class="fas fa-home text-xl mb-1"></i>
-            <span>الرئيسية</span>
-        </div>
-        <div class="nav-item">
-            <i class="fas fa-file-lines text-xl mb-1"></i>
-            <span>طلباتي</span>
-        </div>
-        
-        <div class="plus-btn">
-            <i class="fas fa-plus"></i>
+        <div class="card" onclick="sendOrder('خدمات تيليجرام')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/telegram-app.png"/></div>
+            <span>تيليجرام</span>
         </div>
 
-        <div class="nav-item">
-            <i class="fas fa-history text-xl mb-1"></i>
-            <span>سجل الشحن</span>
+        <div class="card" onclick="sendOrder('سوشيال ميديا')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/instagram-new.png"/></div>
+            <span>سوشيال ميديا</span>
         </div>
-        <div class="nav-item">
-            <i class="fas fa-headset text-xl mb-1"></i>
-            <span>اتصل بنا</span>
+
+        <div class="card" onclick="sendOrder('الاشتراكات')">
+            <div class="icon-box"><img src="https://img.icons8.com/fluency/96/netflix.png"/></div>
+            <span>الاشتراكات</span>
         </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item active">🏠 الرئيسية</div>
+        <div class="nav-item">📜 طلباتي</div>
+        <div class="add-btn">+</div>
+        <div class="nav-item">🔄 السجل</div>
+        <div class="nav-item">📞 اتصل بنا</div>
     </nav>
 
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.backgroundColor = "#0a101a";
-        tg.headerColor = "#0a101a";
-
-        // تأثير بسيط عند الضغط على الأقسام
-        document.querySelectorAll('.icon-box').forEach(box => {
-            box.addEventListener('click', () => {
-                tg.HapticFeedback.impactOccurred('medium');
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
