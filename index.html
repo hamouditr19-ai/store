@@ -3,271 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | الإدارة والمتجر</title>
+    <title>Reem Store | الواجهة المطورة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #000000;
+            --bg-color: #05070a;
             --card-bg: #111827;
             --accent: #00d4ff;
             --primary: #8b5cf6;
+            --text-gray: #94a3b8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg-color); color: white; padding-bottom: 100px; }
+        body { background: var(--bg-color); color: white; padding-bottom: 120px; }
 
         /* Header */
-        header { padding: 20px; text-align: center; border-bottom: 1px solid #222; position: sticky; top: 0; background: black; z-index: 100; }
-        .admin-link { position: absolute; left: 20px; top: 25px; font-size: 1.2rem; color: #444; cursor: pointer; }
+        header { padding: 25px; text-align: center; background: linear-gradient(to bottom, #000, transparent); }
+        .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; color: #fff; }
+        .logo span { color: var(--accent); }
 
         /* Banner */
-        .slider { width: 92%; margin: 15px auto; height: 150px; border-radius: 20px; overflow: hidden; position: relative; }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: 1s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .slide.active { opacity: 1; }
-        .slide-overlay { background: rgba(0,0,0,0.5); width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+        .banner-container { width: 94%; margin: 10px auto; height: 180px; border-radius: 25px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .ad-slide { position: absolute; inset: 0; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 20px; }
+        .ad-slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+        .ad-text { position: relative; z-index: 2; }
+        .ad-text h2 { font-size: 1.2rem; color: var(--accent); }
 
-        /* شبكة الأقسام (مطابقة للصورة تماماً) */
-        .main-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
-        .category-card { 
-            background: #1c2536; border-radius: 25px; overflow: hidden; 
-            display: flex; flex-direction: column; align-items: center;
-            border: 1px solid #2d3748; transition: 0.3s; cursor: pointer;
+        /* شبكة الأقسام المخصصة (5 في كل صف) */
+        .category-section { padding: 15px; }
+        .row-label { margin: 20px 10px 10px; font-size: 0.9rem; color: var(--text-gray); font-weight: bold; border-right: 3px solid var(--accent); padding-right: 10px; }
+        
+        .grid-row { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); /* 5 أقسام في الصف الواحد */
+            gap: 10px; 
+            margin-bottom: 20px;
         }
-        .category-card:active { transform: scale(0.95); }
-        .img-container { 
-            width: 100%; height: 130px; background: #00a8ff; /* اللون الأزرق في خلفية الصورة */
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            position: relative;
+
+        .cat-card { 
+            background: #161d2b; 
+            border-radius: 18px; 
+            padding: 10px 5px; 
+            text-align: center; 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
         }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
-        .category-card h3 { padding: 15px 0; font-size: 1rem; font-weight: 700; color: #e2e8f0; }
-
-        /* Modals & Sheets */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: flex-end; }
-        .sheet { width: 100%; background: #0f172a; border-radius: 30px 30px 0 0; padding: 25px; transform: translateY(100%); transition: 0.4s; max-height: 80vh; overflow-y: auto; }
-        .modal.active { display: flex; }
-        .modal.active .sheet { transform: translateY(0); }
-
-        /* Admin Page Style */
-        .admin-panel { padding: 20px; display: none; animation: fadeIn 0.5s; }
-        input, select, button { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: none; outline: none; }
-        input { background: #1e293b; color: white; }
-        .btn-add { background: var(--primary); color: white; font-weight: bold; cursor: pointer; }
-        .product-manage-item { display: flex; justify-content: space-between; background: #1e293b; padding: 10px; margin-bottom: 5px; border-radius: 8px; }
+        .cat-card:active { transform: scale(0.9); border-color: var(--accent); }
+        
+        /* تكبير الأيقونات */
+        .cat-card .icon-box { 
+            width: 100%; 
+            aspect-ratio: 1/1; 
+            background: #00a8ff; /* مطابقة للصورة الزرقاء */
+            border-radius: 15px; 
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .cat-card .icon-box img { 
+            width: 85%; /* تكبير الأيقونة داخل المربع */
+            height: 85%;
+            object-fit: contain;
+        }
+        .cat-card h4 { font-size: 0.65rem; font-weight: 700; color: #fff; line-height: 1.2; height: 30px; display: flex; align-items: center; justify-content: center; }
 
         /* Bottom Menu */
-        .nav-dock { position: fixed; bottom: 0; width: 100%; background: #0f172a; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; }
-        .nav-item { text-align: center; color: #64748b; font-size: 0.75rem; cursor: pointer; }
+        .nav-dock { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; background: rgba(17, 24, 39, 0.95); backdrop-filter: blur(10px); border-radius: 20px; display: flex; justify-content: space-around; padding: 12px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.6); z-index: 1000; }
+        .nav-item { text-align: center; color: #64748b; font-size: 0.7rem; }
         .nav-item.active { color: var(--accent); }
-        .nav-item i { font-size: 1.3rem; display: block; margin-bottom: 5px; }
+        .nav-item i { font-size: 1.2rem; display: block; margin-bottom: 4px; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* Admin Button */
+        .admin-btn { position: fixed; top: 25px; left: 20px; color: #334155; font-size: 1.2rem; z-index: 101; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="store-page">
-        <header>
-            <i class="fa-solid fa-gear admin-link" onclick="checkAdmin()"></i>
-            <h2 id="store-name">Reem Store | ريم ستوري</h2>
-        </header>
+    <i class="fa-solid fa-user-shield admin-btn" onclick="openAdmin()"></i>
 
-        <div class="slider">
-            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000')">
-                <div class="slide-overlay"><h2>أهلاً بك في ريم ستوري</h2><p>أفضل الخدمات الرقمية</p></div>
-            </div>
-        </div>
+    <header>
+        <div class="logo">REEM <span>STORE</span></div>
+    </header>
 
-        <div class="main-grid" id="category-grid">
-            <div class="category-card" onclick="showCategory('الألعاب')">
-                <div class="img-container"><img src="https://i.ibb.co/Rz9kZkz/games.png"></div>
-                <h3>الألعاب 🎮</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('التطبيقات')">
-                <div class="img-container"><img src="https://i.ibb.co/sK0tFfQ/apps.png"></div>
-                <h3>التطبيقات 📱</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الرصيد')">
-                <div class="img-container"><img src="https://i.ibb.co/x7RzZ8m/balance.png"></div>
-                <h3>الالرصيد 💳</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الأكواد')">
-                <div class="img-container"><img src="https://i.ibb.co/mRT2P5f/cards.png"></div>
-                <h3>الأكواد 🔑</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('سوشل ميديا')">
-                <div class="img-container"><img src="https://i.ibb.co/zH8zQ8W/social.png"></div>
-                <h3>خدمات سوشل ميديا 🚀</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('تلجرام')">
-                <div class="img-container"><img src="https://i.ibb.co/jT8z8mZ/telegram.png"></div>
-                <h3>خدمات تيليجرام ✈️</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الأرقام')">
-                <div class="img-container"><img src="https://i.ibb.co/0Ym9z8m/virtual-num.png"></div>
-                <h3>الأرقام الإفتراضية 📞</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الإنترنت')">
-                <div class="img-container"><img src="https://i.ibb.co/Wf9z8mZ/dsl.png"></div>
-                <h3>خدمات الإنترنت 🌐</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الحسابات')">
-                <div class="img-container"><img src="https://i.ibb.co/Qf9z8mZ/accounts.png"></div>
-                <h3>الحسابات 👤</h3>
-            </div>
-            <div class="category-card" onclick="showCategory('الإشتراكات')">
-                <div class="img-container"><img src="https://i.ibb.co/Pf9z8mZ/subs.png"></div>
-                <h3>الإشتراكات 📺</h3>
+    <div class="banner-container">
+        <div class="ad-slide" style="background-image: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1000')">
+            <div class="ad-text">
+                <h2>أهلاً بك في عالمك الرقمي</h2>
+                <p>شحن فوري، أمان، وسهولة</p>
             </div>
         </div>
     </div>
 
-    <div id="admin-page" class="admin-panel">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2>لوحة الإدارة 🛠️</h2>
-            <button onclick="goHome()" style="width:auto; padding:5px 15px; background:red; color:white;">خروج</button>
-        </div>
-        <hr style="opacity:0.1; margin:20px 0;">
+    <div class="category-section">
         
-        <h3>إضافة منتج جديد</h3>
-        <select id="new-prod-cat">
-            <option value="الألعاب">الألعاب</option>
-            <option value="التطبيقات">التطبيقات</option>
-            <option value="الإشتراكات">الإشتراكات</option>
-        </select>
-        <input type="text" id="new-prod-name" placeholder="اسم المنتج (مثلاً: 660 شدة)">
-        <input type="number" id="new-prod-price" placeholder="السعر">
-        <button class="btn-add" onclick="addProduct()">إضافة للمتجر ✅</button>
-
-        <hr style="opacity:0.1; margin:20px 0;">
-        <h3>إدارة المنتجات الحالية</h3>
-        <div id="admin-product-list"></div>
-    </div>
-
-    <div id="modal" class="modal" onclick="closeModal()">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <h2 id="modal-title">المنتجات</h2>
-            <div id="product-list" style="margin-top:20px;"></div>
+        <div class="row-label">الأقسام الأساسية</div>
+        <div class="grid-row">
+            <div class="cat-card" onclick="openCat('الألعاب')">
+                <div class="icon-box"><img src="https://i.ibb.co/Rz9kZkz/games.png"></div>
+                <h4>الألعاب</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('التطبيقات')">
+                <div class="icon-box"><img src="https://i.ibb.co/sK0tFfQ/apps.png"></div>
+                <h4>التطبيقات</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الرصيد')">
+                <div class="icon-box"><img src="https://i.ibb.co/x7RzZ8m/balance.png"></div>
+                <h4>الرصيد</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الأكواد')">
+                <div class="icon-box"><img src="https://i.ibb.co/mRT2P5f/cards.png"></div>
+                <h4>الأكواد</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الحسابات')">
+                <div class="icon-box"><img src="https://i.ibb.co/Qf9z8mZ/accounts.png"></div>
+                <h4>الحسابات</h4>
+            </div>
         </div>
-    </div>
 
-    <div id="cart-modal" class="modal" onclick="closeModal()">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <h2>🛒 سلة طلباتك</h2>
-            <div id="cart-items" style="margin:20px 0;"></div>
-            <button class="btn-add" onclick="sendToTelegram()">إرسال الطلب عبر تلجرام 🚀</button>
+        <div class="row-label">الخدمات الإضافية</div>
+        <div class="grid-row">
+            <div class="cat-card" onclick="openCat('سوشل ميديا')">
+                <div class="icon-box"><img src="https://i.ibb.co/zH8zQ8W/social.png"></div>
+                <h4>سوشل ميديا</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('تيليجرام')">
+                <div class="icon-box"><img src="https://i.ibb.co/jT8z8mZ/telegram.png"></div>
+                <h4>تيليجرام</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الأرقام')">
+                <div class="icon-box"><img src="https://i.ibb.co/0Ym9z8m/virtual-num.png"></div>
+                <h4>الأرقام</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الإنترنت')">
+                <div class="icon-box"><img src="https://i.ibb.co/Wf9z8mZ/dsl.png"></div>
+                <h4>الإنترنت</h4>
+            </div>
+            <div class="cat-card" onclick="openCat('الإشتراكات')">
+                <div class="icon-box"><img src="https://i.ibb.co/Pf9z8mZ/subs.png"></div>
+                <h4>الإشتراكات</h4>
+            </div>
         </div>
+
     </div>
 
     <div class="nav-dock">
-        <div class="nav-item active" onclick="goHome()"><i class="fa-solid fa-home"></i>الرئيسية</div>
-        <div class="nav-item" onclick="openCart()"><i class="fa-solid fa-shopping-basket"></i>السلة</div>
-        <div class="nav-item" onclick="alert('انسخ الكود: 17ac4a94cb1ed493e47a8526892294dd')"><i class="fa-solid fa-bolt"></i>شحن</div>
+        <div class="nav-item active"><i class="fa-solid fa-house"></i>الرئيسية</div>
+        <div class="nav-item" onclick="alert('سلة المشتريات فارغة')"><i class="fa-solid fa-bag-shopping"></i>السلة</div>
+        <div class="nav-item" onclick="prompt('انسخ كود الدفع (شام كاش):', '17ac4a94cb1ed493e47a8526892294dd')"><i class="fa-solid fa-bolt"></i>شحن</div>
         <div class="nav-item" onclick="window.open('https://t.me/ReemAdmin')"><i class="fa-solid fa-headset"></i>الدعم</div>
     </div>
 
     <script>
-        // نظام البيانات (LocalStorage) لجعل الإضافة والحذف مستمرة
-        let products = JSON.parse(localStorage.getItem('reem_products')) || [
-            { id: 1, cat: 'الألعاب', name: 'ببجي 660 شدة', price: 45 },
-            { id: 2, cat: 'الإشتراكات', name: 'يوتيوب سنة', price: 80 }
-        ];
+        function openCat(name) {
+            alert("سيتم فتح قسم: " + name);
+        }
 
-        let cart = [];
-
-        function checkAdmin() {
-            let pass = prompt("أدخل كلمة مرور الإدارة:");
+        function openAdmin() {
+            let pass = prompt("كلمة مرور الإدارة:");
             if(pass === "1234") {
-                document.getElementById('store-page').style.display = 'none';
-                document.getElementById('admin-page').style.display = 'block';
-                renderAdminProducts();
-            } else {
-                alert("خطأ في كلمة المرور!");
+                alert("سيتم نقلك لصفحة التحكم لإضافة وحذف المنتجات...");
             }
-        }
-
-        function goHome() {
-            document.getElementById('store-page').style.display = 'block';
-            document.getElementById('admin-page').style.display = 'none';
-        }
-
-        // إدارة المنتجات
-        function addProduct() {
-            const cat = document.getElementById('new-prod-cat').value;
-            const name = document.getElementById('new-prod-name').value;
-            const price = document.getElementById('new-prod-price').value;
-
-            if(!name || !price) return alert("امسح البيانات!");
-
-            products.push({ id: Date.now(), cat, name, price: parseInt(price) });
-            localStorage.setItem('reem_products', JSON.stringify(products));
-            alert("تمت الإضافة!");
-            renderAdminProducts();
-            // مسح الحقول
-            document.getElementById('new-prod-name').value = '';
-            document.getElementById('new-prod-price').value = '';
-        }
-
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('reem_products', JSON.stringify(products));
-            renderAdminProducts();
-        }
-
-        function renderAdminProducts() {
-            const list = document.getElementById('admin-product-list');
-            list.innerHTML = products.map(p => `
-                <div class="product-manage-item">
-                    <span>${p.name} (${p.cat})</span>
-                    <button onclick="deleteProduct(${p.id})" style="background:none; color:red; width:auto; padding:0;">حذف 🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        // واجهة المتجر
-        function showCategory(catName) {
-            const modal = document.getElementById('modal');
-            document.getElementById('modal-title').innerText = catName;
-            const list = document.getElementById('product-list');
-            
-            const filtered = products.filter(p => p.cat === catName);
-            list.innerHTML = filtered.length > 0 ? filtered.map(p => `
-                <div style="display:flex; justify-content:space-between; background:#1e293b; padding:15px; border-radius:12px; margin-bottom:10px;">
-                    <span>${p.name} - ${p.price} ر.س</span>
-                    <button onclick="addToCart('${p.name}', ${p.price})" style="background:var(--accent); border:none; padding:5px 15px; border-radius:8px; cursor:pointer;">إضافة</button>
-                </div>
-            `).join('') : '<p style="text-align:center; opacity:0.5;">لا يوجد منتجات حالياً</p>';
-            
-            modal.classList.add('active');
-        }
-
-        function addToCart(name, price) {
-            cart.push({name, price});
-            alert("تمت الإضافة للسلة!");
-        }
-
-        function openCart() {
-            const modal = document.getElementById('cart-modal');
-            const list = document.getElementById('cart-items');
-            list.innerHTML = cart.map(i => `<div>${i.name} - ${i.price} ر.س</div>`).join('');
-            modal.classList.add('active');
-        }
-
-        function closeModal() {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-        }
-
-        async function sendToTelegram() {
-            const token = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
-            const chat_id = "7741275208";
-            let details = cart.map(i => `• ${i.name} (${i.price}ر.س)`).join('%0A');
-            let text = `📦 طلب جديد من Reem Store%0A🧾 الطلبات:%0A${details}`;
-            
-            await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`);
-            alert("تم إرسال الطلب!");
-            cart = [];
-            closeModal();
         }
     </script>
 </body>
