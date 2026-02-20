@@ -13,7 +13,6 @@
         .cyan-text { color: #06b6d4; }
         .cyan-bg { background-color: #06b6d4; }
         
-        /* البنر المتحرك */
         .promo-banner {
             background: linear-gradient(90deg, #0f172a, #06b6d4, #0f172a);
             padding: 8px 0;
@@ -29,9 +28,33 @@
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+
+        /* تنسيق الإشعار الجديد */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .toast {
+            background: #06b6d4;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+            margin-top: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
     </style>
 </head>
 <body class="min-h-screen">
+
+    <div id="toast-container"></div>
 
     <div class="promo-banner border-b border-cyan-400/30">
         <div class="animate-text">
@@ -52,8 +75,7 @@
             <p class="text-cyan-400">متجرك الموثوق للخدمات الرقمية</p>
         </div>
 
-        <div id="store-content">
-            </div>
+        <div id="store-content"></div>
     </main>
 
     <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full md:w-96 glass-card transform -translate-x-full transition-transform duration-300 z-[60] p-6 overflow-y-auto">
@@ -62,8 +84,7 @@
             <button onclick="toggleCart()" class="text-2xl text-cyan-400">&times;</button>
         </div>
         
-        <div id="cart-items" class="space-y-4 mb-6">
-            </div>
+        <div id="cart-items" class="space-y-4 mb-6"></div>
 
         <div class="border-t border-slate-700 pt-4">
             <div class="flex justify-between text-lg font-bold mb-4">
@@ -82,7 +103,7 @@
                     <code id="payment-code" class="bg-black p-2 rounded text-[10px] flex-1 text-white border border-slate-700">17ac4a94cb1ed493e47a8526892294dd</code>
                     <button onclick="copyCode()" class="text-xs cyan-bg text-black px-2 py-1 rounded font-bold">نسخ</button>
                 </div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" alt="Barcode" class="mx-auto w-32 h-32 mb-2 rounded border-2 border-cyan-500">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" class="mx-auto w-32 h-32 mb-2 rounded border-2 border-cyan-500">
                 <input type="text" id="trans-id" placeholder="أدخل رقم عملية التحويل" class="w-full p-2 rounded bg-black border border-cyan-500 text-sm text-white">
             </div>
 
@@ -93,14 +114,9 @@
 
     <footer class="mt-20 border-t border-slate-800 py-10 text-center">
         <p class="text-slate-500 text-sm mb-4">© 2026 Reem Store. جميع الحقوق محفوظة</p>
-        <div class="flex justify-center gap-6 text-xs text-cyan-500/60">
-            <a href="#">سياسة الخصوصية</a>
-            <a href="#">شروط الاستخدام</a>
-        </div>
     </footer>
 
     <script>
-        // --- 🛠 بيانات المتجر (الصور تم تحديثها) ---
         const storeData = [
             {
                 category: "شحن ببجي موبايل | PUBG",
@@ -116,18 +132,25 @@
                     { id: 4, name: "100 جوهرة", price: 1.20, img: "https://images.unsplash.com/photo-1614680376593-902f74cc0d41?auto=format&fit=crop&w=300&q=80" },
                     { id: 5, name: "530 جوهرة", price: 5.50, img: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=300&q=80" }
                 ]
-            },
-            {
-                category: "بطاقات الهدايا | GIFTS",
-                products: [
-                    { id: 6, name: "بطاقة Google Play 5$", price: 5.50, img: "https://images.unsplash.com/photo-1557853113-99a97f5d4590?auto=format&fit=crop&w=300&q=80" }
-                ]
             }
         ];
 
         let cart = [];
         const botToken = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const chatId = '7741275208';
+
+        // وظيفة الإشعار البديلة لـ alert
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
 
         function renderStore() {
             const container = document.getElementById('store-content');
@@ -138,7 +161,7 @@
                         ${sec.products.map(p => `
                             <div class="glass-card p-3 rounded-xl neon-border flex flex-col justify-between">
                                 <div>
-                                    <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover rounded-lg mb-3">
+                                    <img src="${p.img}" class="w-full h-32 object-cover rounded-lg mb-3">
                                     <h4 class="font-bold text-sm mb-1">${p.name}</h4>
                                     <p class="cyan-text font-bold mb-4 text-lg">$ ${p.price}</p>
                                 </div>
@@ -153,26 +176,18 @@
         function addToCart(id, name, price) {
             cart.push({ id, name, price });
             updateCartUI();
-            alert(`تمت إضافة ${name} إلى السلة`);
+            showToast(`✅ تمت إضافة ${name} إلى السلة`);
         }
 
         function updateCartUI() {
-            const list = document.getElementById('cart-items');
-            const count = document.getElementById('cart-count');
-            const total = document.getElementById('cart-total');
-            
-            count.innerText = cart.length;
-            list.innerHTML = cart.map((item, index) => `
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-items').innerHTML = cart.map((item, index) => `
                 <div class="flex justify-between items-center bg-slate-800 p-3 rounded border border-slate-700">
-                    <div>
-                        <p class="text-sm font-bold">${item.name}</p>
-                        <p class="text-xs cyan-text">$ ${item.price}</p>
-                    </div>
+                    <div><p class="text-sm font-bold">${item.name}</p><p class="text-xs cyan-text">$ ${item.price}</p></div>
                     <button onclick="removeFromCart(${index})" class="text-red-500 font-bold">حذف</button>
                 </div>
             `).join('');
-
-            total.innerText = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+            document.getElementById('cart-total').innerText = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
         }
 
         function removeFromCart(index) {
@@ -183,6 +198,7 @@
         function clearCart() {
             cart = [];
             updateCartUI();
+            showToast("تم تفريغ السلة");
         }
 
         function toggleCart() {
@@ -190,9 +206,8 @@
         }
 
         function copyCode() {
-            const code = document.getElementById('payment-code').innerText;
-            navigator.clipboard.writeText(code);
-            alert("تم نسخ كود الدفع!");
+            navigator.clipboard.writeText(document.getElementById('payment-code').innerText);
+            showToast("📋 تم نسخ كود الدفع");
         }
 
         async function sendOrder() {
@@ -201,29 +216,21 @@
             const transId = document.getElementById('trans-id').value;
 
             if (!name || !gameId || cart.length === 0 || !transId) {
-                alert("يرجى إكمال جميع البيانات ورقم العملية");
+                showToast("⚠️ يرجى إكمال جميع البيانات");
                 return;
             }
 
             let productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('%0A');
             let total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-
-            const message = `🚀 طلب جديد من Reem Store %0A%0A` +
-                            `👤 العميل: ${name} %0A` +
-                            `🆔 الآيدي: ${gameId} %0A` +
-                            `💵 رقم العملية: ${transId} %0A%0A` +
-                            `📦 الطلبات: %0A${productsList} %0A%0A` +
-                            `💰 الإجمالي: $ ${total}`;
-
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
+            const message = `🚀 طلب جديد من Reem Store %0A👤 العميل: ${name} %0A🆔 الآيدي: ${gameId} %0A💵 العملية: ${transId} %0A📦 الطلبات: %0A${productsList} %0A💰 الإجمالي: $ ${total}`;
 
             try {
-                await fetch(url);
-                alert("تم إرسال الطلب بنجاح!");
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`);
+                showToast("🎉 تم إرسال الطلب بنجاح!");
                 clearCart();
                 toggleCart();
             } catch (e) {
-                alert("خطأ في الاتصال");
+                showToast("❌ فشل الإرسال");
             }
         }
 
