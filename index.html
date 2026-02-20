@@ -1,138 +1,219 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REEM STORE | المتجر الرقمي الفخم</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root { --cyan: #00f2ff; --bg: #020617; }
-body { font-family: Tajawal,sans-serif; margin:0; background: var(--bg); color:white; overflow-x:hidden; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REEM STORE 2026</title>
+  <style>
+    /* ===== عام ===== */
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+    body { background:#0d0d0d; color:#fff; overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
 
-.glass { background: rgba(15,23,42,0.85); backdrop-filter: blur(15px); border-radius: 20px; }
-.ticker { background: linear-gradient(90deg,#020617,#083344,#020617); height:30px; display:flex; align-items:center; overflow:hidden; }
-.ticker span { white-space:nowrap; animation: ticker 20s linear infinite; color:var(--cyan); font-weight:900; font-size:12px; }
-@keyframes ticker { 0% { transform: translateX(100%);} 100% { transform: translateX(-100%);} }
+    /* ===== شريط إعلاني ===== */
+    #ticker { width:100%; background:#111; overflow:hidden; white-space:nowrap; padding:10px 0; position:relative; }
+    #ticker span { display:inline-block; padding-left:100%; animation: ticker 15s linear infinite; color:#0ff; font-weight:bold; }
+    @keyframes ticker { 0% { transform:translateX(0); } 100% { transform:translateX(-100%); } }
 
-.slider { position: relative; height:200px; margin:10px 0; border-radius:20px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
-.slide { position:absolute; width:100%; height:100%; opacity:0; transition:opacity 0.8s ease-in-out; }
-.slide.active { opacity:1; }
-.slide img { width:100%; height:100%; object-fit:cover; }
-.slide-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(2,6,23,0.8),transparent); display:flex; align-items:flex-end; padding:15px; }
+    /* ===== شعار ===== */
+    #logo { display:flex; align-items:center; gap:10px; padding:15px; cursor:pointer; }
+    #logo img { width:50px; height:50px; }
+    #logo span { font-size:24px; font-weight:bold; color:#0ff; }
 
-.cat-item { padding:10px 20px; border-radius:20px; background: rgba(255,255,255,0.05); border:1px solid transparent; cursor:pointer; white-space:nowrap; transition:0.3s; }
-.cat-item.active { background:var(--cyan); color:#000; box-shadow:0 0 20px var(--cyan); font-weight:900; }
+    /* ===== السلايدر ===== */
+    #slider { display:flex; overflow:hidden; width:100%; height:200px; margin:20px 0; border-radius:15px; }
+    #slider img { width:100%; transition:0.5s; border-radius:15px; }
+    
+    /* ===== المنتجات ===== */
+    #products { display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:20px; padding:0 20px; }
+    .product { background:rgba(255,255,255,0.05); padding:10px; border-radius:15px; text-align:center; transition:0.3s; backdrop-filter:blur(10px); }
+    .product:hover { transform:scale(1.05); }
+    .product img { width:100%; border-radius:10px; }
+    .product button { margin-top:10px; padding:8px 15px; border:none; background:#0ff; color:#000; font-weight:bold; border-radius:8px; cursor:pointer; transition:0.3s; }
+    .product button:hover { background:#0cc; }
 
-#products { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:10px; }
-.product { background:rgba(255,255,255,0.02); backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:10px; position:relative; }
-.product img { width:100%; height:120px; object-fit:cover; border-radius:15px; margin-bottom:5px; }
-.add-cart { position:absolute; bottom:10px; right:10px; background:var(--cyan); color:#000; border-radius:50%; width:35px; height:35px; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    /* ===== السلة (Drawer) ===== */
+    #cartDrawer { position:fixed; top:0; right:-350px; width:350px; height:100%; background:#111; box-shadow:-5px 0 20px #0ff; transition:0.3s; padding:20px; overflow-y:auto; z-index:999; }
+    #cartDrawer.active { right:0; }
+    #cartDrawer h2 { margin-bottom:20px; color:#0ff; }
+    #cartItems { display:flex; flex-direction:column; gap:15px; }
+    #cartItems div { display:flex; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.05); border-radius:10px; }
+    #cartTotal { margin-top:20px; font-weight:bold; color:#0ff; }
 
-#cart { position:fixed; right:-100%; top:0; width:100%; max-width:400px; height:100%; background:#020617; z-index:5000; transition:0.4s; border-left:1px solid var(--cyan); padding:15px; overflow-y:auto; }
-#cart.open { right:0; }
-.cart-item { display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 10px; border-radius:15px; margin-bottom:5px; }
-</style>
+    /* ===== نموذج الطلب ===== */
+    #orderForm { display:flex; flex-direction:column; gap:15px; margin-top:20px; }
+    #orderForm input, #orderForm button { padding:10px; border-radius:8px; border:none; outline:none; }
+    #orderForm input[type="file"] { background:rgba(255,255,255,0.05); color:#fff; }
+    #orderForm button { background:#0ff; color:#000; font-weight:bold; cursor:pointer; transition:0.3s; }
+    #orderForm button:hover { background:#0cc; }
+
+    /* ===== Loader ===== */
+    #loader { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; }
+    #loader div { border:5px solid #0ff; border-top:5px solid #111; border-radius:50%; width:50px; height:50px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform:rotate(0deg);} 100% { transform:rotate(360deg);} }
+
+    /* ===== Responsive ===== */
+    @media(max-width:600px){ #cartDrawer{width:100%;} #slider{height:150px;} }
+
+    /* ===== لوحة الإدارة مخفية ===== */
+    #adminPanel { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#222; padding:20px; border-radius:15px; z-index:9999; width:300px; }
+    #adminPanel.active { display:block; }
+    #adminPanel input, #adminPanel button { width:100%; margin-top:10px; }
+  </style>
 </head>
 <body>
 
-<!-- التيكر العلوي -->
-<div class="ticker"><span>⚡️ عروض شحن ببجي وفري فاير - ريم ستور ⚡️ دفع آمن عبر شام كاش ⚡️ دعم 24/7 ⚡️</span></div>
+  <!-- Loader -->
+  <div id="loader"><div></div></div>
 
-<!-- الناف بار -->
-<nav class="flex justify-between items-center p-4 glass m-2 rounded-xl">
-    <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-cyan-500 rounded-xl flex items-center justify-center"><i class="fa-solid fa-crown"></i></div>
-        <div><h1 class="font-black text-lg">REEM STORE</h1><span class="text-[8px] text-cyan-400 uppercase">Elite Shop</span></div>
+  <!-- شريط إعلاني -->
+  <div id="ticker"><span>🔥 مرحباً بكم في REEM STORE! عروض ببجي وفري فاير اليوم! 🔥</span></div>
+
+  <!-- شعار -->
+  <div id="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828925.png" alt="Logo">
+    <span>REEM STORE</span>
+  </div>
+
+  <!-- سلايدر -->
+  <div id="slider">
+    <img src="https://www.pubgmobile.com/images/slider1.jpg" alt="PUBG">
+    <img src="https://www.freefirenews.com/images/slider2.jpg" alt="Free Fire">
+    <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Other Game">
+  </div>
+
+  <!-- المنتجات -->
+  <div id="products">
+    <div class="product" data-price="5">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Game1">
+      <h3>لعبة 1</h3>
+      <p>السعر: 5$</p>
+      <button onclick="addToCart(this)">إضافة للسلة</button>
     </div>
-    <button onclick="toggleCart()" class="relative w-10 h-10 glass rounded-xl flex items-center justify-center">
-        <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
-        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-[#020617]">0</span>
-    </button>
-</nav>
-
-<!-- السلايدر -->
-<div class="px-4">
-    <div class="slider">
-        <div class="slide active"><img src="https://images8.alphacoders.com/132/1321414.png"><div class="slide-overlay"><h2 class="font-black text-white text-lg">أفضل عروض الألعاب</h2></div></div>
-        <div class="slide"><img src="https://images4.alphacoders.com/131/1315843.jpeg"><div class="slide-overlay"><h2 class="font-black text-white text-lg">شحن آمن وسريع</h2></div></div>
-        <div class="slide"><img src="https://images.alphacoders.com/132/1321410.jpeg"><div class="slide-overlay"><h2 class="font-black text-white text-lg">خدمة عملاء 24 ساعة</h2></div></div>
+    <div class="product" data-price="10">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Game2">
+      <h3>لعبة 2</h3>
+      <p>السعر: 10$</p>
+      <button onclick="addToCart(this)">إضافة للسلة</button>
     </div>
-</div>
+  </div>
 
-<!-- التصنيفات -->
-<div class="flex gap-3 overflow-x-auto py-4 px-4 no-scrollbar">
-    <div class="cat-item active" onclick="filter('all',this)">الكل</div>
-    <div class="cat-item" onclick="filter('games',this)">ألعاب</div>
-    <div class="cat-item" onclick="filter('apps',this)">تطبيقات</div>
-    <div class="cat-item" onclick="filter('nums',this)">أرقام</div>
-</div>
+  <!-- زر فتح السلة -->
+  <button onclick="toggleCart()" style="position:fixed;bottom:20px;right:20px;padding:15px;background:#0ff;color:#000;border:none;border-radius:50%;font-weight:bold;cursor:pointer;">🛒</button>
 
-<!-- المنتجات -->
-<div id="products"></div>
+  <!-- السلة Drawer -->
+  <div id="cartDrawer">
+    <h2>سلة المشتريات</h2>
+    <div id="cartItems"></div>
+    <div id="cartTotal">الإجمالي: 0$</div>
+    <form id="orderForm" onsubmit="submitOrder(event)">
+      <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+      <input type="text" id="userId" placeholder="آيدي الحساب" required>
+      <input type="text" id="refNumber" placeholder="رقم المرجع" required>
+      <input type="file" id="receipt" accept="image/*" required>
+      <button type="submit">إتمام الطلب</button>
+    </form>
+  </div>
 
-<!-- سلة المشتريات -->
-<div id="cart">
-    <h2 class="font-black text-xl mb-4">سلتك</h2>
-    <div id="cart-items"></div>
-    <div class="mt-4">
-        <span>الإجمالي: </span><span id="total">0$</span>
-    </div>
-</div>
+  <!-- لوحة الإدارة مخفية -->
+  <div id="adminPanel">
+    <h3>لوحة الإدارة</h3>
+    <input type="text" id="productName" placeholder="اسم المنتج">
+    <input type="number" id="productPrice" placeholder="السعر">
+    <input type="text" id="productImage" placeholder="رابط الصورة">
+    <input type="text" id="productCategory" placeholder="الفئة">
+    <button onclick="addProduct()">إضافة منتج</button>
+    <button onclick="closeAdmin()">إغلاق</button>
+  </div>
 
-<script>
-let products = [
-    {name:'325 شدة ببجي',price:5,cat:'games',img:'https://images8.alphacoders.com/132/1321414.png'},
-    {name:'جواهر فري فاير',price:10,cat:'games',img:'https://images4.alphacoders.com/131/1315843.jpeg'},
-    {name:'تطبيق حماية',price:3,cat:'apps',img:'https://images.alphacoders.com/132/1321410.jpeg'}
-];
-let cart = [];
-let currentCat = 'all';
+  <footer style="text-align:center;padding:20px;color:#0ff;">© REEM STORE 2026</footer>
 
-// عرض المنتجات
-function renderProducts(){
-    const container=document.getElementById('products');
-    let list = currentCat==='all'?products:products.filter(p=>p.cat===currentCat);
-    container.innerHTML=list.map((p,i)=>`
-        <div class="product">
-            <img src="${p.img}">
-            <h3 class="text-xs font-bold">${p.name}</h3>
-            <span class="text-cyan-400 font-black">${p.price}$</span>
-            <div class="add-cart" onclick="addCart(${i})"><i class="fa-solid fa-plus"></i></div>
-        </div>
-    `).join('');
-}
-function filter(cat,btn){
-    currentCat=cat;
-    document.querySelectorAll('.cat-item').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    renderProducts();
-}
+  <script>
+    // ===== سلايدر تلقائي =====
+    let sliderImages = document.querySelectorAll('#slider img');
+    let currentSlide = 0;
+    setInterval(() => {
+      sliderImages[currentSlide].style.display = 'none';
+      currentSlide = (currentSlide +1) % sliderImages.length;
+      sliderImages[currentSlide].style.display = 'block';
+    },3000);
+    sliderImages.forEach(img => img.style.display='none');
+    sliderImages[0].style.display='block';
 
-// السلة
-function addCart(i){
-    cart.push(products[i]);
-    document.getElementById('cart-count').innerText=cart.length;
-    updateCart();
-}
-function toggleCart(){ document.getElementById('cart').classList.toggle('open'); }
-function updateCart(){
-    const list=document.getElementById('cart-items');
-    list.innerHTML=cart.map((c,i)=>`<div class="cart-item"><span>${c.name}</span><span>${c.price}$</span></div>`).join('');
-    document.getElementById('total').innerText=cart.reduce((s,c)=>s+c.price,0)+'$';
-}
+    // ===== السلة =====
+    let cart = [];
+    function toggleCart(){ document.getElementById('cartDrawer').classList.toggle('active'); }
+    function addToCart(btn){
+      let product = btn.closest('.product');
+      let name = product.querySelector('h3').innerText;
+      let price = parseFloat(product.dataset.price);
+      cart.push({name, price});
+      renderCart();
+    }
+    function renderCart(){
+      let cartItems = document.getElementById('cartItems');
+      cartItems.innerHTML = '';
+      let total = 0;
+      cart.forEach((item,i)=>{
+        total+=item.price;
+        let div = document.createElement('div');
+        div.innerHTML=`<span>${item.name}</span><span>${item.price}$</span>`;
+        cartItems.appendChild(div);
+      });
+      document.getElementById('cartTotal').innerText = 'الإجمالي: '+total+'$';
+    }
 
-// سلايدر
-let slideIndex=0;
-setInterval(()=>{
-    const slides=document.querySelectorAll('.slide');
-    slides.forEach(s=>s.classList.remove('active'));
-    slideIndex=(slideIndex+1)%slides.length;
-    slides[slideIndex].classList.add('active');
-},5000);
+    // ===== إرسال الطلب للتليجرام =====
+    const BOT_TOKEN='8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
+    const CHAT_ID='7741275208';
+    async function submitOrder(e){
+      e.preventDefault();
+      if(cart.length===0){ alert('السلة فارغة!'); return; }
+      let loader=document.getElementById('loader');
+      loader.style.display='flex';
 
-renderProducts();
-</script>
+      let fullName=document.getElementById('fullName').value;
+      let userId=document.getElementById('userId').value;
+      let refNumber=document.getElementById('refNumber').value;
+      let receipt=document.getElementById('receipt').files[0];
+
+      let formData=new FormData();
+      let text=`طلب جديد:\nالاسم: ${fullName}\nآيدي: ${userId}\nرقم المرجع: ${refNumber}\nالمنتجات:\n`;
+      cart.forEach(p=> text+=`- ${p.name} : ${p.price}$\n`);
+      formData.append('chat_id',CHAT_ID);
+      formData.append('caption',text);
+      formData.append('photo',receipt);
+
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{ method:'POST', body:formData })
+      .then(()=> { alert('تم إرسال الطلب بنجاح!'); cart=[]; renderCart(); document.getElementById('orderForm').reset(); toggleCart(); })
+      .catch(()=>{ alert('حدث خطأ أثناء الإرسال!'); })
+      .finally(()=>{ loader.style.display='none'; });
+    }
+
+    // ===== لوحة الإدارة مخفية =====
+    let adminPanel=document.getElementById('adminPanel');
+    document.getElementById('logo').addEventListener('mousedown',()=>{
+      let password=prompt('ادخل كلمة المرور للوصول للوحة الإدارة');
+      if(password==='reem2026'){ adminPanel.classList.add('active'); }
+    });
+    function closeAdmin(){ adminPanel.classList.remove('active'); }
+
+    // ===== إضافة منتجات من لوحة الإدارة =====
+    function addProduct(){
+      let name=document.getElementById('productName').value;
+      let price=document.getElementById('productPrice').value;
+      let img=document.getElementById('productImage').value;
+      let category=document.getElementById('productCategory').value;
+      if(!name||!price||!img){ alert('املأ جميع الحقول'); return; }
+      let div=document.createElement('div');
+      div.classList.add('product');
+      div.dataset.price=price;
+      div.innerHTML=`<img src="${img}" alt="${name}"><h3>${name}</h3><p>السعر: ${price}$</p><button onclick="addToCart(this)">إضافة للسلة</button>`;
+      document.getElementById('products').appendChild(div);
+      alert('تم إضافة المنتج!');
+      document.getElementById('productName').value=''; document.getElementById('productPrice').value='';
+      document.getElementById('productImage').value=''; document.getElementById('productCategory').value='';
+    }
+  </script>
 </body>
 </html>
