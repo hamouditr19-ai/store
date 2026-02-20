@@ -7,102 +7,53 @@
 
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:#0f172a;
-color:white;
+  margin:0;
+  font-family:Arial;
+  background:#111827;
+  color:white;
+  text-align:center;
 }
 
 header{
-background:#111827;
-padding:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-color:#00f7ff;
+  padding:20px;
+  font-size:26px;
+  font-weight:bold;
+  background:#1f2937;
+  color:#00f7ff;
 }
 
-nav{
-display:flex;
-justify-content:center;
-gap:20px;
-background:#1e293b;
-padding:10px;
-flex-wrap:wrap;
-}
-
-nav button{
-background:#00f7ff;
-border:none;
-padding:10px 20px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-}
-
-.section{
-display:none;
-padding:20px;
-}
-
-.active{
-display:block;
-}
-
-.products{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:20px;
+.container{
+  padding:30px;
 }
 
 .card{
-background:#1e293b;
-width:220px;
-padding:15px;
-border-radius:15px;
-box-shadow:0 0 15px #00f7ff33;
-text-align:center;
+  background:#1f2937;
+  padding:20px;
+  border-radius:12px;
+  max-width:300px;
+  margin:20px auto;
 }
 
 .card img{
-width:100%;
-border-radius:10px;
+  width:100%;
+  border-radius:10px;
 }
 
-.card button{
-margin-top:10px;
-background:#00f7ff;
-border:none;
-padding:8px 15px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
+button{
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  background:#00f7ff;
+  font-weight:bold;
+  cursor:pointer;
 }
 
 footer{
-background:#111827;
-margin-top:40px;
-padding:20px;
-text-align:center;
-font-size:14px;
-}
-
-.social a{
-margin:0 10px;
-color:#00f7ff;
-text-decoration:none;
-font-size:18px;
-}
-
-.links{
-margin-top:10px;
-}
-
-.links a{
-color:#ccc;
-margin:0 10px;
-text-decoration:none;
+  margin-top:40px;
+  padding:20px;
+  background:#1f2937;
+  font-size:14px;
 }
 </style>
 </head>
@@ -113,74 +64,19 @@ text-decoration:none;
 Reem Store | ريم ستوري
 </header>
 
-<nav>
-<button onclick="showSection('pubg')">PUBG</button>
-<button onclick="showSection('freefire')">Free Fire</button>
-<button onclick="showSection('apps')">تطبيقات</button>
-</nav>
-
-<!-- قسم PUBG -->
-<div id="pubg" class="section active">
-<h2>شحن PUBG</h2>
-<div class="products">
+<div class="container">
 
 <div class="card">
 <img src="https://i.imgur.com/6X4z9kN.png">
-<h3>60 UC</h3>
-<p>5$</p>
-<button onclick="order('PUBG 60 UC')">شراء</button>
+<h3>شحن PUBG 60 UC</h3>
+<p>السعر: 5$</p>
+<button onclick="order()">شراء الآن</button>
 </div>
 
-</div>
-</div>
-
-<!-- قسم Free Fire -->
-<div id="freefire" class="section">
-<h2>شحن Free Fire</h2>
-<div class="products">
-
-<div class="card">
-<img src="https://i.imgur.com/XqQZQZC.png">
-<h3>100 Diamonds</h3>
-<p>4$</p>
-<button onclick="order('Free Fire 100 Diamonds')">شراء</button>
-</div>
-
-</div>
-</div>
-
-<!-- قسم التطبيقات -->
-<div id="apps" class="section">
-<h2>خدمات التطبيقات</h2>
-<div class="products">
-
-<div class="card">
-<img src="https://i.imgur.com/zYIlgBl.png">
-<h3>اشتراك نتفلكس</h3>
-<p>3$</p>
-<button onclick="order('Netflix Subscription')">شراء</button>
-</div>
-
-</div>
 </div>
 
 <footer>
-
-<div class="social">
-<a href="#">Instagram</a>
-<a href="#">TikTok</a>
-<a href="#">Telegram</a>
-</div>
-
-<div class="links">
-<a href="#">سياسة الخصوصية</a>
-<a href="#">شروط الاستخدام</a>
-</div>
-
-<br>
-
 © 2026 Reem Store. جميع الحقوق محفوظة.
-
 </footer>
 
 <script>
@@ -188,33 +84,28 @@ Reem Store | ريم ستوري
 const BOT_TOKEN = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
 const CHAT_ID = "7741275208";
 
-function showSection(id){
-document.querySelectorAll(".section").forEach(sec=>sec.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-}
+function order(){
+  const name = prompt("ادخل اسمك:");
+  const id = prompt("ادخل ID الحساب:");
 
-function order(product){
-const name = prompt("ادخل اسمك:");
-const gameId = prompt("ادخل ID الحساب:");
-
-const message = `
+  const message = `
 🛒 طلب جديد - Reem Store
 
 👤 الاسم: ${name}
-🎮 المنتج: ${product}
-🆔 ID: ${gameId}
+🆔 ID: ${id}
+🎮 المنتج: شحن PUBG 60 UC
 `;
 
-fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-chat_id: CHAT_ID,
-text: message
-})
-})
-.then(()=>alert("تم إرسال الطلب ✅"))
-.catch(()=>alert("حدث خطأ ❌"));
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      chat_id: CHAT_ID,
+      text: message
+    })
+  })
+  .then(()=>alert("تم إرسال الطلب ✅"))
+  .catch(()=>alert("حدث خطأ ❌"));
 }
 
 </script>
