@@ -7,26 +7,49 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0f172a; color: white; overflow-x: hidden; }
         .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(6, 182, 212, 0.2); }
-        .neon-border { border: 1px solid #06b6d4; box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); }
+        .neon-border { border: 1px solid #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.2); }
         .cyan-text { color: #06b6d4; }
         .cyan-bg { background-color: #06b6d4; }
+        
+        /* البنر المتحرك */
+        .promo-banner {
+            background: linear-gradient(90deg, #0f172a, #06b6d4, #0f172a);
+            padding: 8px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .animate-text {
+            display: inline-block;
+            animation: marquee 15s linear infinite;
+            font-weight: bold;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
     </style>
 </head>
 <body class="min-h-screen">
 
+    <div class="promo-banner border-b border-cyan-400/30">
+        <div class="animate-text">
+            🌟 أهلاً بكم في ريم ستور - Reem Store 🌟 أفضل الأسعار لشحن الألعاب والبطاقات الرقمية 🌟 دفع آمن وسريع عبر شام كاش 🌟
+        </div>
+    </div>
+
     <nav class="sticky top-0 z-50 glass-card py-4 px-6 flex justify-between items-center border-b border-cyan-500/30">
         <h1 class="text-2xl font-bold cyan-text">Reem Store | ريم ستور</h1>
-        <button onclick="toggleCart()" class="relative p-2 bg-slate-800 rounded-lg">
-            🛒 <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+        <button onclick="toggleCart()" class="relative p-2 bg-slate-800 rounded-lg border border-cyan-500/50">
+            🛒 <span id="cart-count" class="absolute -top-2 -right-2 bg-cyan-500 text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
         </button>
     </nav>
 
     <main class="container mx-auto px-4 py-8">
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold mb-4">أهلاً بك في عالم التميز</h2>
-            <p class="text-slate-400">متجرك الأول لشحن الألعاب والخدمات الرقمية</p>
+            <h2 class="text-4xl font-bold mb-2">ريم ستور لشحن الألعاب</h2>
+            <p class="text-cyan-400">متجرك الموثوق للخدمات الرقمية</p>
         </div>
 
         <div id="store-content">
@@ -36,7 +59,7 @@
     <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full md:w-96 glass-card transform -translate-x-full transition-transform duration-300 z-[60] p-6 overflow-y-auto">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-bold cyan-text">سلة المشتريات</h2>
-            <button onclick="toggleCart()" class="text-2xl">&times;</button>
+            <button onclick="toggleCart()" class="text-2xl text-cyan-400">&times;</button>
         </div>
         
         <div id="cart-items" class="space-y-4 mb-6">
@@ -45,55 +68,59 @@
         <div class="border-t border-slate-700 pt-4">
             <div class="flex justify-between text-lg font-bold mb-4">
                 <span>الإجمالي:</span>
-                <span id="cart-total">0</span><span> ل.س</span>
+                <span id="cart-total" class="cyan-text">0</span><span class="cyan-text"> $</span>
             </div>
             
-            <div class="space-y-3 mb-6">
-                <input type="text" id="cust-name" placeholder="اسم العميل" class="w-full p-2 rounded bg-slate-900 border border-slate-700">
-                <input type="text" id="cust-id" placeholder="ID الحساب داخل اللعبة" class="w-full p-2 rounded bg-slate-900 border border-slate-700">
+            <div class="space-y-3 mb-6 text-black">
+                <input type="text" id="cust-name" placeholder="اسم العميل" class="w-full p-2 rounded bg-slate-100 border border-cyan-500 outline-none">
+                <input type="text" id="cust-id" placeholder="ID الحساب داخل اللعبة" class="w-full p-2 rounded bg-slate-100 border border-cyan-500 outline-none">
             </div>
 
-            <div class="p-4 bg-slate-900 rounded-lg mb-4 border border-cyan-500/20">
-                <p class="text-sm cyan-text mb-2">تعليمات الدفع (شام كاش):</p>
+            <div class="p-4 bg-slate-900 rounded-lg mb-4 border border-cyan-500/50">
+                <p class="text-sm cyan-text mb-2 font-bold">طريقة الدفع (شام كاش):</p>
                 <div class="flex items-center gap-2 mb-2">
-                    <code id="payment-code" class="bg-black p-2 rounded text-xs flex-1">17ac4a94cb1ed493e47a8526892294dd</code>
-                    <button onclick="copyCode()" class="text-xs cyan-bg text-black px-2 py-1 rounded">نسخ</button>
+                    <code id="payment-code" class="bg-black p-2 rounded text-[10px] flex-1 text-white border border-slate-700">17ac4a94cb1ed493e47a8526892294dd</code>
+                    <button onclick="copyCode()" class="text-xs cyan-bg text-black px-2 py-1 rounded font-bold">نسخ</button>
                 </div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=ShamCashPayment" alt="Barcode" class="mx-auto w-32 h-32 mb-2 rounded border border-white">
-                <input type="text" id="trans-id" placeholder="رقم عملية الدفع" class="w-full p-2 rounded bg-black border border-slate-700 text-sm">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" alt="Barcode" class="mx-auto w-32 h-32 mb-2 rounded border-2 border-cyan-500">
+                <input type="text" id="trans-id" placeholder="أدخل رقم عملية التحويل" class="w-full p-2 rounded bg-black border border-cyan-500 text-sm text-white">
             </div>
 
-            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-lg hover:opacity-90 transition">إرسال الطلب عبر تلجرام</button>
+            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-lg hover:brightness-110 transition shadow-lg shadow-cyan-500/20">تأكيد وإرسال الطلب</button>
             <button onclick="clearCart()" class="w-full mt-2 text-red-400 text-sm py-1">تفريغ السلة</button>
         </div>
     </div>
 
     <footer class="mt-20 border-t border-slate-800 py-10 text-center">
-        <div class="flex justify-center gap-6 mb-4">
-            <a href="#" class="hover:text-cyan-400">واتساب</a>
-            <a href="#" class="hover:text-cyan-400">تلجرام</a>
-            <a href="#" class="hover:text-cyan-400">انستقرام</a>
-        </div>
-        <p class="text-slate-500 text-sm mb-2">© 2026 Reem Store. جميع الحقوق محفوظة</p>
-        <div class="text-xs text-slate-600">
-            <a href="#">سياسة الخصوصية</a> | <a href="#">شروط الاستخدام</a>
+        <p class="text-slate-500 text-sm mb-4">© 2026 Reem Store. جميع الحقوق محفوظة</p>
+        <div class="flex justify-center gap-6 text-xs text-cyan-500/60">
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">شروط الاستخدام</a>
         </div>
     </footer>
 
     <script>
-        // --- 🛠 إعدادات المتجر (أضف واحذف من هنا بسهولة) ---
+        // --- 🛠 بيانات المتجر (الصور تم تحديثها) ---
         const storeData = [
             {
-                category: "شحن ببجي موبايل",
+                category: "شحن ببجي موبايل | PUBG",
                 products: [
-                    { id: 1, name: "60 شدة", price: 5000, img: "https://placehold.co/200x200/0f172a/06b6d4?text=PUBG" },
-                    { id: 2, name: "325 شدة", price: 25000, img: "https://placehold.co/200x200/0f172a/06b6d4?text=PUBG" }
+                    { id: 1, name: "60 UC شدة", price: 0.99, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" },
+                    { id: 2, name: "325 UC شدة", price: 4.99, img: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=300&q=80" },
+                    { id: 3, name: "660 UC شدة", price: 9.99, img: "https://images.unsplash.com/photo-1624396115567-b459252f74bf?auto=format&fit=crop&w=300&q=80" }
                 ]
             },
             {
-                category: "بطاقات جوجل بلاي",
+                category: "جواهر فري فاير | FREE FIRE",
                 products: [
-                    { id: 3, name: "بطاقة 5$", price: 45000, img: "https://placehold.co/200x200/0f172a/06b6d4?text=Google" }
+                    { id: 4, name: "100 جوهرة", price: 1.20, img: "https://images.unsplash.com/photo-1614680376593-902f74cc0d41?auto=format&fit=crop&w=300&q=80" },
+                    { id: 5, name: "530 جوهرة", price: 5.50, img: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=300&q=80" }
+                ]
+            },
+            {
+                category: "بطاقات الهدايا | GIFTS",
+                products: [
+                    { id: 6, name: "بطاقة Google Play 5$", price: 5.50, img: "https://images.unsplash.com/photo-1557853113-99a97f5d4590?auto=format&fit=crop&w=300&q=80" }
                 ]
             }
         ];
@@ -102,19 +129,20 @@
         const botToken = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const chatId = '7741275208';
 
-        // --- وظائف المتجر ---
         function renderStore() {
             const container = document.getElementById('store-content');
             container.innerHTML = storeData.map(sec => `
                 <div class="mb-12">
-                    <h3 class="text-2xl font-bold mb-6 border-r-4 border-cyan-500 pr-4">${sec.category}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <h3 class="text-xl font-bold mb-6 border-r-4 border-cyan-500 pr-3">${sec.category}</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         ${sec.products.map(p => `
-                            <div class="glass-card p-4 rounded-xl neon-border hover:scale-105 transition-transform">
-                                <img src="${p.img}" alt="${p.name}" class="w-full h-40 object-cover rounded-lg mb-4">
-                                <h4 class="font-bold mb-2">${p.name}</h4>
-                                <p class="cyan-text font-bold mb-4">${p.price.toLocaleString()} ل.س</p>
-                                <button onclick="addToCart(${p.id}, '${p.name}', ${p.price})" class="w-full cyan-bg text-black py-2 rounded-lg font-bold">إضافة للسلة</button>
+                            <div class="glass-card p-3 rounded-xl neon-border flex flex-col justify-between">
+                                <div>
+                                    <img src="${p.img}" alt="${p.name}" class="w-full h-32 object-cover rounded-lg mb-3">
+                                    <h4 class="font-bold text-sm mb-1">${p.name}</h4>
+                                    <p class="cyan-text font-bold mb-4 text-lg">$ ${p.price}</p>
+                                </div>
+                                <button onclick="addToCart(${p.id}, '${p.name}', ${p.price})" class="w-full cyan-bg text-black py-2 rounded-lg font-bold text-xs">إضافة للسلة</button>
                             </div>
                         `).join('')}
                     </div>
@@ -125,6 +153,7 @@
         function addToCart(id, name, price) {
             cart.push({ id, name, price });
             updateCartUI();
+            alert(`تمت إضافة ${name} إلى السلة`);
         }
 
         function updateCartUI() {
@@ -134,16 +163,16 @@
             
             count.innerText = cart.length;
             list.innerHTML = cart.map((item, index) => `
-                <div class="flex justify-between items-center bg-slate-800 p-3 rounded">
+                <div class="flex justify-between items-center bg-slate-800 p-3 rounded border border-slate-700">
                     <div>
-                        <p class="text-sm">${item.name}</p>
-                        <p class="text-xs cyan-text">${item.price} ل.س</p>
+                        <p class="text-sm font-bold">${item.name}</p>
+                        <p class="text-xs cyan-text">$ ${item.price}</p>
                     </div>
-                    <button onclick="removeFromCart(${index})" class="text-red-500">🗑</button>
+                    <button onclick="removeFromCart(${index})" class="text-red-500 font-bold">حذف</button>
                 </div>
             `).join('');
 
-            total.innerText = cart.reduce((sum, item) => sum + item.price, 0).toLocaleString();
+            total.innerText = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
         }
 
         function removeFromCart(index) {
@@ -163,7 +192,7 @@
         function copyCode() {
             const code = document.getElementById('payment-code').innerText;
             navigator.clipboard.writeText(code);
-            alert("تم نسخ الكود!");
+            alert("تم نسخ كود الدفع!");
         }
 
         async function sendOrder() {
@@ -172,33 +201,32 @@
             const transId = document.getElementById('trans-id').value;
 
             if (!name || !gameId || cart.length === 0 || !transId) {
-                alert("يرجى ملء كافة البيانات وإضافة منتجات للسلة");
+                alert("يرجى إكمال جميع البيانات ورقم العملية");
                 return;
             }
 
-            let productsList = cart.map(i => `- ${i.name} (${i.price} ل.س)`).join('%0A');
-            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('%0A');
+            let total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
-            const message = `🛍 طلب جديد من ريم ستور %0A%0A` +
-                            `👤 الاسم: ${name} %0A` +
+            const message = `🚀 طلب جديد من Reem Store %0A%0A` +
+                            `👤 العميل: ${name} %0A` +
                             `🆔 الآيدي: ${gameId} %0A` +
-                            `🧾 رقم العملية: ${transId} %0A%0A` +
-                            `📦 المنتجات: %0A${productsList} %0A%0A` +
-                            `💰 المجموع: ${total} ل.س`;
+                            `💵 رقم العملية: ${transId} %0A%0A` +
+                            `📦 الطلبات: %0A${productsList} %0A%0A` +
+                            `💰 الإجمالي: $ ${total}`;
 
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=html`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`;
 
             try {
                 await fetch(url);
-                alert("تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً.");
+                alert("تم إرسال الطلب بنجاح!");
                 clearCart();
                 toggleCart();
             } catch (e) {
-                alert("حدث خطأ في الإرسال، حاول لاحقاً.");
+                alert("خطأ في الاتصال");
             }
         }
 
-        // Initial Load
         renderStore();
     </script>
 </body>
