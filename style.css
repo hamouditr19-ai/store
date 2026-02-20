@@ -1,0 +1,40 @@
+body{
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+
+h1{
+  margin:20px;
+  color:#00f7ff;
+}
+
+#products{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:#1e293b;
+  width:250px;
+  margin:15px;
+  padding:15px;
+  border-radius:15px;
+  box-shadow:0 0 15px #00f7ff44;
+}
+
+.card img{
+  width:100%;
+  border-radius:10px;
+}
+
+button{
+  background:#00f7ff;
+  border:none;
+  padding:10px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
