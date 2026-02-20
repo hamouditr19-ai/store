@@ -3,192 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | النسخة الاحترافية</title>
+    <title>Reem Store | Infinite Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg: #070d16; --card: #121c2c; --accent: #00d4ff; 
-            --grad: linear-gradient(135deg, #00d4ff, #0055ff);
-            --success: #00ff88; --text: #ffffff;
+            --bg: #030712; --card: #111827; --accent: #00f2ff; 
+            --grad: linear-gradient(135deg, #00f2ff, #0062ff);
+            --success: #10b981; --gold: #fbbf24; --text: #f3f4f6;
         }
 
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; overflow-x: hidden; }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 120px; overflow-x: hidden; }
 
-        /* --- تأثير النيون والتحميل --- */
-        .glow-text {
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-            animation: neon 1.5s ease-in-out infinite alternate;
+        /* --- أنيميشن الظهور --- */
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .fade-in { animation: zoomIn 0.5s ease-out forwards; }
+
+        /* --- Header & Rank --- */
+        header { 
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(17, 24, 39, 0.8); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
         }
-        @keyframes neon { from { opacity: 0.8; } to { opacity: 1; text-shadow: 0 0 20px var(--accent); } }
+        .user-rank { font-size: 10px; background: var(--grad); color: #000; padding: 2px 10px; border-radius: 50px; font-weight: 900; margin-right: 10px; }
 
-        /* --- Header & Wallet --- */
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a2a3a; }
-        .wallet-box { 
-            background: var(--card); padding: 15px 20px; margin: 15px; border-radius: 25px; 
-            border: 1px solid rgba(0,212,255,0.2); display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        /* --- بطاقة المحفظة الملكية --- */
+        .royal-card {
+            background: var(--card); margin: 15px; padding: 25px; border-radius: 30px;
+            border: 1px solid rgba(0, 242, 255, 0.2); position: relative;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.05);
         }
-        .bal-val { font-size: 26px; font-weight: 900; color: var(--accent); }
+        .balance-glow { font-size: 40px; font-weight: 900; color: var(--accent); text-shadow: 0 0 15px rgba(0, 242, 255, 0.4); }
 
-        /* --- الأقسام المتطورة (Grid) --- */
-        .section-title { margin: 20px 20px 10px; font-size: 18px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-        .cat-card { 
-            background: var(--card); border-radius: 20px; padding: 20px; text-align: center;
-            border: 1px solid rgba(255,255,255,0.03); cursor: pointer; position: relative; overflow: hidden;
-        }
-        .cat-card:active { transform: scale(0.95); }
-        .cat-card i { font-size: 35px; margin-bottom: 10px; display: block; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .cat-card b { font-size: 14px; }
-        .badge { position: absolute; top: 10px; left: -20px; background: var(--success); color: #000; font-size: 9px; padding: 2px 20px; transform: rotate(-45deg); font-weight: bold; }
-
-        /* --- شريط الآراء (Ticker) --- */
-        .ticker { background: #121c2c; padding: 8px 0; margin-top: 25px; border-y: 1px solid #1a2a3a; overflow: hidden; }
-        .ticker-wrap { display: flex; animation: slide 25s linear infinite; width: max-content; }
-        .ticker-item { padding: 0 30px; font-size: 12px; color: #888; border-left: 1px solid #333; }
-        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(50%); } }
-
-        /* --- الزر العائم (FAB) --- */
-        .fab { 
-            position: fixed; bottom: 90px; left: 20px; width: 55px; height: 55px; 
-            background: var(--grad); border-radius: 50%; display: flex; align-items: center; 
-            justify-content: center; font-size: 24px; color: #fff; z-index: 1000;
-            box-shadow: 0 5px 20px rgba(0,212,255,0.5);
+        /* --- قسم العروض اليومية --- */
+        .flash-sale {
+            background: linear-gradient(90deg, #ff4b2b, #ff416c);
+            margin: 15px; padding: 15px; border-radius: 20px;
+            display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* --- Modals & Styling --- */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 2000; padding: 20px; align-items: center; justify-content: center; }
-        .modal-content { background: #121c2c; width: 100%; max-width: 400px; border-radius: 30px; padding: 30px; border: 1px solid var(--accent); position: relative; }
-        .input-group { background: #070d16; border-radius: 15px; padding: 5px 15px; margin-bottom: 15px; border: 1px solid #1a2a3a; }
-        .input-group input { background: none; border: none; color: #fff; width: 100%; padding: 12px 0; outline: none; }
-        .btn-confirm { background: var(--grad); border: none; color: #fff; padding: 15px; width: 100%; border-radius: 15px; font-weight: 900; cursor: pointer; font-size: 16px; }
+        /* --- شبكة الأقسام الفخمة --- */
+        .main-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+        .premium-card {
+            background: var(--card); border-radius: 25px; padding: 30px 15px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.05); position: relative; transition: 0.3s;
+        }
+        .premium-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .premium-card i { font-size: 45px; margin-bottom: 15px; display: block; color: var(--accent); }
 
-        /* --- سجل العمليات --- */
-        .history-card { background: var(--card); margin: 10px 15px; border-radius: 15px; padding: 15px; display: flex; justify-content: space-between; border-left: 4px solid var(--success); }
-        
-        /* --- Bottom Nav --- */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(7,13,22,0.95); display: flex; justify-content: space-around; padding: 15px; border-top: 1px solid #1a2a3a; backdrop-filter: blur(10px); }
-        .nav-link { color: #555; text-align: center; font-size: 10px; text-decoration: none; cursor: pointer; }
+        /* --- شريط التقييمات --- */
+        .reviews-bar { background: #0a0f1d; padding: 12px 0; border-y: 1px solid #1f2937; overflow: hidden; }
+        .reviews-track { display: flex; gap: 40px; animation: scroll 30s linear infinite; width: max-content; }
+        .review-item { font-size: 12px; color: #9ca3af; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
+        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(50%); } }
+
+        /* --- مودال المنتجات --- */
+        .modal-bottom { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 2000; align-items: flex-end; }
+        .modal-body { 
+            background: var(--card); width: 100%; border-radius: 35px 35px 0 0; padding: 30px;
+            max-height: 85vh; overflow-y: auto; border-top: 3px solid var(--accent);
+        }
+
+        /* --- أزرار الشراء --- */
+        .buy-row { 
+            background: #0a0f1d; padding: 15px; border-radius: 20px; margin-bottom: 12px;
+            display: flex; justify-content: space-between; align-items: center; border: 1px solid #1f2937;
+        }
+        .buy-btn { background: var(--grad); border: none; color: white; padding: 10px 20px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+        /* --- القائمة السفلية --- */
+        .nav-dock {
+            position: fixed; bottom: 20px; left: 20px; right: 20px; height: 75px;
+            background: rgba(17, 24, 39, 0.9); backdrop-filter: blur(20px);
+            border-radius: 25px; display: flex; justify-content: space-around; align-items: center;
+            border: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+        .nav-link { color: #4b5563; font-size: 10px; text-align: center; }
         .nav-link.active { color: var(--accent); }
-        .nav-link i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .nav-link i { font-size: 24px; display: block; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-weight: 900; font-size: 20px; letter-spacing: 1px;" onclick="showAdmin()">💎 REEM STORE</div>
-    <i class="fas fa-bell" onclick="alert('لا توجد إشعارات جديدة')"></i>
+    <div style="font-weight: 900; font-size: 22px;">REEM <span style="color:var(--accent)">STORE</span> <span class="user-rank" id="userRank">عميل جديد</span></div>
+    <div onclick="adminPanel()"><i class="fas fa-crown" style="color:var(--gold)"></i></div>
 </header>
 
-<div class="wallet-box">
-    <div>
-        <small style="color:#666; font-weight: bold;">الرصيد المتوفر</small>
-        <div class="bal-val glow-text"><span id="userBalance">0.456</span> $</div>
-    </div>
-    <button style="background:var(--grad); border:none; color:#fff; padding:10px 25px; border-radius:15px; font-weight:bold;" onclick="openDeposit()">شحن +</button>
-</div>
-
-<div class="section-title">🚀 الخدمات السريعة</div>
-<div class="grid">
-    <div class="cat-card" onclick="openCat('الألعاب')">
-        <div class="badge">الأكثر طلباً</div>
-        <i class="fas fa-gamepad"></i>
-        <b>شحن ألعاب</b>
-    </div>
-    <div class="cat-card" onclick="openCat('التطبيقات')">
-        <i class="fas fa-mobile-alt"></i>
-        <b>تطبيقات VIP</b>
-    </div>
-    <div class="cat-card" onclick="openCat('سوشال ميديا')">
-        <i class="fas fa-share-alt"></i>
-        <b>رشق متابعين</b>
-    </div>
-    <div class="cat-card" onclick="openCat('الأرقام')">
-        <i class="fas fa-sim-card"></i>
-        <b>أرقام وهمية</b>
+<div class="royal-card fade-in">
+    <div style="font-size: 13px; color: #9ca3af; font-weight: bold;">الرصيد الملكي</div>
+    <div class="balance-glow"><span id="userBal">0.00</span> $</div>
+    <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <button onclick="openModal('chargeModal')" style="background:var(--grad); border:none; color:white; padding:12px 25px; border-radius:15px; font-weight:900; flex:1;">شحن الرصيد</button>
+        <button onclick="window.open('https://wa.me/963900000000')" style="background:#1f2937; border:none; color:white; padding:12px; border-radius:15px;"><i class="fab fa-whatsapp"></i></button>
     </div>
 </div>
 
-<div class="ticker">
-    <div class="ticker-wrap">
-        <div class="ticker-item">✅ تم شحن 660 شدة للعميل **محمد**</div>
-        <div class="ticker-item">✅ انضمام 5000 متابع لحساب **ريم**</div>
-        <div class="ticker-item">✅ تفعيل رقم أمريكي للعميل **أحمد**</div>
-        <div class="ticker-item">✅ شحن رصيد بقيمة 50$ عبر شام كاش</div>
+<div class="flash-sale">
+    <div style="color:white; font-weight: 900;"><i class="fas fa-bolt"></i> عروض تنتهي قريباً!</div>
+    <div id="timer" style="background:rgba(0,0,0,0.3); padding:5px 10px; border-radius:8px; font-weight: bold;">00:59:59</div>
+</div>
+
+<div class="main-grid fade-in">
+    <div class="premium-card" onclick="openCat('الألعاب')"><i class="fas fa-gamepad"></i><b>قسم الألعاب</b></div>
+    <div class="premium-card" onclick="openCat('التطبيقات')"><i class="fas fa-rocket"></i><b>تطبيقات VIP</b></div>
+    <div class="premium-card" onclick="openCat('السوشال')"><i class="fas fa-fire"></i><b>دعم اجتماعي</b></div>
+    <div class="premium-card" onclick="openCat('الأرقام')"><i class="fas fa-shield-alt"></i><b>أرقام وهمية</b></div>
+</div>
+
+<div class="reviews-bar">
+    <div class="reviews-track">
+        <div class="review-item">⭐ ⭐ ⭐ ⭐ ⭐ "أفضل متجر تعاملت معه" - @Ahmad</div>
+        <div class="review-item">⭐ ⭐ ⭐ ⭐ ⭐ "تم شحن شدات ببجي في دقيقة!" - @Samer</div>
+        <div class="review-item">⭐ ⭐ ⭐ ⭐ ⭐ "شكراً ريم ستور على المصداقية" - @Reem_Fans</div>
+        <div class="review-item">⭐ ⭐ ⭐ ⭐ ⭐ "أرقام شغالة 100%" - @Khalid</div>
     </div>
 </div>
 
-<div class="section-title">🕒 آخر العمليات</div>
-<div id="historyList">
-    <div class="history-card">
-        <div><b>شحن رصيد - شام كاش</b><br><small style="color:#666;">اليوم، 10:30 AM</small></div>
-        <div style="color:var(--success); font-weight: bold;">+5.00$</div>
-    </div>
-</div>
-
-<div class="fab" onclick="window.open('https://wa.me/963900000000')">
-    <i class="fab fa-whatsapp"></i>
-</div>
-
-<div id="depositModal" class="modal">
-    <div class="modal-content">
-        <h3 style="text-align: center;">إيداع شام كاش 💳</h3>
-        <center>
-            <img src="https://raw.githubusercontent.com/YourRepo/main/58152.jpg" style="width:150px; border-radius:15px; border:2px solid var(--accent);">
-            <div style="background:#070d16; padding:10px; margin:15px 0; border-radius:10px; border:1px dashed var(--accent); font-size:11px; color:var(--accent);">
-                17ac4a94cb1ed493e47a8526892294dd
-            </div>
-        </center>
-        <div class="input-group"><input type="number" id="payAmt" placeholder="المبلغ المودع ($)"></div>
-        <div class="input-group"><input type="text" id="payID" placeholder="رقم العملية"></div>
-        <button class="btn-confirm" onclick="submitPay()">تأكيد وإرسال 🚀</button>
-        <button onclick="closeModals()" style="width:100%; background:none; border:none; color:#555; margin-top:10px;">إغلاق</button>
-    </div>
-</div>
-
-<nav class="bottom-nav">
+<div class="nav-dock">
     <div class="nav-link active"><i class="fas fa-th-large"></i>الرئيسية</div>
-    <div class="nav-link" onclick="alert('قريباً: متجر الحسابات المباشر')"><i class="fas fa-shopping-bag"></i>المتجر</div>
-    <div class="nav-link" onclick="openDeposit()"><i class="fas fa-wallet"></i>الشحن</div>
-    <div class="nav-link" onclick="window.open('https://t.me/YourUser')"><i class="fas fa-headset"></i>الدعم</div>
-</nav>
+    <div class="nav-link" onclick="openModal('chargeModal')"><i class="fas fa-plus-circle"></i>شحن</div>
+    <div class="nav-link" onclick="alert('سجل طلباتك فارغ حالياً')"><i class="fas fa-history"></i>طلباتي</div>
+    <div class="nav-link" onclick="window.open('https://t.me/YourUser')"><i class="fab fa-telegram"></i>تليجرام</div>
+</div>
+
+<div id="productModal" class="modal-bottom">
+    <div class="modal-body">
+        <h2 id="catTitle" style="margin-top:0; color:var(--accent);"></h2>
+        <div id="productList"></div>
+        <button onclick="closeModal('productModal')" style="width:100%; padding:15px; border:none; background:#1f2937; color:white; border-radius:15px; margin-top:10px;">رجوع</button>
+    </div>
+</div>
+
+<div id="chargeModal" class="modal-bottom">
+    <div class="modal-body" style="text-align:center;">
+        <h2>نظام الإيداع اليدوي 💎</h2>
+        <img src="https://raw.githubusercontent.com/YourRepo/main/58152.jpg" style="width:160px; border-radius:25px; border:3px solid var(--accent); margin-bottom:15px;">
+        <div onclick="copyText()" style="background:#030712; padding:15px; border-radius:15px; border:1px dashed var(--accent); color:var(--accent); font-weight:bold; cursor:pointer; margin-bottom:20px;">
+            17ac4a94cb1ed493e47a8526892294dd <i class="fas fa-copy"></i>
+        </div>
+        <input type="number" id="amt" placeholder="المبلغ ($)" style="width:100%; padding:15px; border-radius:15px; background:#030712; border:1px solid #1f2937; color:white; margin-bottom:10px;">
+        <input type="text" id="txid" placeholder="رقم العملية" style="width:100%; padding:15px; border-radius:15px; background:#030712; border:1px solid #1f2937; color:white; margin-bottom:15px;">
+        <button onclick="confirmDep()" class="buy-btn" style="width:100%; padding:18px; font-size:18px;">تأكيد التحويل 🚀</button>
+    </div>
+</div>
 
 <script>
-    const WALLET = "17ac4a94cb1ed493e47a8526892294dd";
-    let balance = parseFloat(localStorage.getItem('reem_bal')) || 0.456;
-    document.getElementById('userBalance').innerText = balance.toFixed(3);
+    let balance = parseFloat(localStorage.getItem('reem_bal')) || 0.00;
+    let ordersCount = parseInt(localStorage.getItem('reem_count')) || 0;
+    
+    function updateUI() {
+        document.getElementById('userBal').innerText = balance.toFixed(2);
+        let rank = "عميل جديد";
+        if(ordersCount > 5) rank = "عميل برونزي 🥉";
+        if(ordersCount > 15) rank = "عميل ذهبي 🥇";
+        if(ordersCount > 30) rank = "عميل ملكي 💎";
+        document.getElementById('userRank').innerText = rank;
+    }
+    updateUI();
 
-    function openDeposit() { document.getElementById('depositModal').style.display = 'flex'; }
-    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    const data = {
+        'الألعاب': [{n:'شدات ببجي 660', p:9.9}, {n:'جواهر فري فاير 1000', p:7.5}],
+        'التطبيقات': [{n:'نيتفلكس شهر', p:4}, {n:'سبوتيفاي سنة', p:12}],
+        'السوشال': [{n:'1000 متابع انستا', p:1.5}, {n:'5000 مشاهدة تيك توك', p:0.9}],
+        'الأرقام': [{n:'رقم واتساب', p:2}, {n:'رقم تلجرام', p:3}]
+    };
 
-    function submitPay() {
-        const amt = document.getElementById('payAmt').value;
-        const tid = document.getElementById('payID').value;
-        if(!amt || !tid) return alert("أكمل البيانات!");
-        alert("✅ تم إرسال طلب الشحن للمراجعة!");
-        closeModals();
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function openCat(cat) {
+        document.getElementById('catTitle').innerText = cat;
+        const list = document.getElementById('productList');
+        list.innerHTML = "";
+        data[cat].forEach(i => {
+            list.innerHTML += `
+                <div class="buy-row">
+                    <div><b>${i.n}</b><br><small style="color:var(--accent)">${i.p}$</small></div>
+                    <button class="buy-btn" onclick="order('${i.n}', ${i.p})">شراء</button>
+                </div>`;
+        });
+        openModal('productModal');
     }
 
-    function openCat(name) {
-        alert("فتح قسم: " + name + "\nسيتم عرض المنتجات هنا.");
+    function order(name, price) {
+        if(balance < price) return alert("❌ عذراً، رصيدك غير كافٍ!");
+        const input = prompt("أدخل بيانات الشحن (ID / الرقم):");
+        if(!input) return;
+
+        balance -= price;
+        ordersCount++;
+        localStorage.setItem('reem_bal', balance);
+        localStorage.setItem('reem_count', ordersCount);
+        updateUI();
+
+        const msg = `👑 *طلب شراء ملكي*\n📦 المنتج: ${name}\n💰 السعر: ${price}$\n🔑 البيانات: ${input}`;
+        window.open(`https://wa.me/963900000000?text=${encodeURIComponent(msg)}`);
+        alert("✅ تم التنفيذ بنجاح!");
+        closeModal('productModal');
     }
 
-    function showAdmin() {
-        const pass = prompt("كلمة مرور الأدمن:");
-        if(pass === "reem2026") {
-            const nb = prompt("تعديل رصيد العميل:");
-            if(nb) {
-                balance = parseFloat(nb);
+    function confirmDep() {
+        const a = document.getElementById('amt').value;
+        const t = document.getElementById('txid').value;
+        if(!a || !t) return alert("أكمل البيانات");
+        window.open(`https://wa.me/963900000000?text=${encodeURIComponent("💰 طلب إيداع: "+a+"$\nرقم العملية: "+t)}`);
+        closeModal('chargeModal');
+    }
+
+    function adminPanel() {
+        const p = prompt("كلمة سر الإدارة:");
+        if(p === "reem2026") {
+            const v = prompt("أدخل الرصيد الجديد:");
+            if(v) {
+                balance = parseFloat(v);
                 localStorage.setItem('reem_bal', balance);
-                document.getElementById('userBalance').innerText = balance.toFixed(3);
-                alert("💰 تم التحديث!");
+                updateUI();
             }
         }
     }
-</script>
 
+    function copyText() {
+        navigator.clipboard.writeText("17ac4a94cb1ed493e47a8526892294dd");
+        alert("✅ تم النسخ!");
+    }
+</script>
 </body>
 </html>
