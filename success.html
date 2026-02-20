@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم الطلب - REEM STORE</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Tahoma', sans-serif;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        h1 { color: #4CAF50; margin-bottom: 20px; }
+        .btn {
+            display: inline-block;
+            background: #764ba2;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>✅ تم استلام طلبك!</h1>
+        <p>رقم الطلب: <strong id="orderId"></strong></p>
+        <p>سيتم التواصل معك قريباً على الواتساب</p>
+        <a href="index.html" class="btn">العودة للرئيسية</a>
+    </div>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('orderId').textContent = urlParams.get('order');
+    </script>
+</body>
+</html>
