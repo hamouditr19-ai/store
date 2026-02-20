@@ -3,372 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الدفع - REEM STORE</title>
+    <title>تم الطلب - REEM STORE</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
         }
-        
+
         body {
             background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
             min-height: 100vh;
-            color: white;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .checkout-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            background: linear-gradient(90deg, #ff0080, #ff8c00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-        
-        .order-summary {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-        
-        .order-item {
             display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .order-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid #ff0080;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ff8c00;
-            font-weight: 600;
-        }
-        
-        input, select, textarea {
-            width: 100%;
+            align-items: center;
+            justify-content: center;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s;
         }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #ff0080;
-            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+
+        .success-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
         }
-        
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+
+        h1 {
+            color: #4CAF50;
             margin: 20px 0;
         }
-        
-        .payment-method {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
+
+        .order-id {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
         }
-        
-        .payment-method:hover {
-            border-color: #ff0080;
-            transform: translateY(-5px);
-        }
-        
-        .payment-method.selected {
-            border-color: #ff0080;
-            background: rgba(255, 0, 128, 0.1);
-            box-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
-        }
-        
-        .payment-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
+
+        .btn {
+            display: inline-block;
             background: linear-gradient(90deg, #ff0080, #ff8c00);
-            border: none;
-            border-radius: 15px;
             color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .submit-btn:hover::before {
-            left: 100%;
-        }
-        
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: rgba(255,255,255,0.6);
+            padding: 12px 25px;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 1.1rem;
-        }
-        
-        .back-link:hover {
-            color: #ff0080;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="checkout-card">
-            <h1>💳 إتمام الطلب</h1>
-            
-            <!-- ملخص الطلب -->
-            <div class="order-summary" id="orderSummary">
-                <h2 style="margin-bottom: 20px;">🛒 ملخص الطلب</h2>
-                <div id="orderItems"></div>
-                <div class="order-total">
-                    <span>المجموع الكلي:</span>
-                    <span id="totalAmount">$0</span>
-                </div>
-            </div>
-            
-            <!-- نموذج الدفع -->
-            <form id="checkoutForm">
-                <div class="form-group">
-                    <label>👤 الاسم الكامل</label>
-                    <input type="text" id="fullName" placeholder="أدخل اسمك" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>📱 رقم الواتساب</label>
-                    <input type="tel" id="phone" placeholder="مثال: 9665XXXXXXXX" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>🎮 معرف اللعبة / الحساب</label>
-                    <input type="text" id="playerId" placeholder="أدخل معرفك داخل اللعبة" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>💬 ملاحظات (اختياري)</label>
-                    <textarea id="notes" rows="3" placeholder="أي ملاحظات إضافية..."></textarea>
-                </div>
-                
-                <h2 style="margin: 30px 0 20px;">💰 اختر طريقة الدفع</h2>
-                
-                <div class="payment-methods">
-                    <div class="payment-method" onclick="selectPayment('usdt')" id="method-usdt">
-                        <div class="payment-icon">🪙</div>
-                        <div>USDT</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment('stc')" id="method-stc">
-                        <div class="payment-icon">📱</div>
-                        <div>STC Pay</div>
-                    </div>
-                    <div class="payment-method" onclick="selectPayment('bank')" id="method-bank">
-                        <div class="payment-icon">🏦</div>
-                        <div>تحويل بنكي</div>
-                    </div>
-                </div>
-                
-                <input type="hidden" id="selectedPayment" value="">
-                
-                <button type="button" class="submit-btn" onclick="submitOrder()">✅ تأكيد الطلب</button>
-            </form>
-            
-            <a href="index.html" class="back-link">← العودة للمنتجات</a>
-        </div>
+    <div class="success-card">
+        <div style="font-size: 50px;">✅</div>
+        <h1>تم استلام الطلب</h1>
+        <div class="order-id" id="orderDisplay"></div>
+        <p>سيتم التواصل معك قريباً</p>
+        <a href="index.html" class="btn">العودة للرئيسية</a>
     </div>
-    
+
     <script>
-        // بيانات بوت تيليجرام
-        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
-        const CHAT_ID = '7741275208';
-        
-        // استرجاع السلة
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let selectedPayment = '';
-        
-        // عرض ملخص الطلب
-        function displayOrderSummary() {
-            const orderItems = document.getElementById('orderItems');
-            const totalAmount = document.getElementById('totalAmount');
-            
-            if (cart.length === 0) {
-                window.location.href = 'index.html';
-                return;
-            }
-            
-            let itemsHtml = '';
-            let total = 0;
-            
-            cart.forEach(item => {
-                total += item.price;
-                itemsHtml += `
-                    <div class="order-item">
-                        <span>${item.name}</span>
-                        <span>$${item.price}</span>
-                    </div>
-                `;
-            });
-            
-            orderItems.innerHTML = itemsHtml;
-            totalAmount.textContent = '$' + total;
-        }
-        
-        // اختيار طريقة الدفع
-        function selectPayment(method) {
-            selectedPayment = method;
-            document.getElementById('selectedPayment').value = method;
-            
-            // تحديث الواجهة
-            document.querySelectorAll('.payment-method').forEach(el => {
-                el.classList.remove('selected');
-            });
-            document.getElementById(`method-${method}`).classList.add('selected');
-        }
-        
-        // إرسال إشعار تيليجرام
-        async function sendTelegramNotification(order) {
-            const message = `
-🛍️ **طلب جديد من REEM STORE**
-
-📋 رقم الطلب: ${order.id}
-👤 الاسم: ${order.name}
-📱 واتساب: ${order.phone}
-🎮 معرف اللعبة: ${order.playerId}
-💰 المبلغ: $${order.total}
-💳 طريقة الدفع: ${order.paymentMethod}
-📦 المنتجات:
-${order.items.map(item => `- ${item.name} ($${item.price})`).join('\n')}
-
-🔗 متابعة: https://reem-store.vercel.app/admin.html
-            `;
-            
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-                console.log('✅ تم إرسال الإشعار لتليجرام');
-            } catch (error) {
-                console.error('❌ فشل إرسال الإشعار:', error);
-            }
-        }
-        
-        // تأكيد الطلب
-        function submitOrder() {
-            const name = document.getElementById('fullName').value;
-            const phone = document.getElementById('phone').value;
-            const playerId = document.getElementById('playerId').value;
-            const paymentMethod = document.getElementById('selectedPayment').value;
-            
-            if (!name || !phone || !playerId) {
-                alert('⚠️ الرجاء تعبئة جميع الحقول المطلوبة');
-                return;
-            }
-            
-            if (!paymentMethod) {
-                alert('⚠️ الرجاء اختيار طريقة الدفع');
-                return;
-            }
-            
-            // إنشاء الطلب
-            const orderId = 'ORD' + Date.now();
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            
-            const order = {
-                id: orderId,
-                name: name,
-                phone: phone,
-                playerId: playerId,
-                paymentMethod: paymentMethod,
-                items: cart,
-                total: total,
-                date: new Date().toLocaleString(),
-                status: 'جديد'
-            };
-            
-            // حفظ الطلب
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            
-            // إرسال إشعار تيليجرام
-            sendTelegramNotification(order);
-            
-            // تفريغ السلة
-            localStorage.removeItem('cart');
-            
-            // التوجيه لصفحة النجاح
-            window.location.href = `success.html?order=${orderId}`;
-        }
-        
-        // تحميل الصفحة
-        displayOrderSummary();
+        const params = new URLSearchParams(window.location.search);
+        const orderId = params.get('order');
+        document.getElementById('orderDisplay').innerHTML = `رقم الطلب: <strong>${orderId}</strong>`;
     </script>
 </body>
 </html>
