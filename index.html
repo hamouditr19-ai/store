@@ -3,44 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر الشحن</title>
+<title>متجر شحن الألعاب</title>
 
 <style>
 body{
 margin:0;
 font-family:Tahoma;
-background:#0f172a;
+background:#0b0f1a;
 color:white;
+overflow-x:hidden;
 }
 
-header{
-background:linear-gradient(90deg,#1e3a8a,#2563eb);
-padding:40px;
+/* بانر */
+.banner{
+height:350px;
+background:url('https://images.unsplash.com/photo-1605902711622-cfb43c44367f') center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
-font-size:22px;
-font-weight:bold;
-box-shadow:0 5px 20px rgba(0,0,0,0.5);
+position:relative;
 }
 
+.banner::after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+}
+
+.banner h1{
+position:relative;
+z-index:1;
+font-size:32px;
+color:#00f2ff;
+text-shadow:0 0 20px #00f2ff;
+}
+
+/* المنتجات */
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 gap:20px;
-padding:20px;
+padding:30px;
 }
 
 .card{
-background:#1e293b;
-padding:20px;
+background:#111827;
 border-radius:15px;
-text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,0.6);
+overflow:hidden;
+box-shadow:0 5px 25px rgba(0,0,0,0.7);
 transition:0.3s;
 }
 
 .card:hover{
 transform:scale(1.05);
-box-shadow:0 0 20px #3b82f6;
+box-shadow:0 0 25px #00f2ff;
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.card-content{
+padding:15px;
+text-align:center;
 }
 
 .price{
@@ -50,52 +80,75 @@ margin:10px 0;
 }
 
 button{
-background:linear-gradient(45deg,#3b82f6,#06b6d4);
+background:linear-gradient(45deg,#00f2ff,#3b82f6);
 border:none;
 color:white;
 padding:10px;
 border-radius:8px;
 cursor:pointer;
 width:100%;
+font-weight:bold;
 }
 
 button:hover{
 opacity:0.9;
 }
 
+/* السلة */
 .cart{
-background:#111827;
-padding:20px;
+background:#0f172a;
 margin:20px;
+padding:20px;
 border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,0.6);
+box-shadow:0 5px 20px rgba(0,0,0,0.8);
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+border:none;
+}
+
+@media(max-width:600px){
+.banner h1{font-size:22px;}
 }
 </style>
 </head>
 <body>
 
-<header>
-🎮 متجر شحن الألعاب والتطبيقات
-</header>
+<div class="banner">
+<h1>🔥 أفضل موقع شحن ألعاب وتطبيقات 🎮</h1>
+</div>
 
 <div class="products">
 
 <div class="card">
-<h3>💎 شحن شدات ببجي</h3>
+<img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7">
+<div class="card-content">
+<h3>💎 شحن PUBG UC</h3>
 <div class="price">10$</div>
-<button onclick="addToCart('شدات ببجي',10)">➕ إضافة</button>
+<button onclick="addToCart('PUBG UC',10)">➕ إضافة للسلة</button>
+</div>
 </div>
 
 <div class="card">
-<h3>🔥 شحن فري فاير</h3>
+<img src="https://images.unsplash.com/photo-1627856013091-fed6e4e30025">
+<div class="card-content">
+<h3>🔥 شحن Free Fire</h3>
 <div class="price">15$</div>
-<button onclick="addToCart('فري فاير',15)">➕ إضافة</button>
+<button onclick="addToCart('Free Fire',15)">➕ إضافة للسلة</button>
+</div>
 </div>
 
 <div class="card">
-<h3>📱 رصيد تطبيقات</h3>
+<img src="https://images.unsplash.com/photo-1612831455543-6d7f3a5c3b06">
+<div class="card-content">
+<h3>📱 رصيد Google Play</h3>
 <div class="price">5$</div>
-<button onclick="addToCart('رصيد تطبيقات',5)">➕ إضافة</button>
+<button onclick="addToCart('Google Play',5)">➕ إضافة للسلة</button>
+</div>
 </div>
 
 </div>
@@ -104,7 +157,7 @@ box-shadow:0 5px 20px rgba(0,0,0,0.6);
 <h2>🛒 السلة</h2>
 <div id="cartItems"></div>
 <h3 id="total">الإجمالي: 0$</h3>
-<input type="text" id="name" placeholder="اسمك" style="width:100%;padding:8px;margin:10px 0;border-radius:5px;border:none;">
+<input type="text" id="name" placeholder="اكتب اسمك">
 <button onclick="sendOrder()">🚀 إرسال الطلب</button>
 </div>
 
