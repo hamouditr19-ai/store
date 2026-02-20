@@ -24,7 +24,6 @@ font-size:28px;
 font-weight:bold;
 background:#0f172a;
 color:#00f7ff;
-letter-spacing:1px;
 box-shadow:0 0 20px #00f7ff22;
 }
 
@@ -32,13 +31,14 @@ box-shadow:0 0 20px #00f7ff22;
 flex:1;
 display:flex;
 justify-content:center;
-align-items:center;
-padding:30px;
+gap:30px;
+flex-wrap:wrap;
+padding:40px;
 }
 
 .card{
 background:#1e293b;
-width:320px;
+width:280px;
 border-radius:20px;
 overflow:hidden;
 box-shadow:0 0 25px #00f7ff33;
@@ -52,7 +52,7 @@ box-shadow:0 0 35px #00f7ff66;
 
 .card img{
 width:100%;
-height:200px;
+height:180px;
 object-fit:cover;
 }
 
@@ -63,7 +63,7 @@ text-align:center;
 
 .price{
 color:#00f7ff;
-font-size:20px;
+font-size:18px;
 margin:10px 0;
 font-weight:bold;
 }
@@ -71,17 +71,12 @@ font-weight:bold;
 button{
 background:linear-gradient(45deg,#00f7ff,#00c3ff);
 border:none;
-padding:12px 20px;
-border-radius:12px;
+padding:10px;
+border-radius:10px;
 font-weight:bold;
 cursor:pointer;
 color:black;
 width:100%;
-transition:0.3s;
-}
-
-button:hover{
-opacity:0.85;
 }
 
 footer{
@@ -90,6 +85,43 @@ padding:20px;
 text-align:center;
 font-size:14px;
 color:#aaa;
+}
+
+/* Modal */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:#1e293b;
+padding:30px;
+border-radius:20px;
+width:300px;
+text-align:center;
+}
+
+.modal input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+}
+
+.close{
+cursor:pointer;
+color:red;
+margin-bottom:10px;
+display:block;
 }
 </style>
 </head>
@@ -107,7 +139,16 @@ Reem Store | ريم ستوري
 <div class="card-content">
 <h2>شحن PUBG 60 UC</h2>
 <div class="price">5$</div>
-<button onclick="order()">🛒 شراء الآن</button>
+<button onclick="openModal('PUBG 60 UC')">🛒 شراء</button>
+</div>
+</div>
+
+<div class="card">
+<img src="https://i.imgur.com/XqQZQZC.png">
+<div class="card-content">
+<h2>شحن Free Fire 100 💎</h2>
+<div class="price">4$</div>
+<button onclick="openModal('Free Fire 100 Diamonds')">🛒 شراء</button>
 </div>
 </div>
 
@@ -117,24 +158,51 @@ Reem Store | ريم ستوري
 © 2026 Reem Store. جميع الحقوق محفوظة.
 </footer>
 
+<!-- Modal -->
+
+<div class="modal" id="orderModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">✖ إغلاق</span>
+<h3 id="productName"></h3>
+<input type="text" id="customerName" placeholder="ادخل اسمك">
+<input type="text" id="customerId" placeholder="ادخل ID الحساب">
+<button onclick="sendOrder()">إرسال الطلب</button>
+</div>
+</div>
+
 <script>
 
 const BOT_TOKEN = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
 const CHAT_ID = "7741275208";
 
-function order(){
-const name = prompt("ادخل اسمك:");
-if(!name) return;
+let selectedProduct = "";
 
-const id = prompt("ادخل ID الحساب:");
-if(!id) return;
+function openModal(product){
+selectedProduct = product;
+document.getElementById("productName").innerText = product;
+document.getElementById("orderModal").style.display="flex";
+}
+
+function closeModal(){
+document.getElementById("orderModal").style.display="none";
+}
+
+function sendOrder(){
+
+const name = document.getElementById("customerName").value;
+const id = document.getElementById("customerId").value;
+
+if(!name || !id){
+alert("يرجى تعبئة جميع الحقول");
+return;
+}
 
 const message = `
 🛒 طلب جديد - Reem Store
 
 👤 الاسم: ${name}
 🆔 ID: ${id}
-🎮 المنتج: شحن PUBG 60 UC
+🎮 المنتج: ${selectedProduct}
 ⏰ الوقت: ${new Date().toLocaleString()}
 `;
 
@@ -146,8 +214,14 @@ chat_id: CHAT_ID,
 text: message
 })
 })
-.then(()=>alert("تم إرسال الطلب بنجاح ✅"))
-.catch(()=>alert("حدث خطأ ❌"));
+.then(()=>{
+alert("تم إرسال الطلب بنجاح ✅");
+closeModal();
+})
+.catch(()=>{
+alert("حدث خطأ ❌");
+});
+
 }
 
 </script>
