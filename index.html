@@ -1,240 +1,166 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REEM STORE 2026</title>
-  <style>
-    * {margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif;}
-    body {background:#0d0d0d; color:#fff; overflow-x:hidden; transition:0.3s;}
-    a{text-decoration:none; color:inherit;}
-
-    /* ===== شريط إعلاني ===== */
-    #ticker {width:100%; background:#111; overflow:hidden; white-space:nowrap; padding:10px 0; position:relative;}
-    #ticker span {display:inline-block; padding-left:100%; animation: ticker 15s linear infinite; color:#0ff; font-weight:bold;}
-    @keyframes ticker {0%{transform:translateX(0);} 100%{transform:translateX(-100%);}}
-
-    /* ===== شعار ===== */
-    #logo {display:flex; align-items:center; gap:10px; padding:15px; cursor:pointer;}
-    #logo img {width:50px; height:50px;}
-    #logo span {font-size:24px; font-weight:bold; color:#0ff;}
-
-    /* ===== سلايدر متقدم ===== */
-    #slider {position:relative; width:100%; height:220px; margin:20px 0; border-radius:15px; overflow:hidden;}
-    #slider img {width:100%; height:100%; object-fit:cover; border-radius:15px; display:none; transition:0.5s;}
-    #slider img.active {display:block;}
-    #sliderControls {position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:10px;}
-    .dot {width:12px; height:12px; border-radius:50%; background:#0ff; opacity:0.5; cursor:pointer;}
-    .dot.active {opacity:1;}
-
-    /* ===== المنتجات Glassmorphism ===== */
-    #products {display:grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap:20px; padding:0 20px;}
-    .product {background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; text-align:center; transition:0.3s; backdrop-filter:blur(10px);}
-    .product:hover {transform:scale(1.05); box-shadow:0 0 15px #0ff;}
-    .product img {width:100%; border-radius:10px;}
-    .product button {margin-top:10px; padding:8px 15px; border:none; background:#0ff; color:#000; font-weight:bold; border-radius:8px; cursor:pointer; transition:0.3s;}
-    .product button:hover {background:#0cc;}
-
-    /* ===== السلة Drawer ===== */
-    #cartDrawer {position:fixed; top:0; right:-400px; width:400px; max-width:100%; height:100%; background:rgba(15,15,15,0.95); box-shadow:-5px 0 20px #0ff; transition:0.3s; padding:20px; overflow-y:auto; z-index:999;}
-    #cartDrawer.active {right:0;}
-    #cartDrawer h2 {margin-bottom:20px; color:#0ff;}
-    #cartItems {display:flex; flex-direction:column; gap:15px;}
-    #cartItems div {display:flex; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.05); border-radius:10px;}
-    #cartTotal {margin-top:20px; font-weight:bold; color:#0ff;}
-
-    /* ===== نموذج الطلب Glass ===== */
-    #orderForm {display:flex; flex-direction:column; gap:15px; margin-top:20px; backdrop-filter:blur(10px); background:rgba(255,255,255,0.05); padding:15px; border-radius:15px;}
-    #orderForm input, #orderForm button {padding:10px; border-radius:8px; border:none; outline:none;}
-    #orderForm input[type="file"] {background:rgba(255,255,255,0.05); color:#fff;}
-    #orderForm button {background:#0ff; color:#000; font-weight:bold; cursor:pointer; transition:0.3s;}
-    #orderForm button:hover {background:#0cc;}
-
-    /* ===== Loader ===== */
-    #loader {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center;}
-    #loader div {border:5px solid #0ff; border-top:5px solid #111; border-radius:50%; width:50px; height:50px; animation: spin 1s linear infinite;}
-    @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-
-    /* ===== إشعارات VIP ===== */
-    #vipAlert {position:fixed; top:20px; left:50%; transform:translateX(-50%); background:#0ff; color:#000; padding:10px 20px; border-radius:15px; display:none; font-weight:bold; z-index:9999; backdrop-filter:blur(10px);}
-
-    /* ===== Responsive ===== */
-    @media(max-width:600px){ #cartDrawer{width:100%;} #slider{height:150px;} #products{grid-template-columns: repeat(auto-fit,minmax(140px,1fr));} }
-
-    /* ===== لوحة الإدارة مخفية ===== */
-    #adminPanel {display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#222; padding:20px; border-radius:15px; z-index:9999; width:300px;}
-    #adminPanel.active {display:block;}
-    #adminPanel input, #adminPanel button {width:100%; margin-top:10px;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REEM STORE - شحن الألعاب</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tahoma', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 2em;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        
+        .cart-counter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-
-<div id="loader"><div></div></div>
-
-<!-- إشعار VIP -->
-<div id="vipAlert"></div>
-
-<!-- شريط إعلاني -->
-<div id="ticker"><span>🔥 مرحباً بكم في REEM STORE! عروض ببجي وفري فاير اليوم! 🔥</span></div>
-
-<!-- شعار -->
-<div id="logo">
-  <img src="https://cdn-icons-png.flaticon.com/512/1828/1828925.png" alt="Logo">
-  <span>REEM STORE</span>
-</div>
-
-<!-- سلايدر -->
-<div id="slider">
-  <img src="https://www.pubgmobile.com/images/slider1.jpg" alt="PUBG" class="active">
-  <img src="https://www.freefirenews.com/images/slider2.jpg" alt="Free Fire">
-  <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Other Game">
-  <div id="sliderControls"></div>
-</div>
-
-<!-- المنتجات -->
-<div id="products">
-  <div class="product" data-price="5">
-    <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Game1">
-    <h3>لعبة 1</h3>
-    <p>السعر: 5$</p>
-    <button onclick="addToCart(this)">إضافة للسلة</button>
-  </div>
-  <div class="product" data-price="10">
-    <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Game2">
-    <h3>لعبة 2</h3>
-    <p>السعر: 10$</p>
-    <button onclick="addToCart(this)">إضافة للسلة</button>
-  </div>
-</div>
-
-<!-- زر فتح السلة -->
-<button onclick="toggleCart()" style="position:fixed;bottom:20px;right:20px;padding:15px;background:#0ff;color:#000;border:none;border-radius:50%;font-weight:bold;cursor:pointer;">🛒</button>
-
-<!-- السلة Drawer -->
-<div id="cartDrawer">
-  <h2>سلة المشتريات</h2>
-  <div id="cartItems"></div>
-  <div id="cartTotal">الإجمالي: 0$</div>
-  <form id="orderForm" onsubmit="submitOrder(event)">
-    <input type="text" id="fullName" placeholder="الاسم الكامل" required>
-    <input type="text" id="userId" placeholder="آيدي الحساب" required>
-    <input type="text" id="refNumber" placeholder="رقم المرجع" required>
-    <input type="file" id="receipt" accept="image/*" required>
-    <button type="submit">إتمام الطلب</button>
-  </form>
-</div>
-
-<!-- لوحة الإدارة -->
-<div id="adminPanel">
-  <h3>لوحة الإدارة</h3>
-  <input type="text" id="productName" placeholder="اسم المنتج">
-  <input type="number" id="productPrice" placeholder="السعر">
-  <input type="text" id="productImage" placeholder="رابط الصورة">
-  <input type="text" id="productCategory" placeholder="الفئة">
-  <button onclick="addProduct()">إضافة منتج</button>
-  <button onclick="closeAdmin()">إغلاق</button>
-</div>
-
-<footer style="text-align:center;padding:20px;color:#0ff;">© REEM STORE 2026</footer>
-
-<script>
-  // ===== سلايدر متقدم =====
-  let slides = document.querySelectorAll('#slider img');
-  let dotsContainer = document.getElementById('sliderControls');
-  let currentSlide = 0;
-
-  slides.forEach((s,i)=>{
-    let dot=document.createElement('div');
-    dot.classList.add('dot');
-    if(i===0) dot.classList.add('active');
-    dot.addEventListener('click',()=>{ showSlide(i); });
-    dotsContainer.appendChild(dot);
-  });
-
-  function showSlide(index){
-    slides[currentSlide].classList.remove('active');
-    dotsContainer.children[currentSlide].classList.remove('active');
-    currentSlide=index;
-    slides[currentSlide].classList.add('active');
-    dotsContainer.children[currentSlide].classList.add('active');
-  }
-
-  setInterval(()=>{ showSlide((currentSlide+1)%slides.length); }, 4000);
-
-  // ===== السلة =====
-  let cart=[];
-  function toggleCart(){ document.getElementById('cartDrawer').classList.toggle('active'); }
-  function showVIP(message){ let vip=document.getElementById('vipAlert'); vip.innerText=message; vip.style.display='block'; setTimeout(()=>{vip.style.display='none';},2000);}
-  function addToCart(btn){
-    let product=btn.closest('.product');
-    let name=product.querySelector('h3').innerText;
-    let price=parseFloat(product.dataset.price);
-    cart.push({name, price});
-    renderCart();
-    showVIP(`تم إضافة ${name} للسلة!`);
-  }
-
-  function renderCart(){
-    let cartItems=document.getElementById('cartItems');
-    cartItems.innerHTML='';
-    let total=0;
-    cart.forEach(item=>{
-      total+=item.price;
-      let div=document.createElement('div');
-      div.innerHTML=`<span>${item.name}</span><span>${item.price}$</span>`;
-      cartItems.appendChild(div);
-    });
-    document.getElementById('cartTotal').innerText='الإجمالي: '+total+'$';
-  }
-
-  // ===== إرسال الطلب للتليجرام =====
-  const BOT_TOKEN='8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
-  const CHAT_ID='7741275208';
-  async function submitOrder(e){
-    e.preventDefault();
-    if(cart.length===0){ alert('السلة فارغة!'); return; }
-    let loader=document.getElementById('loader'); loader.style.display='flex';
-
-    let fullName=document.getElementById('fullName').value;
-    let userId=document.getElementById('userId').value;
-    let refNumber=document.getElementById('refNumber').value;
-    let receipt=document.getElementById('receipt').files[0];
-
-    let formData=new FormData();
-    let text=`طلب جديد:\nالاسم: ${fullName}\nآيدي: ${userId}\nرقم المرجع: ${refNumber}\nالمنتجات:\n`;
-    cart.forEach(p=> text+=`- ${p.name} : ${p.price}$\n`);
-    formData.append('chat_id',CHAT_ID);
-    formData.append('caption',text);
-    formData.append('photo',receipt);
-
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{ method:'POST', body:formData })
-    .then(()=> { showVIP('تم إرسال الطلب بنجاح!'); cart=[]; renderCart(); document.getElementById('orderForm').reset(); toggleCart(); })
-    .catch(()=>{ alert('حدث خطأ أثناء الإرسال!'); })
-    .finally(()=>{ loader.style.display='none'; });
-  }
-
-  // ===== لوحة الإدارة =====
-  let adminPanel=document.getElementById('adminPanel');
-  document.getElementById('logo').addEventListener('mousedown',()=>{
-    let password=prompt('ادخل كلمة المرور للوصول للوحة الإدارة');
-    if(password==='reem2026'){ adminPanel.classList.add('active'); }
-  });
-  function closeAdmin(){ adminPanel.classList.remove('active'); }
-
-  function addProduct(){
-    let name=document.getElementById('productName').value;
-    let price=document.getElementById('productPrice').value;
-    let img=document.getElementById('productImage').value;
-    let category=document.getElementById('productCategory').value;
-    if(!name||!price||!img){ alert('املأ جميع الحقول'); return; }
-    let div=document.createElement('div');
-    div.classList.add('product');
-    div.dataset.price=price;
-    div.innerHTML=`<img src="${img}" alt="${name}"><h3>${name}</h3><p>السعر: ${price}$</p><button onclick="addToCart(this)">إضافة للسلة</button>`;
-    document.getElementById('products').appendChild(div);
-    showVIP(`تم إضافة المنتج ${name} بنجاح!`);
-    document.getElementById('productName').value=''; document.getElementById('productPrice').value=''; document.getElementById('productImage').value=''; document.getElementById('productCategory').value='';
-  }
-</script>
+    <div class="cart-counter" onclick="window.location.href='checkout.html'">
+        🛒 <span id="cartCount">0</span> | إتمام الشراء
+    </div>
+    
+    <div class="header">
+        <h1>🎮 REEM STORE</h1>
+        <p>شحن الألعاب والتطبيقات بأسرع وقت</p>
+    </div>
+    
+    <div class="products-grid" id="productsGrid"></div>
+    
+    <div class="footer">
+        REEM STORE 2026 ©
+    </div>
+    
+    <script>
+        const products = [
+            {id: 1, name: "شحن جوجل بلاي", price: 5, image: "🎮"},
+            {id: 2, name: "شحن ببجي UC", price: 10, image: "🔫"},
+            {id: 3, name: "شحن فري فاير", price: 15, image: "🔥"}
+        ];
+        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+            products.forEach(product => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-image">${product.image}</div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">$${product.price}</div>
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">➕ إضافة للسلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cartCount').textContent = cart.length;
+            alert('تمت الإضافة للسلة!');
+        }
+        
+        displayProducts();
+        document.getElementById('cartCount').textContent = cart.length;
+    </script>
 </body>
 </html>
