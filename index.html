@@ -1,248 +1,237 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | المتجر المتكامل</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #020408;
-            --card-bg: #111827;
-            --accent: #00d4ff;
-            --primary: #8b5cf6;
-            --glass: rgba(255, 255, 255, 0.03);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reem Store</title>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg); color: white; padding-bottom: 100px; overflow-x: hidden; }
-
-        /* Header */
-        header { padding: 20px; text-align: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--glass); }
-        .logo { font-size: 1.6rem; font-weight: 900; }
-        .logo span { color: var(--accent); }
-
-        /* Banner */
-        .ads-box { width: 92%; margin: 15px auto; height: 160px; border-radius: 25px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 20px; transition: 1s; opacity: 0; }
-        .slide.active { opacity: 1; }
-        .slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
-        .slide-content { position: relative; z-index: 2; }
-
-        /* Grid System (5 items per row) */
-        .grid-container { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding: 15px; }
-        .cat-card { background: var(--card-bg); border-radius: 18px; padding: 8px 4px; text-align: center; border: 1px solid var(--glass); transition: 0.3s; cursor: pointer; }
-        .cat-card:active { transform: scale(0.9); border-color: var(--accent); }
-        .icon-wrap { width: 100%; aspect-ratio: 1/1; background: #00a8ff; border-radius: 14px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .icon-wrap img { width: 80%; height: 80%; object-fit: contain; }
-        .cat-card h4 { font-size: 0.6rem; font-weight: 700; white-space: nowrap; overflow: hidden; }
-
-        /* Sheets / Modals */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: none; align-items: flex-end; backdrop-filter: blur(5px); }
-        .sheet { width: 100%; background: #0f172a; border-radius: 30px 30px 0 0; padding: 25px; transform: translateY(100%); transition: 0.4s; max-height: 85vh; overflow-y: auto; border-top: 2px solid var(--primary); }
-        .modal.active { display: flex; }
-        .modal.active .sheet { transform: translateY(0); }
-
-        /* Product Styles */
-        .prod-item { display: flex; justify-content: space-between; align-items: center; background: var(--glass); padding: 15px; border-radius: 15px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .btn-buy { background: var(--primary); color: white; border: none; padding: 6px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-
-        /* Admin UI */
-        .admin-trigger { position: absolute; left: 20px; top: 25px; color: #334155; font-size: 1.2rem; cursor: pointer; }
-        .admin-panel { padding: 10px; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #334155; background: #05070a; color: white; }
-        .btn-save { width: 100%; padding: 12px; background: #22c55e; color: white; border: none; border-radius: 10px; font-weight: bold; margin-bottom: 20px; }
-        .admin-prod-row { display: flex; justify-content: space-between; padding: 10px; background: rgba(255,0,0,0.05); border-radius: 8px; margin-bottom: 5px; }
-
-        /* Navigation */
-        .nav-dock { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 90%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(15px); border-radius: 20px; display: flex; padding: 12px; border: 1px solid var(--glass); z-index: 500; }
-        .nav-link { flex: 1; text-align: center; color: #64748b; font-size: 0.7rem; text-decoration: none; }
-        .nav-link.active { color: var(--accent); }
-        .nav-link i { font-size: 1.2rem; display: block; margin-bottom: 4px; }
-    </style>
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+header{
+    padding:15px;
+    text-align:center;
+    background:#1e293b;
+    font-size:20px;
+}
+.products{
+    padding:15px;
+}
+.prod-item{
+    background:#1e293b;
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+button{
+    border:none;
+    padding:8px 12px;
+    border-radius:6px;
+    cursor:pointer;
+}
+.buy{background:#22c55e;color:white;}
+.delete{background:red;color:white;}
+.bottom-bar{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:#1e293b;
+    display:flex;
+    justify-content:space-around;
+    padding:10px;
+}
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+.modal.active{display:flex;}
+.sheet{
+    background:#1e293b;
+    padding:20px;
+    width:90%;
+    max-width:400px;
+    border-radius:15px;
+}
+input{
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+    border-radius:5px;
+    border:none;
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <i class="fa-solid fa-lock admin-trigger" onclick="openAdmin()"></i>
-        <div class="logo">REEM <span>STORE</span></div>
-    </header>
+<header>Reem Store 🚀</header>
 
-    <div class="ads-box">
-        <div class="slide active" style="background-image: url('https://i.ibb.co/VWB8YFf/games-bg.jpg')">
-            <div class="slide-content"><h2>عروض حصرية ⚡</h2><p>خصم 20% على شدات ببجي اليوم</p></div>
-        </div>
-        <div class="slide" style="background-image: url('https://i.ibb.co/L5hYfT7/apps-bg.jpg')">
-            <div class="slide-content"><h2>اشتراكات مميزة 📺</h2><p>شاهد ونتفليكس بأقل الأسعار</p></div>
-        </div>
-    </div>
+<div class="products" id="productList"></div>
 
-    <div class="grid-container">
-        <div class="cat-card" onclick="openSection('الألعاب')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/Rz9kZkz/games.png"></div>
-            <h4>الألعاب</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('التطبيقات')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/sK0tFfQ/apps.png"></div>
-            <h4>التطبيقات</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الرصيد')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/x7RzZ8m/balance.png"></div>
-            <h4>الرصيد</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الأكواد')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/mRT2P5f/cards.png"></div>
-            <h4>الأكواد</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الحسابات')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/Qf9z8mZ/accounts.png"></div>
-            <h4>الحسابات</h4>
-        </div>
+<div class="bottom-bar">
+<button onclick="openCart()">🛒 السلة</button>
+<button onclick="openWallet()">💰 المحفظة</button>
+<button onclick="openAdmin()">⚙️ الأدمن</button>
+</div>
 
-        <div class="cat-card" onclick="openSection('سوشل ميديا')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/zH8zQ8W/social.png"></div>
-            <h4>سوشل ميديا</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('تيليجرام')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/jT8z8mZ/telegram.png"></div>
-            <h4>تيليجرام</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الأرقام')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/0Ym9z8m/virtual-num.png"></div>
-            <h4>الأرقام</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الإنترنت')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/Wf9z8mZ/dsl.png"></div>
-            <h4>الإنترنت</h4>
-        </div>
-        <div class="cat-card" onclick="openSection('الإشتراكات')">
-            <div class="icon-wrap"><img src="https://i.ibb.co/Pf9z8mZ/subs.png"></div>
-            <h4>الإشتراكات</h4>
-        </div>
-    </div>
+<!-- CART -->
+<div id="cartModal" class="modal" onclick="closeModals()">
+<div class="sheet" onclick="event.stopPropagation()">
+<h3>السلة 🛒</h3>
+<div id="cartItems"></div>
+<h4 id="cartTotal"></h4>
+<button onclick="sendOrder()" class="buy">إرسال الطلب</button>
+</div>
+</div>
 
-    <div id="userModal" class="modal" onclick="closeModals()">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <h2 id="sectionTitle">قسم المنتجات</h2>
-            <div id="productList" style="margin-top:20px;"></div>
-        </div>
-    </div>
+<!-- WALLET -->
+<div id="walletModal" class="modal" onclick="closeModals()">
+<div class="sheet" onclick="event.stopPropagation()">
+<h3>المحفظة 💰</h3>
+<h4 id="walletBalance"></h4>
+<input id="chargeAmount" placeholder="مبلغ الشحن">
+<button onclick="chargeWallet()" class="buy">شحن</button>
+</div>
+</div>
 
-    <div id="adminModal" class="modal" onclick="closeModals()">
-        <div class="sheet" onclick="event.stopPropagation()">
-            <h2>لوحة الإدارة 🛠️</h2>
-            <div class="admin-panel">
-                <select id="adminCat">
-                    <option value="الألعاب">الألعاب</option>
-                    <option value="التطبيقات">التطبيقات</option>
-                    <option value="الرصيد">الرصيد</option>
-                    <option value="الأكواد">الأكواد</option>
-                    <option value="الحسابات">الحسابات</option>
-                    <option value="سوشل ميديا">سوشل ميديا</option>
-                    <option value="تيليجرام">تيليجرام</option>
-                    <option value="الأرقام">الأرقام</option>
-                    <option value="الإنترنت">الإنترنت</option>
-                    <option value="الإشتراكات">الإشتراكات</option>
-                </select>
-                <input type="text" id="adminName" placeholder="اسم المنتج">
-                <input type="text" id="adminPrice" placeholder="السعر">
-                <button class="btn-save" onclick="saveNewProduct()">إضافة المنتج ✅</button>
-                <hr style="opacity:0.1; margin:15px 0;">
-                <div id="adminViewList"></div>
-            </div>
+<!-- ADMIN -->
+<div id="adminModal" class="modal" onclick="closeModals()">
+<div class="sheet" onclick="event.stopPropagation()">
+<h3>لوحة الأدمن ⚙️</h3>
+<input id="adminPass" placeholder="كلمة السر">
+<input id="prodName" placeholder="اسم المنتج">
+<input id="prodPrice" placeholder="السعر">
+<button onclick="addProduct()" class="buy">إضافة منتج</button>
+</div>
+</div>
+
+<script>
+
+const TELEGRAM_TOKEN = "PUT_YOUR_TOKEN";
+const CHAT_ID = "PUT_YOUR_CHAT_ID";
+
+let database = JSON.parse(localStorage.getItem("store_db")) || [];
+let cart = JSON.parse(localStorage.getItem("store_cart")) || [];
+let wallet = parseFloat(localStorage.getItem("store_wallet")) || 0;
+
+function saveDB(){localStorage.setItem("store_db",JSON.stringify(database));}
+function saveCart(){localStorage.setItem("store_cart",JSON.stringify(cart));}
+function saveWallet(){localStorage.setItem("store_wallet",wallet);}
+
+function renderProducts(){
+    const list=document.getElementById("productList");
+    if(database.length===0){
+        list.innerHTML="<p style='opacity:0.5'>لا يوجد منتجات</p>";
+        return;
+    }
+    list.innerHTML=database.map((p,i)=>`
+    <div class="prod-item">
+        <span>${p.name} - ${p.price}</span>
+        <div>
+            <button class="buy" onclick="addToCart(${i})">شراء</button>
+            <button class="delete" onclick="deleteProduct(${i})">X</button>
         </div>
     </div>
+    `).join("");
+}
 
-    <div class="nav-dock">
-        <a href="#" class="nav-link active"><i class="fa-solid fa-house"></i>الرئيسية</a>
-        <a href="#" class="nav-link" onclick="alert('السلة فارغة')"><i class="fa-solid fa-shopping-bag"></i>السلة</a>
-        <a href="#" class="nav-link" onclick="alert('كود الدفع: 17ac4a94cb1ed493e47a8526892294dd')"><i class="fa-solid fa-bolt"></i>شحن</a>
-        <a href="#" class="nav-link" onclick="window.open('https://t.me/ReemAdmin')"><i class="fa-solid fa-comment-dots"></i>دعم</a>
-    </div>
+function addToCart(i){
+    cart.push(database[i]);
+    saveCart();
+    alert("تمت الإضافة للسلة");
+}
 
-    <script>
-        // داتابيس المتجر
-        let database = JSON.parse(localStorage.getItem('reem_store_db')) || [];
+function openCart(){
+    const modal=document.getElementById("cartModal");
+    const items=document.getElementById("cartItems");
+    const totalBox=document.getElementById("cartTotal");
+    if(cart.length===0){
+        items.innerHTML="السلة فارغة";
+        totalBox.innerHTML="";
+    }else{
+        let total=0;
+        items.innerHTML=cart.map((c,i)=>{
+            total+=parseFloat(c.price);
+            return `<div class="prod-item">${c.name} - ${c.price}
+            <button onclick="removeCart(${i})" class="delete">X</button></div>`;
+        }).join("");
+        totalBox.innerHTML="الإجمالي: "+total;
+    }
+    modal.classList.add("active");
+}
 
-        // تشغيل البنرات
-        let slides = document.querySelectorAll('.slide');
-        let currentSlide = 0;
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, 4000);
+function removeCart(i){
+    cart.splice(i,1);
+    saveCart();
+    openCart();
+}
 
-        // وظائف المتجر (عرض المنتجات للزبون)
-        function openSection(catName) {
-            const modal = document.getElementById('userModal');
-            document.getElementById('sectionTitle').innerText = "قسم " + catName;
-            const list = document.getElementById('productList');
-            
-            const filtered = database.filter(p => p.category === catName);
-            list.innerHTML = filtered.length > 0 ? filtered.map(p => `
-                <div class="prod-item">
-                    <span>${p.name} <br> <small style="color:var(--accent)">${p.price}</small></span>
-                    <button class="btn-buy" onclick="buyItem('${p.name}', '${p.price}')">طلب 🛒</button>
-                </div>
-            `).join('') : '<p style="text-align:center; opacity:0.3;">قريباً سيتم توفير المنتجات...</p>';
-            
-            modal.classList.add('active');
-        }
+function sendOrder(){
+    if(cart.length===0)return alert("السلة فارغة");
+    let msg="📦 طلب جديد:%0A";
+    cart.forEach(c=>{
+        msg+=`- ${c.name} (${c.price})%0A`;
+    });
+    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${msg}`);
+    cart=[];
+    saveCart();
+    closeModals();
+    alert("تم الإرسال");
+}
 
-        // وظائف الإدارة
-        function openAdmin() {
-            let pass = prompt("كلمة سر الإدارة:");
-            if(pass === "1234") {
-                renderAdminList();
-                document.getElementById('adminModal').classList.add('active');
-            }
-        }
+function openWallet(){
+    document.getElementById("walletBalance").innerText="الرصيد: "+wallet;
+    document.getElementById("walletModal").classList.add("active");
+}
 
-        function saveNewProduct() {
-            const cat = document.getElementById('adminCat').value;
-            const name = document.getElementById('adminName').value;
-            const price = document.getElementById('adminPrice').value;
+function chargeWallet(){
+    let amount=parseFloat(document.getElementById("chargeAmount").value);
+    if(!amount)return;
+    wallet+=amount;
+    saveWallet();
+    openWallet();
+}
 
-            if(!name || !price) return alert("امسح البيانات!");
+function openAdmin(){
+    document.getElementById("adminModal").classList.add("active");
+}
 
-            database.push({ id: Date.now(), category: cat, name, price });
-            localStorage.setItem('reem_store_db', JSON.stringify(database));
-            
-            document.getElementById('adminName').value = "";
-            document.getElementById('adminPrice').value = "";
-            renderAdminList();
-            alert("تم الحفظ بنجاح!");
-        }
+function addProduct(){
+    const pass=document.getElementById("adminPass").value;
+    if(pass!=="1234") return alert("كلمة السر غلط");
+    const name=document.getElementById("prodName").value;
+    const price=document.getElementById("prodPrice").value;
+    if(!name||!price)return;
+    database.push({name,price});
+    saveDB();
+    renderProducts();
+    alert("تمت الإضافة");
+}
 
-        function deleteProduct(id) {
-            database = database.filter(p => p.id !== id);
-            localStorage.setItem('reem_store_db', JSON.stringify(database));
-            renderAdminList();
-        }
+function deleteProduct(i){
+    database.splice(i,1);
+    saveDB();
+    renderProducts();
+}
 
-        function renderAdminList() {
-            const list = document.getElementById('adminViewList');
-            list.innerHTML = database.map(p => `
-                <div class="admin-prod-row">
-                    <span>${p.name} (${p.category})</span>
-                    <i class="fa-solid fa-trash" onclick="deleteProduct(${p.id})" style="color:red; cursor:pointer;"></i>
-                </div>
-            `).join('');
-        }
+function closeModals(){
+    document.querySelectorAll(".modal").forEach(m=>m.classList.remove("active"));
+}
 
-        function closeModals() {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-        }
+renderProducts();
 
-        function buyItem(name, price) {
-            const token = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
-            const chat_id = "7741275208";
-            let text = `📦 طلب جديد من المتجر:%0A- المنتج: ${name}%0A- السعر: ${price}`;
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`);
-            alert("تم إرسال طلبك للإدارة بنجاح ✅");
-        }
-    </script>
+</script>
+
 </body>
 </html>
