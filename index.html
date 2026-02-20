@@ -10,46 +10,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         body { font-family: 'Tajawal', sans-serif; background-color: #050811; color: white; margin: 0; overflow-x: hidden; }
-        
-        /* تأثيرات التوهج (Glow) */
         .neon-text { text-shadow: 0 0 10px #06b6d4, 0 0 20px #06b6d4; }
-        .neon-border { box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); border: 1px solid #06b6d4; }
+        .neon-border { border: 1px solid #06b6d4; box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); }
         .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-
-        /* الأقسام - حل مشكلة اللون */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* تصميم الأزرار وحل مشكلة اللون */
         .cat-btn {
             padding: 12px 28px; background: #111827; border-radius: 20px;
-            white-space: nowrap; cursor: pointer; border: 1px solid rgba(6, 182, 212, 0.2);
-            transition: all 0.3s ease; color: #94a3b8;
+            white-space: nowrap; cursor: pointer; border: 1px solid rgba(6, 182, 212, 0.1);
+            transition: 0.3s; color: #94a3b8;
         }
         .cat-btn.active { 
-            background: #06b6d4; color: #050811; font-weight: bold;
+            background: #06b6d4 !important; color: #050811 !important; font-weight: bold;
             box-shadow: 0 0 20px #06b6d4; border-color: #06b6d4;
         }
 
-        /* كرت المنتج النيوني */
+        /* كرت المنتج */
         .product-card {
             background: linear-gradient(145deg, #0f172a, #050811);
-            border-radius: 25px; padding: 15px; transition: 0.5s;
-            border: 1px solid rgba(255,255,255,0.03); position: relative;
+            border-radius: 25px; padding: 15px; border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.4s;
         }
-        .product-card:hover { 
-            transform: translateY(-10px); border-color: #06b6d4;
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+        .product-card:hover { transform: translateY(-10px); border-color: #06b6d4; box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2); }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 20px; background: #0b1120; }
+
+        /* لوحة التحكم الاحترافية */
+        #admin-panel {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 450px; z-index: 10001; display: none;
+            background: #0f172a; border: 2px solid #06b6d4; border-radius: 35px; padding: 30px;
+            box-shadow: 0 0 100px rgba(0,0,0,0.9);
         }
 
-        /* الشريط المتحرك */
-        .ticker-wrap { background: #06b6d4; padding: 8px 0; box-shadow: 0 0 20px rgba(6, 182, 212, 0.5); }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 20s linear infinite; font-weight: bold; color: #050811; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* نافذة التنبيه المخصصة */
+        /* نافذة التنبيه */
         .custom-alert {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 85%; max-width: 380px; background: #0f172a; border: 2px solid #06b6d4;
             border-radius: 35px; padding: 30px; z-index: 10000; text-align: center; display: none;
-            box-shadow: 0 0 60px rgba(6, 182, 212, 0.3);
         }
+
+        /* الشريط المتحرك */
+        .ticker-wrap { background: #06b6d4; padding: 10px 0; box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; font-weight: bold; color: #050811; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
@@ -57,16 +61,36 @@
     <div id="overlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] hidden"></div>
     <div id="alert-box" class="custom-alert">
         <div class="text-5xl mb-4 neon-text">⚡</div>
-        <h3 id="alert-title" class="text-2xl font-bold mb-2 neon-text text-cyan-400"></h3>
+        <h3 id="alert-title" class="text-2xl font-bold mb-2 text-cyan-400"></h3>
         <p id="alert-msg" class="text-gray-400 mb-8"></p>
-        <button id="alert-confirm" class="w-full bg-cyan-500 text-black py-4 rounded-2xl font-bold shadow-lg shadow-cyan-500/50">فهمت</button>
+        <button onclick="closeAlert()" class="w-full bg-cyan-500 text-black py-4 rounded-2xl font-bold shadow-lg shadow-cyan-500/50">موافق</button>
     </div>
 
-    <div class="ticker-wrap"><div class="ticker">🔥 ريم ستور: عالم الاحتراف والتميز.. شحن فوري لجميع الألعاب والبرامج | سرعة - أمان - نيون 🔥</div></div>
+    <div id="admin-panel">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-cyan-400 italic">لوحة التحكم</h2>
+            <button onclick="closeAdmin()" class="text-2xl">&times;</button>
+        </div>
+        <div class="space-y-4 text-black">
+            <input type="text" id="p-name" placeholder="اسم المنتج (مثال: ببجي 325 شدة)" class="w-full p-4 rounded-2xl outline-none border-2 border-transparent focus:border-cyan-500">
+            <input type="number" id="p-price" placeholder="السعر بالدولار $" class="w-full p-4 rounded-2xl outline-none border-2 border-transparent focus:border-cyan-500">
+            <input type="text" id="p-img" placeholder="رابط الصورة (اضغط مطولاً للنسخ)" class="w-full p-4 rounded-2xl outline-none border-2 border-transparent focus:border-cyan-500">
+            <select id="p-cat" class="w-full p-4 rounded-2xl outline-none font-bold bg-white">
+                <option value="apps">قسم التطبيقات</option>
+                <option value="nums">قسم الأرقام</option>
+                <option value="games">ألعاب</option>
+                <option value="tele">اشتراكات تيليجرام</option>
+                <option value="social">سوشل ميديا</option>
+            </select>
+            <button onclick="saveProduct()" class="w-full bg-cyan-500 text-black py-4 rounded-2xl font-black text-lg shadow-xl hover:bg-cyan-400 transition">إضافة للمتجر فورا</button>
+        </div>
+    </div>
 
-    <nav class="p-6 flex justify-between items-center sticky top-0 z-[100] glass border-b border-cyan-500/20">
-        <div onclick="checkAdmin()" class="text-2xl font-black neon-text italic">REEM <span class="text-cyan-400">STORE</span></div>
-        <div onclick="toggleCart()" class="relative bg-cyan-500/10 p-3 rounded-2xl border border-cyan-500/30 cursor-pointer">
+    <div class="ticker-wrap"><div class="ticker">🚀 أهلاً بكم في REEM STORE - شحن فوري - أمان تام - دعم فني 24/7 🚀</div></div>
+
+    <nav class="p-6 flex justify-between items-center sticky top-0 z-[100] glass border-b border-cyan-500/10">
+        <div onclick="openAdminCheck()" class="text-2xl font-black neon-text italic cursor-pointer">REEM <span class="text-cyan-400 text-white">STORE</span></div>
+        <div onclick="toggleCart()" class="relative bg-cyan-500/10 p-3 rounded-2xl border border-cyan-500/20 cursor-pointer">
             <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
             <span id="cart-count" class="absolute -top-1 -right-1 bg-cyan-500 text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
         </div>
@@ -74,12 +98,13 @@
 
     <div class="swiper mySwiper mt-6 mb-8 mx-4 rounded-[35px] overflow-hidden neon-border">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://images.wallpapersden.com/image/download/pubg-mobile-2021-4k-gaming_a2xtbGWUmZqaraWkpJRmbmdlrWZnZWU.jpg" class="w-full h-60 object-cover"></div>
-            <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800" class="w-full h-60 object-cover"></div>
+            <div class="swiper-slide"><img src="https://images.wallpapersden.com/image/download/pubg-mobile-2021-4k-gaming_a2xtbGWUmZqaraWkpJRmbmdlrWZnZWU.jpg" class="w-full h-56 object-cover"></div>
+            <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800" class="w-full h-56 object-cover"></div>
         </div>
+        <div class="swiper-pagination"></div>
     </div>
 
-    <div class="flex gap-4 overflow-x-auto px-6 pb-8 no-scrollbar" id="categories-bar">
+    <div class="flex gap-4 overflow-x-auto px-6 pb-8 no-scrollbar" id="cat-container">
         <button class="cat-btn active" onclick="render('all', this)">الكل</button>
         <button class="cat-btn" onclick="render('apps', this)">التطبيقات</button>
         <button class="cat-btn" onclick="render('nums', this)">الأرقام</button>
@@ -90,119 +115,132 @@
 
     <main class="p-4 grid grid-cols-2 md:grid-cols-4 gap-6" id="products-grid"></main>
 
-    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-[450px] bg-[#050811] z-[1002] transform -translate-x-full transition-transform duration-500 p-8 shadow-2xl border-r border-cyan-500/30">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-bold neon-text text-cyan-400 italic">سلتك الذكية</h2>
-            <button onclick="toggleCart()" class="text-4xl text-gray-500 hover:text-white">&times;</button>
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-[450px] bg-[#050811] z-[1002] transform -translate-x-full transition-transform duration-500 p-8 shadow-2xl border-r border-cyan-500/20">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-black text-cyan-400 neon-text italic">سلتك الذكية</h2>
+            <button onclick="toggleCart()" class="text-4xl text-gray-500">&times;</button>
         </div>
         
-        <div id="cart-items" class="space-y-4 mb-8 overflow-y-auto max-h-[40vh] pr-2"></div>
+        <div id="cart-items" class="space-y-4 mb-6 overflow-y-auto max-h-[35vh]"></div>
 
-        <div class="space-y-4 pt-6 border-t border-cyan-500/20">
-            <div class="flex justify-between text-2xl font-bold text-white mb-4"><span>الإجمالي:</span> <span id="total">0</span> $</div>
+        <div class="space-y-4 pt-6 border-t border-cyan-500/10">
+            <div class="flex justify-between text-2xl font-bold mb-4"><span>الإجمالي:</span> <span id="total" class="text-cyan-400">0</span> $</div>
             
-            <input id="user-name" type="text" placeholder="اسمك الكامل" class="w-full p-4 bg-slate-900 border border-cyan-500/20 rounded-2xl outline-none focus:border-cyan-500">
-            <input id="user-id" type="text" placeholder="ID الحساب المراد شحنه" class="w-full p-4 bg-slate-900 border border-cyan-500/20 rounded-2xl outline-none focus:border-cyan-500">
+            <input id="u-name" type="text" placeholder="اسمك الكامل" class="w-full p-4 bg-slate-900/50 border border-white/5 rounded-2xl outline-none">
+            <input id="u-id" type="text" placeholder="ID الحساب للشحن" class="w-full p-4 bg-slate-900/50 border border-white/5 rounded-2xl outline-none">
 
-            <div class="p-5 bg-gradient-to-r from-blue-900/40 to-cyan-900/40 rounded-[25px] border border-cyan-500/30">
-                <h3 class="font-bold mb-3 text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-wallet"></i> دفع عبر شام كاش</h3>
-                <p class="text-[12px] text-gray-300 mb-4 text-center bg-black/40 p-2 rounded-lg">حول المبلغ للرقم أدناه وارفع صورة العملية</p>
-                <div class="flex justify-between items-center bg-black/50 p-3 rounded-xl mb-4 border border-cyan-500/10">
-                    <span class="text-sm">رقم المحفظة:</span>
-                    <span class="font-mono text-cyan-400 font-bold">0968493135</span>
+            <div class="p-5 bg-cyan-900/20 rounded-[30px] border border-cyan-500/20">
+                <h3 class="font-bold text-cyan-400 mb-3 text-sm flex items-center gap-2"><i class="fa-solid fa-wallet"></i> دفع عبر شام كاش</h3>
+                <div class="bg-black/40 p-3 rounded-xl flex justify-between items-center mb-3">
+                    <span class="text-xs text-gray-400">رقم المحفظة:</span>
+                    <span class="font-bold text-cyan-400">0968493135</span>
                 </div>
-                <input type="text" id="pay-number" placeholder="رقم عملية الدفع (المرجع)" class="w-full p-4 bg-slate-900 border border-cyan-500/20 rounded-2xl mb-4 outline-none text-sm">
-                
-                <div class="relative w-full h-14 border-2 border-dashed border-cyan-500/30 rounded-2xl flex items-center justify-center bg-cyan-500/5 cursor-pointer">
-                    <input type="file" id="pay-img" class="absolute inset-0 opacity-0 cursor-pointer">
-                    <span class="text-xs text-cyan-400"><i class="fa-solid fa-camera mr-1"></i> ارفق لقطة شاشة التحويل (الباركود)</span>
+                <input type="text" id="pay-ref" placeholder="رقم عملية الدفع (المرجع)" class="w-full p-4 bg-slate-900 border border-white/5 rounded-2xl mb-3 text-sm">
+                <div class="relative w-full h-12 border border-dashed border-cyan-500/40 rounded-2xl flex items-center justify-center bg-cyan-500/5">
+                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer">
+                    <span class="text-[10px] text-cyan-400/80 italic">ارفق صورة الباركود / العملية</span>
                 </div>
             </div>
 
-            <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-5 rounded-[25px] font-black text-xl shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:scale-95 transition">إتمام الطلب الآن</button>
+            <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-5 rounded-[25px] font-black text-xl shadow-[0_10px_30px_rgba(6,182,212,0.3)] hover:scale-95 transition">إرسال الطلب عبر واتساب</button>
         </div>
     </div>
 
-    <footer class="mt-20 p-12 glass border-t border-cyan-500/20 text-center">
-        <p class="text-gray-500 text-sm">© 2026 Reem Store. جميع الحقوق محفوظة.</p>
+    <footer class="mt-20 p-10 text-center border-t border-white/5 opacity-40 text-xs">
+        © 2026 Reem Store. All rights reserved.
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         new Swiper(".mySwiper", { loop: true, autoplay: { delay: 4000 }, pagination: { el: ".swiper-pagination", clickable: true } });
 
-        let products = JSON.parse(localStorage.getItem('reem_neon_v1')) || [];
+        let products = JSON.parse(localStorage.getItem('reem_db_v2')) || [];
         let cart = [];
 
         function render(cat = 'all', btn = null) {
             const grid = document.getElementById('products-grid');
-            
-            // حل مشكلة تلوين الأزرار
             if(btn) {
                 document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
             }
-
             const filtered = cat === 'all' ? products : products.filter(x => x.cat === cat);
             
             grid.innerHTML = filtered.length ? filtered.map(p => `
                 <div class="product-card group">
-                    <img src="${p.img || 'https://via.placeholder.com/300x200/0f172a/06b6d4?text=Reem+Store'}" class="neon-border">
-                    <h4 class="font-bold text-sm my-4 h-10 overflow-hidden text-gray-200 group-hover:text-cyan-400 transition">${p.name}</h4>
+                    <img src="${p.img || 'https://via.placeholder.com/300x200/0f172a/06b6d4?text=REEM+STORE'}" 
+                         onerror="this.src='https://via.placeholder.com/300x200/0f172a/06b6d4?text=IMAGE+ERROR'">
+                    <h4 class="font-bold text-sm my-4 h-10 overflow-hidden text-gray-300 group-hover:text-cyan-400 transition">${p.name}</h4>
                     <div class="flex justify-between items-center">
                         <span class="text-cyan-400 font-black text-lg">${p.price} $</span>
-                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl shadow-lg shadow-cyan-500/30 flex items-center justify-center hover:rotate-12 transition">
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl shadow-lg flex items-center justify-center hover:rotate-12 transition">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
+                    ${!document.getElementById('admin-panel').style.display === 'none' ? '' : `<button onclick="deleteProduct(${p.id})" class="text-[10px] text-red-500/50 mt-3 underline">حذف المنتج</button>`}
                 </div>
-            `).join('') : '<p class="col-span-full text-center text-gray-600 py-10">قريباً في هذا القسم...</p>';
+            `).join('') : '<p class="col-span-full text-center text-gray-600 py-10 italic">سيتم توفير المنتجات قريباً..</p>';
+        }
+
+        function openAdminCheck() {
+            let p = prompt("أدخل كلمة سر الإدارة:");
+            if(p === "reem2026") {
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('overlay').classList.remove('hidden');
+                render();
+            } else { alert("عذراً، كلمة السر خاطئة!"); }
+        }
+
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; document.getElementById('overlay').classList.add('hidden'); }
+
+        function saveProduct() {
+            let n = document.getElementById('p-name').value, p = document.getElementById('p-price').value, i = document.getElementById('p-img').value, c = document.getElementById('p-cat').value;
+            if(!n || !p) return;
+            products.push({ id: Date.now(), name: n, price: parseFloat(p), img: i, cat: c });
+            localStorage.setItem('reem_db_v2', JSON.stringify(products));
+            render();
+            showNotice("نجاح", "تمت إضافة المنتج بنجاح إلى المتجر! ✅");
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(x => x.id !== id);
+            localStorage.setItem('reem_db_v2', JSON.stringify(products));
+            render();
         }
 
         function addToCart(n, p) {
             cart.push({n, p});
             document.getElementById('cart-count').innerText = cart.length;
             updateCart();
-            showCustomAlert("تمت الإضافة", `أضفنا ${n} لسلتك بنجاح ✅`);
+            showNotice("السلة", `تم إضافة ${n} ✅`);
         }
 
         function updateCart() {
             document.getElementById('cart-items').innerHTML = cart.map((x, i) => `
-                <div class="flex justify-between items-center bg-slate-900/50 p-4 rounded-2xl border border-cyan-500/10">
-                    <span class="text-sm font-bold">${x.n}</span>
-                    <div class="flex items-center gap-4">
-                        <span class="text-cyan-400">${x.p} $</span>
-                        <button onclick="cart.splice(${i},1);updateCart();document.getElementById('cart-count').innerText = cart.length;" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                <div class="flex justify-between items-center bg-slate-900/80 p-4 rounded-2xl border border-cyan-500/10">
+                    <span class="text-xs font-bold">${x.n}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="text-cyan-400 font-bold">${x.p} $</span>
+                        <button onclick="cart.splice(${i},1);updateCart();document.getElementById('cart-count').innerText = cart.length;" class="text-red-500 text-xs"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
                 </div>
             `).join('');
             document.getElementById('total').innerText = cart.reduce((s, x) => s + x.p, 0).toFixed(2);
         }
 
-        function showCustomAlert(title, msg) {
+        function showNotice(title, msg) {
             document.getElementById('alert-title').innerText = title;
             document.getElementById('alert-msg').innerText = msg;
             document.getElementById('alert-box').style.display = 'block';
             document.getElementById('overlay').classList.remove('hidden');
         }
 
-        document.getElementById('alert-confirm').onclick = () => {
-            document.getElementById('alert-box').style.display = 'none';
-            document.getElementById('overlay').classList.add('hidden');
-        };
-
+        function closeAlert() { document.getElementById('alert-box').style.display = 'none'; document.getElementById('overlay').classList.add('hidden'); }
         function toggleCart() { document.getElementById('cart-drawer').classList.toggle('-translate-x-full'); }
 
         function checkout() {
-            let u = document.getElementById('user-name').value;
-            let id = document.getElementById('user-id').value;
-            let payNum = document.getElementById('pay-number').value;
-            
-            if(!u || !id || !payNum || cart.length === 0) {
-                return showCustomAlert("بيانات ناقصة", "يرجى ملء الاسم، الـ ID، ورقم عملية الدفع ⚠️");
-            }
-
-            let msg = `طلب شحن جديد ⚡%0Aالاسم: ${u}%0Aالـ ID: ${id}%0Aرقم عملية الدفع: ${payNum}%0Aالطلبات:%0A${cart.map(x => `- ${x.n}`).join('%0A')}%0Aالإجمالي: ${document.getElementById('total').innerText}$`;
+            let u = document.getElementById('u-name').value, id = document.getElementById('u-id').value, ref = document.getElementById('pay-ref').value;
+            if(!u || !id || !ref || cart.length === 0) return showNotice("تنبيه", "يرجى إكمال البيانات (الاسم، ID، ومرجع الدفع) ⚠️");
+            let msg = `طلب شحن جديد ⚡%0Aالاسم: ${u}%0Aالـ ID: ${id}%0Aالمرجع: ${ref}%0A%0Aالطلبات:%0A${cart.map(x => `- ${x.n}`).join('%0A')}%0A%0Aالإجمالي: ${document.getElementById('total').innerText}$`;
             window.open(`https://wa.me/963968493135?text=${msg}`);
         }
 
