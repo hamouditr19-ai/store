@@ -3,193 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | متجر ريم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Reem Store | متجر ريم الرقمي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --bg: #0d1b2a;
-            --card-bg: #1b263b;
-            --accent: #00d4ff;
-            --grad: linear-gradient(90deg, #00d4ff, #0055ff);
-            --text: #ffffff;
+            --primary: #00d4ff;
+            --secondary: #0055ff;
+            --bg-dark: #0b1421;
+            --card-bg: #16243a;
+            --text-color: #ffffff;
+            --grad: linear-gradient(135deg, #00d4ff, #0055ff);
         }
 
-        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 90px; overflow-x: hidden; }
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
+        body { background-color: var(--bg-dark); color: var(--text-color); margin: 0; overflow-x: hidden; padding-bottom: 80px; }
 
-        /* 1️⃣ Header & Search */
-        header { padding: 15px; background: rgba(13, 27, 42, 0.95); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .logo { font-size: 22px; font-weight: 800; color: var(--accent); }
-        .search-container { display: flex; background: var(--card-bg); border-radius: 12px; padding: 10px; border: 1px solid rgba(255,255,255,0.1); }
-        .search-container input { background: none; border: none; color: white; width: 100%; outline: none; }
+        /* --- الواجهة العلوية والبحث --- */
+        header { padding: 15px; position: sticky; top: 0; background: rgba(11, 20, 33, 0.95); z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid #1b263b; }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .logo { font-size: 24px; font-weight: 900; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .wallet-badge { background: var(--card-bg); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--primary); font-size: 14px; }
+        .search-box { position: relative; width: 100%; }
+        .search-box input { width: 100%; padding: 12px 40px 12px 15px; background: var(--card-bg); border: none; border-radius: 12px; color: white; outline: none; }
+        .search-box i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--primary); }
 
-        /* 2️⃣ Banner Slider */
-        .banner-box { width: 95%; height: 180px; margin: 10px auto; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; background-size: cover; background-position: center; display: flex; align-items: flex-end; }
+        /* --- Banner Slider --- */
+        .banner-container { width: 95%; height: 180px; margin: 15px auto; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .slide { position: absolute; width: 100%; height: 100%; opacity: 0; display: flex; align-items: flex-end; background-size: cover; background-position: center; }
         .slide.active { opacity: 1; }
-        .slide-txt { background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%; padding: 20px; font-weight: 700; }
+        .slide-overlay { background: linear-gradient(transparent, rgba(0,0,0,0.8)); width: 100%; padding: 20px; }
 
-        /* 3️⃣ Grid Sections */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .card { background: var(--card-bg); border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; position: relative; }
-        .card:hover { transform: translateY(-5px) rotateX(10deg); border-color: var(--accent); box-shadow: 0 10px 20px rgba(0,212,255,0.2); }
-        .icon-box { background: #fff; width: 60px; height: 60px; border-radius: 15px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .icon-box img { width: 45px; object-fit: contain; }
-        .card span { font-size: 11px; font-weight: 700; color: #eee; }
+        /* --- الأقسام Grid --- */
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
+        .category-card { background: var(--card-bg); border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transform-style: preserve-3d; }
+        .category-card:hover { transform: translateY(-5px) scale(1.05); border-color: var(--primary); box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+        .icon-box { background: #fff; width: 55px; height: 55px; border-radius: 15px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; }
+        .icon-box img { width: 40px; }
+        .category-card span { font-size: 11px; font-weight: 700; white-space: nowrap; }
 
-        /* 4️⃣ Bottom Menu */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: rgba(13, 27, 42, 0.98); display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid var(--card-bg); z-index: 1000; }
-        .nav-item { text-align: center; color: #777; font-size: 10px; flex: 1; cursor: pointer; }
-        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
-        .nav-item.active { color: var(--accent); }
-        .nav-center { background: var(--grad); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: -35px; border: 5px solid var(--bg); color: white; font-size: 22px; }
+        /* --- المنتجات Slider --- */
+        .products-slider { display: flex; overflow-x: auto; gap: 15px; padding: 15px; scrollbar-width: none; }
+        .product-item { min-width: 140px; background: var(--card-bg); border-radius: 15px; padding: 10px; text-align: center; }
+        .product-item img { width: 100%; border-radius: 10px; margin-bottom: 8px; }
 
-        /* 5️⃣ Modal & Cart */
+        /* --- القائمة السفلية --- */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: #0b1421; display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #1b263b; z-index: 1000; }
+        .nav-btn { color: #888; font-size: 10px; text-align: center; flex: 1; cursor: pointer; }
+        .nav-btn.active { color: var(--primary); }
+        .nav-btn i { font-size: 20px; display: block; margin-bottom: 4px; }
+        .center-btn { background: var(--grad); width: 55px; height: 55px; border-radius: 50%; margin-top: -35px; border: 5px solid var(--bg-dark); color: white; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 5px 15px rgba(0,212,255,0.4); }
+
+        /* --- Modals --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--bg); width: 100%; max-width: 450px; border-radius: 25px; padding: 25px; border: 1px solid var(--accent); max-height: 80vh; overflow-y: auto; }
-        .btn-main { background: var(--grad); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 700; width: 100%; cursor: pointer; margin-top: 15px; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; }
+        .modal-content { background: var(--bg-dark); width: 100%; max-width: 450px; border-radius: 25px; padding: 25px; border: 1px solid var(--primary); max-height: 80vh; overflow-y: auto; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: var(--card-bg); border: 1px solid #1b263b; border-radius: 10px; color: white; outline: none; }
+        .btn-action { background: var(--grad); border: none; padding: 15px; border-radius: 12px; color: white; font-weight: 700; width: 100%; cursor: pointer; margin-top: 10px; }
 
-        /* Cart Floating Button */
-        .cart-float { position: fixed; left: 20px; bottom: 100px; background: var(--accent); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg); font-weight: bold; z-index: 900; }
+        /* --- Admin Panel Simple Style --- */
+        .admin-section { display: none; padding: 20px; }
+        .admin-item { background: #1b263b; padding: 10px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
 
-        footer { text-align: center; padding: 30px; font-size: 12px; color: #555; }
+        /* Notifications */
+        .notif { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; padding: 10px 20px; border-radius: 10px; font-weight: bold; display: none; z-index: 3000; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="top-bar">
-        <div class="logo">💎 REEM STORE</div>
-        <div style="background:var(--card-bg); padding:5px 15px; border-radius:20px; font-size:13px;">رصيدك: 0.456 $</div>
+    <div id="notification" class="notif"></div>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">💎 REEM STORE</div>
+            <div class="wallet-badge" onclick="showWallet()">💰 محفظتي: <span id="userBalance">50.00</span> $</div>
+        </div>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="ابحث عن منتج، قسم، خدمة..." id="searchInp" onkeyup="filterItems()">
+        </div>
+    </header>
+
+    <div class="banner-container">
+        <div class="slide active" style="background-image: url('https://i.ibb.co/pW6mX3P/banner1.jpg');">
+            <div class="slide-overlay"><h3>شحن ألعاب فوري 🔥 ببجي وفري فاير</h3></div>
+        </div>
+        <div class="slide" style="background-image: url('https://i.ibb.co/68v9LpX/banner2.jpg');">
+            <div class="slide-overlay"><h3>أفضل الحسابات والاشتراكات 📺 نيتفلكس</h3></div>
+        </div>
     </div>
-    <div class="search-container">
-        <i class="fas fa-search" style="margin-left:10px; color:#555;"></i>
-        <input type="text" id="searchInput" placeholder="ابحث عن ألعاب، بطاقات، أرقام..." onkeyup="filterContent()">
+
+    <div class="grid-container" id="categoryGrid">
+        <div class="category-card" onclick="openCat('الألعاب')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/controller.png"></div><span>الألعاب</span></div>
+        <div class="category-card" onclick="openCat('التطبيقات')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/apps.png"></div><span>التطبيقات</span></div>
+        <div class="category-card" onclick="openCat('الرصيد')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/money-bag.png"></div><span>الرصيد</span></div>
+        <div class="category-card" onclick="openCat('الأكواد')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/gift-card.png"></div><span>الأكواد</span></div>
+        <div class="category-card" onclick="openCat('سوشال ميديا')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/facebook-new.png"></div><span>سوشال ميديا</span></div>
+        <div class="category-card" onclick="openCat('تلجرام')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/telegram-app.png"></div><span>تلجرام</span></div>
+        <div class="category-card" onclick="openCat('أرقام')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/sim-card-chip.png"></div><span>الأرقام</span></div>
+        <div class="category-card" onclick="openCat('اشتراكات')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/netflix.png"></div><span>اشتراكات</span></div>
     </div>
-</header>
 
-<div class="banner-box">
-    <div class="slide active" style="background-image: url('https://i.ibb.co/pW6mX3P/banner1.jpg');">
-        <div class="slide-txt">عروض شحن ببجي وفري فاير 🔥</div>
+    <h4 style="margin: 10px 20px;">🔥 الأكثر طلباً</h4>
+    <div class="products-slider">
+        <div class="product-item">
+            <img src="https://via.placeholder.com/100" alt="prod">
+            <p style="font-size: 12px; margin: 5px 0;">660 شدة ببجي</p>
+            <button class="btn-action" style="padding: 5px; font-size: 10px;" onclick="addToCart('شدات ببجي', 10)">10$ إضافة</button>
+        </div>
+        <div class="product-item">
+            <img src="https://via.placeholder.com/100" alt="prod">
+            <p style="font-size: 12px; margin: 5px 0;">نيتفلكس شهر</p>
+            <button class="btn-action" style="padding: 5px; font-size: 10px;" onclick="addToCart('نيتفلكس شهر', 5)">5$ إضافة</button>
+        </div>
     </div>
-    <div class="slide" style="background-image: url('https://i.ibb.co/68v9LpX/banner2.jpg');">
-        <div class="slide-txt">اشتراكات نيتفلكس ويتيوب بريميوم 📺</div>
+
+    <footer>
+        <p>© 2026 Reem Store. جميع الحقوق محفوظة.</p>
+        <div style="font-size: 20px;">
+            <i class="fab fa-telegram"></i> <i class="fab fa-whatsapp"></i> <i class="fab fa-instagram"></i>
+        </div>
+    </footer>
+
+    <nav class="bottom-nav">
+        <div class="nav-btn active" onclick="location.reload()"><i class="fas fa-home"></i>الرئيسية</div>
+        <div class="nav-btn" onclick="alert('سجل طلباتك فارغ')"><i class="fas fa-receipt"></i>طلباتي</div>
+        <div class="center-btn" onclick="showCart()"><i class="fas fa-shopping-basket"></i></div>
+        <div class="nav-btn" onclick="showWallet()"><i class="fas fa-wallet"></i>شحن</div>
+        <div class="nav-btn" onclick="showAdmin()"><i class="fas fa-user-shield"></i>أدمن</div>
+    </nav>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <h3>سلة التسوق 🛒</h3>
+            <div id="cartItems"></div>
+            <hr>
+            <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                <span>الإجمالي:</span> <span id="cartTotal">0</span> $
+            </div>
+            <input type="text" id="custName" placeholder="اسمك الكامل">
+            <textarea id="orderMsg" placeholder="تفاصيل إضافية (الآي دي، النوع...)"></textarea>
+            <button class="btn-action" onclick="sendOrder()">تأكيد الطلب وإرسال للبوت 🚀</button>
+            <button class="btn-action" style="background: grey;" onclick="closeModals()">إغلاق</button>
+        </div>
     </div>
-</div>
 
-<div class="grid" id="mainGrid">
-    <div class="card" onclick="openSection('الألعاب')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/controller.png"></div><span>الألعاب 🎮</span></div>
-    <div class="card" onclick="openSection('التطبيقات')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/apps.png"></div><span>التطبيقات 📱</span></div>
-    <div class="card" onclick="openSection('الرصيد')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/money-bag.png"></div><span>الرصيد 💰</span></div>
-    <div class="card" onclick="openSection('الأكواد')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/gift-card.png"></div><span>الأكواد 🔑</span></div>
-    <div class="card" onclick="openSection('سوشال ميديا')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/facebook-new.png"></div><span>سوشال ميديا 🌐</span></div>
-    <div class="card" onclick="openSection('تلجرام')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/telegram-app.png"></div><span>خدمات تلجرام ✈️</span></div>
-    <div class="card" onclick="openSection('أرقام وهمية')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/sim-card-chip.png"></div><span>أرقام افتراضية 📞</span></div>
-    <div class="card" onclick="openSection('الإنترنت')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/wi-fi.png"></div><span>خدمات الإنترنت 🌐</span></div>
-    <div class="card" onclick="openSection('الحسابات')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/customer-extract.png"></div><span>الحسابات 👤</span></div>
-    <div class="card" onclick="openSection('الاشتراكات')"><div class="icon-box"><img src="https://img.icons8.com/fluency/96/netflix.png"></div><span>الاشتراكات 🍿</span></div>
-</div>
-
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <h3 id="modalTitle">تأكيد الطلب</h3>
-        <p id="itemSelected" style="color:var(--accent); font-weight:bold;"></p>
-        <input type="text" id="custName" placeholder="الاسم الكامل">
-        <textarea id="orderNotes" rows="4" placeholder="تفاصيل الطلب (رقم اللاعب، النوع، إلخ...)"></textarea>
-        <div style="font-size:12px; color:#888;">إيداع عبر شام كاش: 17ac4a94cb1ed493e47a8526892294dd</div>
-        <button class="btn-main" onclick="sendToTelegram()">إرسال الطلب عبر التلجرام 🚀</button>
-        <button onclick="closeModal()" style="background:none; border:none; color:#888; width:100%; margin-top:10px;">إلغاء</button>
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <h3>لوحة التحكم 🔐</h3>
+            <input type="password" id="adminPass" placeholder="كلمة مرور الأدمن">
+            <button class="btn-action" onclick="loginAdmin()">دخول</button>
+            
+            <div id="adminControls" style="display: none; margin-top: 20px;">
+                <h4>إضافة منتج</h4>
+                <input type="text" id="pName" placeholder="اسم المنتج">
+                <input type="number" id="pPrice" placeholder="السعر بالدولار">
+                <button class="btn-action" onclick="addProduct()">إضافة للمتجر</button>
+                <div id="adminProductList"></div>
+            </div>
+            <button class="btn-action" style="background: grey; margin-top:10px;" onclick="closeModals()">خروج</button>
+        </div>
     </div>
-</div>
 
-<nav class="bottom-nav">
-    <div class="nav-item active" onclick="location.reload()"><i class="fas fa-home"></i>الرئيسية</div>
-    <div class="nav-item" onclick="alert('سجل الطلبات قيد التحديث')"><i class="fas fa-list-alt"></i>طلباتي</div>
-    <div class="nav-center" onclick="openSection('إيداع شحن')"><i class="fas fa-plus"></i></div>
-    <div class="nav-item" onclick="alert('سجل الشحن فارغ')"><i class="fas fa-history"></i>سجل الشحن</div>
-    <div class="nav-item" onclick="window.open('https://t.me/YourUser','_blank')"><i class="fas fa-headset"></i>اتصل بنا</div>
-</nav>
+    <script>
+        // --- البيانات الأساسية ---
+        const TELEGRAM_TOKEN = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
+        const CHAT_ID = "7741275208";
+        let balance = 50.00;
+        let cart = [];
 
-<div class="cart-float" id="cartCount">0</div>
+        // --- نظام البانر ---
+        let slideIndex = 0;
+        function rotateBanner() {
+            let slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) slideIndex = 1;
+            slides[slideIndex-1].classList.add('active');
+            setTimeout(rotateBanner, 4000);
+        }
+        rotateBanner();
 
-<footer>
-    <p>© 2026 Reem Store. جميع الحقوق محفوظة.</p>
-    <div><i class="fab fa-telegram"></i> <i class="fab fa-whatsapp"></i></div>
-</footer>
+        // --- وظائف السلة ---
+        function addToCart(name, price) {
+            cart.push({name, price});
+            showNotif(`تم إضافة ${name} للسلة`);
+            updateCart();
+        }
 
-<script>
-    // ⚙️ الإعدادات البرمجية
-    const BOT_TOKEN = "8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74";
-    const CHAT_ID = "7741275208";
-    let cart = [];
-    let currentCategory = "";
+        function updateCart() {
+            const list = document.getElementById('cartItems');
+            list.innerHTML = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin:10px 0;">
+                    <span>${item.name}</span>
+                    <span>${item.price}$ <i class="fas fa-trash" style="color:red; cursor:pointer;" onclick="removeFromCart(${index})"></i></span>
+                </div>`;
+            });
+            document.getElementById('cartTotal').innerText = total;
+        }
 
-    // 1️⃣ Banner Auto Slider
-    let slideIdx = 0;
-    function rotateSlides() {
-        let slides = document.querySelectorAll(".slide");
-        slides.forEach(s => s.classList.remove("active"));
-        slideIdx++;
-        if (slideIdx > slides.length) slideIdx = 1;
-        slides[slideIdx-1].classList.add("active");
-        setTimeout(rotateSlides, 4000);
-    }
-    rotateSlides();
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
 
-    // 2️⃣ Filter Function
-    function filterContent() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            let text = card.innerText.toLowerCase();
-            card.style.display = text.includes(input) ? "block" : "none";
-        });
-    }
+        function showCart() { document.getElementById('cartModal').style.display = 'flex'; }
 
-    // 3️⃣ Modal Logic
-    function openSection(cat) {
-        currentCategory = cat;
-        document.getElementById("modalTitle").innerText = "طلب من قسم: " + cat;
-        document.getElementById("orderModal").style.display = "flex";
-        cart.push(cat);
-        document.getElementById("cartCount").innerText = cart.length;
-    }
+        // --- إرسال الطلب للتليجرام ---
+        function sendOrder() {
+            const name = document.getElementById('custName').value;
+            const msg = document.getElementById('orderMsg').value;
+            const total = document.getElementById('cartTotal').innerText;
 
-    function closeModal() {
-        document.getElementById("orderModal").style.display = "none";
-    }
+            if(!name || cart.length === 0) { alert("الرجاء إدخال الاسم ومنتجات"); return; }
+            if(balance < total) { alert("رصيدك غير كافٍ!"); return; }
 
-    // 4️⃣ Telegram Integration
-    function sendToTelegram() {
-        const name = document.getElementById("custName").value;
-        const notes = document.getElementById("orderNotes").value;
+            const orderDetails = cart.map(i => i.name).join(', ');
+            const text = `🚀 *طلب جديد من المتجر*\n\n👤 العميل: ${name}\n📦 المنتجات: ${orderDetails}\n💰 الإجمالي: ${total}$\n📝 ملاحظات: ${msg}\n⏰ الوقت: ${new Date().toLocaleString('ar-EG')}`;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+
+            fetch(url).then(res => {
+                if(res.ok) {
+                    balance -= parseFloat(total);
+                    document.getElementById('userBalance').innerText = balance.toFixed(2);
+                    showNotif("✅ تم إرسال طلبك بنجاح!");
+                    cart = [];
+                    updateCart();
+                    closeModals();
+                }
+            });
+        }
+
+        // --- نظام الأدمن ---
+        function showAdmin() { document.getElementById('adminModal').style.display = 'flex'; }
         
-        if(!name || !notes) return alert("الرجاء تعبئة الاسم والتفاصيل!");
+        function loginAdmin() {
+            const pass = document.getElementById('adminPass').value;
+            if(pass === "reem2026") { // كلمة مرور افتراضية
+                document.getElementById('adminControls').style.display = 'block';
+                showNotif("مرحباً أيها المدير");
+            } else { alert("كلمة المرور خطأ!"); }
+        }
 
-        const message = `🚀 *طلب جديد من متجر ريم*\n\n` +
-                        `👤 العميل: ${name}\n` +
-                        `📂 القسم: ${currentCategory}\n` +
-                        `📝 التفاصيل: ${notes}\n` +
-                        `⏰ الوقت: ${new Date().toLocaleString('ar-EG')}\n` +
-                        `💳 الدفع: شام كاش (تلقائي)`;
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            if(!name || !price) return;
+            showNotif(`تم إضافة ${name} للمتجر بنجاح`);
+            document.getElementById('pName').value = "";
+            document.getElementById('pPrice').value = "";
+        }
 
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+        // --- وظائف عامة ---
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        
+        function showNotif(text) {
+            const n = document.getElementById('notification');
+            n.innerText = text;
+            n.style.display = 'block';
+            setTimeout(() => n.style.display = 'none', 3000);
+        }
 
-        fetch(url).then(res => {
-            if(res.ok) {
-                alert("✅ تم استلام طلبك وسيتم معالجته فوراً.");
-                closeModal();
-                cart = [];
-                document.getElementById("cartCount").innerText = "0";
-            } else {
-                alert("❌ خطأ في الإرسال، تأكد من إعدادات البوت.");
-            }
-        });
-    }
-</script>
+        function filterItems() {
+            let val = document.getElementById('searchInp').value.toLowerCase();
+            let cards = document.querySelectorAll('.category-card');
+            cards.forEach(c => {
+                let txt = c.innerText.toLowerCase();
+                c.style.display = txt.includes(val) ? "block" : "none";
+            });
+        }
 
+        function showWallet() { alert("سيستم شحن الرصيد يتطلب ربط بوابة دفع. حالياً يمكنك الشحن عبر مراسلة الدعم."); }
+        function openCat(name) { showNotif(`فتح قسم: ${name}`); }
+
+    </script>
 </body>
 </html>
