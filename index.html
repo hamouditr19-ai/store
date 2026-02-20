@@ -6,306 +6,190 @@
     <title>Reem Store | ريم ستور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #0b1120; color: white; margin: 0; overflow-x: hidden; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #0b1120; color: white; margin: 0; }
         
-        /* شريط الترحيب العلوي المتطور */
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(6, 182, 212, 0.2); }
+        
+        /* شريط الترحيب المتحرك */
         .top-banner {
-            background: linear-gradient(90deg, #0b1120 0%, #06b6d4 50%, #0b1120 100%);
-            padding: 12px; text-align: center; font-weight: bold; font-size: 13px;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-            letter-spacing: 0.5px;
+            background: linear-gradient(90deg, #0f172a, #06b6d4, #0f172a);
+            padding: 10px; text-align: center; font-size: 13px; font-weight: bold;
         }
 
-        /* كروت المنتجات والأقسام */
-        .premium-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(6, 182, 212, 0.15);
-            border-radius: 28px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        /* أزرار الأقسام مع الأيقونات */
-        .category-chip {
-            background: #1e293b;
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex; align-items: center; gap: 10px;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            min-width: fit-content;
-        }
-        .category-chip i { font-size: 18px; color: #06b6d4; }
-        .category-chip.active {
-            background: #06b6d4; color: #0b1120; border-color: #fff;
-            transform: scale(1.05);
-        }
-        .category-chip.active i { color: #0b1120; }
-
-        /* نافذة التنبيه المخصصة الفخمة */
+        /* نافذة التنبيه الاحترافية (بدل الكلاسيكية) */
         .custom-alert {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 85%; max-width: 380px;
-            background: #1e293b;
-            border: 2px solid #06b6d4; border-radius: 30px;
-            padding: 30px; z-index: 10000; text-align: center;
-            display: none; animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            width: 90%; max-width: 360px;
+            background: rgba(30, 41, 59, 0.98);
+            border: 1px solid #06b6d4; border-radius: 25px;
+            padding: 25px; z-index: 10000; text-align: center;
+            display: none; box-shadow: 0 0 40px rgba(0,0,0,0.7);
         }
-        @keyframes popIn { from { opacity: 0; transform: translate(-50%, -60%) scale(0.8); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
-        /* ستايل الصور في السلايدر */
-        .swiper { width: 100%; height: 230px; border-radius: 0 0 30px 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
-
-        /* زر واتساب */
-        .wa-float {
-            position: fixed; bottom: 25px; right: 25px;
-            background: #25d366; width: 60px; height: 60px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); z-index: 1000;
-            font-size: 30px; color: white;
+        /* تصميم كرت المنتج الفخم */
+        .product-card {
+            background: #1e293b; border-radius: 20px; overflow: hidden;
+            transition: transform 0.3s; border: 1px solid rgba(255,255,255,0.05);
         }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .product-card:hover { transform: translateY(-5px); border-color: #06b6d4; }
+
+        .category-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; }
+        .category-item {
+            background: #1e293b; padding: 10px 20px; border-radius: 15px;
+            white-space: nowrap; font-weight: bold; cursor: pointer; border: 1px solid transparent;
+        }
+        .category-item.active { background: #06b6d4; color: #0b1120; }
+
+        .wa-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
 
-    <div id="overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[9999] hidden"></div>
+    <div id="overlay" class="fixed inset-0 bg-black/80 z-[9999] hidden backdrop-blur-sm"></div>
     <div id="alert-box" class="custom-alert">
-        <div id="alert-icon" class="text-5xl mb-4"></div>
-        <h3 id="alert-title" class="text-2xl font-bold mb-3"></h3>
-        <p id="alert-msg" class="text-gray-400 text-sm mb-8 leading-relaxed"></p>
-        <div class="flex gap-3">
-            <button onclick="closeAlert()" class="flex-1 bg-slate-700 py-3 rounded-2xl font-bold hover:bg-slate-600 transition">إلغاء</button>
-            <button id="alert-confirm" class="flex-1 bg-cyan-500 text-black py-3 rounded-2xl font-bold hover:brightness-110 transition">حسناً</button>
+        <div id="alert-icon" class="text-4xl mb-3 text-yellow-400">⚠️</div>
+        <h3 id="alert-title" class="text-xl font-bold mb-2">تنبيه</h3>
+        <p id="alert-msg" class="text-gray-300 text-sm mb-6"></p>
+        <div class="flex gap-2">
+            <button onclick="closeAlert()" class="flex-1 bg-slate-700 py-3 rounded-xl font-bold">إلغاء</button>
+            <button id="alert-confirm" class="flex-1 bg-cyan-500 text-black py-3 rounded-xl font-bold">حسناً</button>
         </div>
     </div>
 
-    <div class="top-banner">
-        🚀 Reem Store | أهلاً بكم في متجر ريم لشحن الألعاب والبرامج - سرعة وأمان 🚀
-    </div>
+    <div class="top-banner">⭐ النجسين العلتحة - عيااة | سارع - Reem Store - الطررام ⭐</div>
 
-    <nav class="p-5 flex justify-between items-center bg-slate-900/40 sticky top-0 z-50 backdrop-blur-xl border-b border-white/5">
-        <div onclick="document.getElementById('admin-modal').classList.remove('hidden')" class="flex items-center gap-2 cursor-pointer">
-            <div class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-black font-bold shadow-lg shadow-cyan-500/20">R</div>
-            <span class="text-xl font-bold tracking-tight">Reem <span class="text-cyan-400 text-sm">Store</span></span>
-        </div>
-        <div onclick="toggleCart()" class="relative p-3 bg-slate-800/80 rounded-2xl border border-white/10 cursor-pointer hover:bg-slate-700 transition">
-            <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border-2 border-slate-900">0</span>
+    <nav class="p-5 flex justify-between items-center sticky top-0 z-50 bg-[#0b1120]/80 backdrop-blur-md">
+        <div onclick="openAdmin()" class="text-xl font-bold text-cyan-400">Reem Store | ريم ستور</div>
+        <div onclick="toggleCart()" class="relative bg-slate-800 p-3 rounded-xl">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-cyan-500 text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </nav>
 
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="https://wallpapers.com/images/featured/pubg-mobile-4k-75un6t31j94at53k.jpg"></div>
-            <div class="swiper-slide"><img src="https://w0.peakpx.com/wallpaper/528/1004/HD-wallpaper-social-media-icons-social-network-neon-icons-blue-background-social-media-concepts-social-media.jpg"></div>
+    <main class="p-4">
+        <div class="category-scroll no-scrollbar mb-8">
+            <div class="category-item active" onclick="filterCat('all')">الكل</div>
+            <div class="category-item" onclick="filterCat('apps')">قسم التطبيقات</div>
+            <div class="category-item" onclick="filterCat('nums')">قسم الأرقام</div>
+            <div class="category-item" onclick="filterCat('games')">ألعاب</div>
+            <div class="category-item" onclick="filterCat('tele')">اشتراكات تيليجرام</div>
+            <div class="category-item" onclick="filterCat('social')">سوشل ميديا</div>
         </div>
-        <div class="swiper-pagination"></div>
-    </div>
 
-    <main class="p-5">
-        <div id="admin-panel" class="hidden premium-card p-6 mb-10 border-red-500/40 animate-pulse">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-red-400 font-bold flex items-center gap-2"><i class="fa-solid fa-user-gear"></i> لوحة تحكم ريم</h2>
-                <button onclick="this.parentElement.parentElement.classList.add('hidden')" class="text-gray-400">✕</button>
-            </div>
-            
-            <div class="space-y-6">
-                <div class="bg-slate-900/50 p-4 rounded-3xl border border-white/5">
-                    <p class="text-xs font-bold text-cyan-400 mb-3 uppercase tracking-widest">إضافة قسم جديد</p>
-                    <div class="flex gap-2">
-                        <input type="text" id="cat-in" placeholder="اسم القسم" class="flex-1 p-3 rounded-xl bg-slate-800 text-sm outline-none border border-transparent focus:border-cyan-500">
-                        <button onclick="addCat()" class="bg-green-600 px-6 rounded-xl font-bold text-sm">إضافة</button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-900/50 p-4 rounded-3xl border border-white/5 text-black">
-                    <p class="text-xs font-bold text-cyan-400 mb-3 uppercase tracking-widest">إضافة منتج</p>
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="text" id="p-name" placeholder="اسم المنتج" class="p-3 rounded-xl bg-white outline-none">
-                        <input type="number" id="p-price" placeholder="السعر $" class="p-3 rounded-xl bg-white outline-none">
-                        <input type="text" id="p-img" placeholder="رابط الصورة" class="col-span-2 p-3 rounded-xl bg-white outline-none">
-                        <select id="p-cat" class="col-span-2 p-3 rounded-xl bg-white font-bold outline-none"></select>
-                        <button onclick="addProd()" class="col-span-2 bg-cyan-500 py-4 rounded-2xl font-bold text-black shadow-xl">نشر في المتجر</button>
-                    </div>
-                </div>
+        <div id="admin-panel" class="hidden glass-panel p-6 rounded-3xl mb-10 border-red-500/50">
+            <h2 class="text-red-400 font-bold mb-4 flex justify-between">لوحة التحكم <span onclick="closeAdminPanel()" class="cursor-pointer">✕</span></h2>
+            <div class="space-y-3">
+                <input type="text" id="p-name" placeholder="اسم المنتج" class="w-full p-3 rounded-xl bg-slate-900 border-none outline-none">
+                <input type="number" id="p-price" placeholder="السعر $" class="w-full p-3 rounded-xl bg-slate-900 border-none outline-none">
+                <input type="text" id="p-img" placeholder="رابط صورة المنتج" class="w-full p-3 rounded-xl bg-slate-900 border-none outline-none">
+                <select id="p-cat" class="w-full p-3 rounded-xl bg-slate-900 border-none outline-none text-white">
+                    <option value="apps">قسم التطبيقات</option>
+                    <option value="nums">قسم الأرقام</option>
+                    <option value="games">ألعاب</option>
+                    <option value="tele">اشتراكات تيليجرام</option>
+                    <option value="social">سوشل ميديا</option>
+                </select>
+                <button onclick="addProduct()" class="w-full bg-cyan-500 text-black font-bold py-3 rounded-xl">إضافة للمتجر (محلياً)</button>
             </div>
         </div>
 
-        <h3 class="text-xs font-bold text-gray-500 mb-4 uppercase tracking-[3px]">الأقسام المتوفرة</h3>
-        <div id="filters" class="flex gap-3 overflow-x-auto pb-8 no-scrollbar"></div>
-
-        <div id="content"></div>
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            </div>
     </main>
 
-    <div id="admin-modal" class="fixed inset-0 bg-black/95 z-[10001] hidden flex items-center justify-center p-6">
-        <div class="premium-card p-10 w-full max-w-sm text-center">
-            <div class="text-5xl mb-6">🔒</div>
-            <h3 class="text-2xl font-bold mb-2">منطقة الإدارة</h3>
-            <p class="text-gray-500 text-sm mb-8">يرجى إدخال كلمة السر للمتابعة</p>
-            <input type="password" id="pass-field" class="w-full p-4 bg-slate-900 border border-white/10 rounded-2xl mb-6 text-center text-2xl tracking-[10px] outline-none focus:border-cyan-500 transition-all">
-            <div class="flex gap-3">
-                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="flex-1 bg-slate-800 py-4 rounded-2xl font-bold">إلغاء</button>
-                <button onclick="tryLogin()" class="flex-1 bg-cyan-500 text-black py-4 rounded-2xl font-bold">دخول</button>
-            </div>
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-80 bg-[#0f172a] z-[10002] transform -translate-x-full transition-transform duration-300 p-6">
+        <h2 class="text-2xl font-bold text-cyan-400 mb-6">سلتك الذكية</h2>
+        <div id="cart-items" class="space-y-3 mb-6"></div>
+        <div class="border-t border-slate-700 pt-4">
+            <p class="flex justify-between mb-4 font-bold">المجموع: <span id="total">0</span> $</p>
+            <input id="user-name" type="text" placeholder="اسمك الكريم" class="w-full p-3 bg-slate-800 rounded-xl mb-3 outline-none">
+            <input id="user-id" type="text" placeholder="ID الحساب" class="w-full p-3 bg-slate-800 rounded-xl mb-6 outline-none">
+            <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-4 rounded-xl font-bold">إرسال عبر واتساب</button>
         </div>
     </div>
 
-    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-96 bg-[#0b1120] z-[10002] transform -translate-x-full transition-transform duration-500 p-8 shadow-2xl border-r border-white/5">
-        <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-bold text-cyan-400">سلتك الذكية</h2>
-            <button onclick="toggleCart()" class="w-12 h-12 flex items-center justify-center bg-slate-800 rounded-full text-2xl">&times;</button>
-        </div>
-        <div id="cart-list" class="space-y-4 mb-10 overflow-y-auto max-h-[50vh] no-scrollbar"></div>
-        <div class="absolute bottom-0 left-0 right-0 p-8 bg-slate-900/80 backdrop-blur-xl border-t border-white/5">
-            <div class="flex justify-between text-2xl font-bold mb-8"><span>المجموع:</span><span id="total" class="text-cyan-400">0</span> $</div>
-            <input id="user-name" type="text" placeholder="اسم العميل" class="w-full p-4 bg-slate-800 rounded-2xl mb-3 outline-none border border-transparent focus:border-cyan-500">
-            <input id="user-id" type="text" placeholder="الآيدي المراد شحنه (ID)" class="w-full p-4 bg-slate-800 rounded-2xl mb-8 outline-none border border-transparent focus:border-cyan-500">
-            <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-5 rounded-3xl font-bold text-xl shadow-2xl shadow-cyan-500/20">تأكيد الطلب عبر واتساب</button>
-        </div>
-    </div>
+    <a href="https://wa.me/963968493135" class="wa-float"><i class="fa-brands fa-whatsapp"></i></a>
 
-    <a href="https://wa.me/963968493135" class="wa-float">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // تفعيل السلايدر
-        new Swiper(".mySwiper", { loop: true, autoplay: { delay: 4000 }, pagination: { el: ".swiper-pagination", clickable: true } });
-
-        // إدارة البيانات
-        let data = JSON.parse(localStorage.getItem('reem_store_v5')) || [
-            { id: 'c1', name: 'شحن ببجي موبايل', icon: 'fa-gamepad', items: [] },
-            { id: 'c2', name: 'تطبيقات الشات', icon: 'fa-comments', items: [] }
-        ];
+        let products = JSON.parse(localStorage.getItem('reem_v10')) || [];
         let cart = [];
 
-        // نظام التنبيهات المخصص
-        function showAlert(title, msg, type = 'success', onConfirm = null) {
-            const box = document.getElementById('alert-box');
-            const icon = document.getElementById('alert-icon');
+        function showCustomAlert(title, msg, onConfirm) {
             document.getElementById('alert-title').innerText = title;
             document.getElementById('alert-msg').innerText = msg;
-            
-            if(type === 'success') { icon.innerHTML = '✅'; box.style.borderColor = '#06b6d4'; }
-            else if(type === 'delete') { icon.innerHTML = '🗑️'; box.style.borderColor = '#ef4444'; }
-            else { icon.innerHTML = '🛒'; box.style.borderColor = '#facc15'; }
-
-            box.style.display = 'block';
+            document.getElementById('alert-box').style.display = 'block';
             document.getElementById('overlay').classList.remove('hidden');
-            
-            document.getElementById('alert-confirm').onclick = () => { if(onConfirm) onConfirm(); closeAlert(); };
-        }
-        function closeAlert() { document.getElementById('alert-box').style.display = 'none'; document.getElementById('overlay').classList.add('hidden'); }
-
-        // لوحة الإدارة
-        function tryLogin() {
-            if(document.getElementById('pass-field').value === 'reem2026') {
-                document.getElementById('admin-panel').classList.remove('hidden');
-                document.getElementById('admin-modal').classList.add('hidden');
-                render();
-                showAlert("أهلاً ريم", "تم تفعيل وضع الإدارة بنجاح 🛠️");
-            } else { alert("كلمة السر خاطئة!"); }
+            document.getElementById('alert-confirm').onclick = () => { onConfirm(); closeAlert(); };
         }
 
-        function addCat() {
-            let n = document.getElementById('cat-in').value;
-            if(!n) return;
-            data.push({ id: 'c'+Date.now(), name: n, icon: 'fa-star', items: [] });
-            save(); render();
-            document.getElementById('cat-in').value = '';
+        function closeAlert() {
+            document.getElementById('alert-box').style.display = 'none';
+            document.getElementById('overlay').classList.add('hidden');
         }
 
-        function addProd() {
+        function openAdmin() {
+            showCustomAlert("دخول الإدارة", "هل تريد فتح لوحة التحكم؟", () => {
+                let pass = prompt("كلمة السر:");
+                if(pass === "reem2026") {
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                }
+            });
+        }
+
+        function addProduct() {
             let n = document.getElementById('p-name').value, p = document.getElementById('p-price').value, i = document.getElementById('p-img').value, c = document.getElementById('p-cat').value;
             if(!n || !p) return;
-            let idx = data.findIndex(x => x.id === c);
-            data[idx].items.push({ id: Date.now(), name: n, price: parseFloat(p), img: i });
-            save(); render();
-            showAlert("تم النشر", "تم إضافة المنتج بنجاح للمتجر ✅");
-            document.getElementById('p-name').value = ''; document.getElementById('p-price').value = ''; document.getElementById('p-img').value = '';
+            products.push({ id: Date.now(), name: n, price: parseFloat(p), img: i, cat: c });
+            localStorage.setItem('reem_v10', JSON.stringify(products));
+            render();
+            closeAdminPanel();
         }
 
-        function render() {
-            const isAdmin = !document.getElementById('admin-panel').classList.contains('hidden');
-            document.getElementById('filters').innerHTML = data.map(c => `
-                <div onclick="scrollToCat('${c.id}')" class="category-chip">
-                    <i class="fa-solid ${c.icon}"></i>
-                    <span>${c.name}</span>
-                </div>
-            `).join('');
+        function render(filter = 'all') {
+            const grid = document.getElementById('products-grid');
+            const filtered = filter === 'all' ? products : products.filter(x => x.cat === filter);
             
-            document.getElementById('p-cat').innerHTML = data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-
-            document.getElementById('content').innerHTML = data.map(c => `
-                <div id="${c.id}" class="mb-14 scroll-mt-28">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-1 h-8 bg-cyan-500 rounded-full"></div>
-                        <h3 class="text-xl font-bold">${c.name}</h3>
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card p-3">
+                    <img src="${p.img || 'https://via.placeholder.com/150'}" class="w-full h-32 object-cover rounded-xl mb-3">
+                    <h4 class="text-sm font-bold mb-2 h-10 overflow-hidden">${p.name}</h4>
+                    <div class="flex justify-between items-center">
+                        <span class="text-cyan-400 font-bold">${p.price} $</span>
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black px-3 py-1 rounded-lg text-xs font-bold">إضافة</button>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-                        ${c.items.map(p => `
-                            <div class="premium-card p-4 relative group hover:border-cyan-500/50 transition-all duration-300">
-                                ${isAdmin ? `<button onclick="delP('${c.id}',${p.id})" class="absolute top-3 left-3 bg-red-600/20 text-red-500 w-8 h-8 rounded-full z-10 hover:bg-red-600 hover:text-white transition">✕</button>` : ''}
-                                <img src="${p.img || 'https://via.placeholder.com/300'}" class="w-full h-40 object-cover rounded-2xl mb-4 shadow-2xl">
-                                <h4 class="text-sm font-bold mb-2 h-10 overflow-hidden text-gray-200">${p.name}</h4>
-                                <div class="flex justify-between items-center mt-4">
-                                    <span class="text-cyan-400 font-bold text-lg">${p.price} $</span>
-                                    <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center hover:scale-110 transition shadow-lg shadow-cyan-500/20"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
+                    ${!document.getElementById('admin-panel').classList.contains('hidden') ? `<button onclick="deleteP(${p.id})" class="text-red-500 text-[10px] mt-2 underline">حذف</button>` : ''}
                 </div>
             `).join('');
-        }
-
-        function delP(cid, pid) {
-            showAlert("حذف منتج", "هل أنت متأكد من رغبتك في حذف هذا المنتج نهائياً؟", 'delete', () => {
-                let cidx = data.findIndex(x => x.id === cid);
-                data[cidx].items = data[cidx].items.filter(x => x.id !== pid);
-                save(); render();
-            });
         }
 
         function addToCart(n, p) {
             cart.push({n, p});
             document.getElementById('cart-count').innerText = cart.length;
-            showAlert("تمت الإضافة", `تم وضع [${n}] في سلة المشتريات بنجاح 🛒`, 'cart');
+            showCustomAlert("السلة", `تمت إضافة ${n} بنجاح ✅`, () => {});
             updateCart();
         }
 
         function updateCart() {
-            document.getElementById('cart-list').innerHTML = cart.map((x, i) => `
-                <div class="flex justify-between items-center bg-slate-800/40 p-4 rounded-2xl border border-white/5 shadow-inner">
-                    <div class="flex flex-col">
-                        <span class="text-sm font-bold">${x.n}</span>
-                        <span class="text-xs text-cyan-400">${x.p} $</span>
-                    </div>
-                    <button onclick="cart.splice(${i},1);updateCart();document.getElementById('cart-count').innerText = cart.length;" class="text-red-500 w-8 h-8 rounded-lg hover:bg-red-500/10 transition">✕</button>
+            document.getElementById('cart-items').innerHTML = cart.map((x, i) => `
+                <div class="flex justify-between bg-slate-800 p-3 rounded-xl text-xs">
+                    <span>${x.n}</span>
+                    <button onclick="cart.splice(${i},1);updateCart();document.getElementById('cart-count').innerText = cart.length;" class="text-red-500">✕</button>
                 </div>
             `).join('');
-            document.getElementById('total').innerText = cart.reduce((s, x) => s + x.p, 0).toFixed(2);
+            document.getElementById('total').innerText = cart.reduce((s, x) => s + x.p, 0);
         }
 
-        function scrollToCat(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-        function save() { localStorage.setItem('reem_store_v5', JSON.stringify(data)); }
         function toggleCart() { document.getElementById('cart-drawer').classList.toggle('-translate-x-full'); }
+        function closeAdminPanel() { document.getElementById('admin-panel').classList.add('hidden'); }
+        function filterCat(c) { render(c); }
         
         function checkout() {
-            let u = document.getElementById('user-name').value, id = document.getElementById('user-id').value;
-            if(!u || cart.length === 0) return showAlert("بيانات ناقصة", "يرجى كتابة اسمك وإضافة منتجات للسلة ⚠️", 'cart');
-            let t = `🚀 طلب جديد من Reem Store 🚀%0A👤 الاسم: ${u}%0A🆔 الآيدي: ${id}%0A%0A📦 المنتجات:%0A${cart.map(x => `- ${x.n}`).join('%0A')}%0A%0A💰 الإجمالي: ${document.getElementById('total').innerText} $`;
-            window.open(`https://wa.me/963968493135?text=${t}`);
+            let u = document.getElementById('user-name').value;
+            if(!u || cart.length === 0) return showCustomAlert("خطأ", "يرجى إكمال البيانات أولاً", () => {});
+            let msg = `طلب جديد:%0Aالاسم: ${u}%0Aالطلبات:%0A${cart.map(x => `- ${x.n}`).join('%0A')}`;
+            window.open(`https://wa.me/963968493135?text=${msg}`);
         }
 
         render();
