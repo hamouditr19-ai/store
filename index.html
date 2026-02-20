@@ -13,48 +13,27 @@
         .cyan-text { color: #06b6d4; }
         .cyan-bg { background-color: #06b6d4; }
         
-        .promo-banner {
-            background: linear-gradient(90deg, #0f172a, #06b6d4, #0f172a);
-            padding: 8px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .animate-text {
-            display: inline-block;
-            animation: marquee 15s linear infinite;
-            font-weight: bold;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
+        .promo-banner { background: linear-gradient(90deg, #0f172a, #06b6d4, #0f172a); padding: 8px 0; overflow: hidden; white-space: nowrap; }
+        .animate-text { display: inline-block; animation: marquee 15s linear infinite; font-weight: bold; }
+        @keyframes marquee { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* تنسيق الإشعار الجديد */
-        #toast-container {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-        }
-        .toast {
-            background: #06b6d4;
-            color: #000;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
-            margin-top: 10px;
-            animation: slideIn 0.3s ease-out;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        /* Toast Notifications */
+        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 100; }
+        .toast { background: #06b6d4; color: #000; padding: 12px 24px; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4); margin-top: 10px; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* WhatsApp Button */
+        .whatsapp-btn { position: fixed; bottom: 25px; right: 25px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 50; transition: 0.3s; }
+        .whatsapp-btn:hover { transform: scale(1.1); }
     </style>
 </head>
 <body class="min-h-screen">
 
     <div id="toast-container"></div>
+
+    <a href="https://wa.me/963900000000" target="_blank" class="whatsapp-btn">
+        <svg fill="currentColor" width="35" height="35" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.161 1.237 8.404 3.48s3.481 5.229 3.481 8.405c0 6.556-5.333 11.888-11.889 11.888-2.016 0-3.998-.512-5.759-1.487l-6.224 1.811zm6.273-3.414l.348.207c1.472.873 3.18 1.336 4.935 1.336 5.232 0 9.492-4.259 9.492-9.491 0-2.535-.987-4.918-2.778-6.709s-4.175-2.779-6.709-2.779c-5.233 0-9.492 4.259-9.492 9.491 0 1.831.526 3.618 1.521 5.165l.226.35-.998 3.644 3.731-.976zm11.33-6.805c-.272-.136-1.61-.795-1.86-.886-.25-.091-.432-.136-.613.136-.182.273-.705.886-.864 1.068-.159.182-.318.204-.59.068-.273-.136-1.15-.424-2.19-1.354-.809-.722-1.355-1.614-1.514-1.886-.159-.272-.017-.42.119-.556.123-.122.272-.318.409-.477.136-.159.182-.272.272-.454.091-.182.045-.341-.023-.477-.068-.136-.613-1.477-.84-2.022-.222-.534-.446-.462-.613-.47h-.523c-.182 0-.477.068-.727.341-.25.273-.954.932-.954 2.272 0 1.341.977 2.636 1.114 2.818.136.182 1.92 2.932 4.651 4.113.65.28 1.157.448 1.551.573.653.208 1.248.178 1.718.108.523-.078 1.61-.659 1.837-1.295.227-.636.227-1.181.159-1.295-.068-.113-.25-.181-.523-.317z"/></svg>
+    </a>
 
     <div class="promo-banner border-b border-cyan-400/30">
         <div class="animate-text">
@@ -63,13 +42,26 @@
     </div>
 
     <nav class="sticky top-0 z-50 glass-card py-4 px-6 flex justify-between items-center border-b border-cyan-500/30">
-        <h1 class="text-2xl font-bold cyan-text">Reem Store | ريم ستور</h1>
+        <h1 class="text-2xl font-bold cyan-text cursor-pointer" onclick="toggleAdmin()">Reem Store | ريم ستور</h1>
         <button onclick="toggleCart()" class="relative p-2 bg-slate-800 rounded-lg border border-cyan-500/50">
             🛒 <span id="cart-count" class="absolute -top-2 -right-2 bg-cyan-500 text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
         </button>
     </nav>
 
     <main class="container mx-auto px-4 py-8">
+        <div id="admin-panel" class="hidden glass-card p-6 rounded-xl mb-10 border-2 border-red-500/50">
+            <h2 class="text-xl font-bold mb-4 text-red-400">لوحة التحكم (للأدمن فقط)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 text-black">
+                <input type="text" id="new-p-name" placeholder="اسم المنتج" class="p-2 rounded">
+                <input type="number" id="new-p-price" placeholder="السعر $" class="p-2 rounded">
+                <input type="text" id="new-p-img" placeholder="رابط الصورة" class="p-2 rounded">
+                <select id="new-p-cat" class="p-2 rounded">
+                    </select>
+            </div>
+            <button onclick="addNewProduct()" class="bg-red-600 px-6 py-2 rounded font-bold hover:bg-red-700">إضافة المنتج</button>
+            <button onclick="toggleAdmin()" class="mr-4 text-sm text-slate-400 underline">إغلاق اللوحة</button>
+        </div>
+
         <div class="text-center mb-12">
             <h2 class="text-4xl font-bold mb-2">ريم ستور لشحن الألعاب</h2>
             <p class="text-cyan-400">متجرك الموثوق للخدمات الرقمية</p>
@@ -83,54 +75,41 @@
             <h2 class="text-xl font-bold cyan-text">سلة المشتريات</h2>
             <button onclick="toggleCart()" class="text-2xl text-cyan-400">&times;</button>
         </div>
-        
         <div id="cart-items" class="space-y-4 mb-6"></div>
-
         <div class="border-t border-slate-700 pt-4">
-            <div class="flex justify-between text-lg font-bold mb-4">
-                <span>الإجمالي:</span>
-                <span id="cart-total" class="cyan-text">0</span><span class="cyan-text"> $</span>
-            </div>
-            
+            <div class="flex justify-between text-lg font-bold mb-4"><span>الإجمالي:</span><span id="cart-total" class="cyan-text">0</span><span class="cyan-text"> $</span></div>
             <div class="space-y-3 mb-6 text-black">
                 <input type="text" id="cust-name" placeholder="اسم العميل" class="w-full p-2 rounded bg-slate-100 border border-cyan-500 outline-none">
-                <input type="text" id="cust-id" placeholder="ID الحساب داخل اللعبة" class="w-full p-2 rounded bg-slate-100 border border-cyan-500 outline-none">
+                <input type="text" id="cust-id" placeholder="ID الحساب" class="w-full p-2 rounded bg-slate-100 border border-cyan-500 outline-none">
             </div>
-
             <div class="p-4 bg-slate-900 rounded-lg mb-4 border border-cyan-500/50">
-                <p class="text-sm cyan-text mb-2 font-bold">طريقة الدفع (شام كاش):</p>
-                <div class="flex items-center gap-2 mb-2">
-                    <code id="payment-code" class="bg-black p-2 rounded text-[10px] flex-1 text-white border border-slate-700">17ac4a94cb1ed493e47a8526892294dd</code>
-                    <button onclick="copyCode()" class="text-xs cyan-bg text-black px-2 py-1 rounded font-bold">نسخ</button>
-                </div>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" class="mx-auto w-32 h-32 mb-2 rounded border-2 border-cyan-500">
-                <input type="text" id="trans-id" placeholder="أدخل رقم عملية التحويل" class="w-full p-2 rounded bg-black border border-cyan-500 text-sm text-white">
+                <p class="text-sm cyan-text mb-2 font-bold">الدفع (شام كاش):</p>
+                <code id="payment-code" class="block bg-black p-2 rounded text-[10px] text-white border border-slate-700 mb-2 text-center">17ac4a94cb1ed493e47a8526892294dd</code>
+                <button onclick="copyCode()" class="w-full text-xs cyan-bg text-black py-2 rounded font-bold mb-3">نسخ كود الدفع</button>
+                <input type="text" id="trans-id" placeholder="رقم عملية التحويل" class="w-full p-2 rounded bg-black border border-cyan-500 text-sm text-white">
             </div>
-
-            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-lg hover:brightness-110 transition shadow-lg shadow-cyan-500/20">تأكيد وإرسال الطلب</button>
-            <button onclick="clearCart()" class="w-full mt-2 text-red-400 text-sm py-1">تفريغ السلة</button>
+            <button onclick="sendOrder()" class="w-full cyan-bg text-black font-bold py-3 rounded-lg hover:brightness-110 shadow-lg">إرسال الطلب</button>
         </div>
     </div>
 
     <footer class="mt-20 border-t border-slate-800 py-10 text-center">
-        <p class="text-slate-500 text-sm mb-4">© 2026 Reem Store. جميع الحقوق محفوظة</p>
+        <p class="text-slate-500 text-sm">© 2026 Reem Store. جميع الحقوق محفوظة</p>
     </footer>
 
     <script>
-        const storeData = [
+        // --- ⚙️ نظام البيانات (يتم التحميل من الذاكرة أو البدء بالبيانات الافتراضية) ---
+        let storeData = JSON.parse(localStorage.getItem('reemStoreData')) || [
             {
                 category: "شحن ببجي موبايل | PUBG",
                 products: [
-                    { id: 1, name: "60 UC شدة", price: 0.99, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" },
-                    { id: 2, name: "325 UC شدة", price: 4.99, img: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=300&q=80" },
-                    { id: 3, name: "660 UC شدة", price: 9.99, img: "https://images.unsplash.com/photo-1624396115567-b459252f74bf?auto=format&fit=crop&w=300&q=80" }
+                    { id: Date.now() + 1, name: "60 UC شدة", price: 0.99, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300" },
+                    { id: Date.now() + 2, name: "325 UC شدة", price: 4.99, img: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=300" }
                 ]
             },
             {
                 category: "جواهر فري فاير | FREE FIRE",
                 products: [
-                    { id: 4, name: "100 جوهرة", price: 1.20, img: "https://images.unsplash.com/photo-1614680376593-902f74cc0d41?auto=format&fit=crop&w=300&q=80" },
-                    { id: 5, name: "530 جوهرة", price: 5.50, img: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=300&q=80" }
+                    { id: Date.now() + 3, name: "100 جوهرة", price: 1.20, img: "https://images.unsplash.com/photo-1614680376593-902f74cc0d41?w=300" }
                 ]
             }
         ];
@@ -139,27 +118,64 @@
         const botToken = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const chatId = '7741275208';
 
-        // وظيفة الإشعار البديلة لـ alert
-        function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = message;
-            container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
+        function saveData() {
+            localStorage.setItem('reemStoreData', JSON.stringify(storeData));
+            renderStore();
+            updateAdminCats();
+        }
+
+        function showToast(m) {
+            const c = document.getElementById('toast-container');
+            const t = document.createElement('div'); t.className = 'toast'; t.innerText = m;
+            c.appendChild(t); setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 500); }, 3000);
+        }
+
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            if(panel.classList.contains('hidden')) {
+                const pass = prompt("أدخل كلمة سر الأدمن:");
+                if(pass === "reem2026") { panel.classList.remove('hidden'); updateAdminCats(); }
+                else { alert("كلمة السر خطأ!"); }
+            } else { panel.classList.add('hidden'); }
+        }
+
+        function updateAdminCats() {
+            const sel = document.getElementById('new-p-cat');
+            sel.innerHTML = storeData.map((s, idx) => `<option value="${idx}">${s.category}</option>`).join('');
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('new-p-name').value;
+            const price = parseFloat(document.getElementById('new-p-price').value);
+            const img = document.getElementById('new-p-img').value;
+            const catIdx = document.getElementById('new-p-cat').value;
+
+            if(!name || !price || !img) return showToast("⚠️ أكمل بيانات المنتج");
+
+            storeData[catIdx].products.push({ id: Date.now(), name, price, img });
+            saveData();
+            showToast("✅ تم إضافة المنتج بنجاح");
+        }
+
+        function deleteProduct(catIdx, pId) {
+            if(confirm("هل أنت متأكد من الحذف؟")) {
+                storeData[catIdx].products = storeData[catIdx].products.filter(p => p.id !== pId);
+                saveData();
+                showToast("🗑 تم الحذف");
+            }
         }
 
         function renderStore() {
             const container = document.getElementById('store-content');
-            container.innerHTML = storeData.map(sec => `
+            const isAdminVisible = !document.getElementById('admin-panel').classList.contains('hidden');
+
+            container.innerHTML = storeData.map((sec, sIdx) => `
                 <div class="mb-12">
                     <h3 class="text-xl font-bold mb-6 border-r-4 border-cyan-500 pr-3">${sec.category}</h3>
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         ${sec.products.map(p => `
-                            <div class="glass-card p-3 rounded-xl neon-border flex flex-col justify-between">
+                            <div class="glass-card p-3 rounded-xl neon-border flex flex-col justify-between relative">
+                                ${isAdminVisible ? `<button onclick="deleteProduct(${sIdx}, ${p.id})" class="absolute top-2 left-2 bg-red-600 text-white text-[10px] px-2 py-1 rounded">حذف</button>` : ''}
                                 <div>
                                     <img src="${p.img}" class="w-full h-32 object-cover rounded-lg mb-3">
                                     <h4 class="font-bold text-sm mb-1">${p.name}</h4>
@@ -173,65 +189,34 @@
             `).join('');
         }
 
-        function addToCart(id, name, price) {
-            cart.push({ id, name, price });
-            updateCartUI();
-            showToast(`✅ تمت إضافة ${name} إلى السلة`);
-        }
-
+        // --- وظائف السلة والطلب (نفس السابق مع تحسينات) ---
+        function addToCart(id, name, price) { cart.push({ id, name, price }); updateCartUI(); showToast(`✅ أضفت ${name}`); }
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('cart-items').innerHTML = cart.map((item, index) => `
-                <div class="flex justify-between items-center bg-slate-800 p-3 rounded border border-slate-700">
+                <div class="flex justify-between items-center bg-slate-800 p-3 rounded">
                     <div><p class="text-sm font-bold">${item.name}</p><p class="text-xs cyan-text">$ ${item.price}</p></div>
-                    <button onclick="removeFromCart(${index})" class="text-red-500 font-bold">حذف</button>
+                    <button onclick="removeFromCart(${index})" class="text-red-500">حذف</button>
                 </div>
             `).join('');
-            document.getElementById('cart-total').innerText = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+            document.getElementById('cart-total').innerText = cart.reduce((s, i) => s + i.price, 0).toFixed(2);
         }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function clearCart() {
-            cart = [];
-            updateCartUI();
-            showToast("تم تفريغ السلة");
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('-translate-x-full');
-        }
-
-        function copyCode() {
-            navigator.clipboard.writeText(document.getElementById('payment-code').innerText);
-            showToast("📋 تم نسخ كود الدفع");
-        }
+        function removeFromCart(i) { cart.splice(i, 1); updateCartUI(); }
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('-translate-x-full'); }
+        function copyCode() { navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd'); showToast("📋 تم نسخ الكود"); }
 
         async function sendOrder() {
-            const name = document.getElementById('cust-name').value;
-            const gameId = document.getElementById('cust-id').value;
-            const transId = document.getElementById('trans-id').value;
+            const n = document.getElementById('cust-name').value;
+            const id = document.getElementById('cust-id').value;
+            const tr = document.getElementById('trans-id').value;
+            if(!n || !id || !tr || cart.length === 0) return showToast("⚠️ بيانات ناقصة");
 
-            if (!name || !gameId || cart.length === 0 || !transId) {
-                showToast("⚠️ يرجى إكمال جميع البيانات");
-                return;
-            }
+            const items = cart.map(i => `- ${i.name} ($${i.price})`).join('%0A');
+            const total = cart.reduce((s, i) => s + i.price, 0).toFixed(2);
+            const msg = `🚀 طلب جديد: %0A👤 ${n} %0A🆔 ${id} %0A💵 ت: ${tr} %0A📦: %0A${items} %0A💰 $${total}`;
 
-            let productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('%0A');
-            let total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-            const message = `🚀 طلب جديد من Reem Store %0A👤 العميل: ${name} %0A🆔 الآيدي: ${gameId} %0A💵 العملية: ${transId} %0A📦 الطلبات: %0A${productsList} %0A💰 الإجمالي: $ ${total}`;
-
-            try {
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`);
-                showToast("🎉 تم إرسال الطلب بنجاح!");
-                clearCart();
-                toggleCart();
-            } catch (e) {
-                showToast("❌ فشل الإرسال");
-            }
+            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${msg}`);
+            showToast("🎉 تم الطلب!"); cart = []; updateCartUI(); toggleCart();
         }
 
         renderStore();
