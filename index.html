@@ -3,164 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reem Store | الفخامة في الشحن</title>
+    <title>Reem Store | ريم ستور</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
     <style>
-        body { font-family: 'Tajawal', sans-serif; background-color: #0b1120; color: white; overflow-x: hidden; }
-        
-        /* تأثيرات الزجاج */
+        body { font-family: 'Tajawal', sans-serif; background-color: #0b1120; color: white; margin: 0; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(6, 182, 212, 0.1); }
         
-        /* الشريط العلوي المتحرك */
-        .ticker-wrap { background: linear-gradient(90deg, #06b6d4, #0891b2); overflow: hidden; padding: 10px 0; }
-        .ticker { display: inline-block; white-space: nowrap; animation: ticker 25s linear infinite; font-weight: bold; }
+        /* تصحيح شكل كروت المنتجات */
+        .product-card {
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+        .product-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover; /* يضمن عدم تمدد الصورة */
+            border-radius: 18px;
+            background-color: #0f172a; /* لون خلفية في حال لم تظهر الصورة */
+        }
+
+        /* شريط الأقسام */
+        .category-btn {
+            padding: 10px 25px;
+            background: #1e293b;
+            border-radius: 15px;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .category-btn.active { background: #06b6d4; color: #0b1120; font-weight: bold; }
+
+        .ticker-wrap { background: #06b6d4; padding: 8px 0; overflow: hidden; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 20s linear infinite; font-weight: bold; color: #0b1120; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* الأنيميشن الخاص بالمنتجات */
-        .product-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .product-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 30px rgba(0,0,0,0.5); border-color: #06b6d4; }
-
-        /* فوتر السوشيال ميديا */
-        .social-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; background: #1e293b; }
-        .social-icon:hover { background: #06b6d4; color: #0b1120; transform: translateY(-3px); }
-
-        .swiper-pagination-bullet { background: #06b6d4 !important; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div class="ticker">
-             🔥 أهلاً بكم في Reem Store - سرعة في التنفيذ.. أمان في الدفع.. عروض يومية لا تنتهي على شدات ببجي وجواهر فري فاير وبرامج الشات.. ⭐ ريم ستور خيارك الأول ⭐
+             ⭐ أهلاً بكم في ريم ستور - عروض خاصة على شدات ببجي وأرقام الواتساب واشتراكات التيليجرام ⭐
         </div>
     </div>
 
     <nav class="p-5 flex justify-between items-center sticky top-0 z-[100] glass">
-        <div onclick="openAdmin()" class="flex items-center gap-2 cursor-pointer">
-            <div class="w-10 h-10 bg-cyan-500 rounded-2xl rotate-12 flex items-center justify-center text-black shadow-lg shadow-cyan-500/20">
-                <i class="fa-solid fa-bolt -rotate-12"></i>
-            </div>
-            <span class="text-2xl font-bold tracking-tighter">REEM <span class="text-cyan-400">STORE</span></span>
+        <div onclick="location.reload()" class="text-2xl font-bold flex items-center gap-2">
+            <span class="text-cyan-400">REEM</span> STORE
         </div>
-        <div onclick="toggleCart()" class="relative p-3 bg-slate-800 rounded-2xl cursor-pointer hover:bg-slate-700 transition">
+        <div onclick="toggleCart()" class="relative bg-slate-800 p-3 rounded-2xl cursor-pointer">
             <i class="fa-solid fa-cart-shopping text-cyan-400"></i>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center">0</span>
         </div>
     </nav>
 
-    <div class="swiper mySwiper mt-2 mb-8 mx-4 rounded-3xl overflow-hidden shadow-2xl">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide relative">
-                <img src="https://images.wallpapersden.com/image/download/pubg-mobile-2021-4k-gaming_a2xtbGWUmZqaraWkpJRmbmdlrWZnZWU.jpg" class="h-[250px] md:h-[450px] w-full object-cover">
-                <div class="absolute bottom-0 p-8 bg-gradient-to-t from-black to-transparent w-full">
-                    <h2 class="text-2xl font-bold">شحن UC ببجي فوراً</h2>
-                    <p class="text-cyan-400 text-sm">أرخص الأسعار في الشرق الأوسط</p>
-                </div>
-            </div>
-            <div class="swiper-slide relative">
-                <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1200" class="h-[250px] md:h-[450px] w-full object-cover">
-                <div class="absolute bottom-0 p-8 bg-gradient-to-t from-black to-transparent w-full">
-                    <h2 class="text-2xl font-bold">عملات تطبيقات الشات</h2>
-                    <p class="text-cyan-400 text-sm">تفعيل فوري لجميع الحسابات</p>
-                </div>
-            </div>
-        </div>
-        <div class="swiper-pagination"></div>
+    <div class="flex gap-3 overflow-x-auto p-4 no-scrollbar">
+        <div class="category-btn active" onclick="render('all')">الكل</div>
+        <div class="category-btn" onclick="render('apps')">تطبيقات</div>
+        <div class="category-btn" onclick="render('nums')">أرقام</div>
+        <div class="category-btn" onclick="render('games')">ألعاب</div>
+        <div class="category-btn" onclick="render('tele')">تيليجرام</div>
+        <div class="category-btn" onclick="render('social')">سوشل ميديا</div>
     </div>
 
-    <main class="p-4 max-w-7xl mx-auto">
-        <div class="flex gap-3 overflow-x-auto pb-8 no-scrollbar" data-aos="fade-left">
-            <div class="category-item active px-8 py-3 bg-cyan-500 text-black rounded-2xl font-bold">الكل</div>
-            <div class="px-8 py-3 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700">قسم التطبيقات</div>
-            <div class="px-8 py-3 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700">الأرقام</div>
-            <div class="px-8 py-3 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700">ألعاب</div>
-        </div>
-
-        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+    <main class="p-4">
+        <div id="products-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
             </div>
     </main>
 
-    <footer class="mt-20 border-t border-white/5 bg-slate-900/50 pt-12 pb-6 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
-            <div>
-                <h3 class="text-xl font-bold mb-4">Reem Store</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">المتجر الأفضل والأسرع في تقديم الخدمات الرقمية، شحن ألعاب، بطاقات جوجل، واشتراكات عالمية بأمان تام وضمان 100%.</p>
-            </div>
-            <div class="text-center">
-                <h3 class="text-xl font-bold mb-6">روابط سريعة</h3>
-                <div class="flex flex-col gap-3 text-gray-400 text-sm">
-                    <a href="#" class="hover:text-cyan-400">سياسة الخصوصية</a>
-                    <a href="#" class="hover:text-cyan-400">شروط الاستخدام</a>
-                    <a href="#" class="hover:text-cyan-400">الدعم الفني</a>
-                </div>
-            </div>
-            <div class="flex flex-col items-center">
-                <h3 class="text-xl font-bold mb-6">تابعنا</h3>
-                <div class="flex gap-4">
-                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="https://wa.me/963968493135" class="social-icon"><i class="fa-brands fa-whatsapp text-green-500"></i></a>
-                </div>
-            </div>
+    <footer class="mt-10 p-10 border-t border-white/5 text-center text-gray-500 text-sm">
+        <div class="flex justify-center gap-6 mb-4 text-xl">
+            <i class="fa-brands fa-whatsapp hover:text-green-500 cursor-pointer"></i>
+            <i class="fa-brands fa-telegram hover:text-blue-400 cursor-pointer"></i>
+            <i class="fa-brands fa-facebook hover:text-blue-600 cursor-pointer"></i>
         </div>
-        <div class="text-center text-gray-500 text-sm pt-6 border-t border-white/5">
-            © 2026 Reem Store. جميع الحقوق محفوظة.
+        <p>© 2026 Reem Store. جميع الحقوق محفوظة.</p>
+        <div class="flex justify-center gap-4 mt-2">
+            <a href="#" class="hover:underline">سياسة الخصوصية</a>
+            <a href="#" class="hover:underline">شروط الاستخدام</a>
         </div>
     </footer>
 
-    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-96 bg-[#0b1120] z-[200] transform -translate-x-full transition-transform duration-500 p-8 shadow-2xl border-r border-white/10">
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full md:w-96 bg-[#0b1120] z-[200] transform -translate-x-full transition-transform duration-500 p-8 shadow-2xl">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-2xl font-bold text-cyan-400">سلتك</h2>
-            <button onclick="toggleCart()" class="text-3xl text-gray-500 hover:text-white">&times;</button>
+            <button onclick="toggleCart()" class="text-3xl">&times;</button>
         </div>
-        <div id="cart-items" class="space-y-4 mb-8"></div>
-        <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-4 rounded-2xl font-bold">إتمام الطلب</button>
+        <div id="cart-items" class="space-y-4 mb-8 max-h-[60vh] overflow-y-auto"></div>
+        <div class="border-t border-white/10 pt-4">
+            <p class="text-xl font-bold mb-4">الإجمالي: <span id="total-price">0</span> $</p>
+            <button onclick="checkout()" class="w-full bg-cyan-500 text-black py-4 rounded-2xl font-bold">إتمام الطلب عبر واتساب</button>
+        </div>
     </div>
 
-    <div id="overlay" class="fixed inset-0 bg-black/80 z-[999] hidden backdrop-blur-sm"></div>
-    <div id="alert-box" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-sm glass p-8 rounded-[40px] z-[1000] hidden text-center border-cyan-500">
-        <div class="w-20 h-20 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fa-solid fa-check text-3xl text-cyan-500"></i>
-        </div>
-        <h3 id="alert-title" class="text-xl font-bold mb-2">تم الإضافة</h3>
-        <p id="alert-msg" class="text-gray-400 mb-6 text-sm"></p>
-        <button onclick="closeAlert()" class="w-full bg-cyan-500 text-black py-3 rounded-2xl font-bold">حسناً</button>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 1000, once: true });
-        
-        // تفعيل السلايدر
-        var swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: { delay: 4000 },
-            pagination: { el: ".swiper-pagination", clickable: true },
-        });
-
-        let products = JSON.parse(localStorage.getItem('reem_v11')) || [
-            { id: 1, name: 'ببجي 60 شدة', price: 0.99, img: 'https://pwa.pubgmobile.com/static/img/logo.f7da757.png', cat: 'games' },
-            { id: 2, name: 'ببجي 325 شدة', price: 4.99, img: 'https://pwa.pubgmobile.com/static/img/logo.f7da757.png', cat: 'games' }
-        ];
+        // مصفوفة المنتجات (تأكدي من وضع روابط صور صحيحة تنتهي بـ .jpg أو .png)
+        let products = JSON.parse(localStorage.getItem('reem_vfinal')) || [];
         let cart = [];
 
-        function render() {
+        function render(filter = 'all') {
             const grid = document.getElementById('products-grid');
-            grid.innerHTML = products.map((p, index) => `
-                <div class="product-card glass p-4 rounded-[30px]" data-aos="fade-up" data-aos-delay="${index * 100}">
-                    <img src="${p.img}" class="w-full h-40 object-cover rounded-2xl mb-4">
-                    <h4 class="font-bold text-sm mb-2">${p.name}</h4>
+            const filtered = filter === 'all' ? products : products.filter(x => x.cat === filter);
+            
+            // تحديث حالة الأزرار
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText.includes(filter) || (filter === 'all' && btn.innerText === 'الكل')) btn.classList.add('active');
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">لا توجد منتجات في هذا القسم حالياً..</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="product-card">
+                    <img src="${p.img || 'https://via.placeholder.com/300x200/1e293b/06b6d4?text=Reem+Store'}" 
+                         onerror="this.src='https://via.placeholder.com/300x200/1e293b/06b6d4?text=Image+Error'">
+                    <h4 class="font-bold text-sm my-3 h-10 overflow-hidden">${p.name}</h4>
                     <div class="flex justify-between items-center">
                         <span class="text-cyan-400 font-bold">${p.price} $</span>
-                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-10 h-10 rounded-xl flex items-center justify-center hover:rotate-12 transition">
-                            <i class="fa-solid fa-plus"></i>
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="bg-cyan-500 text-black w-8 h-8 rounded-lg flex items-center justify-center hover:scale-110 transition">
+                            <i class="fa-solid fa-plus text-xs"></i>
                         </button>
                     </div>
                 </div>
@@ -170,22 +140,42 @@
         function addToCart(n, p) {
             cart.push({n, p});
             document.getElementById('cart-count').innerText = cart.length;
-            showAlert("تمت الإضافة", `تم إضافة ${n} إلى سلتك بنجاح!`);
+            updateCartUI();
+            // تنبيه بسيط بدل الـ alert المزعج
+            const btn = event.currentTarget;
+            btn.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+            setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-plus text-xs"></i>'; }, 1000);
         }
 
-        function showAlert(title, msg) {
-            document.getElementById('alert-title').innerText = title;
-            document.getElementById('alert-msg').innerText = msg;
-            document.getElementById('alert-box').style.display = 'block';
-            document.getElementById('overlay').classList.remove('hidden');
+        function updateCartUI() {
+            const list = document.getElementById('cart-items');
+            list.innerHTML = cart.map((item, index) => `
+                <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl">
+                    <span>${item.n}</span>
+                    <div class="flex items-center gap-4">
+                        <span class="text-cyan-400 font-bold">${item.p} $</span>
+                        <button onclick="removeFromCart(${index})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('total-price').innerText = cart.reduce((sum, item) => sum + item.p, 0).toFixed(2);
         }
 
-        function closeAlert() {
-            document.getElementById('alert-box').style.display = 'none';
-            document.getElementById('overlay').classList.add('hidden');
+        function removeFromCart(i) {
+            cart.splice(i, 1);
+            document.getElementById('cart-count').innerText = cart.length;
+            updateCartUI();
         }
 
-        function toggleCart() { document.getElementById('cart-drawer').classList.toggle('-translate-x-full'); }
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('-translate-x-full');
+        }
+
+        function checkout() {
+            if(cart.length === 0) return;
+            let msg = `طلب جديد من ريم ستور:%0A` + cart.map(x => `- ${x.n} (${x.p}$)`).join('%0A') + `%0A%0Aالإجمالي: ${document.getElementById('total-price').innerText}$`;
+            window.open(`https://wa.me/963968493135?text=${msg}`);
+        }
 
         render();
     </script>
