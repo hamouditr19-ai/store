@@ -5,46 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تم الطلب - REEM STORE</title>
     <style>
+        @import url( https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap );
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family:  Cairo , sans-serif;
+        }
+        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Tahoma', sans-serif;
+            padding: 20px;
         }
         
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
+        .success-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: glow 2s infinite;
         }
         
-        h1 { color: #4CAF50; margin-bottom: 20px; }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 25px 50px rgba(255, 0, 128, 0.3); }
+            50% { box-shadow: 0 25px 70px rgba(255, 140, 0, 0.5); }
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff0080, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .order-id {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 0, 128, 0.3);
+        }
+        
+        .order-id span {
+            font-size: 1.5rem;
+            color: #ff0080;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .steps {
+            text-align: right;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
         .btn {
-            display: inline-block;
-            background: #764ba2;
-            color: white;
             padding: 15px 30px;
-            border-radius: 8px;
+            border-radius: 50px;
             text-decoration: none;
-            margin: 10px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #ff0080, #ff8c00);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255,0,128,0.4);
+        }
+        
+        .whatsapp-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #25D366;
+            text-decoration: none;
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>✅ تم استلام طلبك!</h1>
-        <p>رقم الطلب: <strong id="orderId"></strong></p>
-        <p>سيتم التواصل معك قريباً على الواتساب</p>
-        <a href="index.html" class="btn">العودة للرئيسية</a>
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+        <h1>تم استلام طلبك!</h1>
+        
+        <div class="order-id">
+            <p>رقم الطلب:</p>
+            <span id="orderId"></span>
+        </div>
+        
+        <div class="steps">
+            <h3 style="margin-bottom: 15px;">📋 الخطوات التالية:</h3>
+            <div class="step">
+                <span class="step-number">1</span>
+                <span>انسخ كود الدفع من الصفحة الرئيسية</span>
+            </div>
+            <div class="step">
+                <span class="step-number">2</span>
+                <span>قم بالتحويل إلى المحفظة المحددة</span>
+            </div>
+            <div class="step">
+                <span class="step-number">3</span>
+                <span>أرسل صورة الإيصال على الواتساب</span>
+            </div>
+            <div class="step">
+                <span class="step-number">4</span>
+                <span>سيتم الشحن فور التأكيد</span>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <a href="index.html" class="btn btn-primary">🏠 العودة للرئيسية</a>
+            <a href="#" id="whatsappBtn" class="btn btn-secondary" target="_blank">📱 تواصل واتساب</a>
+        </div>
+        
+        <a href="#" id="whatsappLink" class="whatsapp-link">اضغط للتواصل المباشر</a>
     </div>
     
     <script>
+        // استلام رقم الطلب من الرابط
         const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('orderId').textContent = urlParams.get('order');
+        const orderId = urlParams.get( order );
+        document.getElementById( orderId ).textContent = orderId ||  غير متوفر ;
+        
+        // رابط الواتساب
+        const whatsappNumber =  966XXXXXXXXX ; // ضع رقمك هنا
+        const message = `مرحباً، طلب جديد رقم: ${orderId}`;
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        
+        document.getElementById( whatsappBtn ).href = whatsappUrl;
+        document.getElementById( whatsappLink ).href = whatsappUrl;
     </script>
 </body>
 </html>
