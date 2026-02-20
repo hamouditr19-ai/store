@@ -1,44 +1,91 @@
-/* تحسين شكل الكروت والكتابة */
+body {
+    background-color: #0b1421;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding-bottom: 90px;
+    direction: rtl;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: #16243a;
+    font-weight: bold;
+}
+
+.banner {
+    padding: 10px;
+}
+
+.banner img {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #1b263b;
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 أعمدة مثل الصورة الأصلية */
+    grid-template-columns: repeat(4, 1fr); /* 4 أعمدة مثل التطبيقات الاحترافية */
     gap: 10px;
-    padding: 15px;
+    padding: 10px;
 }
 
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-decoration: none;
+    cursor: pointer;
 }
 
-/* المربع الأبيض الصغير خلف الأيقونة */
 .icon-box {
-    background-color: #ffffff;
-    border-radius: 12px;
+    background: white;
     width: 65px;
     height: 65px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-bottom: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .icon-box img {
     width: 45px;
     height: 45px;
-    object-fit: contain;
 }
 
-/* تنسيق النص ليكون واضح وما يتقطع */
 .card span {
-    color: #ffffff;
     font-size: 11px;
     text-align: center;
-    white-space: nowrap; /* يمنع نزول النص لسطر جديد بشكل مشوه */
+    font-weight: bold;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis; /* يضع نقاط إذا كان النص طويل جداً */
+    background: #0b1421;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #1b263b;
+}
+
+.nav-item { font-size: 10px; color: #888; text-align: center; }
+.nav-item.active { color: #00d4ff; }
+
+.add-btn {
+    background: #00d4ff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -30px;
+    box-shadow: 0 0 15px #00d4ff;
 }
