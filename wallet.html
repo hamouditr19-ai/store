@@ -2,108 +2,272 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reem Store | المحفظة</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Tajawal', sans-serif;
-            background: #0a0f1f;
-            color: white;
-            padding: 10px;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
+        
+        /* خلفية متحركة */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s infinite;
+        }
+        
+        .circle1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -200px;
+            background: rgba(255, 0, 128, 0.15);
+        }
+        
+        .circle2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            left: -200px;
+            background: rgba(0, 255, 255, 0.15);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-50px) scale(1.2); }
+        }
+        
+        /* الهيدر */
         .header {
-            background: #0f172a;
-            padding: 15px;
             text-align: center;
-            border-bottom: 3px solid #06b6d4;
-            margin-bottom: 15px;
+            padding: 25px 15px;
         }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
+        }
+        
+        /* أزرار التنقل */
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
+            gap: 25px;
+            margin: 20px 0 30px;
         }
+        
         .nav-btn {
-            background: #1e293b;
-            padding: 8px 20px;
-            border-radius: 30px;
-            border: 1px solid #06b6d4;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0080;
+            border-radius: 50px;
+            padding: 12px 30px;
             color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
             text-decoration: none;
         }
-        .wallet-box {
-            background: #1e293b;
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #06b6d4;
+        
+        .nav-btn:hover {
+            background: #ff0080;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px #ff0080;
         }
-        .code-box {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #06b6d4;
-            margin: 15px 0;
-            word-break: break-all;
+        
+        /* المحفظة */
+        .wallet-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .wallet-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0080;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .balance-title {
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: black;
+        }
+        
+        .wallet-code {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
         }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            background: #0f172a;
-            border: 1px solid #06b6d4;
-            border-radius: 6px;
-            color: white;
-        }
-        button {
-            width: 100%;
-            background: linear-gradient(90deg, #06b6d4, #ec4899);
-            color: black;
+        
+        .copy-btn {
+            background: #00ffff;
             border: none;
-            padding: 12px;
-            border-radius: 30px;
+            border-radius: 10px;
+            padding: 5px 15px;
+            color: black;
             font-weight: bold;
-            margin: 5px 0;
             cursor: pointer;
         }
-        .copy-btn {
-            width: auto;
-            background: #06b6d4;
-            padding: 5px 10px;
-        }
-        .warning {
-            background: rgba(239,68,68,0.1);
-            border: 1px solid #ef4444;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            margin: 10px 0;
-        }
-        .footer {
+        
+        .qr-code {
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 2px solid #06b6d4;
+            margin: 20px 0;
         }
+        
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            background: white;
+            padding: 10px;
+            border-radius: 20px;
+        }
+        
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        .warning-box i {
+            color: #ff0080;
+            margin-left: 5px;
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ffff;
+            font-size: 0.9rem;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #ff0080;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ff0080;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            border: none;
+            border-radius: 30px;
+            padding: 15px;
+            color: black;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #ff0080;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #ff0080;
+            text-align: center;
+        }
+        
         .copyright {
-            color: #94a3b8;
+            color: #aaa;
             font-size: 0.8rem;
+        }
+        
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </div>
+
     <div class="header">
         <h1>💰 محفظة شام كاش</h1>
     </div>
@@ -111,37 +275,56 @@
     <div class="nav-buttons">
         <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
         <a href="cart.html" class="nav-btn">🛒 السلة</a>
-        <a href="admin.html" class="nav-btn">👑 Admin</a>
+        <a href="wallet.html" class="nav-btn">💰 المحفظة</a>
     </div>
 
-    <div class="container">
-        <div class="wallet-box">
-            <h2 class="text-center text-xl mb-4">إيداع شام كاش</h2>
-            
-            <div class="code-box">
-                <span class="text-sm">7ee806564d3aa36d87667cad636b6788</span>
+    <div class="wallet-container">
+        <div class="wallet-card">
+            <div class="balance-card">
+                <div class="balance-title">رصيدك الحالي</div>
+                <div class="balance-amount" id="userBalance">$0</div>
+            </div>
+
+            <div class="wallet-code">
+                <span>17ac4a94cb1ed493e47a8526892294dd</span>
                 <button class="copy-btn" onclick="copyCode()">نسخ</button>
             </div>
 
-            <div class="warning">
-                <i class="fas fa-exclamation-triangle text-red-500"></i>
-                تنبيهات ماسة:<br>
-                • لا تستخدم إخفاء الهوية<br>
-                • لا تكتب ملاحظة عند التحويل
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" alt="QR Code">
             </div>
 
-            <input type="text" id="userId" placeholder="👤 ID الحساب">
-            
-            <select id="currency">
-                <option value="USD">USD - دولار أمريكي</option>
-                <option value="SYP">SYP - ليرة سورية</option>
-            </select>
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                تنبيهات هامة:<br>
+                • لا تستخدم خيار إخفاء الهوية<br>
+                • لا تكتب أي ملاحظة عند التحويل<br>
+                • المبلغ سيضاف تلقائياً بعد التأكيد
+            </div>
 
-            <input type="number" id="amount" placeholder="💰 المبلغ">
-            <input type="text" id="transId" placeholder="🔢 رقم عملية الدفع (7-10 أرقام)">
+            <div class="input-group">
+                <label>👤 معرف المستخدم (User ID)</label>
+                <input type="text" id="userId" placeholder="أدخل معرفك الخاص">
+            </div>
 
-            <button onclick="sendRequest()">💰 إرسال طلب الإيداع</button>
-            <button class="back-btn" style="background:transparent; border:1px solid #06b6d4;" onclick="window.location='index.html'">رجوع</button>
+            <div class="input-group">
+                <label>💰 المبلغ بالدولار</label>
+                <input type="number" id="amount" placeholder="أدخل المبلغ">
+            </div>
+
+            <div class="input-group">
+                <label>🔢 رقم عملية الدفع</label>
+                <input type="text" id="transId" placeholder="رقم العملية من 7-10 أرقام">
+            </div>
+
+            <div class="file-upload" onclick="document.getElementById('receipt').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                <div>اضغط لرفع صورة الإشعار</div>
+                <input type="file" id="receipt" accept="image/*" class="hidden" style="display: none;" onchange="handleFile(this)">
+            </div>
+            <div id="fileName" style="color: #00ffff; font-size: 0.8rem; margin-top: 5px;"></div>
+
+            <button class="submit-btn" onclick="sendRecharge()">💰 تأكيد الإيداع</button>
         </div>
     </div>
 
@@ -154,39 +337,71 @@
     <script>
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
+        let selectedFile = null;
+        let balances = JSON.parse(localStorage.getItem('balances')) || {};
 
-        function copyCode() {
-            navigator.clipboard.writeText('7ee806564d3aa36d87667cad636b6788');
-            alert('✅ تم نسخ عنوان المحفظة');
+        function updateBalanceDisplay() {
+            let userId = document.getElementById('userId')?.value || 'default';
+            let balance = balances[userId] || 0;
+            document.getElementById('userBalance').textContent = '$' + balance;
         }
 
-        function sendRequest() {
-            let user = document.getElementById('userId').value;
-            let curr = document.getElementById('currency').value;
-            let amount = document.getElementById('amount').value;
-            let trans = document.getElementById('transId').value;
+        function copyCode() {
+            navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd');
+            alert('✅ تم نسخ كود المحفظة');
+        }
 
-            if (!user || !amount || !trans) {
+        function handleFile(input) {
+            selectedFile = input.files[0];
+            if (selectedFile) {
+                document.getElementById('fileName').innerHTML = '📸 ' + selectedFile.name;
+            }
+        }
+
+        async function sendRecharge() {
+            let userId = document.getElementById('userId').value;
+            let amount = document.getElementById('amount').value;
+            let transId = document.getElementById('transId').value;
+
+            if (!userId || !amount || amount <= 0 || !transId || !selectedFile) {
                 alert('⚠️ أكمل جميع الحقول');
                 return;
             }
 
-            let msg = `💰 طلب إيداع جديد
+            let reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onload = async function() {
+                let base64 = reader.result.split(',')[1];
+
+                let message = `💰 **طلب إيداع جديد**
 ━━━━━━━━━━━━━━━━
-👤 ID المستخدم: ${user}
-💵 المبلغ: ${amount} ${curr}
-🔢 رقم العملية: ${trans}
+👤 معرف المستخدم: ${userId}
+💵 المبلغ: $${amount}
+🔢 رقم العملية: ${transId}
 ━━━━━━━━━━━━━━━━`;
 
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-            });
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
 
-            alert('✅ تم إرسال طلب الإيداع');
-            window.location = 'index.html';
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        photo: base64,
+                        caption: `📸 صورة إشعار الدفع - مستخدم: ${userId}`
+                    })
+                });
+
+                alert('✅ تم إرسال طلب الإيداع');
+                window.location.href = 'index.html';
+            };
         }
+
+        updateBalanceDisplay();
     </script>
 </body>
 </html>
