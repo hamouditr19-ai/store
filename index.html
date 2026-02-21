@@ -28,6 +28,32 @@
             padding-bottom: 20px;
         }
         
+        /* الشريط المتحرك */
+        .ticker-wrap {
+            background: linear-gradient(90deg, #06b6d4, #ec4899);
+            padding: 15px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 2px solid white;
+        }
+        
+        .ticker {
+            display: inline-block;
+            animation: ticker 25s linear infinite;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: black;
+        }
+        
+        .ticker span {
+            margin: 0 30px;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
         /* شريط الشعار */
         .hero {
             background: #0f172a;
@@ -119,15 +145,15 @@
             cursor: pointer;
         }
         
-        /* الأقسام - مكبرة */
+        /* الأقسام - مكبرة للجوال */
         .category-tab {
-            padding: 12px 22px;
+            padding: 14px 25px;
             background: var(--card);
             border-radius: 40px;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            border: 2px solid var(--accent);
-            margin: 5px;
+            border: 3px solid var(--accent);
+            margin: 6px;
             cursor: pointer;
             display: inline-block;
         }
@@ -139,8 +165,8 @@
         
         @media (max-width: 640px) {
             .category-tab {
-                padding: 10px 18px;
-                font-size: 1rem;
+                padding: 12px 20px;
+                font-size: 1.1rem;
             }
         }
         
@@ -298,6 +324,17 @@
 </head>
 <body>
 
+    <!-- الشريط المتحرك (جديد) -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span>🔥🔥 Reem Store | ريم ستور 🔥🔥</span>
+            <span>🎮 شحن PUBG - Free Fire - Roblox 🎮</span>
+            <span>💳 Google Play - Apple - Steam 💳</span>
+            <span>⚡ توصيل فوري خلال دقائق ⚡</span>
+            <span>💰 خصومات تصل لـ 30% 💰</span>
+        </div>
+    </div>
+
     <!-- شريط الشعار -->
     <div class="hero">
         <h1>✨ Reem Store | ريم ستور ✨</h1>
@@ -421,8 +458,7 @@
     <!-- الإشعارات -->
     <div class="toast-container" id="toast-container"></div>
 
-    <!-- ================== لوحة التحكم (الجديدة) ================== -->
-    <!-- مودال إدخال كلمة السر -->
+    <!-- لوحة التحكم -->
     <div id="admin-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;">
         <div style="background: #1e293b; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 2px solid #06b6d4;">
             <h2 style="font-size: 2rem; font-weight: 900; color: #06b6d4; margin-bottom: 20px; text-align: center;">👑 لوحة التحكم</h2>
@@ -431,7 +467,6 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الرئيسية -->
     <div id="admin-panel" style="position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(10px); z-index: 2001; padding: 20px; overflow-y: auto; display: none;">
         <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #1e293b; padding: 15px; border-radius: 12px;">
             <h2 style="font-size: 1.8rem; font-weight: 900; color: #06b6d4;">👑 لوحة التحكم</h2>
@@ -439,7 +474,6 @@
         </div>
         
         <div style="max-width: 600px; margin: 0 auto;">
-            <!-- إضافة منتج -->
             <div style="background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #06b6d4;">
                 <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">➕ إضافة منتج جديد</h3>
                 <input type="text" id="new-prod-name" placeholder="اسم المنتج" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
@@ -455,7 +489,6 @@
                 <button style="width: 100%; background: #06b6d4; color: black; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="addNewProduct()">إضافة منتج</button>
             </div>
 
-            <!-- قائمة المنتجات -->
             <div style="background: #1e293b; border-radius: 20px; padding: 20px; border: 2px solid #06b6d4;">
                 <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">📦 المنتجات الحالية</h3>
                 <div id="admin-products-list"></div>
@@ -483,7 +516,6 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
-        // ================== التوست ==================
         function showToast(msg) {
             let container = document.getElementById('toast-container');
             let toast = document.createElement('div');
@@ -496,7 +528,16 @@
             }, 3000);
         }
 
-        // ================== عرض الأقسام ==================
+        // تحديث الإحصائيات
+        function updateStats() {
+            visitors++;
+            document.getElementById('visitor-count').innerText = visitors;
+            document.getElementById('orders-count').innerText = orders.length;
+            let totalSales = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+            document.getElementById('sales-total').innerText = '$' + (totalSales/1000).toFixed(1) + 'K';
+            document.getElementById('products-count').innerText = products.length;
+        }
+
         function renderTabs() {
             let tabs = document.getElementById('category-tabs');
             let categories = [
@@ -512,7 +553,6 @@
             });
         }
 
-        // ================== تصفية المنتجات ==================
         function filterProducts(cat) {
             currentFilter = cat;
             document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
@@ -520,7 +560,6 @@
             renderProducts();
         }
 
-        // ================== عرض المنتجات ==================
         function renderProducts() {
             let container = document.getElementById('products-container');
             let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
@@ -534,7 +573,6 @@
             `).join('');
         }
 
-        // ================== عرض الأكثر مبيعاً ==================
         function renderBestSellers() {
             let best = [...products].sort((a,b) => b.sales - a.sales).slice(0,4);
             let container = document.getElementById('best-sellers-container');
@@ -548,7 +586,6 @@
             `).join('');
         }
 
-        // ================== إضافة للسلة ==================
         function addToCart(id) {
             let p = products.find(p => p.id === id);
             cart.push(p);
@@ -557,14 +594,12 @@
             showToast('✅ تمت الإضافة للسلة');
         }
 
-        // ================== تغيير الصفحات ==================
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
             if (page === 'cart') updateCartDisplay();
         }
 
-        // ================== عرض السلة ==================
         function updateCartDisplay() {
             let container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -581,7 +616,6 @@
             document.getElementById('cart-total-display').innerHTML = `الإجمالي: $${total.toFixed(2)}`;
         }
 
-        // ================== حذف من السلة ==================
         function removeFromCart(i) {
             cart.splice(i, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -590,7 +624,6 @@
             showToast('🗑️ تم الحذف');
         }
 
-        // ================== المحفظة ==================
         function setAmount(a) {
             document.getElementById('custom-amount').value = a;
             showToast(`✅ تم اختيار $${a}`);
@@ -648,10 +681,13 @@
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = '0';
+            orders.push({ total: total });
+            localStorage.setItem('orders', JSON.stringify(orders));
+            updateStats();
             showPage('home');
         }
 
-        // ================== لوحة التحكم ==================
+        // لوحة التحكم
         function openAdminModal() {
             document.getElementById('admin-modal').style.display = 'flex';
         }
@@ -665,13 +701,12 @@
                 document.getElementById('admin-modal').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
                 renderAdminProducts();
-                showToast('🔓 أهلاً بك في لوحة التحكم');
+                showToast('🔓 أهلاً بك');
             } else {
                 showToast('❌ كلمة سر خطأ');
             }
         }
 
-        // عرض المنتجات في لوحة التحكم
         function renderAdminProducts() {
             let list = document.getElementById('admin-products-list');
             list.innerHTML = products.map(p => `
@@ -685,7 +720,6 @@
             `).join('');
         }
 
-        // إضافة منتج جديد
         function addNewProduct() {
             let name = document.getElementById('new-prod-name').value;
             let price = parseFloat(document.getElementById('new-prod-price').value);
@@ -693,7 +727,7 @@
             let cat = document.getElementById('new-prod-cat').value;
 
             if (!name || !price || !img) {
-                showToast('⚠️ أكمل جميع الحقول');
+                showToast('⚠️ أكمل الحقول');
                 return;
             }
 
@@ -711,22 +745,23 @@
             renderProducts();
             renderBestSellers();
             renderAdminProducts();
+            updateStats();
             
             document.getElementById('new-prod-name').value = '';
             document.getElementById('new-prod-price').value = '';
             document.getElementById('new-prod-img').value = '';
             
-            showToast('✅ تم إضافة المنتج');
+            showToast('✅ تمت الإضافة');
         }
 
-        // حذف منتج
         function deleteProduct(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+            if (confirm('حذف المنتج؟')) {
                 products = products.filter(p => p.id !== id);
                 renderProducts();
                 renderBestSellers();
                 renderAdminProducts();
-                showToast('🗑️ تم حذف المنتج');
+                updateStats();
+                showToast('🗑️ تم الحذف');
             }
         }
 
@@ -735,9 +770,7 @@
         renderProducts();
         renderBestSellers();
         document.getElementById('cart-count').innerText = cart.length;
-        document.getElementById('visitor-count').innerText = visitors;
-        document.getElementById('orders-count').innerText = orders.length;
-        document.getElementById('products-count').innerText = products.length;
+        updateStats();
     </script>
 </body>
 </html>
