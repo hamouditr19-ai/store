@@ -7,145 +7,274 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background: #f5f5f5; padding: 20px; }
-        .wallet-container {
-            max-width: 500px;
-            margin: 20px auto;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-            padding: 25px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
-        h1 { color: #8e24aa; text-align: center; margin-bottom: 30px; }
-        .balance-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .balance-label { font-size: 1rem; opacity: 0.9; }
-        .balance-amount { font-size: 3rem; font-weight: 900; margin: 10px 0; }
-        .balance-currency { font-size: 1.2rem; }
 
-        .qr-section {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            text-align: center;
+        :root {
+            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --accent: #8e2de2;
         }
-        .qr-placeholder {
-            width: 200px;
-            height: 200px;
-            background: #ddd;
-            margin: 0 auto 15px;
-            border-radius: 20px;
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: #666;
-            border: 2px dashed #aaa;
+            padding: 20px;
         }
+
+        .wallet-container {
+            max-width: 500px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 900;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            color: white;
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .balance-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .balance-amount {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .balance-currency {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .qr-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 25px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #8e2de2;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .qr-placeholder i {
+            font-size: 5rem;
+            margin-bottom: 10px;
+        }
+
         .payment-code {
-            background: #eee;
-            padding: 15px;
+            background: white;
+            padding: 15px 20px;
             border-radius: 50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin: 15px 0;
-            font-weight: bold;
-            border: 1px solid #ddd;
+            border: 2px solid #8e2de2;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         }
+
+        .payment-code span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            direction: ltr;
+        }
+
         .copy-btn {
-            background: #8e24aa;
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
             color: white;
             border: none;
-            padding: 8px 25px;
-            border-radius: 25px;
-            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 700;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 1rem;
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(142, 45, 226, 0.4);
         }
-        .info-label { color: #666; }
-        .info-value { font-weight: 700; color: #333; }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: var(--accent);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
 
         .upload-section {
-            border: 2px dashed #8e24aa;
-            border-radius: 20px;
-            padding: 25px;
+            border: 3px dashed #8e2de2;
+            border-radius: 25px;
+            padding: 30px;
             text-align: center;
             margin: 25px 0;
             cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(142, 45, 226, 0.05);
         }
-        .upload-section input { display: none; }
-        .upload-icon { font-size: 3rem; color: #8e24aa; }
+
+        .upload-section:hover {
+            background: rgba(142, 45, 226, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .upload-section input {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #8e2de2;
+            margin-bottom: 15px;
+        }
 
         .btn {
-            background: linear-gradient(135deg, #8e24aa, #c2185b);
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
             color: white;
             border: none;
-            padding: 15px;
+            padding: 18px;
             border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            font-size: 1.3rem;
+            font-weight: 700;
             width: 100%;
             cursor: pointer;
-            margin: 10px 0;
+            transition: all 0.3s ease;
+            margin: 15px 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(142, 45, 226, 0.4);
         }
 
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 20px;
-            color: #8e24aa;
+            color: var(--accent);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .transaction-history {
+            margin-top: 30px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-item.success {
+            color: #00b894;
+        }
+
+        .history-item.pending {
+            color: #fdcb6e;
         }
     </style>
 </head>
 <body>
-
     <div class="wallet-container">
         <h1>💳 المحفظة</h1>
 
-        <!-- الرصيد -->
+        <!-- بطاقة الرصيد -->
         <div class="balance-card">
             <div class="balance-label">رصيدك الحالي</div>
             <div class="balance-amount" id="walletBalance">500</div>
             <div class="balance-currency">دولار سوري</div>
         </div>
 
-        <!-- الباركود وكود الدفع -->
+        <!-- قسم الباركود والدفع -->
         <div class="qr-section">
             <div class="qr-placeholder">
-                <i class="fas fa-qrcode" style="font-size: 4rem; color: #aaa;"></i>
-                <p style="font-size: 0.9rem; margin-top: 10px;">(صورة الباركود)</p>
+                <i class="fas fa-qrcode"></i>
+                <span>رمز الدفع</span>
             </div>
 
             <div class="payment-code">
-                <span id="paymentCode">SYR-1234-5678-90</span>
-                <button class="copy-btn" onclick="copyPaymentCode()">نسخ</button>
+                <span id="paymentCode">SYR-9876-5432-10</span>
+                <button class="copy-btn" onclick="copyPaymentCode()">
+                    <i class="fas fa-copy"></i> نسخ
+                </button>
             </div>
 
-            <div class="info-row">
-                <span class="info-label">المبلغ المطلوب:</span>
-                <span class="info-value">500 دولار سوري</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">رقم العملية:</span>
-                <span class="info-value" id="operationNumber">987654321</span>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">المبلغ</div>
+                    <div class="info-value" id="amountToPay">500</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">رقم العملية</div>
+                    <div class="info-value" id="operationNumber">7654321</div>
+                </div>
             </div>
         </div>
 
@@ -153,6 +282,7 @@
         <div class="upload-section" onclick="document.getElementById('receiptUpload').click()">
             <i class="fas fa-cloud-upload-alt upload-icon"></i>
             <p>اضغط لرفع صورة الإشعار</p>
+            <p style="font-size: 0.9rem; color: #666;">(صورة التحويل أو إيصال الدفع)</p>
             <input type="file" id="receiptUpload" accept="image/*">
         </div>
 
@@ -161,17 +291,30 @@
             <i class="fas fa-bolt"></i> شحن الرصيد
         </button>
 
-        <a href="index.html" class="back-link">← العودة للرئيسية</a>
+        <!-- سجل المعاملات -->
+        <div class="transaction-history">
+            <h3 style="margin-bottom: 15px;">📋 آخر المعاملات</h3>
+            <div id="transactionsList">
+                <!-- المعاملات بتتحمل من JavaScript -->
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> العودة للرئيسية
+        </a>
     </div>
 
     <script>
-        // محاكاة الرصيد
+        // بيانات المحفظة
         let balance = parseInt(localStorage.getItem('walletBalance')) || 500;
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+        // عرض الرصيد
         document.getElementById('walletBalance').innerText = balance;
 
         // توليد رقم عملية عشوائي
         function generateOperationNumber() {
-            return Math.floor(1000000 + Math.random() * 9000000); // 7 أرقام
+            return Math.floor(1000000 + Math.random() * 9000000);
         }
         document.getElementById('operationNumber').innerText = generateOperationNumber();
 
@@ -190,9 +333,50 @@
                 alert('❌ الرجاء رفع صورة الإشعار أولاً');
                 return;
             }
-            alert('✅ تم استلام طلب الشحن، سيتم إضافة الرصيد بعد التحقق');
-            // هنا يمكن إرسال الصورة للبوت
+
+            const amount = document.getElementById('amountToPay').innerText;
+            const opNumber = document.getElementById('operationNumber').innerText;
+
+            // إضافة معاملة جديدة
+            const transaction = {
+                id: Date.now(),
+                type: 'شحن',
+                amount: amount,
+                date: new Date().toLocaleDateString('ar-EG'),
+                status: 'قيد المراجعة'
+            };
+            transactions.push(transaction);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+
+            alert(`✅ تم استلام طلب الشحن بقيمة ${amount} دولار سوري`);
+            displayTransactions();
         };
+
+        // عرض سجل المعاملات
+        function displayTransactions() {
+            const list = document.getElementById('transactionsList');
+            if(transactions.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #666;">لا توجد معاملات سابقة</p>';
+                return;
+            }
+
+            list.innerHTML = transactions.map(t => `
+                <div class="history-item ${t.status === 'مكتمل' ? 'success' : 'pending'}">
+                    <div>
+                        <strong>${t.type}</strong>
+                        <div style="font-size: 0.8rem;">${t.date}</div>
+                    </div>
+                    <div style="font-weight: 700;">${t.amount} دولار</div>
+                    <div>${t.status}</div>
+                </div>
+            `).join('');
+        }
+
+        // تحديث المبلغ المعروض
+        document.getElementById('amountToPay').innerText = balance;
+
+        // بدء التطبيق
+        displayTransactions();
     </script>
 </body>
 </html>
