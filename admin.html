@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Tajawal', sans-serif;
             background: #0a0f1f;
@@ -60,10 +66,9 @@
             margin: 5px 0;
         }
         
-        .product-list, .category-list {
-            max-height: 200px;
-            overflow-y: auto;
-            margin: 10px 0;
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px #ff0080;
         }
         
         .list-item {
@@ -83,11 +88,64 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid #ff0080;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00ffff;
+        }
+        
+        .orders-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .order-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #ff0080;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <h1>🔐 لوحة التحكم</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVisitors">0</div>
+                <div>الزوار</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalOrders">0</div>
+                <div>الطلبات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSales">$0</div>
+                <div>المبيعات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalProducts">0</div>
+                <div>المنتجات</div>
+            </div>
+        </div>
         
         <div class="section">
             <h2>➕ إضافة منتج</h2>
@@ -101,30 +159,59 @@
 
         <div class="section">
             <h2>🗑️ حذف منتج</h2>
-            <div id="productList" class="product-list"></div>
+            <div id="productList" class="orders-list"></div>
         </div>
 
         <div class="section">
             <h2>➕ إضافة قسم</h2>
             <input type="text" id="categoryName" placeholder="اسم القسم">
-            <input type="text" id="categoryIcon" placeholder="أيقونة (مثل: 🎮)">
+            <input type="text" id="categoryIcon" placeholder="أيقونة (🎮)">
             <button onclick="addCategory()">إضافة قسم</button>
         </div>
 
         <div class="section">
             <h2>🗑️ حذف قسم</h2>
-            <div id="categoryList" class="category-list"></div>
+            <div id="categoryList" class="orders-list"></div>
+        </div>
+
+        <div class="section">
+            <h2>📋 الطلبات الحديثة</h2>
+            <div id="ordersList" class="orders-list"></div>
+        </div>
+
+        <div class="section">
+            <h2>⚙️ الإعدادات</h2>
+            <input type="password" id="newAdminPass" placeholder="تغيير كلمة السر">
+            <button onclick="saveSettings()">حفظ</button>
         </div>
     </div>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('products')) || [];
-        let categories = JSON.parse(localStorage.getItem('categories')) || [];
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            { id: 1, name: '60 UC PUBG', priceUSD: 5, priceSYP: 65000, cat: 'games', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' }
+        ];
+        let categories = JSON.parse(localStorage.getItem('categories')) || [
+            { id: 'games', name: '🎮 ألعاب' },
+            { id: 'apps', name: '📱 تطبيقات' },
+            { id: 'codes', name: '🔑 أكواد' },
+            { id: 'telegram', name: '🤖 تيليجرام' },
+            { id: 'balance', name: '💳 رصيد' }
+        ];
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let visitors = parseInt(localStorage.getItem('visitors')) || 0;
+
+        function loadStats() {
+            document.getElementById('totalVisitors').textContent = visitors;
+            document.getElementById('totalOrders').textContent = orders.length;
+            let totalSales = orders.reduce((s, o) => s + (o.total || 0), 0);
+            document.getElementById('totalSales').textContent = '$' + totalSales;
+            document.getElementById('totalProducts').textContent = products.length;
+        }
 
         function updateCategorySelect() {
             const select = document.getElementById('productCategory');
-            select.innerHTML = categories.filter(c => c.id !== 'all').map(c => 
-                `<option value="${c.id}">${c.icon || ''} ${c.name}</option>`
+            select.innerHTML = categories.map(c => 
+                `<option value="${c.id}">${c.name}</option>`
             ).join('');
         }
 
@@ -140,10 +227,25 @@
 
         function updateCategoryList() {
             const list = document.getElementById('categoryList');
-            list.innerHTML = categories.filter(c => c.id !== 'all').map(c => `
+            list.innerHTML = categories.map(c => `
                 <div class="list-item">
-                    <span>${c.icon || ''} ${c.name}</span>
+                    <span>${c.name}</span>
                     <span class="delete-btn" onclick="deleteCategory('${c.id}')">✕</span>
+                </div>
+            `).join('');
+        }
+
+        function updateOrdersList() {
+            const list = document.getElementById('ordersList');
+            if (orders.length === 0) {
+                list.innerHTML = '<p style="color:#666;">لا توجد طلبات</p>';
+                return;
+            }
+            list.innerHTML = orders.slice(-5).reverse().map(o => `
+                <div class="order-item">
+                    <div>💰 ${o.total} ${o.currency || 'USD'}</div>
+                    <div>🎮 ${o.gameId}</div>
+                    <div>⏰ ${new Date(o.date).toLocaleString()}</div>
                 </div>
             `).join('');
         }
@@ -155,7 +257,7 @@
             const image = document.getElementById('productImage').value;
             const category = document.getElementById('productCategory').value;
 
-            if(!name || !priceUSD || !priceSYP || !image) {
+            if (!name || !priceUSD || !priceSYP || !image) {
                 alert('❌ الرجاء ملء جميع الحقول');
                 return;
             }
@@ -172,6 +274,7 @@
             products.push(newProduct);
             localStorage.setItem('products', JSON.stringify(products));
             updateProductList();
+            loadStats();
             alert('✅ تم إضافة المنتج');
         };
 
@@ -179,21 +282,21 @@
             products = products.filter(p => p.id !== id);
             localStorage.setItem('products', JSON.stringify(products));
             updateProductList();
+            loadStats();
         };
 
         window.addCategory = function() {
             const name = document.getElementById('categoryName').value;
             const icon = document.getElementById('categoryIcon').value;
 
-            if(!name || !icon) {
+            if (!name || !icon) {
                 alert('❌ الرجاء ملء جميع الحقول');
                 return;
             }
 
             const newCategory = {
                 id: name.toLowerCase().replace(/\s+/g, ''),
-                name: name,
-                icon: icon
+                name: icon + ' ' + name
             };
 
             categories.push(newCategory);
@@ -210,9 +313,19 @@
             updateCategoryList();
         };
 
+        window.saveSettings = function() {
+            const newPass = document.getElementById('newAdminPass').value;
+            if (newPass) {
+                localStorage.setItem('adminPass', newPass);
+                alert('✅ تم تغيير كلمة السر');
+            }
+        };
+
         updateCategorySelect();
         updateProductList();
         updateCategoryList();
+        updateOrdersList();
+        loadStats();
     </script>
 </body>
 </html>
