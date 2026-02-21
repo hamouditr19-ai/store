@@ -228,7 +228,7 @@
             color: white;
         }
         
-        /* الإشعارات - كبيرة وواضحة تحت */
+        /* الإشعارات */
         .toast-container {
             position: fixed;
             bottom: 30px;
@@ -418,8 +418,50 @@
         <p class="text-gray-500 text-sm">© 2026 Reem Store. جميع الحقوق محفوظة.</p>
     </div>
 
-    <!-- الإشعارات - كبيرة تحت -->
+    <!-- الإشعارات -->
     <div class="toast-container" id="toast-container"></div>
+
+    <!-- ================== لوحة التحكم (الجديدة) ================== -->
+    <!-- مودال إدخال كلمة السر -->
+    <div id="admin-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;">
+        <div style="background: #1e293b; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 2px solid #06b6d4;">
+            <h2 style="font-size: 2rem; font-weight: 900; color: #06b6d4; margin-bottom: 20px; text-align: center;">👑 لوحة التحكم</h2>
+            <input type="password" id="admin-password" placeholder="كلمة السر" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+            <button style="width: 100%; background: #06b6d4; color: black; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="checkAdminPassword()">دخول</button>
+        </div>
+    </div>
+
+    <!-- لوحة التحكم الرئيسية -->
+    <div id="admin-panel" style="position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(10px); z-index: 2001; padding: 20px; overflow-y: auto; display: none;">
+        <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #1e293b; padding: 15px; border-radius: 12px;">
+            <h2 style="font-size: 1.8rem; font-weight: 900; color: #06b6d4;">👑 لوحة التحكم</h2>
+            <button style="background: #ef4444; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;" onclick="closeAdminPanel()">✕</button>
+        </div>
+        
+        <div style="max-width: 600px; margin: 0 auto;">
+            <!-- إضافة منتج -->
+            <div style="background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">➕ إضافة منتج جديد</h3>
+                <input type="text" id="new-prod-name" placeholder="اسم المنتج" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+                <input type="number" id="new-prod-price" placeholder="السعر $" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+                <input type="text" id="new-prod-img" placeholder="رابط الصورة" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+                <select id="new-prod-cat" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+                    <option value="games">🎮 ألعاب</option>
+                    <option value="apps">📱 تطبيقات</option>
+                    <option value="codes">🔑 أكواد</option>
+                    <option value="telegram">🤖 تيليجرام</option>
+                    <option value="balance">💳 رصيد</option>
+                </select>
+                <button style="width: 100%; background: #06b6d4; color: black; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="addNewProduct()">إضافة منتج</button>
+            </div>
+
+            <!-- قائمة المنتجات -->
+            <div style="background: #1e293b; border-radius: 20px; padding: 20px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">📦 المنتجات الحالية</h3>
+                <div id="admin-products-list"></div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // المنتجات
@@ -434,7 +476,6 @@
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
-        let userBalance = 0;
         let currentFilter = 'all';
         let selectedFile = null;
         let visitors = 1247;
@@ -442,7 +483,7 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
-        // الإشعارات - كبيرة وواضحة
+        // ================== التوست ==================
         function showToast(msg) {
             let container = document.getElementById('toast-container');
             let toast = document.createElement('div');
@@ -455,35 +496,7 @@
             }, 3000);
         }
 
-        // عرض المنتجات
-        function renderProducts() {
-            let container = document.getElementById('products-container');
-            let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
-            container.innerHTML = filtered.map(p => `
-                <div class="product-card">
-                    <img src="${p.img}">
-                    <h3>${p.name}</h3>
-                    <div class="price">$${p.price}</div>
-                    <button class="add-btn" onclick="addToCart(${p.id})">🛒 إضافة للسلة</button>
-                </div>
-            `).join('');
-        }
-
-        // عرض الأكثر مبيعاً
-        function renderBestSellers() {
-            let best = [...products].sort((a,b) => b.sales - a.sales).slice(0,4);
-            let container = document.getElementById('best-sellers-container');
-            container.innerHTML = best.map(p => `
-                <div class="product-card">
-                    <img src="${p.img}">
-                    <h3>${p.name}</h3>
-                    <div class="price">$${p.price}</div>
-                    <button class="add-btn" onclick="addToCart(${p.id})">🛒 إضافة</button>
-                </div>
-            `).join('');
-        }
-
-        // أقسام
+        // ================== عرض الأقسام ==================
         function renderTabs() {
             let tabs = document.getElementById('category-tabs');
             let categories = [
@@ -499,6 +512,7 @@
             });
         }
 
+        // ================== تصفية المنتجات ==================
         function filterProducts(cat) {
             currentFilter = cat;
             document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
@@ -506,7 +520,35 @@
             renderProducts();
         }
 
-        // إضافة للسلة
+        // ================== عرض المنتجات ==================
+        function renderProducts() {
+            let container = document.getElementById('products-container');
+            let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+            container.innerHTML = filtered.map(p => `
+                <div class="product-card">
+                    <img src="${p.img}">
+                    <h3>${p.name}</h3>
+                    <div class="price">$${p.price}</div>
+                    <button class="add-btn" onclick="addToCart(${p.id})">🛒 إضافة للسلة</button>
+                </div>
+            `).join('');
+        }
+
+        // ================== عرض الأكثر مبيعاً ==================
+        function renderBestSellers() {
+            let best = [...products].sort((a,b) => b.sales - a.sales).slice(0,4);
+            let container = document.getElementById('best-sellers-container');
+            container.innerHTML = best.map(p => `
+                <div class="product-card">
+                    <img src="${p.img}">
+                    <h3>${p.name}</h3>
+                    <div class="price">$${p.price}</div>
+                    <button class="add-btn" onclick="addToCart(${p.id})">🛒 إضافة</button>
+                </div>
+            `).join('');
+        }
+
+        // ================== إضافة للسلة ==================
         function addToCart(id) {
             let p = products.find(p => p.id === id);
             cart.push(p);
@@ -515,12 +557,14 @@
             showToast('✅ تمت الإضافة للسلة');
         }
 
+        // ================== تغيير الصفحات ==================
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
             if (page === 'cart') updateCartDisplay();
         }
 
+        // ================== عرض السلة ==================
         function updateCartDisplay() {
             let container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -537,6 +581,7 @@
             document.getElementById('cart-total-display').innerHTML = `الإجمالي: $${total.toFixed(2)}`;
         }
 
+        // ================== حذف من السلة ==================
         function removeFromCart(i) {
             cart.splice(i, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -545,6 +590,7 @@
             showToast('🗑️ تم الحذف');
         }
 
+        // ================== المحفظة ==================
         function setAmount(a) {
             document.getElementById('custom-amount').value = a;
             showToast(`✅ تم اختيار $${a}`);
@@ -574,11 +620,11 @@
                 let base64 = reader.result.split(',')[1];
                 let msg = `💰 طلب تعبئة\nالمبلغ: $${amount}\nرقم: ${trans}`;
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method:'POST', headers:{'Content-Type':'application/json'},
+                    method: 'POST', headers:{ 'Content-Type': 'application/json' },
                     body:JSON.stringify({chat_id:CHAT_ID, text:msg})
                 });
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                    method:'POST', headers:{'Content-Type':'application/json'},
+                    method: 'POST', headers:{ 'Content-Type': 'application/json' },
                     body:JSON.stringify({chat_id:CHAT_ID, photo:base64})
                 });
                 showToast('✅ تم الإرسال');
@@ -595,7 +641,7 @@
             let list = cart.map(i => `- ${i.name}`).join('\n');
             let msg = `🛍️ طلب جديد\n👤 ${name}\n🎮 ${gameId}\n📦\n${list}\n💰 $${total}`;
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method:'POST', headers:{'Content-Type':'application/json'},
+                method: 'POST', headers:{ 'Content-Type': 'application/json' },
                 body:JSON.stringify({chat_id:CHAT_ID, text:msg})
             });
             showToast('✅ تم إرسال الطلب');
@@ -605,20 +651,93 @@
             showPage('home');
         }
 
+        // ================== لوحة التحكم ==================
         function openAdminModal() {
-            let pass = prompt('كلمة سر admin:');
-            if (pass === '1234') {
-                showToast('🔓 أهلاً بك');
+            document.getElementById('admin-modal').style.display = 'flex';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function checkAdminPassword() {
+            if (document.getElementById('admin-password').value === '1234') {
+                document.getElementById('admin-modal').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                renderAdminProducts();
+                showToast('🔓 أهلاً بك في لوحة التحكم');
             } else {
-                showToast('❌ غلط');
+                showToast('❌ كلمة سر خطأ');
             }
         }
 
-        // تشغيل
+        // عرض المنتجات في لوحة التحكم
+        function renderAdminProducts() {
+            let list = document.getElementById('admin-products-list');
+            list.innerHTML = products.map(p => `
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
+                    <div>
+                        <img src="${p.img}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; display: inline-block; vertical-align: middle; margin-left: 10px;">
+                        <span>${p.name} - $${p.price}</span>
+                    </div>
+                    <button style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="deleteProduct(${p.id})">حذف</button>
+                </div>
+            `).join('');
+        }
+
+        // إضافة منتج جديد
+        function addNewProduct() {
+            let name = document.getElementById('new-prod-name').value;
+            let price = parseFloat(document.getElementById('new-prod-price').value);
+            let img = document.getElementById('new-prod-img').value;
+            let cat = document.getElementById('new-prod-cat').value;
+
+            if (!name || !price || !img) {
+                showToast('⚠️ أكمل جميع الحقول');
+                return;
+            }
+
+            let newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+            
+            products.push({
+                id: newId,
+                name: name,
+                price: price,
+                img: img,
+                category: cat,
+                sales: 0
+            });
+
+            renderProducts();
+            renderBestSellers();
+            renderAdminProducts();
+            
+            document.getElementById('new-prod-name').value = '';
+            document.getElementById('new-prod-price').value = '';
+            document.getElementById('new-prod-img').value = '';
+            
+            showToast('✅ تم إضافة المنتج');
+        }
+
+        // حذف منتج
+        function deleteProduct(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                products = products.filter(p => p.id !== id);
+                renderProducts();
+                renderBestSellers();
+                renderAdminProducts();
+                showToast('🗑️ تم حذف المنتج');
+            }
+        }
+
+        // التهيئة
         renderTabs();
         renderProducts();
         renderBestSellers();
         document.getElementById('cart-count').innerText = cart.length;
+        document.getElementById('visitor-count').innerText = visitors;
+        document.getElementById('orders-count').innerText = orders.length;
+        document.getElementById('products-count').innerText = products.length;
     </script>
 </body>
 </html>
