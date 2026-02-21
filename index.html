@@ -9,10 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <!-- Swiper CSS (للسلايدر) -->
+    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
-    <!-- Font Awesome للأيقونات -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -79,7 +79,7 @@
             100% { transform: translateX(-100%); }
         }
         
-        /* البنر المتحرك (سلايدر) */
+        /* البنر المتحرك */
         .swiper {
             width: 100%;
             height: 300px;
@@ -137,14 +137,35 @@
         .cyan-text { color: #06b6d4; }
         .cyan-bg { background: #06b6d4; }
         
+        /* أزرار الأقسام */
+        .category-tab {
+            padding: 10px 20px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .category-tab:hover, .category-tab.active {
+            background: #06b6d4;
+            color: black;
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+        
         /* زر الواتساب العائم */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
             right: 25px;
             background: #25d366;
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -156,8 +177,8 @@
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 4px 25px rgba(37, 211, 102, 0.5); }
-            50% { transform: scale(1.1); box-shadow: 0 8px 35px rgba(37, 211, 102, 0.8); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         /* السلة الجانبية */
@@ -220,63 +241,60 @@
             font-weight: bold;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             animation: slideIn 0.3s forwards;
-            border: 1px solid rgba(255,255,255,0.3);
         }
         
         @keyframes slideIn {
             from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0%); opacity: 1; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
-        /* الفوتر */
+        /* الفوتر - أيقونات أصغر */
         .footer {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
             border-top: 2px solid #06b6d4;
-            padding: 40px 20px 20px;
+            padding: 30px 20px 20px;
             margin-top: 60px;
         }
         
         .social-icon {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
             border: 1px solid rgba(6, 182, 212, 0.3);
         }
         
         .social-icon:hover {
             background: #06b6d4;
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-3px) scale(1.05);
             color: black;
         }
         
-        /* التجاوب مع الجوال */
         @media (max-width: 640px) {
             .swiper { height: 200px; }
             .slide-overlay h2 { font-size: 1.3rem; }
+            .category-tab { padding: 8px 15px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- خلفية متحركة -->
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
 
-    <!-- شريط الإعلانات المتحرك -->
+    <!-- شريط الإعلانات -->
     <div class="ticker-wrap">
         <div class="ticker-content">
             <span>🔥🔥 مرحباً بكم في Reem Store | ريم ستور 🔥🔥</span>
             <span>🎮 شحن جميع الألعاب: PUBG - Free Fire - Roblox 🎮</span>
             <span>💳 بطاقات Google Play - Apple - Steam 💳</span>
             <span>⚡ توصيل فوري خلال دقائق ⚡</span>
-            <span>💰 خصومات تصل إلى 40% على أول طلب 💰</span>
         </div>
     </div>
 
@@ -331,7 +349,7 @@
         </div>
     </div>
 
-    <!-- البنر المتحرك (سلايدر) -->
+    <!-- البنر المتحرك -->
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -362,18 +380,16 @@
     <!-- لوحة التحكم (مخفية) -->
     <div id="admin-panel" class="hidden glass-card p-6 rounded-2xl mx-4 mb-10 border-2 border-pink-500 relative">
         <button onclick="closeAdmin()" class="absolute top-4 left-4 bg-red-500 text-white w-8 h-8 rounded-full">✕</button>
-        <h2 class="text-xl font-bold mb-4 text-pink-400">👑 لوحة التحكم الشاملة</h2>
+        <h2 class="text-xl font-bold mb-4 text-pink-400">👑 لوحة التحكم</h2>
         
-        <!-- إضافة قسم جديد -->
         <div class="mb-6 p-4 bg-slate-800/50 rounded-xl">
             <p class="mb-2 font-bold text-cyan-400">➕ إضافة قسم جديد</p>
             <div class="flex gap-2">
-                <input type="text" id="new-cat-name" placeholder="اسم القسم (مثال: خدمات تيليجرام)" class="flex-1 p-2 rounded-lg bg-white text-black">
+                <input type="text" id="new-cat-name" placeholder="اسم القسم" class="flex-1 p-2 rounded-lg bg-white text-black">
                 <button onclick="addNewCategory()" class="bg-green-600 px-4 py-2 rounded-lg text-white font-bold">إضافة</button>
             </div>
         </div>
         
-        <!-- إضافة منتج -->
         <div class="p-4 bg-slate-800/50 rounded-xl">
             <p class="mb-2 font-bold text-cyan-400">🛍️ إضافة منتج</p>
             <div class="grid gap-3">
@@ -381,24 +397,26 @@
                 <input type="number" id="new-prod-price" placeholder="السعر $" class="p-2 rounded-lg bg-white text-black">
                 <input type="text" id="new-prod-img" placeholder="رابط الصورة" class="p-2 rounded-lg bg-white text-black">
                 <select id="new-prod-cat" class="p-2 rounded-lg bg-white text-black font-bold"></select>
-                <button onclick="addNewProduct()" class="bg-cyan-600 py-2 rounded-lg text-white font-bold">إضافة المنتج</button>
+                <button onclick="addNewProduct()" class="bg-cyan-600 py-2 rounded-lg text-white font-bold">إضافة</button>
             </div>
         </div>
     </div>
 
-    <!-- الفلاتر -->
+    <!-- أزرار الأقسام (Tabs) -->
     <div class="container mx-auto px-4">
-        <div id="category-filters" class="flex flex-wrap gap-2 mb-8 justify-center"></div>
+        <div class="flex flex-wrap gap-2 mb-8 justify-center" id="category-tabs">
+            <button class="category-tab active" onclick="filterByCategory('all')">الكل 🏠</button>
+        </div>
     </div>
 
     <!-- محتوى المتجر -->
     <main class="container mx-auto px-4 pb-20" id="store-content"></main>
 
-    <!-- الفوتر (التذييل) -->
+    <!-- الفوتر -->
     <footer class="footer">
         <div class="container mx-auto">
-            <!-- أيقونات السوشال ميديا -->
-            <div class="flex justify-center gap-4 mb-8">
+            <!-- أيقونات أصغر -->
+            <div class="flex justify-center gap-3 mb-8">
                 <a href="https://www.instagram.com/reem216179?igsh=eXV5NnkyczV6bzVo" target="_blank" class="social-icon">
                     <i class="fab fa-instagram"></i>
                 </a>
@@ -413,12 +431,10 @@
                 </a>
             </div>
             
-            <!-- حقوق النشر -->
             <div class="text-center mb-6">
                 <p class="text-cyan-400 text-lg font-bold">© 2026 Reem Store. جميع الحقوق محفوظة.</p>
             </div>
             
-            <!-- روابط سياسة الخصوصية وشروط الاستخدام -->
             <div class="flex justify-center gap-6 text-sm text-slate-400">
                 <a href="#" class="hover:text-cyan-400 transition" onclick="showPrivacyPolicy()">سياسة الخصوصية</a>
                 <span>|</span>
@@ -427,18 +443,16 @@
         </div>
     </footer>
 
-    <!-- زر الواتساب العائم -->
+    <!-- زر الواتساب -->
     <a href="https://wa.me/963968493135" target="_blank" class="whatsapp-float">
-        <i class="fab fa-whatsapp text-3xl"></i>
+        <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <!-- توست الإشعارات -->
+    <!-- توست -->
     <div class="toast-container" id="toast-container"></div>
 
-    <!-- السكريبتات -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // تهيئة السلايدر
         const swiper = new Swiper(".mySwiper", {
             autoplay: { delay: 3000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
@@ -446,80 +460,100 @@
             effect: "fade",
         });
 
-        // ------------------ بيانات المتجر مع الأقسام الجديدة ------------------
+        // بيانات المتجر
         let storeData = JSON.parse(localStorage.getItem('reemStoreMaster')) || [
-            { 
-                id: 'cat1', 
-                name: '🎮 ألعاب', 
-                products: [
-                    { id: 1, name: '60 UC شدة PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
-                    { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
-                ]
-            },
-            { 
-                id: 'cat2', 
-                name: '📱 تطبيقات', 
-                products: [
-                    { id: 3, name: 'اشتراك نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
-                    { id: 4, name: 'اشتراك شاهد VIP', price: 12, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
-                ]
-            },
-            { 
-                id: 'cat3', 
-                name: '🔑 أكواد', 
-                products: [
-                    { id: 5, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
-                    { id: 6, name: 'كود iTunes 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
-                ]
-            },
-            { 
-                id: 'cat4', 
-                name: '🤖 خدمات تيليجرام', 
-                products: [
-                    { id: 7, name: 'عضوية قنوات (1000 عضو)', price: 20, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' },
-                    { id: 8, name: 'تفاعل منشورات', price: 15, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' }
-                ]
-            },
-            { 
-                id: 'cat5', 
-                name: '💳 رصيد وبطاقات', 
-                products: [
-                    { id: 9, name: 'رصيد STC 50 ريال', price: 13, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
-                    { id: 10, name: 'بطاقة Steam 20$', price: 22, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
-                ]
-            },
-            { 
-                id: 'cat6', 
-                name: '📱 خدمات سوشل ميديا', 
-                products: [
-                    { id: 11, name: 'متابعين انستا (500)', price: 25, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' },
-                    { id: 12, name: 'لايكات تيك توك (1000)', price: 30, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' }
-                ]
-            },
-            { 
-                id: 'cat7', 
-                name: '👥 حسابات مميزة', 
-                products: [
-                    { id: 13, name: 'حساب نتفلكس بريميوم', price: 35, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
-                    { id: 14, name: 'حساب Canva Pro', price: 40, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
-                ]
-            }
+            { id: 'cat1', name: '🎮 ألعاب', products: [
+                { id: 1, name: '60 UC شدة PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
+                { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
+            ]},
+            { id: 'cat2', name: '📱 تطبيقات', products: [
+                { id: 3, name: 'اشتراك نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
+                { id: 4, name: 'اشتراك شاهد VIP', price: 12, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
+            ]},
+            { id: 'cat3', name: '🔑 أكواد', products: [
+                { id: 5, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
+                { id: 6, name: 'كود iTunes 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+            ]},
+            { id: 'cat4', name: '🤖 خدمات تيليجرام', products: [
+                { id: 7, name: 'عضوية قنوات (1000)', price: 20, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' }
+            ]},
+            { id: 'cat5', name: '💳 رصيد وبطاقات', products: [
+                { id: 8, name: 'رصيد STC 50', price: 13, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+            ]},
+            { id: 'cat6', name: '📱 سوشل ميديا', products: [
+                { id: 9, name: 'متابعين انستا (500)', price: 25, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' }
+            ]},
+            { id: 'cat7', name: '👥 حسابات', products: [
+                { id: 10, name: 'حساب نتفلكس بريميوم', price: 35, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
+            ]}
         ];
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
+        let currentFilter = 'all';
 
-        // ------------------ سياسة الخصوصية والشروط ------------------
-        function showPrivacyPolicy() {
-            alert('سياسة الخصوصية - Reem Store\n\nنحن نلتزم بحماية بياناتك الشخصية وعدم مشاركتها مع أي جهة خارجية. جميع المعاملات آمنة ومشفرة.');
+        // عرض الأقسام في التبويبات
+        function renderTabs() {
+            const tabsContainer = document.getElementById('category-tabs');
+            tabsContainer.innerHTML = '<button class="category-tab active" onclick="filterByCategory(\'all\')">الكل 🏠</button>';
+            
+            storeData.forEach(cat => {
+                tabsContainer.innerHTML += `<button class="category-tab" onclick="filterByCategory('${cat.id}')">${cat.name}</button>`;
+            });
         }
 
-        function showTerms() {
-            alert('شروط الاستخدام - Reem Store\n\n1. الدفع مقدم قبل الشحن.\n2. يتم الشحن خلال 24 ساعة كحد أقصى.\n3. في حال وجود مشكلة، يتم استرداد المبلغ كاملاً.\n4. يمنع استخدام الخدمات في الأنشطة غير القانونية.');
+        // تصفية حسب القسم
+        function filterByCategory(catId) {
+            currentFilter = catId;
+            
+            // تحديث شكل التبويبات
+            document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            renderStore();
         }
 
-        // ------------------ التوست ------------------
+        // عرض المنتجات حسب التصفية
+        function renderStore() {
+            const isAdmin = !document.getElementById('admin-panel').classList.contains('hidden');
+            const content = document.getElementById('store-content');
+            
+            let filteredData = [];
+            
+            if (currentFilter === 'all') {
+                filteredData = storeData;
+            } else {
+                const category = storeData.find(c => c.id === currentFilter);
+                filteredData = category ? [category] : [];
+            }
+
+            content.innerHTML = filteredData.map(cat => `
+                <div class="mb-12">
+                    <h2 class="text-xl font-bold mb-4 border-r-4 border-cyan-500 pr-3">${cat.name}</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        ${cat.products.map(p => `
+                            <div class="glass-card p-3 rounded-2xl neon-border relative">
+                                ${isAdmin ? `
+                                    <button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-xs px-2 py-1 rounded-full z-10">
+                                        ✕
+                                    </button>
+                                ` : ''}
+                                <img src="${p.img}" class="w-full h-32 object-cover rounded-xl mb-3">
+                                <h3 class="font-bold text-sm mb-1">${p.name}</h3>
+                                <p class="text-lg font-black cyan-text mb-3">$${p.price}</p>
+                                <button onclick="addToCart('${p.name}', ${p.price})" class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-white py-2 rounded-xl text-xs font-bold hover:scale-105 transition">
+                                    🛒 إضافة للسلة
+                                </button>
+                            </div>
+                        `).join('')}
+                        ${cat.products.length === 0 ? '<p class="text-slate-500 col-span-4">لا توجد منتجات</p>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // باقي الدوال (بدون تغيير)
         function showToast(msg) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -532,7 +566,6 @@
             }, 3000);
         }
 
-        // ------------------ المودال ------------------
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
         }
@@ -541,7 +574,6 @@
             document.getElementById(id).style.display = 'none';
         }
 
-        // ------------------ لوحة التحكم ------------------
         function checkAdminPass() {
             const pass = document.getElementById('admin-pass').value;
             if (pass === '1234') {
@@ -560,7 +592,6 @@
             renderStore();
         }
 
-        // إضافة قسم جديد
         function addNewCategory() {
             const name = document.getElementById('new-cat-name').value;
             if (!name) return showToast('⚠️ اكتب اسم القسم');
@@ -573,12 +604,12 @@
             
             saveData();
             updateCategorySelect();
+            renderTabs();
             renderStore();
             document.getElementById('new-cat-name').value = '';
             showToast('✅ تم إضافة القسم');
         }
 
-        // إضافة منتج
         function addNewProduct() {
             const name = document.getElementById('new-prod-name').value;
             const price = parseFloat(document.getElementById('new-prod-price').value);
@@ -605,7 +636,6 @@
             showToast('✅ تم إضافة المنتج');
         }
 
-        // حذف منتج
         function deleteProduct(catId, prodId) {
             if (!confirm('حذف المنتج؟')) return;
             const catIndex = storeData.findIndex(c => c.id === catId);
@@ -615,77 +645,29 @@
             showToast('🗑️ تم حذف المنتج');
         }
 
-        // حذف قسم كامل
         function deleteCategory(catId) {
-            if (!confirm('هل أنت متأكد من حذف القسم بالكامل؟')) return;
+            if (!confirm('حذف القسم بالكامل؟')) return;
             storeData = storeData.filter(c => c.id !== catId);
             saveData();
             updateCategorySelect();
+            renderTabs();
+            if (currentFilter === catId) {
+                currentFilter = 'all';
+                document.querySelectorAll('.category-tab')[0].classList.add('active');
+            }
             renderStore();
             showToast('🗑️ تم حذف القسم');
         }
 
-        // تحديث قائمة الأقسام في لوحة التحكم
         function updateCategorySelect() {
             const select = document.getElementById('new-prod-cat');
             select.innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
-        // حفظ البيانات
         function saveData() {
             localStorage.setItem('reemStoreMaster', JSON.stringify(storeData));
         }
 
-        // ------------------ عرض المتجر ------------------
-        function renderStore() {
-            const isAdmin = !document.getElementById('admin-panel').classList.contains('hidden');
-            const content = document.getElementById('store-content');
-            const filters = document.getElementById('category-filters');
-
-            // الفلاتر
-            filters.innerHTML = storeData.map(c => `
-                <button onclick="scrollToCategory('${c.id}')" class="px-4 py-2 bg-slate-800 rounded-full border border-cyan-500/50 text-sm font-bold hover:bg-cyan-500 hover:text-black transition">
-                    ${c.name}
-                </button>
-            `).join('');
-
-            // المحتوى
-            content.innerHTML = storeData.map(cat => `
-                <div id="${cat.id}" class="mb-12">
-                    <div class="flex justify-between items-center mb-4 border-r-4 border-cyan-500 pr-3">
-                        <h2 class="text-xl font-bold">${cat.name}</h2>
-                        ${isAdmin ? `<button onclick="deleteCategory('${cat.id}')" class="text-xs bg-red-600 px-3 py-1 rounded-full">حذف القسم</button>` : ''}
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        ${cat.products.map(p => `
-                            <div class="glass-card p-3 rounded-2xl neon-border relative">
-                                ${isAdmin ? `
-                                    <button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-xs px-2 py-1 rounded-full z-10">
-                                        ✕
-                                    </button>
-                                ` : ''}
-                                <img src="${p.img}" class="w-full h-32 object-cover rounded-xl mb-3">
-                                <h3 class="font-bold text-sm mb-1">${p.name}</h3>
-                                <p class="text-lg font-black cyan-text mb-3">$${p.price}</p>
-                                <button onclick="addToCart('${p.name}', ${p.price})" class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-white py-2 rounded-xl text-xs font-bold hover:scale-105 transition">
-                                    🛒 إضافة للسلة
-                                </button>
-                            </div>
-                        `).join('')}
-                        
-                        ${cat.products.length === 0 ? '<p class="text-slate-500 col-span-4">لا توجد منتجات بعد</p>' : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // التمرير للقسم
-        function scrollToCategory(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // ------------------ السلة ------------------
         function addToCart(name, price) {
             cart.push({ name, price });
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -721,13 +703,12 @@
             document.getElementById('cart-sidebar').classList.toggle('open');
         }
 
-        // ------------------ إرسال الطلب ------------------
         async function sendOrder() {
             const name = document.getElementById('cust-name').value;
             const gameId = document.getElementById('cust-id').value;
 
             if (!name || !gameId || cart.length === 0) {
-                showToast('⚠️ املأ جميع البيانات وأضف منتجات للسلة');
+                showToast('⚠️ املأ جميع البيانات');
                 return;
             }
 
@@ -750,29 +731,36 @@ ${productsList}
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         chat_id: CHAT_ID,
-                        text: message,
-                        parse_mode: 'Markdown'
+                        text: message
                     })
                 });
                 
-                showToast('✅ تم إرسال الطلب بنجاح!');
+                showToast('✅ تم إرسال الطلب');
                 cart = [];
                 localStorage.removeItem('cart');
                 updateCartUI();
                 toggleCart();
-                
                 document.getElementById('cust-name').value = '';
                 document.getElementById('cust-id').value = '';
                 
             } catch (error) {
-                showToast('❌ فشل الإرسال، حاول مرة أخرى');
+                showToast('❌ فشل الإرسال');
             }
         }
 
-        // ------------------ التهيئة ------------------
+        function showPrivacyPolicy() {
+            alert('سياسة الخصوصية - Reem Store\n\nنحن نلتزم بحماية بياناتك الشخصية.');
+        }
+
+        function showTerms() {
+            alert('شروط الاستخدام - Reem Store\n\n1. الدفع مقدم.\n2. الشحن خلال 24 ساعة.\n3. استرداد في حال وجود مشكلة.');
+        }
+
+        // التهيئة
+        renderTabs();
         renderStore();
         updateCartUI();
         updateCategorySelect();
     </script>
 </body>
-    </html>
+</html>
