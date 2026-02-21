@@ -7,100 +7,210 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background: #f5f5f5; padding: 20px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        :root {
+            --bg-primary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-primary: #333;
+            --accent: #8e2de2;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            padding: 20px;
+        }
+
         .cart-container {
             max-width: 600px;
             margin: 20px auto;
-            background: white;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             overflow: hidden;
-            padding: 25px;
+            padding: 30px;
         }
-        h1 { color: #8e24aa; text-align: center; margin-bottom: 30px; }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 900;
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
 
         .cart-item {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 15px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
+
+        .cart-item:hover {
+            border-color: var(--accent);
+            transform: translateX(-5px);
+        }
+
         .cart-item img {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
-            background: #fafafa;
+            background: white;
             border-radius: 15px;
             padding: 10px;
         }
-        .item-details { flex: 1; }
-        .item-name { font-weight: 700; margin-bottom: 5px; }
-        .item-price { color: #8e24aa; font-weight: 600; }
 
-        .game-id-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            margin: 15px 0;
-            font-size: 1rem;
+        .item-details {
+            flex: 1;
         }
 
-        .total-section {
-            background: #f9f9f9;
+        .item-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: var(--accent);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #f5576c;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.2);
+            color: #f093fb;
+        }
+
+        .game-id-section {
+            background: #f0f0f0;
             padding: 20px;
             border-radius: 20px;
             margin: 20px 0;
+        }
+
+        .game-id-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .game-id-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(142, 45, 226, 0.2);
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            color: white;
+            padding: 25px;
+            border-radius: 25px;
+            margin: 20px 0;
             text-align: center;
         }
-        .total-amount { font-size: 2rem; font-weight: 900; color: #8e24aa; }
+
+        .total-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .total-amount {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
 
         .btn-checkout {
-            background: linear-gradient(135deg, #8e24aa, #c2185b);
+            background: linear-gradient(135deg, #00b894, #00cec9);
             color: white;
             border: none;
             padding: 18px;
             border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
+            font-size: 1.5rem;
+            font-weight: 700;
             width: 100%;
             cursor: pointer;
-            margin: 15px 0;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.4);
         }
 
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 20px;
-            color: #8e24aa;
+            color: var(--accent);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .empty-cart {
             text-align: center;
-            padding: 40px;
-            color: #999;
+            padding: 50px;
+            color: #666;
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-
     <div class="cart-container">
         <h1>🛒 سلة الشراء</h1>
 
-        <div id="cartItems">
-            <!-- عناصر السلة ستتحمل هنا -->
+        <div id="cartItems" class="cart-items">
+            <!-- عناصر السلة بتتحمل من JavaScript -->
         </div>
 
-        <div id="gameIdSection" style="display: none;">
-            <input type="text" id="gameIdInput" class="game-id-input" placeholder="أدخل ID اللعبة أو البرنامج">
+        <div id="gameIdSection" class="game-id-section" style="display: none;">
+            <h3 style="margin-bottom: 15px;">🎮 معلومات الشحن</h3>
+            <input type="text" id="gameIdInput" class="game-id-input" 
+                   placeholder="أدخل ID اللعبة أو البرنامج">
+            <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
+                <i class="fas fa-info-circle"></i> 
+                مثال: معرف PUBG، أو اسم المستخدم في اللعبة
+            </p>
         </div>
 
         <div class="total-section">
-            <div style="margin-bottom: 10px;">المجموع الكلي</div>
+            <div class="total-label">المجموع الكلي</div>
             <div class="total-amount" id="cartTotal">0</div>
             <div>دولار سوري</div>
         </div>
@@ -109,20 +219,30 @@
             <i class="fas fa-check-circle"></i> تأكيد الشراء
         </button>
 
-        <a href="index.html" class="back-link">← العودة للتسوق</a>
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-right"></i> متابعة التسوق
+        </a>
     </div>
 
     <script>
+        // جلب البيانات
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let balance = parseInt(localStorage.getItem('walletBalance')) || 500;
 
+        // عرض السلة
         function displayCart() {
             const container = document.getElementById('cartItems');
             const gameIdSection = document.getElementById('gameIdSection');
             const totalEl = document.getElementById('cartTotal');
             
             if(cart.length === 0) {
-                container.innerHTML = '<div class="empty-cart"><i class="fas fa-shopping-cart fa-3x"></i><p>السلة فارغة</p></div>';
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>السلة فارغة</h3>
+                        <p>أضف بعض المنتجات للبدء</p>
+                    </div>
+                `;
                 gameIdSection.style.display = 'none';
                 totalEl.innerText = '0';
                 return;
@@ -130,7 +250,8 @@
 
             let html = '';
             let total = 0;
-            cart.forEach(item => {
+            
+            cart.forEach((item, index) => {
                 total += item.price;
                 html += `
                     <div class="cart-item">
@@ -139,6 +260,9 @@
                             <div class="item-name">${item.name}</div>
                             <div class="item-price">💰 ${item.price} دولار سوري</div>
                         </div>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
                     </div>
                 `;
             });
@@ -148,6 +272,14 @@
             gameIdSection.style.display = 'block';
         }
 
+        // حذف من السلة
+        window.removeFromCart = function(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        };
+
+        // إتمام الشراء
         window.checkout = function() {
             if(cart.length === 0) {
                 alert('❌ السلة فارغة');
@@ -155,6 +287,7 @@
             }
 
             const total = cart.reduce((sum, item) => sum + item.price, 0);
+            
             if(total > balance) {
                 alert('❌ رصيد غير كافي. الرجاء شحن المحفظة');
                 window.location.href = 'wallet.html';
@@ -167,26 +300,29 @@
                 return;
             }
 
-            // محاكاة إرسال الطلب للبوت
-            const orderDetails = {
-                items: cart,
-                total: total,
-                gameId: gameId,
-                userId: 'user_' + Date.now()
-            };
-            console.log('📦 طلب جديد:', orderDetails);
-            
             // خصم الرصيد
             balance -= total;
             localStorage.setItem('walletBalance', balance.toString());
 
-            alert(`✅ تم إرسال الطلب بنجاح! سيتم التواصل معك قريباً`);
+            // إرسال الطلب للسيرفر
+            const orderData = {
+                userId: 'user_' + Date.now(),
+                items: cart,
+                total: total,
+                gameId: gameId
+            };
+
+            // محاكاة إرسال للبوت
+            console.log('📦 طلب جديد:', orderData);
+            
+            alert(`✅ تم إرسال الطلب بنجاح!\nرقم الطلب: ORD-${Date.now()}`);
             
             // تفريغ السلة
             localStorage.removeItem('cart');
             window.location.href = 'index.html';
         };
 
+        // بدء التطبيق
         displayCart();
     </script>
 </body>
