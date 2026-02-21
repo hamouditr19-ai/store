@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reem Store | لوحة التحكم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0f1f;
+            color: white;
+            padding: 10px;
+        }
+        .login-box {
+            max-width: 300px;
+            margin: 100px auto;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #06b6d4;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #0f172a;
+            border: 1px solid #06b6d4;
+            border-radius: 6px;
+            color: white;
+        }
+        button {
+            width: 100%;
+            background: #06b6d4;
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .panel {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box" id="loginBox">
+        <h2 class="text-center">👑 دخول Admin</h2>
+        <input type="password" id="password" placeholder="كلمة السر">
+        <button onclick="checkPass()">دخول</button>
+    </div>
 
+    <div class="panel" id="adminPanel">
+        <h2 class="text-center">لوحة التحكم</h2>
+        <p class="text-center">هنا تضيف أو تعدل المنتجات</p>
+        <button onclick="logout()">خروج</button>
+    </div>
+
+    <script>
+        function checkPass() {
+            if (document.getElementById('password').value === '1234') {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else {
+                alert('❌ كلمة سر خطأ');
+            }
+        }
+        function logout() {
+            document.getElementById('loginBox').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
