@@ -2,328 +2,509 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سلة الشراء | ريم ستوري</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reem Store | السلة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
         }
-
-        :root {
-            --bg-primary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-primary: #333;
-            --accent: #8e2de2;
-        }
-
+        
         body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0f1f;
+            color: white;
             min-height: 100vh;
-            background: var(--bg-primary);
-            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
-
-        .cart-container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             overflow: hidden;
-            padding: 30px;
         }
-
-        h1 {
-            text-align: center;
-            color: var(--accent);
-            font-size: 2.2rem;
-            margin-bottom: 30px;
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite;
+        }
+        
+        .circle1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -200px;
+            background: rgba(255, 0, 128, 0.2);
+        }
+        
+        .circle2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            left: -200px;
+            background: rgba(0, 255, 255, 0.2);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-50px) scale(1.2); }
+        }
+        
+        .navbar {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff0080;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
             font-weight: 900;
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        .cart-items {
-            margin-bottom: 30px;
+        
+        .nav-icons {
+            display: flex;
+            gap: 15px;
         }
-
-        .cart-item {
+        
+        .nav-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 20px;
-            background: #f8f9fa;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .nav-icon:hover {
+            background: #ff0080;
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff0080;
+            color: white;
+            font-size: 0.7rem;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .currency-bar {
+            background: rgba(0, 255, 255, 0.1);
+            border-bottom: 1px solid #00ffff;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .currency-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .currency-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff0080;
             border-radius: 20px;
-            margin-bottom: 15px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
+            padding: 5px 15px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
         }
-
-        .cart-item:hover {
-            border-color: var(--accent);
-            transform: translateX(-5px);
-        }
-
-        .cart-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            background: white;
-            border-radius: 15px;
-            padding: 10px;
-        }
-
-        .item-details {
-            flex: 1;
-        }
-
-        .item-name {
+        
+        .currency-btn.active {
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            color: black;
             font-weight: 700;
-            font-size: 1.1rem;
+        }
+        
+        .wallet-balance {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-weight: 700;
+        }
+        
+        .cart-container {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        
+        .cart-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0080;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+        }
+        
+        .cart-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .cart-header h2 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .cart-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .item-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        
+        .item-details h4 {
+            font-size: 1rem;
             margin-bottom: 5px;
         }
-
+        
         .item-price {
-            color: var(--accent);
-            font-weight: 900;
-            font-size: 1.2rem;
+            color: #00ffff;
+            font-weight: 700;
         }
-
-        .remove-btn {
-            background: none;
+        
+        .delete-btn {
+            background: #ff0080;
             border: none;
-            color: #f5576c;
-            font-size: 1.5rem;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
             cursor: pointer;
-            padding: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
-
-        .remove-btn:hover {
-            transform: scale(1.2);
-            color: #f093fb;
+        
+        .delete-btn:hover {
+            transform: scale(1.1);
         }
-
+        
+        .cart-total {
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            color: black;
+            font-weight: 900;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
         .game-id-section {
-            background: #f0f0f0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #ff0080;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 20px;
             margin: 20px 0;
         }
-
+        
         .game-id-input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .game-id-input:focus {
-            border-color: var(--accent);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(142, 45, 226, 0.2);
-        }
-
-        .total-section {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
             color: white;
-            padding: 25px;
-            border-radius: 25px;
-            margin: 20px 0;
-            text-align: center;
+            margin: 10px 0;
         }
-
-        .total-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 10px;
-        }
-
-        .total-amount {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .btn-checkout {
-            background: linear-gradient(135deg, #00b894, #00cec9);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: 700;
+        
+        .buy-btn {
             width: 100%;
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            border: none;
+            border-radius: 30px;
+            padding: 15px;
+            color: black;
+            font-weight: 900;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 20px 0;
+            transition: all 0.3s;
         }
-
-        .btn-checkout:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 184, 148, 0.4);
+        
+        .buy-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #ff0080;
         }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
+        
         .empty-cart {
             text-align: center;
-            padding: 50px;
+            padding: 40px;
             color: #666;
         }
-
+        
         .empty-cart i {
-            font-size: 5rem;
-            color: var(--accent);
+            font-size: 4rem;
+            color: #ff0080;
             margin-bottom: 20px;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ff0080;
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </div>
+
+    <div class="navbar">
+        <div class="logo">Reem Store</div>
+        <div class="nav-icons">
+            <a href="index.html" class="nav-icon"><i class="fas fa-home"></i></a>
+            <a href="cart.html" class="nav-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </a>
+            <a href="wallet.html" class="nav-icon"><i class="fas fa-wallet"></i></a>
+            <a href="admin.html" class="nav-icon"><i class="fas fa-cog"></i></a>
+        </div>
+    </div>
+
+    <div class="currency-bar">
+        <div class="currency-selector">
+            <button class="currency-btn" onclick="setCurrency('usd')">🇺🇸 دولار</button>
+            <button class="currency-btn" onclick="setCurrency('syp')">🇸🇾 ليرة</button>
+        </div>
+        <div class="wallet-balance" id="walletDisplay">$500</div>
+    </div>
+
     <div class="cart-container">
-        <h1>🛒 سلة الشراء</h1>
-
-        <div id="cartItems" class="cart-items">
-            <!-- عناصر السلة بتتحمل من JavaScript -->
+        <div class="cart-card">
+            <div class="cart-header">
+                <h2>🛒 سلة المشتريات</h2>
+            </div>
+            
+            <div id="cartItems"></div>
+            
+            <div class="cart-total" id="cartTotal">المجموع: $0</div>
+            
+            <div class="game-id-section">
+                <h4>🎮 معلومات الشحن</h4>
+                <input type="text" id="gameIdInput" class="game-id-input" placeholder="أدخل ID اللعبة أو البرنامج">
+            </div>
+            
+            <button class="buy-btn" onclick="sendOrder()">📦 تأكيد الطلب</button>
         </div>
+    </div>
 
-        <div id="gameIdSection" class="game-id-section" style="display: none;">
-            <h3 style="margin-bottom: 15px;">🎮 معلومات الشحن</h3>
-            <input type="text" id="gameIdInput" class="game-id-input" 
-                   placeholder="أدخل ID اللعبة أو البرنامج">
-            <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-                <i class="fas fa-info-circle"></i> 
-                مثال: معرف PUBG، أو اسم المستخدم في اللعبة
-            </p>
+    <div class="footer">
+        <div class="copyright">
+            © 2026 Reem Store. جميع الحقوق محفوظة.
         </div>
-
-        <div class="total-section">
-            <div class="total-label">المجموع الكلي</div>
-            <div class="total-amount" id="cartTotal">0</div>
-            <div>دولار سوري</div>
-        </div>
-
-        <button class="btn-checkout" onclick="checkout()">
-            <i class="fas fa-check-circle"></i> تأكيد الشراء
-        </button>
-
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-right"></i> متابعة التسوق
-        </a>
     </div>
 
     <script>
-        // جلب البيانات
+        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
+        const CHAT_ID = '7741275208';
+
+        let currentCurrency = localStorage.getItem('currency') || 'usd';
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let balance = parseInt(localStorage.getItem('walletBalance')) || 500;
+        let balanceUSD = parseInt(localStorage.getItem('balanceUSD')) || 500;
+        let balanceSYP = parseInt(localStorage.getItem('balanceSYP')) || 6500000;
 
-        // عرض السلة
-        function displayCart() {
-            const container = document.getElementById('cartItems');
-            const gameIdSection = document.getElementById('gameIdSection');
-            const totalEl = document.getElementById('cartTotal');
-            
-            if(cart.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>السلة فارغة</h3>
-                        <p>أضف بعض المنتجات للبدء</p>
-                    </div>
-                `;
-                gameIdSection.style.display = 'none';
-                totalEl.innerText = '0';
-                return;
+        document.querySelectorAll('.currency-btn').forEach(btn => {
+            if (btn.textContent.includes(currentCurrency === 'usd' ? 'دولار' : 'ليرة')) {
+                btn.classList.add('active');
             }
+        });
 
-            let html = '';
-            let total = 0;
-            
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="item-details">
-                            <div class="item-name">${item.name}</div>
-                            <div class="item-price">💰 ${item.price} دولار سوري</div>
-                        </div>
-                        <button class="remove-btn" onclick="removeFromCart(${index})">
-                            <i class="fas fa-times-circle"></i>
-                        </button>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-            totalEl.innerText = total;
-            gameIdSection.style.display = 'block';
+        function updateWalletDisplay() {
+            const display = document.getElementById('walletDisplay');
+            if (currentCurrency === 'usd') {
+                display.textContent = '$' + balanceUSD;
+            } else {
+                display.textContent = balanceSYP.toLocaleString() + ' ل.س';
+            }
         }
 
-        // حذف من السلة
-        window.removeFromCart = function(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            displayCart();
+        window.setCurrency = function(currency) {
+            currentCurrency = currency;
+            localStorage.setItem('currency', currency);
+            
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateWalletDisplay();
+            showCart();
         };
 
-        // إتمام الشراء
-        window.checkout = function() {
-            if(cart.length === 0) {
-                alert('❌ السلة فارغة');
-                return;
+        function showCart() {
+            let html = '';
+            let totalUSD = 0;
+            let totalSYP = 0;
+
+            if (cart.length === 0) {
+                html = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>السلة فارغة</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach((item, i) => {
+                    totalUSD += item.priceUSD || 0;
+                    totalSYP += item.priceSYP || 0;
+                    html += `
+                        <div class="cart-item">
+                            <div class="item-info">
+                                <img src="${item.img || 'https://via.placeholder.com/50'}" class="item-image">
+                                <div class="item-details">
+                                    <h4>${item.name}</h4>
+                                    <div class="item-price">
+                                        ${currentCurrency === 'usd' ? '$' + item.priceUSD : item.priceSYP?.toLocaleString() + ' ل.س'}
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="delete-btn" onclick="removeItem(${i})">✕</button>
+                        </div>
+                    `;
+                });
             }
 
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            
-            if(total > balance) {
-                alert('❌ رصيد غير كافي. الرجاء شحن المحفظة');
-                window.location.href = 'wallet.html';
+            document.getElementById('cartItems').innerHTML = html;
+            let totalDisplay = currentCurrency === 'usd' ? '$' + totalUSD : totalSYP.toLocaleString() + ' ل.س';
+            document.getElementById('cartTotal').innerHTML = `المجموع: ${totalDisplay}`;
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        window.removeItem = function(i) {
+            cart.splice(i, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showCart();
+        };
+
+        window.sendOrder = async function() {
+            if (cart.length === 0) {
+                alert('⚠️ السلة فارغة');
                 return;
             }
 
             const gameId = document.getElementById('gameIdInput').value;
-            if(!gameId) {
-                alert('❌ الرجاء إدخال ID اللعبة');
+            if (!gameId) {
+                alert('⚠️ الرجاء إدخال ID اللعبة');
                 return;
             }
 
-            // خصم الرصيد
-            balance -= total;
-            localStorage.setItem('walletBalance', balance.toString());
+            let totalUSD = cart.reduce((s, i) => s + (i.priceUSD || 0), 0);
+            let totalSYP = cart.reduce((s, i) => s + (i.priceSYP || 0), 0);
 
-            // إرسال الطلب للسيرفر
-            const orderData = {
-                userId: 'user_' + Date.now(),
+            if ((currentCurrency === 'usd' && totalUSD > balanceUSD) || 
+                (currentCurrency === 'syp' && totalSYP > balanceSYP)) {
+                alert('⚠️ رصيد غير كافي');
+                window.location.href = 'wallet.html';
+                return;
+            }
+
+            let itemsList = cart.map(i => `• ${i.name} (${currentCurrency === 'usd' ? '$' + i.priceUSD : i.priceSYP?.toLocaleString() + ' ل.س'})`).join('\n');
+
+            let message = `🛍️ **طلب شراء جديد**
+━━━━━━━━━━━━━━━━
+📦 المنتجات:
+${itemsList}
+💰 الإجمالي: ${currentCurrency === 'usd' ? '$' + totalUSD : totalSYP.toLocaleString() + ' ل.س'}
+🎮 ID اللعبة: ${gameId}
+⏰ الوقت: ${new Date().toLocaleString()}
+━━━━━━━━━━━━━━━━`;
+
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+            });
+
+            if (currentCurrency === 'usd') {
+                balanceUSD -= totalUSD;
+                localStorage.setItem('balanceUSD', balanceUSD);
+            } else {
+                balanceSYP -= totalSYP;
+                localStorage.setItem('balanceSYP', balanceSYP);
+            }
+
+            let orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push({
                 items: cart,
-                total: total,
-                gameId: gameId
-            };
+                total: currentCurrency === 'usd' ? totalUSD : totalSYP,
+                currency: currentCurrency,
+                gameId: gameId,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('orders', JSON.stringify(orders));
 
-            // محاكاة إرسال للبوت
-            console.log('📦 طلب جديد:', orderData);
-            
-            alert(`✅ تم إرسال الطلب بنجاح!\nرقم الطلب: ORD-${Date.now()}`);
-            
-            // تفريغ السلة
-            localStorage.removeItem('cart');
+            alert('✅ تم إرسال الطلب');
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
             window.location.href = 'index.html';
         };
 
-        // بدء التطبيق
-        displayCart();
+        updateWalletDisplay();
+        showCart();
     </script>
 </body>
-</html>
+    </html>
