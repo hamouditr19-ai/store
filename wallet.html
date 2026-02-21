@@ -6,6 +6,7 @@
     <title>Reem Store | المحفظة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -30,6 +31,7 @@
             justify-content: center;
             gap: 10px;
             margin: 15px 0;
+            flex-wrap: wrap;
         }
         .nav-btn {
             background: #1e293b;
@@ -52,6 +54,9 @@
             border: 1px solid #06b6d4;
             margin: 15px 0;
             word-break: break-all;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         input, select {
             width: 100%;
@@ -73,6 +78,11 @@
             margin: 5px 0;
             cursor: pointer;
         }
+        .copy-btn {
+            width: auto;
+            background: #06b6d4;
+            padding: 5px 10px;
+        }
         .warning {
             background: rgba(239,68,68,0.1);
             border: 1px solid #ef4444;
@@ -80,6 +90,16 @@
             border-radius: 8px;
             font-size: 0.8rem;
             margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #06b6d4;
+        }
+        .copyright {
+            color: #94a3b8;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -91,41 +111,53 @@
     <div class="nav-buttons">
         <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
         <a href="cart.html" class="nav-btn">🛒 السلة</a>
+        <a href="admin.html" class="nav-btn">👑 Admin</a>
     </div>
 
     <div class="container">
         <div class="wallet-box">
-            <h2 class="text-center">إيداع شام كاش</h2>
+            <h2 class="text-center text-xl mb-4">إيداع شام كاش</h2>
             
             <div class="code-box">
-                7ee806564d3aa36d87667cad636b6788
-                <button style="width:auto; background:#06b6d4; padding:5px 10px;" onclick="copyCode()">نسخ</button>
+                <span class="text-sm">7ee806564d3aa36d87667cad636b6788</span>
+                <button class="copy-btn" onclick="copyCode()">نسخ</button>
             </div>
 
             <div class="warning">
-                ⚠️ لا تستخدم إخفاء الهوية<br>
-                ⚠️ لا تكتب ملاحظة عند التحويل
+                <i class="fas fa-exclamation-triangle text-red-500"></i>
+                تنبيهات ماسة:<br>
+                • لا تستخدم إخفاء الهوية<br>
+                • لا تكتب ملاحظة عند التحويل
             </div>
 
             <input type="text" id="userId" placeholder="👤 ID الحساب">
             
             <select id="currency">
-                <option value="USD">USD - دولار</option>
-                <option value="SYP">SYP - ليرة</option>
+                <option value="USD">USD - دولار أمريكي</option>
+                <option value="SYP">SYP - ليرة سورية</option>
             </select>
 
             <input type="number" id="amount" placeholder="💰 المبلغ">
-            <input type="text" id="transId" placeholder="🔢 رقم العملية">
+            <input type="text" id="transId" placeholder="🔢 رقم عملية الدفع (7-10 أرقام)">
 
-            <button onclick="sendRequest()">إرسال طلب الإيداع</button>
+            <button onclick="sendRequest()">💰 إرسال طلب الإيداع</button>
             <button class="back-btn" style="background:transparent; border:1px solid #06b6d4;" onclick="window.location='index.html'">رجوع</button>
         </div>
     </div>
 
+    <div class="footer">
+        <div class="copyright">
+            © 2026 Reem Store. جميع الحقوق محفوظة.
+        </div>
+    </div>
+
     <script>
+        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
+        const CHAT_ID = '7741275208';
+
         function copyCode() {
             navigator.clipboard.writeText('7ee806564d3aa36d87667cad636b6788');
-            alert('✅ تم النسخ');
+            alert('✅ تم نسخ عنوان المحفظة');
         }
 
         function sendRequest() {
@@ -135,12 +167,24 @@
             let trans = document.getElementById('transId').value;
 
             if (!user || !amount || !trans) {
-                alert('⚠️ أكمل البيانات');
+                alert('⚠️ أكمل جميع الحقول');
                 return;
             }
 
-            let msg = `💰 طلب إيداع\n👤 ID: ${user}\n💵 ${amount} ${curr}\n🔢 رقم العملية: ${trans}`;
-            alert('✅ تم إرسال الطلب');
+            let msg = `💰 طلب إيداع جديد
+━━━━━━━━━━━━━━━━
+👤 ID المستخدم: ${user}
+💵 المبلغ: ${amount} ${curr}
+🔢 رقم العملية: ${trans}
+━━━━━━━━━━━━━━━━`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+            });
+
+            alert('✅ تم إرسال طلب الإيداع');
             window.location = 'index.html';
         }
     </script>
