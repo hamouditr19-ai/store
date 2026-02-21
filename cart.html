@@ -2,111 +2,260 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reem Store | السلة</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: #0a0f1f;
-            color: white;
-            padding: 10px;
+            font-family:  Tajawal , sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
+        
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s infinite;
+        }
+        
+        .circle1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -200px;
+            background: rgba(255, 0, 128, 0.15);
+        }
+        
+        .circle2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            left: -200px;
+            background: rgba(0, 255, 255, 0.15);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-50px) scale(1.2); }
+        }
+        
         .header {
-            background: #0f172a;
-            padding: 15px;
             text-align: center;
-            border-bottom: 3px solid #06b6d4;
-            margin-bottom: 15px;
+            padding: 25px 15px;
         }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 128, 0.3);
+        }
+        
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
+            gap: 25px;
+            margin: 20px 0 30px;
         }
+        
         .nav-btn {
-            background: #1e293b;
-            padding: 8px 20px;
-            border-radius: 30px;
-            border: 1px solid #06b6d4;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0080;
+            border-radius: 50px;
+            padding: 12px 30px;
             color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
             text-decoration: none;
         }
+        
+        .nav-btn:hover {
+            background: #ff0080;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px #ff0080;
+        }
+        
+        .cart-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        
+        .cart-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff0080;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .balance-title {
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .balance-amount {
+            font-size: 2rem;
+            font-weight: 900;
+            color: black;
+        }
+        
         .cart-item {
-            background: #1e293b;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            border: 1px solid #06b6d4;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
-        .total {
-            background: #06b6d4;
+        
+        .cart-total {
+            background: #00ffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
             color: black;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
+            font-weight: 900;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+        
+        .input-group {
             margin: 15px 0;
         }
-        input {
+        
+        .input-group input {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            background: #1e293b;
-            border: 1px solid #06b6d4;
-            border-radius: 6px;
-            color: white;
-        }
-        button {
-            width: 100%;
-            background: linear-gradient(90deg, #06b6d4, #ec4899);
-            color: black;
-            border: none;
             padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #ff0080;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .buy-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            border: none;
             border-radius: 30px;
-            font-weight: bold;
-            margin: 5px 0;
+            padding: 15px;
+            color: black;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .buy-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #ff0080;
+        }
+        
+        .delete-btn {
+            background: #ff0080;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
             cursor: pointer;
         }
-        .back-btn {
-            background: transparent;
-            border: 1px solid #06b6d4;
-            color: white;
-        }
+        
         .footer {
+            margin-top: 50px;
+            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #ff0080;
             text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 2px solid #06b6d4;
         }
+        
         .copyright {
-            color: #94a3b8;
+            color: #aaa;
             font-size: 0.8rem;
+        }
+        
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </div>
+
     <div class="header">
         <h1>🛒 سلة المشتريات</h1>
     </div>
 
     <div class="nav-buttons">
         <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+        <a href="cart.html" class="nav-btn">🛒 السلة</a>
         <a href="wallet.html" class="nav-btn">💰 المحفظة</a>
-        <a href="admin.html" class="nav-btn">👑 Admin</a>
     </div>
 
-    <div class="container" id="cart-container"></div>
+    <div class="cart-container">
+        <div class="cart-card">
+            <div class="balance-card" id="balanceDisplay">
+                <div class="balance-title">رصيدك الحالي</div>
+                <div class="balance-amount" id="userBalance">$0</div>
+            </div>
+
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">المجموع: $0</div>
+
+            <div class="input-group">
+                <input type="text" id="userId" placeholder="🎮 أدخل معرف الحساب">
+            </div>
+
+            <button class="buy-btn" onclick="buyWithBalance()">💳 اشتري بالرصيد</button>
+        </div>
+    </div>
 
     <div class="footer">
         <div class="copyright">
@@ -115,60 +264,97 @@
     </div>
 
     <script>
-        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
-        const CHAT_ID = '7741275208';
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const BOT_TOKEN =  8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74 ;
+        const CHAT_ID =  7741275208 ;
+        let cart = JSON.parse(localStorage.getItem( cart )) || [];
+        let balances = JSON.parse(localStorage.getItem( balances )) || {};
+
+        function getUserBalance(userId) {
+            return balances[userId] || 0;
+        }
+
+        function updateAllBalances() {
+            let userId = document.getElementById( userId )?.value;
+            if (userId) {
+                document.getElementById( userBalance ).textContent =  $  + getUserBalance(userId);
+            }
+        }
 
         function showCart() {
-            let html = '';
+            let html =   ;
             let total = 0;
 
             if (cart.length === 0) {
-                html = '<p class="text-center">السلة فارغة</p>';
+                html =  <p style="text-align: center;">السلة فارغة</p> ;
             } else {
                 cart.forEach((item, i) => {
                     total += item.price;
                     html += `
                         <div class="cart-item">
                             <span>${item.name}</span>
-                            <span>$${item.price} <button onclick="removeItem(${i})" style="width:auto; background:#ef4444; padding:2px 8px;">✕</button></span>
+                            <span>
+                                $${item.price}
+                                <button class="delete-btn" onclick="removeItem(${i})">✕</button>
+                            </span>
                         </div>
                     `;
                 });
-                html += `<div class="total">المجموع: $${total}</div>`;
-                html += `<input type="text" id="userId" placeholder="🎮 ID الحساب">`;
-                html += `<button onclick="buy()">💳 اشتري بالرصيد</button>`;
             }
-            html += `<button class="back-btn" onclick="window.location='index.html'">رجوع</button>`;
-            document.getElementById('cart-container').innerHTML = html;
+
+            document.getElementById( cartItems ).innerHTML = html;
+            document.getElementById( cartTotal ).innerHTML = `المجموع: $${total}`;
         }
 
         function removeItem(i) {
             cart.splice(i, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem( cart , JSON.stringify(cart));
             showCart();
         }
 
-        function buy() {
-            let userId = document.getElementById('userId').value;
+        async function buyWithBalance() {
+            let userId = document.getElementById( userId ).value;
+            let total = cart.reduce((s, i) => s + i.price, 0);
+
             if (!userId) {
-                alert('⚠️ أدخل ID الحساب');
+                alert( ⚠️ أدخل معرف الحساب );
                 return;
             }
-            let total = cart.reduce((s, i) => s + i.price, 0);
-            let list = cart.map(i => i.name).join('، ');
-            let msg = `🛍️ طلب شراء\n👤 ID: ${userId}\n📦 ${list}\n💰 $${total}`;
-            
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+
+            if (cart.length === 0) {
+                alert( ⚠️ السلة فارغة );
+                return;
+            }
+
+            let userBalance = getUserBalance(userId);
+
+            if (userBalance < total) {
+                alert( ❌ رصيدك غير كافٍ );
+                return;
+            }
+
+            // خصم الرصيد
+            balances[userId] = userBalance - total;
+            localStorage.setItem( balances , JSON.stringify(balances));
+
+            let productList = cart.map(i => i.name).join( ،  );
+            let message = `🛍️ **طلب شراء جديد**
+━━━━━━━━━━━━━━━━
+👤 معرف المستخدم: ${userId}
+📦 المنتجات: ${productList}
+💰 المبلغ: $${total}
+💳 الرصيد المتبقي: $${balances[userId]}
+━━━━━━━━━━━━━━━━`;
+
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method:  POST ,
+                headers: {  Content-Type :  application/json  },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
             });
 
-            alert('✅ تم إرسال الطلب');
+            alert( ✅ تم الشراء بنجاح );
             cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            window.location = 'index.html';
+            localStorage.setItem( cart , JSON.stringify(cart));
+            window.location.href =  index.html ;
         }
 
         showCart();
