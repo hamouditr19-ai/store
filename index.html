@@ -18,7 +18,6 @@
             color: white;
         }
         
-        /* شريط التنقل */
         .navbar {
             background: #0f172a;
             padding: 12px 20px;
@@ -39,7 +38,6 @@
         
         .logo span { color: #06b6d4; }
         
-        /* أزرار التنقل */
         .nav-buttons {
             display: flex;
             gap: 15px;
@@ -54,7 +52,6 @@
             font-size: 0.9rem;
         }
         
-        /* الصفحات */
         .page {
             display: none;
             padding: 20px;
@@ -63,7 +60,22 @@
         
         .page.active { display: block; }
         
-        /* كروت المنتجات */
+        /* الأقسام كلها راجعة */
+        .category-tab {
+            padding: 8px 15px;
+            background: #1e293b;
+            border-radius: 25px;
+            cursor: pointer;
+            border: 1px solid #06b6d4;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        
+        .category-tab.active {
+            background: #06b6d4;
+            color: black;
+        }
+        
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -90,48 +102,16 @@
             margin: 8px 0;
         }
         
-        .price-tag {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 8px 0;
-        }
-        
         .price-usd {
             color: #06b6d4;
             font-weight: bold;
             font-size: 16px;
         }
         
-        .currency-btn {
-            background: #2d3a4f;
-            padding: 3px 8px;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-        
-        .currency-dropdown {
-            display: none;
-            background: #0f172a;
-            border: 1px solid #06b6d4;
-            border-radius: 8px;
-            padding: 8px;
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        
-        .currency-dropdown.show { display: block; }
-        
-        .currency-item {
-            padding: 5px;
-            border-bottom: 1px solid #334155;
-        }
-        
-        /* المحفظة */
+        /* المحفظة الجديدة - مع رفع الصورة */
         .wallet-container {
             max-width: 500px;
-            margin: 30px auto;
+            margin: 20px auto;
             background: #1e293b;
             border-radius: 20px;
             padding: 25px;
@@ -185,17 +165,65 @@
             border-radius: 10px;
         }
         
-        .wallet-amount {
-            font-size: 2rem;
-            color: #06b6d4;
+        /* المستخدم يختار المبلغ */
+        .amount-input {
+            width: 100%;
+            padding: 15px;
+            background: #0f172a;
+            border: 1px solid #06b6d4;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
             text-align: center;
             margin: 15px 0;
+        }
+        
+        .amount-presets {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .amount-preset {
+            background: #2d3a4f;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #06b6d4;
+        }
+        
+        .amount-preset:hover {
+            background: #06b6d4;
+            color: black;
+        }
+        
+        .file-upload {
+            border: 2px dashed #06b6d4;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 15px 0;
+        }
+        
+        .send-btn {
+            width: 100%;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
         }
         
         /* السلة */
         .cart-container {
             max-width: 600px;
-            margin: 30px auto;
+            margin: 20px auto;
         }
         
         .cart-item {
@@ -212,11 +240,10 @@
         .cart-total {
             background: #06b6d4;
             color: black;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            font-size: 1.3rem;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         
         .cart-input {
@@ -229,27 +256,6 @@
             color: white;
         }
         
-        .file-upload {
-            border: 2px dashed #06b6d4;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 15px 0;
-        }
-        
-        .send-btn {
-            width: 100%;
-            background: linear-gradient(90deg, #06b6d4, #ec4899);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        /* الفوتر */
         .footer {
             background: #0f172a;
             padding: 30px 20px;
@@ -274,7 +280,6 @@
             justify-content: center;
             color: #06b6d4;
             text-decoration: none;
-            transition: 0.3s;
         }
         
         .social-link:hover {
@@ -282,7 +287,6 @@
             color: black;
         }
         
-        /* التوست */
         .toast-container {
             position: fixed;
             bottom: 20px;
@@ -315,18 +319,23 @@
         </div>
     </div>
 
-    <!-- الصفحات -->
-    
-    <!-- الصفحة الرئيسية -->
+    <!-- الصفحة الرئيسية - مع كل الأقسام -->
     <div id="home-page" class="page active">
         <div class="flex flex-wrap gap-2 justify-center mb-4" id="category-tabs">
-            <button class="category-tab active" onclick="filterProducts('all')">الكل</button>
+            <button class="category-tab active" onclick="filterProducts('all')">الكل 🏠</button>
+            <button class="category-tab" onclick="filterProducts('games')">🎮 ألعاب</button>
+            <button class="category-tab" onclick="filterProducts('apps')">📱 تطبيقات</button>
+            <button class="category-tab" onclick="filterProducts('codes')">🔑 أكواد</button>
+            <button class="category-tab" onclick="filterProducts('telegram')">🤖 تيليجرام</button>
+            <button class="category-tab" onclick="filterProducts('balance')">💳 رصيد</button>
+            <button class="category-tab" onclick="filterProducts('social')">📱 سوشل ميديا</button>
+            <button class="category-tab" onclick="filterProducts('accounts')">👥 حسابات</button>
         </div>
         
         <div class="products-grid" id="products-container"></div>
     </div>
 
-    <!-- صفحة السلة -->
+    <!-- صفحة السلة (لشراء المنتجات) -->
     <div id="cart-page" class="page">
         <div class="cart-container">
             <h2 class="text-2xl font-bold mb-4 text-center text-cyan-400">🛒 سلة المشتريات</h2>
@@ -340,20 +349,13 @@
             <input type="text" id="customer-name" class="cart-input" placeholder="👤 اسمك الكامل">
             <input type="text" id="customer-id" class="cart-input" placeholder="🎮 معرف اللعبة / الحساب">
             
-            <div class="file-upload" onclick="document.getElementById('receipt').click()">
-                <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
-                <div>اضغط لرفع صورة الإشعار</div>
-                <input type="file" id="receipt" accept="image/*" class="hidden" onchange="handleReceipt(this)">
-            </div>
-            <div id="receipt-name" class="text-sm text-green-400 mb-4"></div>
-            
-            <button class="send-btn" onclick="sendOrder()">
-                ✅ تأكيد وإرسال الطلب
+            <button class="send-btn" onclick="sendOrder()" style="background: linear-gradient(90deg, #06b6d4, #ec4899);">
+                ✅ تأكيد الطلب
             </button>
         </div>
     </div>
 
-    <!-- صفحة المحفظة -->
+    <!-- صفحة المحفظة - مع رفع الصورة واختيار المبلغ -->
     <div id="wallet-page" class="page">
         <div class="wallet-container">
             <h2 class="wallet-title">💰 محفظة شام كاش</h2>
@@ -367,13 +369,38 @@
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" alt="QR Code">
             </div>
             
-            <div class="wallet-amount" id="wallet-amount">$0</div>
+            <!-- المستخدم يختار المبلغ -->
+            <h3 class="text-lg font-bold mb-2">💰 اختر المبلغ</h3>
+            
+            <div class="amount-presets">
+                <div class="amount-preset" onclick="setAmount(5)">$5</div>
+                <div class="amount-preset" onclick="setAmount(10)">$10</div>
+                <div class="amount-preset" onclick="setAmount(20)">$20</div>
+                <div class="amount-preset" onclick="setAmount(50)">$50</div>
+                <div class="amount-preset" onclick="setAmount(100)">$100</div>
+                <div class="amount-preset" onclick="setAmount(200)">$200</div>
+                <div class="amount-preset" onclick="setAmount(500)">$500</div>
+                <div class="amount-preset" onclick="setAmount(1000)">$1000</div>
+            </div>
+            
+            <input type="number" id="custom-amount" class="amount-input" placeholder="أو أدخل مبلغ مخصص" min="1" step="0.01">
             
             <input type="text" id="transaction-number" class="cart-input" placeholder="🔢 رقم عملية الدفع">
             
-            <p class="text-sm text-slate-400 mt-4">
-                <i class="fas fa-info-circle"></i>
-                حول المبلغ لهذا الكود، ثم أدخل رقم العملية وارفع الصورة في صفحة السلة
+            <!-- رفع الصورة هنا مع المحفظة -->
+            <div class="file-upload" onclick="document.getElementById('receipt').click()">
+                <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
+                <div>اضغط لرفع صورة الإشعار</div>
+                <input type="file" id="receipt" accept="image/*" class="hidden" onchange="handleReceipt(this)">
+            </div>
+            <div id="receipt-name" class="text-sm text-green-400 mb-4"></div>
+            
+            <button class="send-btn" onclick="sendWalletOrder()">
+                💰 تأكيد عملية الدفع
+            </button>
+            
+            <p class="text-xs text-slate-400 mt-4 text-center">
+                بعد التحويل، سيتم إضافة الرصيد لحسابك يدوياً
             </p>
         </div>
     </div>
@@ -400,7 +427,7 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم (تظهر بعد كلمة السر) -->
+    <!-- لوحة التحكم -->
     <div id="admin-panel" class="fixed inset-0 bg-black/95 hidden z-[1001] p-6 overflow-y-auto">
         <button onclick="closeAdminPanel()" class="absolute top-4 left-4 text-red-500 text-2xl">✕</button>
         
@@ -408,17 +435,19 @@
         
         <div class="max-w-2xl mx-auto">
             <div class="bg-[#1e293b] p-6 rounded-xl mb-6">
-                <h3 class="text-lg font-bold mb-4">➕ إضافة قسم جديد</h3>
-                <input type="text" id="new-category" placeholder="اسم القسم" class="w-full p-3 mb-3 rounded bg-[#0f172a]">
-                <button onclick="addCategory()" class="w-full bg-green-600 py-3 rounded font-bold">إضافة</button>
-            </div>
-            
-            <div class="bg-[#1e293b] p-6 rounded-xl">
-                <h3 class="text-lg font-bold mb-4">🛍️ إضافة منتج جديد</h3>
+                <h3 class="text-lg font-bold mb-4">➕ إضافة منتج</h3>
                 <input type="text" id="product-name" placeholder="اسم المنتج" class="w-full p-3 mb-3 rounded bg-[#0f172a]">
                 <input type="number" id="product-price" placeholder="السعر $" class="w-full p-3 mb-3 rounded bg-[#0f172a]">
                 <input type="text" id="product-image" placeholder="رابط الصورة" class="w-full p-3 mb-3 rounded bg-[#0f172a]">
-                <select id="product-category" class="w-full p-3 mb-3 rounded bg-[#0f172a]"></select>
+                <select id="product-category" class="w-full p-3 mb-3 rounded bg-[#0f172a]">
+                    <option value="games">🎮 ألعاب</option>
+                    <option value="apps">📱 تطبيقات</option>
+                    <option value="codes">🔑 أكواد</option>
+                    <option value="telegram">🤖 تيليجرام</option>
+                    <option value="balance">💳 رصيد</option>
+                    <option value="social">📱 سوشل ميديا</option>
+                    <option value="accounts">👥 حسابات</option>
+                </select>
                 <button onclick="addProduct()" class="w-full bg-cyan-600 py-3 rounded font-bold">إضافة</button>
             </div>
         </div>
@@ -428,21 +457,39 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script>
-        // بيانات المتجر
-        let storeData = JSON.parse(localStorage.getItem('storeData')) || [
-            { id: 'cat1', name: '🎮 ألعاب', products: [
-                { id: 1, name: '60 UC PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
-                { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
-            ]},
-            { id: 'cat2', name: '📱 تطبيقات', products: [
-                { id: 3, name: 'نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
-            ]}
+        // بيانات المنتجات - كل الأقسام موجودة
+        let products = [
+            // ألعاب
+            { id: 1, name: '60 UC PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400', category: 'games' },
+            { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400', category: 'games' },
+            { id: 3, name: '330 UC PUBG', price: 25, img: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=400', category: 'games' },
+            
+            // تطبيقات
+            { id: 4, name: 'نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400', category: 'apps' },
+            { id: 5, name: 'شاهد VIP شهر', price: 12, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400', category: 'apps' },
+            
+            // أكواد
+            { id: 6, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400', category: 'codes' },
+            { id: 7, name: 'كود iTunes 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400', category: 'codes' },
+            
+            // تيليجرام
+            { id: 8, name: '1000 عضو تيليجرام', price: 20, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400', category: 'telegram' },
+            { id: 9, name: '5000 تفاعل', price: 35, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400', category: 'telegram' },
+            
+            // رصيد
+            { id: 10, name: 'رصيد STC 50 ريال', price: 13, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400', category: 'balance' },
+            
+            // سوشل ميديا
+            { id: 11, name: '500 متابع انستا', price: 25, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400', category: 'social' },
+            
+            // حسابات
+            { id: 12, name: 'حساب نتفلكس بريميوم', price: 35, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400', category: 'accounts' }
         ];
 
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentFilter = 'all';
         let selectedFile = null;
-        let currentProduct = null;
+        let walletAmount = 0;
         
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
@@ -451,29 +498,27 @@
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(page + '-page').classList.add('active');
-            
             if (page === 'cart') updateCartDisplay();
-            if (page === 'wallet') updateWalletAmount();
+        }
+
+        // تصفية المنتجات
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
         }
 
         // عرض المنتجات
         function renderProducts() {
             let container = document.getElementById('products-container');
-            let filtered = currentFilter === 'all' ? storeData : storeData.filter(c => c.id === currentFilter);
+            let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
             
-            container.innerHTML = filtered.flatMap(cat => cat.products).map(p => `
+            container.innerHTML = filtered.map(p => `
                 <div class="product-card">
                     <img src="${p.img}">
                     <h3>${p.name}</h3>
-                    <div class="price-tag">
-                        <span class="price-usd">$${p.price}</span>
-                        <span class="currency-btn" onclick="showCurrency(${p.id}, event)">💱 عملات</span>
-                    </div>
-                    <div class="currency-dropdown" id="currency-${p.id}">
-                        <div class="currency-item">🇸🇾 ${(p.price * 13000).toLocaleString()} ل.س</div>
-                        <div class="currency-item">🇸🇦 ${(p.price * 3.75).toFixed(2)} ر.س</div>
-                        <div class="currency-item">🇦🇪 ${(p.price * 3.67).toFixed(2)} د.إ</div>
-                    </div>
+                    <div class="price-usd">$${p.price}</div>
                     <button onclick="addToCart(${p.id})" class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-black py-2 rounded font-bold text-sm mt-2">
                         🛒 إضافة للسلة
                     </button>
@@ -481,36 +526,9 @@
             `).join('');
         }
 
-        // إظهار العملات
-        function showCurrency(productId, event) {
-            event.stopPropagation();
-            document.querySelectorAll('.currency-dropdown').forEach(d => d.classList.remove('show'));
-            document.getElementById(`currency-${productId}`).classList.add('show');
-            
-            setTimeout(() => {
-                document.getElementById(`currency-${productId}`).classList.remove('show');
-            }, 3000);
-        }
-
-        // أزرار الأقسام
-        function renderTabs() {
-            let tabs = document.getElementById('category-tabs');
-            tabs.innerHTML = '<button class="category-tab active" onclick="filterProducts(\'all\')">الكل</button>';
-            storeData.forEach(c => {
-                tabs.innerHTML += `<button class="category-tab" onclick="filterProducts('${c.id}')">${c.name}</button>`;
-            });
-        }
-
-        function filterProducts(id) {
-            currentFilter = id;
-            document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts();
-        }
-
         // إضافة للسلة
         function addToCart(productId) {
-            let product = storeData.flatMap(c => c.products).find(p => p.id === productId);
+            let product = products.find(p => p.id === productId);
             cart.push(product);
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = cart.length;
@@ -536,7 +554,6 @@
             
             let total = cart.reduce((sum, i) => sum + i.price, 0);
             document.getElementById('cart-total-display').innerHTML = `الإجمالي: $${total.toFixed(2)}`;
-            document.getElementById('wallet-amount').innerHTML = `$${total.toFixed(2)}`;
         }
 
         function removeFromCart(index) {
@@ -544,6 +561,13 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = cart.length;
             updateCartDisplay();
+        }
+
+        // اختيار المبلغ في المحفظة
+        function setAmount(amount) {
+            walletAmount = amount;
+            document.getElementById('custom-amount').value = amount;
+            showToast(`✅ تم اختيار $${amount}`);
         }
 
         // رفع الصورة
@@ -554,34 +578,43 @@
             }
         }
 
-        // إرسال الطلب
-        async function sendOrder() {
-            let name = document.getElementById('customer-name').value;
-            let gameId = document.getElementById('customer-id').value;
-            let transNumber = document.getElementById('transaction-number')?.value || '';
+        // نسخ كود المحفظة
+        function copyWalletCode() {
+            navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd');
+            showToast('✅ تم نسخ الكود');
+        }
 
-            if (!name || !gameId || cart.length === 0 || !selectedFile) {
-                showToast('⚠️ أكمل جميع البيانات');
+        // إرسال طلب تعبئة المحفظة
+        async function sendWalletOrder() {
+            let amount = document.getElementById('custom-amount').value;
+            let transNumber = document.getElementById('transaction-number').value;
+
+            if (!amount || amount <= 0) {
+                showToast('⚠️ اختر المبلغ');
                 return;
             }
 
-            let total = cart.reduce((sum, i) => sum + i.price, 0);
-            let productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('\n');
+            if (!transNumber) {
+                showToast('⚠️ أدخل رقم عملية الدفع');
+                return;
+            }
+
+            if (!selectedFile) {
+                showToast('⚠️ ارفع صورة الإشعار');
+                return;
+            }
 
             let reader = new FileReader();
             reader.readAsDataURL(selectedFile);
             reader.onload = async function() {
                 let base64 = reader.result.split(',')[1];
                 
-                let message = `🛍️ **طلب جديد - Reem Store**
+                let message = `💰 **طلب تعبئة رصيد - Reem Store**
 ━━━━━━━━━━━━━━━━
-👤 الاسم: ${name}
-🎮 الآيدي: ${gameId}
+💵 المبلغ: $${amount}
 🔢 رقم العملية: ${transNumber}
-📦 المنتجات:
-${productsList}
-💰 المبلغ: $${total.toFixed(2)}
-💳 كود المحفظة: 17ac4a94cb1ed493e47a8526892294dd`;
+💳 كود المحفظة: 17ac4a94cb1ed493e47a8526892294dd
+━━━━━━━━━━━━━━━━`;
 
                 try {
                     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -596,13 +629,13 @@ ${productsList}
                         body: JSON.stringify({ chat_id: CHAT_ID, photo: base64 })
                     });
 
-                    showToast('✅ تم إرسال الطلب');
+                    showToast('✅ تم إرسال طلب التعبئة');
                     
-                    // تفريغ السلة
-                    cart = [];
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    document.getElementById('cart-count').innerText = '0';
-                    showPage('home');
+                    // تفريغ الحقول
+                    document.getElementById('custom-amount').value = '';
+                    document.getElementById('transaction-number').value = '';
+                    document.getElementById('receipt-name').innerHTML = '';
+                    selectedFile = null;
                     
                 } catch (error) {
                     showToast('❌ فشل الإرسال');
@@ -610,16 +643,46 @@ ${productsList}
             };
         }
 
-        // نسخ كود المحفظة
-        function copyWalletCode() {
-            navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd');
-            showToast('✅ تم نسخ الكود');
-        }
+        // إرسال طلب شراء منتجات
+        async function sendOrder() {
+            let name = document.getElementById('customer-name').value;
+            let gameId = document.getElementById('customer-id').value;
 
-        // تحديث مبلغ المحفظة
-        function updateWalletAmount() {
+            if (!name || !gameId || cart.length === 0) {
+                showToast('⚠️ أكمل البيانات وأضف منتجات');
+                return;
+            }
+
             let total = cart.reduce((sum, i) => sum + i.price, 0);
-            document.getElementById('wallet-amount').innerHTML = `$${total.toFixed(2)}`;
+            let productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('\n');
+
+            let message = `🛍️ **طلب شراء منتجات - Reem Store**
+━━━━━━━━━━━━━━━━
+👤 الاسم: ${name}
+🎮 الآيدي: ${gameId}
+📦 المنتجات:
+${productsList}
+💰 المبلغ: $${total.toFixed(2)}
+━━━━━━━━━━━━━━━━`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
+
+                showToast('✅ تم إرسال الطلب');
+                
+                // تفريغ السلة
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                document.getElementById('cart-count').innerText = '0';
+                showPage('home');
+                
+            } catch (error) {
+                showToast('❌ فشل الإرسال');
+            }
         }
 
         // لوحة التحكم
@@ -632,7 +695,6 @@ ${productsList}
             if (pass === '1234') {
                 document.getElementById('admin-modal').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
-                updateCategorySelect();
             } else {
                 showToast('❌ كلمة سر خطأ');
             }
@@ -642,49 +704,25 @@ ${productsList}
             document.getElementById('admin-panel').style.display = 'none';
         }
 
-        function addCategory() {
-            let name = document.getElementById('new-category').value;
-            if (!name) return;
-            
-            storeData.push({
-                id: 'cat' + Date.now(),
-                name: name,
-                products: []
-            });
-            
-            localStorage.setItem('storeData', JSON.stringify(storeData));
-            renderTabs();
-            updateCategorySelect();
-            document.getElementById('new-category').value = '';
-            showToast('✅ تم إضافة القسم');
-        }
-
         function addProduct() {
             let name = document.getElementById('product-name').value;
             let price = parseFloat(document.getElementById('product-price').value);
             let img = document.getElementById('product-image').value;
-            let catId = document.getElementById('product-category').value;
+            let category = document.getElementById('product-category').value;
 
-            if (!name || !price || !img || !catId) return;
+            if (!name || !price || !img) return;
 
-            let cat = storeData.find(c => c.id === catId);
-            cat.products.push({
-                id: Date.now(),
-                name, price, img
+            products.push({
+                id: products.length + 1,
+                name, price, img, category
             });
 
-            localStorage.setItem('storeData', JSON.stringify(storeData));
             renderProducts();
             showToast('✅ تم إضافة المنتج');
             
             document.getElementById('product-name').value = '';
             document.getElementById('product-price').value = '';
             document.getElementById('product-image').value = '';
-        }
-
-        function updateCategorySelect() {
-            let select = document.getElementById('product-category');
-            select.innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
         // توست
@@ -697,7 +735,6 @@ ${productsList}
         }
 
         // تهيئة
-        renderTabs();
         renderProducts();
         document.getElementById('cart-count').innerText = cart.length;
     </script>
