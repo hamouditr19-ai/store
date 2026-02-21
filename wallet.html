@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reem Store | المحفظة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0f1f;
+            color: white;
+            padding: 10px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #0f172a;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #06b6d4;
+            margin-bottom: 15px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .nav-btn {
+            background: #1e293b;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid #06b6d4;
+            color: white;
+            text-decoration: none;
+        }
+        .wallet-box {
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #06b6d4;
+        }
+        .code-box {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #06b6d4;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #0f172a;
+            border: 1px solid #06b6d4;
+            border-radius: 6px;
+            color: white;
+        }
+        button {
+            width: 100%;
+            background: linear-gradient(90deg, #06b6d4, #ec4899);
+            color: black;
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .warning {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid #ef4444;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💰 محفظة شام كاش</h1>
+    </div>
 
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+        <a href="cart.html" class="nav-btn">🛒 السلة</a>
+    </div>
+
+    <div class="container">
+        <div class="wallet-box">
+            <h2 class="text-center">إيداع شام كاش</h2>
+            
+            <div class="code-box">
+                7ee806564d3aa36d87667cad636b6788
+                <button style="width:auto; background:#06b6d4; padding:5px 10px;" onclick="copyCode()">نسخ</button>
+            </div>
+
+            <div class="warning">
+                ⚠️ لا تستخدم إخفاء الهوية<br>
+                ⚠️ لا تكتب ملاحظة عند التحويل
+            </div>
+
+            <input type="text" id="userId" placeholder="👤 ID الحساب">
+            
+            <select id="currency">
+                <option value="USD">USD - دولار</option>
+                <option value="SYP">SYP - ليرة</option>
+            </select>
+
+            <input type="number" id="amount" placeholder="💰 المبلغ">
+            <input type="text" id="transId" placeholder="🔢 رقم العملية">
+
+            <button onclick="sendRequest()">إرسال طلب الإيداع</button>
+            <button class="back-btn" style="background:transparent; border:1px solid #06b6d4;" onclick="window.location='index.html'">رجوع</button>
+        </div>
+    </div>
+
+    <script>
+        function copyCode() {
+            navigator.clipboard.writeText('7ee806564d3aa36d87667cad636b6788');
+            alert('✅ تم النسخ');
+        }
+
+        function sendRequest() {
+            let user = document.getElementById('userId').value;
+            let curr = document.getElementById('currency').value;
+            let amount = document.getElementById('amount').value;
+            let trans = document.getElementById('transId').value;
+
+            if (!user || !amount || !trans) {
+                alert('⚠️ أكمل البيانات');
+                return;
+            }
+
+            let msg = `💰 طلب إيداع\n👤 ID: ${user}\n💵 ${amount} ${curr}\n🔢 رقم العملية: ${trans}`;
+            alert('✅ تم إرسال الطلب');
+            window.location = 'index.html';
+        }
+    </script>
+</body>
+</html>
