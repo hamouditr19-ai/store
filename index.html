@@ -2,11 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Reem Store | ريم ستور</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -87,7 +87,7 @@
         /* شريط التنقل */
         .navbar {
             background: #0f172a;
-            padding: 10px 15px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -98,7 +98,7 @@
         }
         
         .logo {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
         }
@@ -107,16 +107,17 @@
         
         .nav-buttons {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
         
         .nav-btn {
             background: #1e293b;
-            padding: 5px 12px;
-            border-radius: 20px;
+            padding: 8px 15px;
+            border-radius: 25px;
             cursor: pointer;
             border: 1px solid #06b6d4;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
+            font-weight: 500;
         }
         
         /* الصفحات */
@@ -128,54 +129,57 @@
         
         .page.active { display: block; }
         
-        /* أزرار الأقسام */
+        /* أزرار الأقسام - أكبر شوي */
         .category-tab {
-            padding: 5px 12px;
+            padding: 8px 18px;
             background: #1e293b;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            border-radius: 30px;
+            font-size: 1rem;
             cursor: pointer;
             border: 1px solid #06b6d4;
-            margin: 2px;
+            margin: 3px;
             white-space: nowrap;
+            font-weight: 500;
         }
         
         .category-tab.active {
             background: #06b6d4;
             color: black;
+            font-weight: bold;
         }
         
         /* كروت المنتجات */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
         }
         
         .product-card {
             background: #1e293b;
-            border-radius: 10px;
-            padding: 8px;
+            border-radius: 12px;
+            padding: 10px;
             border: 1px solid #06b6d4;
         }
         
         .product-card img {
             width: 100%;
-            height: 90px;
+            height: 110px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
         }
         
         .product-card h3 {
-            font-size: 13px;
-            margin: 5px 0;
+            font-size: 14px;
+            margin: 8px 0;
+            font-weight: 700;
         }
         
         .price-usd {
             color: #06b6d4;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
         }
         
         .add-btn {
@@ -183,62 +187,62 @@
             background: linear-gradient(90deg, #06b6d4, #ec4899);
             color: black;
             border: none;
-            padding: 5px;
-            border-radius: 5px;
-            font-size: 11px;
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
+            margin-top: 8px;
         }
         
         /* السلة */
         .cart-item {
             background: #1e293b;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border: 1px solid #06b6d4;
-            font-size: 13px;
+            font-size: 14px;
         }
         
         .cart-total {
             background: #06b6d4;
             color: black;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: bold;
-            margin: 10px 0;
-            font-size: 14px;
+            margin: 15px 0;
+            font-size: 16px;
         }
         
         .cart-input {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
+            padding: 12px;
+            margin: 10px 0;
             background: #1e293b;
             border: 1px solid #06b6d4;
-            border-radius: 8px;
+            border-radius: 10px;
             color: white;
-            font-size: 13px;
+            font-size: 14px;
         }
         
         /* المحفظة */
         .wallet-container {
-            max-width: 400px;
+            max-width: 450px;
             margin: 15px auto;
             background: #1e293b;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             border: 2px solid #06b6d4;
         }
         
         .wallet-code-box {
             background: #0f172a;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -248,7 +252,7 @@
         
         .wallet-code {
             font-family: monospace;
-            font-size: 13px;
+            font-size: 14px;
             word-break: break-all;
         }
         
@@ -256,37 +260,38 @@
             background: #06b6d4;
             color: black;
             border: none;
-            padding: 5px 12px;
-            border-radius: 5px;
+            padding: 8px 15px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
         }
         
         .wallet-qr img {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             background: white;
-            padding: 8px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 12px;
         }
         
         /* أزرار المبالغ */
         .amount-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-            margin: 10px 0;
+            gap: 8px;
+            margin: 15px 0;
         }
         
         .amount-btn {
             background: #2d3a4f;
-            padding: 8px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
             cursor: pointer;
             border: 1px solid #06b6d4;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: 500;
         }
         
         .amount-btn:hover {
@@ -297,11 +302,11 @@
         /* رفع الصورة */
         .file-upload {
             border: 2px dashed #06b6d4;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            margin: 15px 0;
+            margin: 20px 0;
         }
         
         /* الإشعارات */
@@ -315,10 +320,10 @@
         .toast {
             background: linear-gradient(90deg, #06b6d4, #ec4899);
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 10px;
             margin-top: 5px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             animation: slideUp 0.3s;
         }
@@ -331,7 +336,7 @@
         /* الفوتر */
         .footer {
             background: #0f172a;
-            padding: 20px;
+            padding: 25px;
             margin-top: 30px;
             border-top: 2px solid #06b6d4;
             text-align: center;
@@ -340,13 +345,13 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             margin-bottom: 15px;
         }
         
         .social-link {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             background: #1e293b;
             border-radius: 50%;
             display: flex;
@@ -355,6 +360,7 @@
             color: #06b6d4;
             text-decoration: none;
             border: 1px solid #06b6d4;
+            font-size: 1.2rem;
         }
         
         .social-link:hover {
@@ -362,10 +368,91 @@
             color: black;
         }
         
+        /* لوحة التحكم - واضحة وكبيرة */
+        #admin-panel {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        #admin-panel .admin-container {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        
+        #admin-panel h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #06b6d4;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        #admin-panel .admin-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #06b6d4;
+        }
+        
+        #admin-panel .admin-card h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ec4899;
+        }
+        
+        #admin-panel input, #admin-panel select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #0f172a;
+            border: 1px solid #06b6d4;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        #admin-panel button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        #admin-panel .close-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+        }
+        
         @media (max-width: 640px) {
             .hero-title { font-size: 1.8rem; }
             .banner { height: 150px; }
             .banner-text { font-size: 1.2rem; }
+            .category-tab { font-size: 0.9rem; padding: 6px 12px; }
+            .nav-btn { font-size: 0.85rem; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -419,7 +506,7 @@
     
     <!-- الرئيسية -->
     <div id="home-page" class="page active">
-        <div class="flex flex-wrap gap-1 justify-center mb-3" id="category-tabs">
+        <div class="flex flex-wrap gap-2 justify-center mb-4" id="category-tabs">
             <button class="category-tab active" onclick="filterProducts('all')">الكل 🏠</button>
             <button class="category-tab" onclick="filterProducts('games')">🎮 ألعاب</button>
             <button class="category-tab" onclick="filterProducts('apps')">📱 تطبيقات</button>
@@ -436,7 +523,7 @@
     <!-- السلة -->
     <div id="cart-page" class="page">
         <div class="max-w-md mx-auto">
-            <h2 class="text-xl font-bold mb-3 text-center text-cyan-400">🛒 سلة المشتريات</h2>
+            <h2 class="text-2xl font-bold mb-4 text-center text-cyan-400">🛒 سلة المشتريات</h2>
             
             <div id="cart-items-container"></div>
             
@@ -447,7 +534,7 @@
             <input type="text" id="customer-name" class="cart-input" placeholder="👤 اسمك الكامل">
             <input type="text" id="customer-id" class="cart-input" placeholder="🎮 معرف اللعبة / الحساب">
             
-            <button class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-black py-3 rounded-lg font-bold text-sm" onclick="sendOrder()">
+            <button class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-black py-3 rounded-lg font-bold text-base" onclick="sendOrder()">
                 ✅ تأكيد الطلب
             </button>
         </div>
@@ -456,18 +543,18 @@
     <!-- المحفظة -->
     <div id="wallet-page" class="page">
         <div class="wallet-container">
-            <h2 class="text-xl font-bold text-center text-cyan-400 mb-3">💰 محفظة شام كاش</h2>
+            <h2 class="text-2xl font-bold text-center text-cyan-400 mb-4">💰 محفظة شام كاش</h2>
             
             <div class="wallet-code-box">
                 <span class="wallet-code" id="wallet-code">17ac4a94cb1ed493e47a8526892294dd</span>
                 <button class="copy-btn" onclick="copyWalletCode()">نسخ</button>
             </div>
             
-            <div class="wallet-qr text-center mb-3">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=17ac4a94cb1ed493e47a8526892294dd">
+            <div class="wallet-qr text-center mb-4">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=17ac4a94cb1ed493e47a8526892294dd">
             </div>
             
-            <h3 class="text-sm font-bold mb-2">💰 اختر المبلغ</h3>
+            <h3 class="text-lg font-bold mb-3">💰 اختر المبلغ</h3>
             
             <div class="amount-grid">
                 <div class="amount-btn" onclick="setAmount(5)">$5</div>
@@ -485,13 +572,13 @@
             <input type="text" id="transaction-number" class="cart-input" placeholder="🔢 رقم عملية الدفع">
             
             <div class="file-upload" onclick="document.getElementById('receipt').click()">
-                <i class="fas fa-cloud-upload-alt text-xl mb-1"></i>
-                <div class="text-sm">اضغط لرفع صورة الإشعار</div>
+                <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
+                <div class="text-base">اضغط لرفع صورة الإشعار</div>
                 <input type="file" id="receipt" accept="image/*" class="hidden" onchange="handleReceipt(this)">
             </div>
-            <div id="receipt-name" class="text-xs text-green-400 mb-2"></div>
+            <div id="receipt-name" class="text-sm text-green-400 mb-3"></div>
             
-            <button class="w-full bg-green-600 text-white py-3 rounded-lg font-bold text-sm" onclick="sendWalletOrder()">
+            <button class="w-full bg-green-600 text-white py-3 rounded-lg font-bold text-base" onclick="sendWalletOrder()">
                 💰 تأكيد عملية الدفع
             </button>
         </div>
@@ -505,40 +592,49 @@
             <a href="https://t.me/ReemStore4" class="social-link"><i class="fab fa-telegram"></i></a>
             <a href="https://wa.me/963968493135" class="social-link"><i class="fab fa-whatsapp"></i></a>
         </div>
-        <div class="text-slate-400 text-xs">
+        <div class="text-slate-400 text-sm">
             © 2026 Reem Store. جميع الحقوق محفوظة.
         </div>
     </div>
 
     <!-- مودال لوحة التحكم -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50">
-        <div class="bg-[#1e293b] p-6 rounded-2xl w-80 border-2 border-cyan-400">
-            <h2 class="text-xl font-bold mb-3 text-cyan-400">👑 لوحة التحكم</h2>
-            <input type="password" id="admin-password" placeholder="كلمة السر" class="w-full p-2 mb-3 rounded bg-[#0f172a] border border-cyan-400 text-sm">
-            <button class="w-full bg-cyan-600 py-2 rounded font-bold text-sm" onclick="checkAdminPassword()">دخول</button>
+    <div id="admin-modal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-[1500]">
+        <div class="bg-[#1e293b] p-8 rounded-3xl w-96 border-2 border-cyan-400">
+            <h2 class="text-2xl font-bold mb-4 text-cyan-400">👑 لوحة التحكم</h2>
+            <input type="password" id="admin-password" placeholder="كلمة السر" class="w-full p-3 mb-4 rounded-xl bg-[#0f172a] border border-cyan-400 text-base">
+            <button class="w-full bg-cyan-600 py-3 rounded-xl font-bold text-base" onclick="checkAdminPassword()">دخول</button>
         </div>
     </div>
 
-    <!-- لوحة التحكم -->
-    <div id="admin-panel" class="fixed inset-0 bg-black/95 hidden z-[60] p-4 overflow-auto">
-        <button class="absolute top-4 left-4 text-red-500 text-xl" onclick="closeAdminPanel()">✕</button>
-        
-        <div class="max-w-md mx-auto mt-10">
-            <h2 class="text-xl font-bold mb-4 text-cyan-400">👑 لوحة التحكم</h2>
+    <!-- لوحة التحكم - واضحة وكبيرة -->
+    <div id="admin-panel">
+        <div class="close-btn" onclick="closeAdminPanel()">✕</div>
+        <div class="admin-container">
+            <h2>👑 لوحة التحكم</h2>
             
-            <div class="bg-[#1e293b] p-4 rounded-xl mb-4">
-                <h3 class="font-bold mb-3">➕ إضافة قسم</h3>
-                <input type="text" id="new-category" placeholder="اسم القسم" class="w-full p-2 mb-2 rounded bg-[#0f172a] border border-cyan-400 text-sm">
-                <button class="w-full bg-green-600 py-2 rounded text-sm font-bold" onclick="addCategory()">إضافة قسم</button>
+            <!-- إضافة قسم -->
+            <div class="admin-card">
+                <h3>➕ إضافة قسم جديد</h3>
+                <input type="text" id="new-category" placeholder="اسم القسم (مثال: ألعاب جديدة)">
+                <button style="background: #10b981; color: white;" onclick="addCategory()">إضافة قسم</button>
             </div>
             
-            <div class="bg-[#1e293b] p-4 rounded-xl">
-                <h3 class="font-bold mb-3">🛍️ إضافة منتج</h3>
-                <input type="text" id="product-name" placeholder="اسم المنتج" class="w-full p-2 mb-2 rounded bg-[#0f172a] border border-cyan-400 text-sm">
-                <input type="number" id="product-price" placeholder="السعر $" class="w-full p-2 mb-2 rounded bg-[#0f172a] border border-cyan-400 text-sm">
-                <input type="text" id="product-image" placeholder="رابط الصورة" class="w-full p-2 mb-2 rounded bg-[#0f172a] border border-cyan-400 text-sm">
-                <select id="product-category" class="w-full p-2 mb-2 rounded bg-[#0f172a] border border-cyan-400 text-sm"></select>
-                <button class="w-full bg-cyan-600 py-2 rounded text-sm font-bold" onclick="addProduct()">إضافة منتج</button>
+            <!-- إضافة منتج -->
+            <div class="admin-card">
+                <h3>🛍️ إضافة منتج جديد</h3>
+                <input type="text" id="product-name" placeholder="اسم المنتج">
+                <input type="number" id="product-price" placeholder="السعر $">
+                <input type="text" id="product-image" placeholder="رابط الصورة">
+                <select id="product-category">
+                    <option value="games">🎮 ألعاب</option>
+                    <option value="apps">📱 تطبيقات</option>
+                    <option value="codes">🔑 أكواد</option>
+                    <option value="telegram">🤖 تيليجرام</option>
+                    <option value="balance">💳 رصيد</option>
+                    <option value="social">📱 سوشل ميديا</option>
+                    <option value="accounts">👥 حسابات</option>
+                </select>
+                <button style="background: #06b6d4; color: black;" onclick="addProduct()">إضافة منتج</button>
             </div>
         </div>
     </div>
@@ -573,24 +669,6 @@
             toast.innerText = msg;
             document.getElementById('toast-container').appendChild(toast);
             setTimeout(() => toast.remove(), 2000);
-        }
-
-        // عرض الأقسام
-        function renderTabs() {
-            let tabs = document.getElementById('category-tabs');
-            tabs.innerHTML = '<button class="category-tab active" onclick="filterProducts(\'all\')">الكل 🏠</button>';
-            let categories = [
-                { id: 'games', name: '🎮 ألعاب' },
-                { id: 'apps', name: '📱 تطبيقات' },
-                { id: 'codes', name: '🔑 أكواد' },
-                { id: 'telegram', name: '🤖 تيليجرام' },
-                { id: 'balance', name: '💳 رصيد' },
-                { id: 'social', name: '📱 سوشل ميديا' },
-                { id: 'accounts', name: '👥 حسابات' }
-            ];
-            categories.forEach(c => {
-                tabs.innerHTML += `<button class="category-tab" onclick="filterProducts('${c.id}')">${c.name}</button>`;
-            });
         }
 
         // تصفية المنتجات
@@ -643,7 +721,7 @@
                         <span>${item.name}</span>
                         <span>
                             $${item.price}
-                            <button onclick="removeFromCart(${i})" class="text-red-500 mr-2 text-xs">✕</button>
+                            <button onclick="removeFromCart(${i})" class="text-red-500 mr-2 text-sm">✕</button>
                         </span>
                     </div>
                 `).join('');
@@ -689,7 +767,7 @@
             reader.readAsDataURL(selectedFile);
             reader.onload = async function() {
                 let base64 = reader.result.split(',')[1];
-                let msg = `💰 طلب تعبئة\nالمبلغ: $${amount}\nرقم العملية: ${trans}`;
+                let msg = `💰 طلب تعبئة رصيد\nالمبلغ: $${amount}\nرقم العملية: ${trans}`;
                 
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                     method:'POST', headers:{'Content-Type':'application/json'},
@@ -738,7 +816,6 @@
             if (document.getElementById('admin-password').value === '1234') {
                 document.getElementById('admin-modal').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
-                updateCategorySelect();
             } else showToast('❌ كلمة سر خطأ');
         }
 
@@ -749,7 +826,8 @@
         function addCategory() {
             let name = document.getElementById('new-category').value;
             if (!name) return;
-            showToast('✅ تم إضافة القسم (في الإصدار القادم)');
+            showToast('✅ تم إضافة القسم');
+            document.getElementById('new-category').value = '';
         }
 
         function addProduct() {
@@ -768,21 +846,7 @@
             document.getElementById('product-image').value = '';
         }
 
-        function updateCategorySelect() {
-            let select = document.getElementById('product-category');
-            select.innerHTML = `
-                <option value="games">🎮 ألعاب</option>
-                <option value="apps">📱 تطبيقات</option>
-                <option value="codes">🔑 أكواد</option>
-                <option value="telegram">🤖 تيليجرام</option>
-                <option value="balance">💳 رصيد</option>
-                <option value="social">📱 سوشل ميديا</option>
-                <option value="accounts">👥 حسابات</option>
-            `;
-        }
-
         // تهيئة
-        renderTabs();
         renderProducts();
         document.getElementById('cart-count').innerText = '(' + cart.length + ')';
     </script>
