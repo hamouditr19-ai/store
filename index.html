@@ -22,6 +22,7 @@
             overflow-x: hidden;
         }
         
+        /* خلفية متحركة */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -61,6 +62,7 @@
             50% { transform: translateY(-50px) scale(1.2); }
         }
         
+        /* شريط التنقل */
         .navbar {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
@@ -281,21 +283,11 @@
             margin: 5px 0;
         }
         
-        .price-container {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 8px 0;
-        }
-        
-        .price-usd {
+        .price {
             color: #00ffff;
+            font-size: 1.3rem;
             font-weight: 900;
-        }
-        
-        .price-syp {
-            color: #ff0080;
-            font-weight: 900;
+            margin: 8px 0;
         }
         
         .add-btn {
@@ -303,7 +295,7 @@
             background: linear-gradient(90deg, #ff0080, #00ffff);
             border: none;
             border-radius: 25px;
-            padding: 10px;
+            padding: 8px;
             color: black;
             font-weight: 700;
             cursor: pointer;
@@ -342,6 +334,7 @@
             color: #aaa;
         }
         
+        /* لوحة التحكم المخفية */
         .admin-overlay {
             display: none;
             position: fixed;
@@ -530,16 +523,16 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
-        let products = JSON.parse(localStorage.getItem('products')) || [
-            { id: 1, name: '60 UC PUBG', priceUSD: 5, priceSYP: 65000, cat: 'games', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
-            { id: 2, name: '100 جوهرة فري فاير', priceUSD: 4, priceSYP: 52000, cat: 'games', img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' },
-            { id: 3, name: 'نتفلكس شهر', priceUSD: 15, priceSYP: 195000, cat: 'apps', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
-            { id: 4, name: 'كود Google Play 5$', priceUSD: 5.5, priceSYP: 71500, cat: 'codes', img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
-            { id: 5, name: '1000 عضو تيليجرام', priceUSD: 20, priceSYP: 260000, cat: 'telegram', img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' },
-            { id: 6, name: 'رصيد STC 50', priceUSD: 13, priceSYP: 169000, cat: 'balance', img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+        let products = [
+            { id: 1, name: '60 UC PUBG', price: 5, cat: 'games', img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
+            { id: 2, name: '100 جوهرة فري فاير', price: 4, cat: 'games', img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' },
+            { id: 3, name: 'نتفلكس شهر', price: 15, cat: 'apps', img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
+            { id: 4, name: 'كود Google Play 5$', price: 5.5, cat: 'codes', img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
+            { id: 5, name: '1000 عضو تيليجرام', price: 20, cat: 'telegram', img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' },
+            { id: 6, name: 'رصيد STC 50', price: 13, cat: 'balance', img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
         ];
 
-        let categories = JSON.parse(localStorage.getItem('categories')) || [
+        let categories = [
             { id: 'all', name: 'الكل', icon: '📌' },
             { id: 'games', name: '🎮 ألعاب', icon: '🎮' },
             { id: 'apps', name: '📱 تطبيقات', icon: '📱' },
@@ -586,10 +579,7 @@
                     <div class="product-card">
                         <img src="${p.img}">
                         <h3>${p.name}</h3>
-                        <div class="price-container">
-                            <span class="price-usd">$${p.priceUSD}</span>
-                            <span class="price-syp">${p.priceSYP.toLocaleString()} ل.س</span>
-                        </div>
+                        <div class="price">$${p.price}</div>
                         <button class="add-btn" onclick="addToCart(${p.id})">➕ إضافة</button>
                     </div>
                 `;
@@ -645,4 +635,4 @@
         showProducts();
     </script>
 </body>
-</html>
+    </html>
