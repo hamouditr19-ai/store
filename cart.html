@@ -22,6 +22,7 @@
             overflow-x: hidden;
         }
         
+        /* خلفية متحركة */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -61,6 +62,7 @@
             50% { transform: translateY(-50px) scale(1.2); }
         }
         
+        /* شريط التنقل */
         .navbar {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
@@ -120,34 +122,14 @@
             justify-content: center;
         }
         
+        /* شريط العملات */
         .currency-bar {
             background: rgba(0, 255, 255, 0.1);
             border-bottom: 1px solid #00ffff;
-            padding: 8px 20px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        .currency-selector {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .currency-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #ff0080;
-            border-radius: 20px;
-            padding: 5px 15px;
-            color: white;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        
-        .currency-btn.active {
-            background: linear-gradient(90deg, #ff0080, #00ffff);
-            color: black;
-            font-weight: 700;
         }
         
         .wallet-balance {
@@ -158,6 +140,7 @@
             font-weight: 700;
         }
         
+        /* حاوية السلة */
         .cart-container {
             max-width: 500px;
             margin: 30px auto;
@@ -185,6 +168,14 @@
             -webkit-text-fill-color: transparent;
         }
         
+        /* عناصر السلة */
+        #cartItems {
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
         .cart-item {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #00ffff;
@@ -194,6 +185,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         .item-info {
@@ -232,8 +235,10 @@
         
         .delete-btn:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 15px #ff0080;
         }
         
+        /* إجمالي السلة */
         .cart-total {
             background: linear-gradient(90deg, #ff0080, #00ffff);
             border-radius: 15px;
@@ -245,6 +250,7 @@
             font-size: 1.3rem;
         }
         
+        /* قسم معلومات الشحن */
         .game-id-section {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #ff0080;
@@ -253,34 +259,50 @@
             margin: 20px 0;
         }
         
+        .game-id-section h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
         .game-id-input {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #00ffff;
             border-radius: 10px;
             color: white;
-            margin: 10px 0;
+            font-size: 1rem;
+            transition: all 0.3s;
         }
         
-        .buy-btn {
+        .game-id-input:focus {
+            outline: none;
+            border-color: #ff0080;
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
+        }
+        
+        /* زر تأكيد الطلب */
+        .checkout-btn {
             width: 100%;
             background: linear-gradient(90deg, #ff0080, #00ffff);
             border: none;
             border-radius: 30px;
-            padding: 15px;
+            padding: 18px;
             color: black;
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s;
+            margin: 10px 0;
         }
         
-        .buy-btn:hover {
+        .checkout-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 0 30px #ff0080;
         }
         
+        /* السلة الفارغة */
         .empty-cart {
             text-align: center;
             padding: 40px;
@@ -291,8 +313,43 @@
             font-size: 4rem;
             color: #ff0080;
             margin-bottom: 20px;
+            animation: bounce 2s infinite;
         }
         
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* رسائل التنبيه */
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            color: black;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+            display: none;
+        }
+        
+        @keyframes slideDown {
+            from {
+                top: -100px;
+                opacity: 0;
+            }
+            to {
+                top: 20px;
+                opacity: 1;
+            }
+        }
+        
+        /* الفوتر */
         .footer {
             margin-top: 50px;
             padding: 20px;
@@ -307,11 +364,13 @@
     </style>
 </head>
 <body>
+    <!-- خلفية متحركة -->
     <div class="bg-animation">
         <div class="bg-circle circle1"></div>
         <div class="bg-circle circle2"></div>
     </div>
 
+    <!-- شريط التنقل -->
     <div class="navbar">
         <div class="logo">Reem Store</div>
         <div class="nav-icons">
@@ -321,37 +380,46 @@
                 <span class="cart-count" id="cartCount">0</span>
             </a>
             <a href="wallet.html" class="nav-icon"><i class="fas fa-wallet"></i></a>
-            <a href="admin.html" class="nav-icon"><i class="fas fa-cog"></i></a>
         </div>
     </div>
 
+    <!-- شريط الرصيد -->
     <div class="currency-bar">
-        <div class="currency-selector">
-            <button class="currency-btn" onclick="setCurrency('usd')">🇺🇸 دولار</button>
-            <button class="currency-btn" onclick="setCurrency('syp')">🇸🇾 ليرة</button>
-        </div>
-        <div class="wallet-balance" id="walletDisplay">$500</div>
+        <div class="wallet-balance" id="walletBalance">$500</div>
     </div>
 
+    <!-- حاوية السلة -->
     <div class="cart-container">
         <div class="cart-card">
             <div class="cart-header">
                 <h2>🛒 سلة المشتريات</h2>
             </div>
             
-            <div id="cartItems"></div>
-            
-            <div class="cart-total" id="cartTotal">المجموع: $0</div>
-            
-            <div class="game-id-section">
-                <h4>🎮 معلومات الشحن</h4>
-                <input type="text" id="gameIdInput" class="game-id-input" placeholder="أدخل ID اللعبة أو البرنامج">
+            <!-- عناصر السلة -->
+            <div id="cartItems">
+                <!-- هون بتنضاف العناصر -->
             </div>
             
-            <button class="buy-btn" onclick="sendOrder()">📦 تأكيد الطلب</button>
+            <!-- إجمالي السلة -->
+            <div class="cart-total" id="cartTotal">المجموع: $0</div>
+            
+            <!-- معلومات الشحن -->
+            <div class="game-id-section">
+                <h3>🎮 معلومات الشحن</h3>
+                <input type="text" id="gameId" class="game-id-input" placeholder="أدخل ID اللعبة أو البرنامج">
+            </div>
+            
+            <!-- زر تأكيد الطلب -->
+            <button class="checkout-btn" onclick="checkout()">
+                ✅ تأكيد الطلب
+            </button>
         </div>
     </div>
 
+    <!-- رسالة منبثقة -->
+    <div id="alert" class="alert"></div>
+
+    <!-- الفوتر -->
     <div class="footer">
         <div class="copyright">
             © 2026 Reem Store. جميع الحقوق محفوظة.
@@ -359,152 +427,143 @@
     </div>
 
     <script>
+        // إعدادات البوت
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
-        let currentCurrency = localStorage.getItem('currency') || 'usd';
+        // جلب البيانات من localStorage
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        let balanceUSD = parseInt(localStorage.getItem('balanceUSD')) || 500;
-        let balanceSYP = parseInt(localStorage.getItem('balanceSYP')) || 6500000;
+        let balance = parseInt(localStorage.getItem('balance')) || 500;
 
-        document.querySelectorAll('.currency-btn').forEach(btn => {
-            if (btn.textContent.includes(currentCurrency === 'usd' ? 'دولار' : 'ليرة')) {
-                btn.classList.add('active');
-            }
-        });
-
-        function updateWalletDisplay() {
-            const display = document.getElementById('walletDisplay');
-            if (currentCurrency === 'usd') {
-                display.textContent = '$' + balanceUSD;
-            } else {
-                display.textContent = balanceSYP.toLocaleString() + ' ل.س';
-            }
-        }
-
-        window.setCurrency = function(currency) {
-            currentCurrency = currency;
-            localStorage.setItem('currency', currency);
+        // تحديث واجهة السلة
+        function updateCart() {
+            const container = document.getElementById('cartItems');
+            const totalElement = document.getElementById('cartTotal');
+            const cartCount = document.getElementById('cartCount');
             
-            document.querySelectorAll('.currency-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            updateWalletDisplay();
-            showCart();
-        };
-
-        function showCart() {
-            let html = '';
-            let totalUSD = 0;
-            let totalSYP = 0;
-
             if (cart.length === 0) {
-                html = `
+                container.innerHTML = `
                     <div class="empty-cart">
                         <i class="fas fa-shopping-cart"></i>
                         <p>السلة فارغة</p>
                     </div>
                 `;
-            } else {
-                cart.forEach((item, i) => {
-                    totalUSD += item.priceUSD || 0;
-                    totalSYP += item.priceSYP || 0;
-                    html += `
-                        <div class="cart-item">
-                            <div class="item-info">
-                                <img src="${item.img || 'https://via.placeholder.com/50'}" class="item-image">
-                                <div class="item-details">
-                                    <h4>${item.name}</h4>
-                                    <div class="item-price">
-                                        ${currentCurrency === 'usd' ? '$' + item.priceUSD : item.priceSYP?.toLocaleString() + ' ل.س'}
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="delete-btn" onclick="removeItem(${i})">✕</button>
-                        </div>
-                    `;
-                });
+                totalElement.textContent = 'المجموع: $0';
+                cartCount.textContent = '0';
+                return;
             }
 
-            document.getElementById('cartItems').innerHTML = html;
-            let totalDisplay = currentCurrency === 'usd' ? '$' + totalUSD : totalSYP.toLocaleString() + ' ل.س';
-            document.getElementById('cartTotal').innerHTML = `المجموع: ${totalDisplay}`;
-            document.getElementById('cartCount').textContent = cart.length;
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price || 0;
+                html += `
+                    <div class="cart-item">
+                        <div class="item-info">
+                            <img src="${item.img || 'https://via.placeholder.com/50'}" class="item-image">
+                            <div class="item-details">
+                                <h4>${item.name}</h4>
+                                <div class="item-price">$${item.price || 0}</div>
+                            </div>
+                        </div>
+                        <button class="delete-btn" onclick="removeItem(${index})">✕</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalElement.textContent = `المجموع: $${total}`;
+            cartCount.textContent = cart.length;
         }
 
-        window.removeItem = function(i) {
-            cart.splice(i, 1);
+        // حذف عنصر من السلة
+        window.removeItem = function(index) {
+            cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
-            showCart();
+            updateCart();
+            showAlert('✅ تم حذف المنتج من السلة');
         };
 
-        window.sendOrder = async function() {
+        // عرض رسالة منبثقة
+        function showAlert(message) {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 2000);
+        }
+
+        // تأكيد الطلب
+        window.checkout = async function() {
             if (cart.length === 0) {
-                alert('⚠️ السلة فارغة');
+                showAlert('⚠️ السلة فارغة');
                 return;
             }
 
-            const gameId = document.getElementById('gameIdInput').value;
+            const gameId = document.getElementById('gameId').value;
             if (!gameId) {
-                alert('⚠️ الرجاء إدخال ID اللعبة');
+                showAlert('⚠️ الرجاء إدخال ID اللعبة');
                 return;
             }
 
-            let totalUSD = cart.reduce((s, i) => s + (i.priceUSD || 0), 0);
-            let totalSYP = cart.reduce((s, i) => s + (i.priceSYP || 0), 0);
-
-            if ((currentCurrency === 'usd' && totalUSD > balanceUSD) || 
-                (currentCurrency === 'syp' && totalSYP > balanceSYP)) {
-                alert('⚠️ رصيد غير كافي');
-                window.location.href = 'wallet.html';
+            const total = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+            
+            if (total > balance) {
+                showAlert('⚠️ رصيد غير كافي');
                 return;
             }
 
-            let itemsList = cart.map(i => `• ${i.name} (${currentCurrency === 'usd' ? '$' + i.priceUSD : i.priceSYP?.toLocaleString() + ' ل.س'})`).join('\n');
-
+            // إعداد رسالة التلجرام
+            let itemsList = cart.map(item => `• ${item.name} ($${item.price})`).join('\n');
             let message = `🛍️ **طلب شراء جديد**
 ━━━━━━━━━━━━━━━━
 📦 المنتجات:
 ${itemsList}
-💰 الإجمالي: ${currentCurrency === 'usd' ? '$' + totalUSD : totalSYP.toLocaleString() + ' ل.س'}
-🎮 ID اللعبة: ${gameId}
+💰 الإجمالي: $${total}
+🎮 ID: ${gameId}
 ⏰ الوقت: ${new Date().toLocaleString()}
 ━━━━━━━━━━━━━━━━`;
 
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-            });
+            try {
+                // إرسال للتلجرام
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
 
-            if (currentCurrency === 'usd') {
-                balanceUSD -= totalUSD;
-                localStorage.setItem('balanceUSD', balanceUSD);
-            } else {
-                balanceSYP -= totalSYP;
-                localStorage.setItem('balanceSYP', balanceSYP);
+                // خصم الرصيد
+                balance -= total;
+                localStorage.setItem('balance', balance);
+                
+                // تفريغ السلة
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // تحديث الواجهة
+                updateCart();
+                document.getElementById('walletBalance').textContent = '$' + balance;
+                
+                showAlert('✅ تم إرسال الطلب بنجاح');
+                
+                // الرجوع للصفحة الرئيسية بعد 2 ثانية
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+                
+            } catch (error) {
+                showAlert('❌ فشل إرسال الطلب');
             }
-
-            let orders = JSON.parse(localStorage.getItem('orders')) || [];
-            orders.push({
-                items: cart,
-                total: currentCurrency === 'usd' ? totalUSD : totalSYP,
-                currency: currentCurrency,
-                gameId: gameId,
-                date: new Date().toISOString()
-            });
-            localStorage.setItem('orders', JSON.stringify(orders));
-
-            alert('✅ تم إرسال الطلب');
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            window.location.href = 'index.html';
         };
 
-        updateWalletDisplay();
-        showCart();
+        // تحديث الرصيد المعروض
+        document.getElementById('walletBalance').textContent = '$' + balance;
+
+        // بدء التطبيق
+        updateCart();
     </script>
 </body>
-    </html>
+</html>
