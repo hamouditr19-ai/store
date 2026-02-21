@@ -12,6 +12,9 @@
     <!-- Swiper CSS (للسلايدر) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -222,7 +225,35 @@
         
         @keyframes slideIn {
             from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(0%); opacity: 1; }
+        }
+        
+        /* الفوتر */
+        .footer {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid #06b6d4;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        
+        .social-icon:hover {
+            background: #06b6d4;
+            transform: translateY(-5px) scale(1.1);
+            color: black;
         }
         
         /* التجاوب مع الجوال */
@@ -337,7 +368,7 @@
         <div class="mb-6 p-4 bg-slate-800/50 rounded-xl">
             <p class="mb-2 font-bold text-cyan-400">➕ إضافة قسم جديد</p>
             <div class="flex gap-2">
-                <input type="text" id="new-cat-name" placeholder="اسم القسم (مثال: ألعاب جديدة)" class="flex-1 p-2 rounded-lg bg-white text-black">
+                <input type="text" id="new-cat-name" placeholder="اسم القسم (مثال: خدمات تيليجرام)" class="flex-1 p-2 rounded-lg bg-white text-black">
                 <button onclick="addNewCategory()" class="bg-green-600 px-4 py-2 rounded-lg text-white font-bold">إضافة</button>
             </div>
         </div>
@@ -363,11 +394,42 @@
     <!-- محتوى المتجر -->
     <main class="container mx-auto px-4 pb-20" id="store-content"></main>
 
+    <!-- الفوتر (التذييل) -->
+    <footer class="footer">
+        <div class="container mx-auto">
+            <!-- أيقونات السوشال ميديا -->
+            <div class="flex justify-center gap-4 mb-8">
+                <a href="https://www.instagram.com/reem216179?igsh=eXV5NnkyczV6bzVo" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@reem_m272?_r=1&_t=ZS-945Up3Qk65t" target="_blank" class="social-icon">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://t.me/ReemStore4" target="_blank" class="social-icon">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                <a href="https://wa.me/963968493135" target="_blank" class="social-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            
+            <!-- حقوق النشر -->
+            <div class="text-center mb-6">
+                <p class="text-cyan-400 text-lg font-bold">© 2026 Reem Store. جميع الحقوق محفوظة.</p>
+            </div>
+            
+            <!-- روابط سياسة الخصوصية وشروط الاستخدام -->
+            <div class="flex justify-center gap-6 text-sm text-slate-400">
+                <a href="#" class="hover:text-cyan-400 transition" onclick="showPrivacyPolicy()">سياسة الخصوصية</a>
+                <span>|</span>
+                <a href="#" class="hover:text-cyan-400 transition" onclick="showTerms()">شروط الاستخدام</a>
+            </div>
+        </div>
+    </footer>
+
     <!-- زر الواتساب العائم -->
     <a href="https://wa.me/963968493135" target="_blank" class="whatsapp-float">
-        <svg fill="white" width="35" height="35" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.888 11.888-11.888 3.176 0 6.161 1.237 8.404 3.48s3.481 5.229 3.481 8.405c0 6.556-5.333 11.888-11.889 11.888-2.016 0-3.998-.512-5.759-1.487l-6.224 1.811zm6.273-3.414l.348.207c1.472.873 3.18 1.336 4.935 1.336 5.232 0 9.492-4.259 9.492-9.491 0-2.535-.987-4.918-2.778-6.709s-4.175-2.779-6.709-2.779c-5.233 0-9.492 4.259-9.492 9.491 0 1.831.526 3.618 1.521 5.165l.226.35-.998 3.644 3.731-.976zm11.33-6.805c-.272-.136-1.61-.795-1.86-.886-.25-.091-.432-.136-.613.136-.182.273-.705.886-.864 1.068-.159.182-.318.204-.59.068-.273-.136-1.15-.424-2.19-1.354-.809-.722-1.355-1.614-1.514-1.886-.159-.272-.017-.42.119-.556.123-.122.272-.318.409-.477.136-.159.182-.272.272-.454.091-.182.045-.341-.023-.477-.068-.136-.613-1.477-.84-2.022-.222-.534-.446-.462-.613-.47h-.523c-.182 0-.477.068-.727.341-.25.273-.954.932-.954 2.272 0 1.341.977 2.636 1.114 2.818.136.182 1.92 2.932 4.651 4.113.65.28 1.157.448 1.551.573.653.208 1.248.178 1.718.108.523-.078 1.61-.659 1.837-1.295.227-.636.227-1.181.159-1.295-.068-.113-.25-.181-.523-.317z"/>
-        </svg>
+        <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
     <!-- توست الإشعارات -->
@@ -384,31 +446,62 @@
             effect: "fade",
         });
 
-        // ------------------ بيانات المتجر ------------------
+        // ------------------ بيانات المتجر مع الأقسام الجديدة ------------------
         let storeData = JSON.parse(localStorage.getItem('reemStoreMaster')) || [
             { 
                 id: 'cat1', 
-                name: '🎮 شدات ببجي PUBG', 
+                name: '🎮 ألعاب', 
                 products: [
-                    { id: 1, name: '60 UC شدة', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
-                    { id: 2, name: '325 UC شدة', price: 25, img: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?w=400' },
-                    { id: 3, name: '660 UC شدة', price: 45, img: 'https://images.unsplash.com/photo-1624396115567-b459252f74bf?w=400' }
+                    { id: 1, name: '60 UC شدة PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400' },
+                    { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
                 ]
             },
             { 
                 id: 'cat2', 
-                name: '🔥 جواهر فري فاير', 
+                name: '📱 تطبيقات', 
                 products: [
-                    { id: 4, name: '100 جوهرة', price: 4, img: 'https://images.unsplash.com/photo-1614680376593-902f74cc0d41?w=400' },
-                    { id: 5, name: '530 جوهرة', price: 18, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
+                    { id: 3, name: 'اشتراك نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
+                    { id: 4, name: 'اشتراك شاهد VIP', price: 12, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
                 ]
             },
             { 
                 id: 'cat3', 
-                name: '💳 بطاقات جوجل بلاي', 
+                name: '🔑 أكواد', 
                 products: [
-                    { id: 6, name: 'بطاقة 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
-                    { id: 7, name: 'بطاقة 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+                    { id: 5, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
+                    { id: 6, name: 'كود iTunes 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+                ]
+            },
+            { 
+                id: 'cat4', 
+                name: '🤖 خدمات تيليجرام', 
+                products: [
+                    { id: 7, name: 'عضوية قنوات (1000 عضو)', price: 20, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' },
+                    { id: 8, name: 'تفاعل منشورات', price: 15, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' }
+                ]
+            },
+            { 
+                id: 'cat5', 
+                name: '💳 رصيد وبطاقات', 
+                products: [
+                    { id: 9, name: 'رصيد STC 50 ريال', price: 13, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
+                    { id: 10, name: 'بطاقة Steam 20$', price: 22, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
+                ]
+            },
+            { 
+                id: 'cat6', 
+                name: '📱 خدمات سوشل ميديا', 
+                products: [
+                    { id: 11, name: 'متابعين انستا (500)', price: 25, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' },
+                    { id: 12, name: 'لايكات تيك توك (1000)', price: 30, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' }
+                ]
+            },
+            { 
+                id: 'cat7', 
+                name: '👥 حسابات مميزة', 
+                products: [
+                    { id: 13, name: 'حساب نتفلكس بريميوم', price: 35, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
+                    { id: 14, name: 'حساب Canva Pro', price: 40, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
                 ]
             }
         ];
@@ -417,8 +510,17 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
+        // ------------------ سياسة الخصوصية والشروط ------------------
+        function showPrivacyPolicy() {
+            alert('سياسة الخصوصية - Reem Store\n\nنحن نلتزم بحماية بياناتك الشخصية وعدم مشاركتها مع أي جهة خارجية. جميع المعاملات آمنة ومشفرة.');
+        }
+
+        function showTerms() {
+            alert('شروط الاستخدام - Reem Store\n\n1. الدفع مقدم قبل الشحن.\n2. يتم الشحن خلال 24 ساعة كحد أقصى.\n3. في حال وجود مشكلة، يتم استرداد المبلغ كاملاً.\n4. يمنع استخدام الخدمات في الأنشطة غير القانونية.');
+        }
+
         // ------------------ التوست ------------------
-        function showToast(msg, type = 'success') {
+        function showToast(msg) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = 'toast';
@@ -449,7 +551,7 @@
                 renderStore();
                 showToast('🔓 أهلاً بك في لوحة التحكم');
             } else {
-                showToast('❌ كلمة سر خطأ', 'error');
+                showToast('❌ كلمة سر خطأ');
             }
         }
 
@@ -630,10 +732,9 @@
             }
 
             const total = cart.reduce((sum, i) => sum + i.price, 0);
-            const productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('%0A');
+            const productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('\n');
 
-            const message = `
-🛍️ **طلب جديد من Reem Store**
+            const message = `🛍️ طلب جديد من Reem Store
 ━━━━━━━━━━━━━━━━
 👤 الاسم: ${name}
 🎮 الآيدي: ${gameId}
@@ -641,8 +742,7 @@
 ${productsList}
 💰 المجموع: $${total.toFixed(2)}
 ⏰ الوقت: ${new Date().toLocaleString()}
-━━━━━━━━━━━━━━━━
-            `;
+━━━━━━━━━━━━━━━━`;
 
             try {
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -672,6 +772,7 @@ ${productsList}
         // ------------------ التهيئة ------------------
         renderStore();
         updateCartUI();
+        updateCategorySelect();
     </script>
 </body>
-        </html>
+    </html>
