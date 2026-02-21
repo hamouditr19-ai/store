@@ -22,7 +22,6 @@
             overflow-x: hidden;
         }
         
-        /* خلفية متحركة مع توهج */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -36,54 +35,32 @@
         .bg-circle {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            animation: float 15s infinite ease-in-out;
+            filter: blur(80px);
+            animation: float 20s infinite;
         }
         
         .circle1 {
-            width: 600px;
-            height: 600px;
+            width: 500px;
+            height: 500px;
             top: -200px;
             right: -200px;
-            background: rgba(255, 0, 128, 0.3);
-            animation: float1 20s infinite;
+            background: rgba(255, 0, 128, 0.2);
         }
         
         .circle2 {
-            width: 500px;
-            height: 500px;
-            bottom: -200px;
-            left: -200px;
-            background: rgba(0, 255, 255, 0.3);
-            animation: float2 18s infinite;
-        }
-        
-        .circle3 {
             width: 400px;
             height: 400px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 0, 255, 0.2);
-            animation: float3 22s infinite;
+            bottom: -200px;
+            left: -200px;
+            background: rgba(0, 255, 255, 0.2);
+            animation-delay: -5s;
         }
         
-        @keyframes float1 {
+        @keyframes float {
             0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-100px) scale(1.3); }
+            50% { transform: translateY(-50px) scale(1.2); }
         }
         
-        @keyframes float2 {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(100px) scale(1.3); }
-        }
-        
-        @keyframes float3 {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.5); }
-        }
-        
-        /* شريط التنقل مع توهج */
         .navbar {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
@@ -95,7 +72,6 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
         }
         
         .logo {
@@ -106,13 +82,7 @@
             -webkit-text-fill-color: transparent;
             cursor: pointer;
             user-select: none;
-            transition: all 0.3s;
-            text-shadow: 0 0 20px rgba(255, 0, 128, 0.5);
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+            transition: transform 0.3s;
         }
         
         .logo:active {
@@ -138,13 +108,11 @@
             transition: all 0.3s;
             text-decoration: none;
             position: relative;
-            box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
         }
         
         .nav-icon:hover {
             background: #ff0080;
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 0 30px #ff0080;
+            transform: scale(1.1);
         }
         
         .cart-count {
@@ -160,16 +128,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 10px #00ffff;
         }
         
-        /* شريط الإعلانات المتحرك */
         .ticker-wrap {
             background: linear-gradient(90deg, #ff0080, #00ffff);
             padding: 12px 0;
             overflow: hidden;
             white-space: nowrap;
-            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
         }
         
         .ticker {
@@ -177,18 +142,10 @@
             animation: ticker 25s linear infinite;
             font-weight: 900;
             color: black;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
         .ticker span {
             margin: 0 30px;
-            font-size: 1.1rem;
-        }
-        
-        .ticker i {
-            margin: 0 10px;
-            color: white;
-            text-shadow: 0 0 10px black;
         }
         
         @keyframes ticker {
@@ -196,22 +153,19 @@
             100% { transform: translateX(-100%); }
         }
         
-        /* البنرات المتحركة */
         .slider {
             width: 100%;
-            height: 220px;
+            height: 200px;
             overflow: hidden;
             position: relative;
-            margin: 20px 0;
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(255, 0, 128, 0.5);
+            margin: 15px 0;
         }
         
         .slides {
             display: flex;
             width: 400%;
             height: 100%;
-            animation: slide 18s infinite;
+            animation: slide 15s infinite;
         }
         
         .slide {
@@ -232,32 +186,15 @@
             background: linear-gradient(90deg, rgba(0,0,0,0.7), transparent);
         }
         
-        .slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            box-shadow: inset 0 0 100px rgba(255, 0, 128, 0.5);
-            z-index: 1;
-        }
-        
         .slide-content {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             color: white;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 900;
-            z-index: 2;
-            text-shadow: 0 0 20px #ff0080, 0 0 40px #00ffff;
-            animation: glow 2s infinite;
-        }
-        
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 20px #ff0080, 0 0 40px #00ffff; }
-            50% { text-shadow: 0 0 40px #ff0080, 0 0 80px #00ffff; }
+            z-index: 1;
+            text-shadow: 0 0 10px #ff0080;
         }
         
         @keyframes slide {
@@ -273,7 +210,6 @@
         .slide3 { background-image: url('https://images.unsplash.com/photo-1614680376593-902f74cc0d41?w=1200'); }
         .slide4 { background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200'); }
         
-        /* الأقسام */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -291,23 +227,18 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(255, 0, 128, 0.2);
         }
         
         .cat-btn:hover {
             background: #ff0080;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 0 30px #ff0080;
+            transform: translateY(-5px);
         }
         
         .cat-btn.active {
             background: linear-gradient(90deg, #ff0080, #00ffff);
             color: black;
-            border-color: transparent;
-            box-shadow: 0 0 30px #00ffff;
         }
         
-        /* المنتجات */
         .products {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -327,43 +258,22 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid #ff0080;
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 15px;
             transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(255, 0, 128, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #ff0080, #00ffff);
-            animation: borderGlow 2s infinite;
-        }
-        
-        @keyframes borderGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
         }
         
         .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-5px);
             border-color: #00ffff;
-            box-shadow: 0 0 40px #00ffff;
         }
         
         .product-card img {
             width: 100%;
             height: 120px;
             object-fit: cover;
-            border-radius: 15px;
+            border-radius: 10px;
             margin-bottom: 10px;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
         
         .product-card h3 {
@@ -381,13 +291,11 @@
         .price-usd {
             color: #00ffff;
             font-weight: 900;
-            text-shadow: 0 0 10px #00ffff;
         }
         
         .price-syp {
             color: #ff0080;
             font-weight: 900;
-            text-shadow: 0 0 10px #ff0080;
         }
         
         .add-btn {
@@ -400,15 +308,12 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
         }
         
         .add-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 30px #ff0080;
         }
         
-        /* الإحصائيات */
         .stats {
             display: flex;
             justify-content: center;
@@ -424,20 +329,12 @@
             padding: 12px 20px;
             min-width: 100px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
-            animation: statGlow 3s infinite;
-        }
-        
-        @keyframes statGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(0, 255, 255, 0.3); }
         }
         
         .stat-number {
             font-size: 1.8rem;
             font-weight: 900;
             color: #00ffff;
-            text-shadow: 0 0 15px #00ffff;
         }
         
         .stat-label {
@@ -445,7 +342,6 @@
             color: #aaa;
         }
         
-        /* لوحة التحكم المخفية */
         .admin-overlay {
             display: none;
             position: fixed;
@@ -468,17 +364,14 @@
             width: 90%;
             max-width: 400px;
             color: white;
-            box-shadow: 0 0 50px rgba(255, 0, 128, 0.5);
         }
         
         .admin-panel h2 {
             color: #ff0080;
             margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 0 0 10px #ff0080;
         }
         
-        .admin-input {
+        .admin-input, .admin-select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -486,7 +379,6 @@
             border: 1px solid #00ffff;
             border-radius: 10px;
             color: white;
-            box-shadow: 0 0 10px rgba(0,255,255,0.3);
         }
         
         .admin-btn {
@@ -498,25 +390,15 @@
             color: black;
             font-weight: 700;
             cursor: pointer;
-            margin: 5px 0;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
         }
         
-        .admin-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px #ff0080;
-        }
-        
-        /* الفوتر */
         .footer {
             margin-top: 50px;
             padding: 30px 20px;
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
-            border-top: 2px solid #ff0080;
+            border-top: 1px solid #ff0080;
             text-align: center;
-            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
         }
         
         .social-links {
@@ -538,14 +420,12 @@
             color: #ff0080;
             font-size: 1.5rem;
             transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(255, 0, 128, 0.3);
         }
         
         .social-link:hover {
             background: #ff0080;
             color: black;
-            transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 0 30px #ff0080;
+            transform: scale(1.1);
         }
         
         .footer-links a {
@@ -553,12 +433,6 @@
             text-decoration: none;
             margin: 0 15px;
             font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #ff0080;
-            text-shadow: 0 0 10px #ff0080;
         }
         
         .copyright {
@@ -572,7 +446,6 @@
     <div class="bg-animation">
         <div class="bg-circle circle1"></div>
         <div class="bg-circle circle2"></div>
-        <div class="bg-circle circle3"></div>
     </div>
 
     <div class="navbar">
@@ -590,29 +463,18 @@
     <div class="ticker-wrap">
         <div class="ticker">
             <span>🔥 Reem Store | ريم ستور 🔥</span>
-            <i class="fas fa-star"></i>
             <span>🎮 شحن PUBG - Free Fire</span>
-            <i class="fas fa-star"></i>
             <span>💳 Google Play - Apple</span>
-            <i class="fas fa-star"></i>
             <span>⚡ توصيل فوري</span>
         </div>
     </div>
 
     <div class="slider">
         <div class="slides">
-            <div class="slide slide1">
-                <div class="slide-content">🎮 PUBG</div>
-            </div>
-            <div class="slide slide2">
-                <div class="slide-content">🔥 Free Fire</div>
-            </div>
-            <div class="slide slide3">
-                <div class="slide-content">💳 Google Play</div>
-            </div>
-            <div class="slide slide4">
-                <div class="slide-content">✨ Reem Store</div>
-            </div>
+            <div class="slide slide1"><div class="slide-content">🎮 PUBG</div></div>
+            <div class="slide slide2"><div class="slide-content">🔥 Free Fire</div></div>
+            <div class="slide slide3"><div class="slide-content">💳 Google Play</div></div>
+            <div class="slide slide4"><div class="slide-content">✨ Reem Store</div></div>
         </div>
     </div>
 
@@ -644,7 +506,7 @@
             <h2>🔐 لوحة التحكم</h2>
             <input type="password" id="adminPass" class="admin-input" placeholder="كلمة السر">
             <button class="admin-btn" onclick="checkAdminPass()">دخول</button>
-            <button class="admin-btn" onclick="hideAdminPanel()" style="background: #ff0080;">إلغاء</button>
+            <button class="admin-btn" onclick="hideAdminPanel()" style="background: #ff0080; margin-top: 10px;">إلغاء</button>
         </div>
     </div>
 
@@ -743,6 +605,7 @@
             alert('✅ تمت الإضافة للسلة');
         };
 
+        // الضغط المطول على الشعار
         const logo = document.getElementById('mainLogo');
         const adminOverlay = document.getElementById('adminOverlay');
         let pressTimer;
@@ -782,4 +645,4 @@
         showProducts();
     </script>
 </body>
-    </html>
+</html>
