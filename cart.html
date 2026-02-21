@@ -6,6 +6,7 @@
     <title>Reem Store | السلة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -30,6 +31,7 @@
             justify-content: center;
             gap: 10px;
             margin: 15px 0;
+            flex-wrap: wrap;
         }
         .nav-btn {
             background: #1e293b;
@@ -81,6 +83,16 @@
             border: 1px solid #06b6d4;
             color: white;
         }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 2px solid #06b6d4;
+        }
+        .copyright {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -91,11 +103,20 @@
     <div class="nav-buttons">
         <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
         <a href="wallet.html" class="nav-btn">💰 المحفظة</a>
+        <a href="admin.html" class="nav-btn">👑 Admin</a>
     </div>
 
     <div class="container" id="cart-container"></div>
 
+    <div class="footer">
+        <div class="copyright">
+            © 2026 Reem Store. جميع الحقوق محفوظة.
+        </div>
+    </div>
+
     <script>
+        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
+        const CHAT_ID = '7741275208';
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
         function showCart() {
@@ -137,6 +158,13 @@
             let total = cart.reduce((s, i) => s + i.price, 0);
             let list = cart.map(i => i.name).join('، ');
             let msg = `🛍️ طلب شراء\n👤 ID: ${userId}\n📦 ${list}\n💰 $${total}`;
+            
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+            });
+
             alert('✅ تم إرسال الطلب');
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
