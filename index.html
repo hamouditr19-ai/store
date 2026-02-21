@@ -28,7 +28,24 @@
             padding-bottom: 20px;
         }
         
-        /* الشريط المتحرك */
+        /* شريط الشعار */
+        .hero {
+            background: #0f172a;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* الشريط المتحرك (تحت ريم ستور) */
         .ticker-wrap {
             background: linear-gradient(90deg, #06b6d4, #ec4899);
             padding: 10px 0;
@@ -52,23 +69,6 @@
         @keyframes ticker {
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
-        }
-        
-        /* شريط الشعار */
-        .hero {
-            background: #0f172a;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 3px solid var(--accent);
-        }
-        
-        .hero h1 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            cursor: pointer;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         /* البنرات */
@@ -140,11 +140,11 @@
             color: #94a3b8;
         }
         
-        /* أزرار التنقل صغيرة */
+        /* أزرار التنقل الصغيرة */
         .nav-row {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             padding: 8px;
             background: #0f172a;
             border-bottom: 2px solid var(--accent);
@@ -152,14 +152,16 @@
         
         .nav-icon-btn {
             background: #1e293b;
-            padding: 6px 15px;
-            border-radius: 30px;
+            padding: 5px 12px;
+            border-radius: 20px;
             border: 1px solid var(--accent);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
             color: white;
+            min-width: 40px;
+            text-align: center;
         }
         
         .nav-icon-btn:hover {
@@ -194,7 +196,7 @@
             color: black;
         }
         
-        /* المحفظة - مطابقة للصورة */
+        /* المحفظة */
         .wallet-container {
             max-width: 400px;
             margin: 10px auto;
@@ -210,6 +212,17 @@
             color: var(--accent);
             text-align: center;
             margin-bottom: 10px;
+        }
+        
+        .wallet-balance {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: black;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 15px;
         }
         
         .wallet-subtitle {
@@ -467,7 +480,12 @@
 </head>
 <body>
 
-    <!-- الشريط المتحرك -->
+    <!-- شريط الشعار (Reem Store تفتح لوحة التحكم) -->
+    <div class="hero">
+        <h1 onclick="openAdminModal()">✨ Reem Store | ريم ستور ✨</h1>
+    </div>
+
+    <!-- الشريط المتحرك تحت ريم ستور -->
     <div class="ticker-wrap">
         <div class="ticker">
             <span>🔥 Reem Store | ريم ستور 🔥</span>
@@ -475,11 +493,6 @@
             <span>💳 Google Play - Apple</span>
             <span>⚡ توصيل فوري</span>
         </div>
-    </div>
-
-    <!-- شريط الشعار (Reem Store تفتح لوحة التحكم) -->
-    <div class="hero">
-        <h1 onclick="openAdminModal()">✨ Reem Store | ريم ستور ✨</h1>
     </div>
 
     <!-- البنرات المتحركة -->
@@ -539,18 +552,26 @@
     <div id="cart-page" class="page hidden">
         <div class="cart-container">
             <h2 class="text-lg font-bold mb-2 text-center text-cyan-400">🛒 السلة</h2>
+            
+            <!-- عرض الرصيد الحالي -->
+            <div class="wallet-balance mb-3" id="cart-balance">رصيدك: $0</div>
+            
             <div id="cart-items-container"></div>
             <div class="cart-total" id="cart-total-display">المجموع: $0</div>
             <input type="text" id="customer-id" class="cart-input" placeholder="🎮 ID الحساب">
-            <button class="btn-primary" onclick="sendOrder()">✅ تأكيد</button>
+            
+            <button class="btn-primary" onclick="buyWithBalance()">💳 اشتري بالرصيد</button>
             <button class="btn-secondary" onclick="showPage('home')">رجوع</button>
         </div>
     </div>
 
-    <!-- صفحة المحفظة - مطابقة للصور -->
+    <!-- صفحة المحفظة -->
     <div id="wallet-page" class="page hidden">
         <div class="wallet-container">
-            <h2 class="wallet-title">💰 إيداع شام كاش</h2>
+            <h2 class="wallet-title">💰 محفظتي</h2>
+            
+            <!-- عرض الرصيد الحالي -->
+            <div class="wallet-balance" id="wallet-balance-display">$0</div>
             
             <div class="wallet-subtitle">عنوان المحفظة</div>
             <div class="wallet-code-box">
@@ -591,7 +612,7 @@
             </div>
             <div id="receipt-name" class="text-green-400 text-xs mb-2"></div>
 
-            <button class="btn-primary" onclick="sendRecharge()">💰 تأكيد الإيداع</button>
+            <button class="btn-primary" onclick="sendRecharge()">💰 إضافة رصيد</button>
             <button class="btn-secondary" onclick="showPage('home')">رجوع</button>
         </div>
     </div>
@@ -672,6 +693,7 @@
         let selectedFile = null;
         let visitors = parseInt(localStorage.getItem('visitors')) || 0;
         let selectedCurrency = 'USD';
+        let currentUser = localStorage.getItem('currentUser') || 'default';
 
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
@@ -687,6 +709,26 @@
                 toast.style.opacity = '0';
                 setTimeout(() => toast.remove(), 300);
             }, 2000);
+        }
+
+        // ================== الحصول على رصيد المستخدم ==================
+        function getUserBalance() {
+            return userBalances[currentUser] || 0;
+        }
+
+        // ================== تحديث الرصيد ==================
+        function updateUserBalance(newBalance) {
+            userBalances[currentUser] = newBalance;
+            localStorage.setItem('userBalances', JSON.stringify(userBalances));
+        }
+
+        // ================== عرض الرصيد في الواجهات ==================
+        function updateBalanceDisplays() {
+            let balance = getUserBalance();
+            let balanceElem = document.getElementById('wallet-balance-display');
+            let cartBalanceElem = document.getElementById('cart-balance');
+            if (balanceElem) balanceElem.innerText = '$' + balance;
+            if (cartBalanceElem) cartBalanceElem.innerText = 'رصيدك: $' + balance;
         }
 
         // ================== تحديث الإحصائيات ==================
@@ -755,7 +797,13 @@
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
-            if (page === 'cart') updateCartDisplay();
+            if (page === 'cart') {
+                updateCartDisplay();
+                updateBalanceDisplays();
+            }
+            if (page === 'wallet') {
+                updateBalanceDisplays();
+            }
         }
 
         // ================== السلة ==================
@@ -785,23 +833,41 @@
             showToast('🗑️ تم');
         }
 
-        async function sendOrder() {
+        // ================== الشراء بالرصيد ==================
+        async function buyWithBalance() {
             let gameId = document.getElementById('customer-id').value;
-            
-            if (!gameId || cart.length === 0) {
-                showToast('⚠️ أكمل البيانات');
+            let total = cart.reduce((s,i) => s + i.price, 0);
+            let balance = getUserBalance();
+
+            if (!gameId) {
+                showToast('⚠️ أدخل ID الحساب');
                 return;
             }
+
+            if (cart.length === 0) {
+                showToast('⚠️ السلة فارغة');
+                return;
+            }
+
+            if (balance < total) {
+                showToast('❌ رصيدك غير كافٍ');
+                return;
+            }
+
+            // خصم الرصيد
+            let newBalance = balance - total;
+            updateUserBalance(newBalance);
             
-            let total = cart.reduce((s,i) => s + i.price, 0);
+            // تحضير رسالة الطلب
             let list = cart.map(i => `- ${i.name}`).join('\n');
-            
-            let msg = `🛍️ طلب جديد
+            let msg = `🛍️ طلب جديد (مدفوع بالرصيد)
 ━━━━━━━━━━━━━━━━
 🎮 ID: ${gameId}
 📦 المنتجات:
 ${list}
-💰 المبلغ: $${total}`;
+💰 المبلغ: $${total}
+💳 الرصيد المتبقي: $${newBalance}
+━━━━━━━━━━━━━━━━`;
 
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
@@ -809,7 +875,7 @@ ${list}
                 body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
             });
 
-            showToast('✅ تم الإرسال');
+            showToast('✅ تم الشراء بنجاح');
             
             orders.push({ total });
             localStorage.setItem('orders', JSON.stringify(orders));
@@ -819,6 +885,7 @@ ${list}
             document.getElementById('cart-count').innerText = '0';
             
             updateStats();
+            updateBalanceDisplays();
             showPage('home');
         }
 
@@ -842,7 +909,7 @@ ${list}
         }
 
         async function sendRecharge() {
-            let amount = document.getElementById('recharge-amount').value;
+            let amount = parseFloat(document.getElementById('recharge-amount').value);
             let trans = document.getElementById('recharge-trans').value;
 
             if (!amount || amount <= 0 || !trans || !selectedFile) {
@@ -873,13 +940,18 @@ ${list}
                     body: JSON.stringify({ chat_id: CHAT_ID, photo: base64 })
                 });
 
-                showToast('✅ تم الإرسال');
+                // إضافة الرصيد للمستخدم
+                let currentBalance = getUserBalance();
+                updateUserBalance(currentBalance + amount);
+
+                showToast('✅ تم إضافة الرصيد');
                 
                 document.getElementById('recharge-amount').value = '';
                 document.getElementById('recharge-trans').value = '';
                 document.getElementById('receipt-name').innerHTML = '';
                 selectedFile = null;
                 
+                updateBalanceDisplays();
                 showPage('home');
             };
         }
@@ -1010,6 +1082,7 @@ ${list}
         document.getElementById('cart-count').innerText = cart.length;
         updateStats();
         updateCategorySelect();
+        updateBalanceDisplays();
     </script>
 </body>
-</html>
+    </html>
