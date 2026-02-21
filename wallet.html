@@ -18,8 +18,6 @@
             background: #0a0f1f;
             color: white;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
         }
         
         .bg-animation {
@@ -116,7 +114,6 @@
             border: 2px solid #ff0080;
             border-radius: 30px;
             padding: 30px;
-            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
         }
         
         .balance-card {
@@ -160,7 +157,6 @@
             color: black;
             font-weight: 900;
             cursor: pointer;
-            transition: all 0.3s;
         }
         
         .copy-btn:hover {
@@ -183,10 +179,39 @@
         
         .warning-box i {
             color: #ff0080;
-            margin-left: 5px;
         }
         
-        .amount-input {
+        .currency-section {
+            margin: 20px 0;
+        }
+        
+        .currency-title {
+            color: #ff0080;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .currency-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .currency-option {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .currency-option.active {
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            color: black;
+        }
+        
+        .amount-input, .operation-input {
             width: 100%;
             padding: 15px;
             background: rgba(0, 0, 0, 0.3);
@@ -198,14 +223,6 @@
         }
         
         .operation-input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #ff0080;
-            border-radius: 10px;
-            color: white;
-            font-size: 1.1rem;
-            margin: 15px 0;
             direction: ltr;
         }
         
@@ -216,7 +233,6 @@
             text-align: center;
             margin: 20px 0;
             cursor: pointer;
-            transition: all 0.3s;
         }
         
         .file-upload:hover {
@@ -238,7 +254,6 @@
             font-weight: 900;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s;
             margin: 20px 0;
         }
         
@@ -264,6 +279,14 @@
             justify-content: space-between;
             padding: 10px;
             border-bottom: 1px solid #00ffff;
+        }
+        
+        .transaction-item.success {
+            color: #00ff00;
+        }
+        
+        .transaction-item.pending {
+            color: #ffff00;
         }
         
         .footer {
@@ -308,8 +331,16 @@
 
             <div class="warning-box">
                 <p><i class="fas fa-exclamation-triangle"></i> تنبيهات هامة</p>
-                <p>• الرجاء عدم استخدام خيار إخفاء الهوية عند التحويل</p>
-                <p>• الرجاء عدم كتابة أي ملاحظة عند إرسال المبلغ</p>
+                <p>• لا تستخدم خيار إخفاء الهوية عند التحويل</p>
+                <p>• لا تكتب أي ملاحظة عند إرسال المبلغ</p>
+            </div>
+
+            <div class="currency-section">
+                <div class="currency-title">اختر العملة</div>
+                <div class="currency-options">
+                    <div class="currency-option active" onclick="selectCurrency('usd')" id="usdOption">🇺🇸 دولار أمريكي</div>
+                    <div class="currency-option" onclick="selectCurrency('syp')" id="sypOption">🇸🇾 ليرة سورية</div>
+                </div>
             </div>
 
             <input type="number" id="amountInput" class="amount-input" placeholder="المبلغ المدفوع">
@@ -342,11 +373,19 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
+        let selectedCurrency = 'usd';
         let balance = parseInt(localStorage.getItem('balance')) || 0;
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
         let selectedFile = null;
 
         document.getElementById('balanceAmount').textContent = '$' + balance;
+
+        window.selectCurrency = function(currency) {
+            selectedCurrency = currency;
+            document.getElementById('usdOption').classList.remove('active');
+            document.getElementById('sypOption').classList.remove('active');
+            document.getElementById(currency + 'Option').classList.add('active');
+        };
 
         window.copyCode = function() {
             navigator.clipboard.writeText(document.getElementById('paymentCode').textContent);
@@ -383,10 +422,11 @@
             reader.readAsDataURL(selectedFile);
             reader.onload = async function() {
                 let base64Image = reader.result.split(',')[1];
+                let currencyText = selectedCurrency === 'usd' ? 'دولار' : 'ليرة سورية';
 
                 let message = `💰 **طلب إيداع جديد**
 ━━━━━━━━━━━━━━━━
-💵 المبلغ: $${amount}
+💵 المبلغ: ${amount} ${currencyText}
 🔢 رقم العملية: ${operationNumber}
 ⏰ الوقت: ${new Date().toLocaleString()}
 ━━━━━━━━━━━━━━━━`;
@@ -410,6 +450,7 @@
                 let transaction = {
                     id: Date.now(),
                     amount: amount,
+                    currency: selectedCurrency,
                     operation: operationNumber,
                     date: new Date().toLocaleString(),
                     status: 'قيد المراجعة'
@@ -420,7 +461,6 @@
                 alert('✅ تم إرسال طلب الإيداع');
                 showTransactions();
                 
-                // تفريغ الحقول
                 document.getElementById('amountInput').value = '';
                 document.getElementById('operationInput').value = '';
                 document.getElementById('fileName').innerHTML = '';
@@ -438,7 +478,7 @@
             list.innerHTML = transactions.slice(-5).reverse().map(t => `
                 <div class="transaction-item ${t.status === 'مكتمل' ? 'success' : 'pending'}">
                     <span>${t.date}</span>
-                    <span>$${t.amount}</span>
+                    <span>${t.currency === 'usd' ? '$' + t.amount : t.amount + ' ل.س'}</span>
                     <span>${t.status}</span>
                 </div>
             `).join('');
