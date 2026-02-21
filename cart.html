@@ -81,15 +81,15 @@
         
         .nav-icons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
         
         .nav-icon {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #ff0080;
-            border-radius: 50%;
             width: 45px;
             height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #ff0080;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,7 +101,8 @@
         
         .nav-icon:hover {
             background: #ff0080;
-            transform: scale(1.1);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px #ff0080;
         }
         
         .cart-container {
@@ -117,6 +118,14 @@
             border-radius: 30px;
             padding: 30px;
             box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
         }
         
         .cart-item {
@@ -198,10 +207,15 @@
 
     <div class="cart-container">
         <div class="cart-card">
+            <div class="balance-card">
+                <div>رصيدك الحالي</div>
+                <div style="font-size: 2rem; font-weight: 900; color: black;" id="userBalance">$0</div>
+            </div>
+
             <h2 style="text-align: center; margin-bottom: 20px;">🛒 سلة المشتريات</h2>
             <div id="cartItems"></div>
             <div class="cart-total" id="cartTotal">المجموع: $0</div>
-            <button class="buy-btn" onclick="sendOrder()">📦 تأكيد الطلب</button>
+            <button class="buy-btn" onclick="buyWithBalance()">💳 اشتري بالرصيد</button>
         </div>
     </div>
 
@@ -215,6 +229,15 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let balances = JSON.parse(localStorage.getItem('balances')) || {};
+
+        function getUserBalance() {
+            return balances['user'] || 0;
+        }
+
+        function updateBalanceDisplay() {
+            document.getElementById('userBalance').textContent = '$' + getUserBalance();
+        }
 
         function showCart() {
             let html = '';
@@ -247,13 +270,24 @@
             showCart();
         }
 
-        async function sendOrder() {
+        async function buyWithBalance() {
             if (cart.length === 0) {
                 alert('⚠️ السلة فارغة');
                 return;
             }
 
             let total = cart.reduce((s, i) => s + i.price, 0);
+            let balance = getUserBalance();
+
+            if (balance < total) {
+                alert('❌ رصيدك غير كافٍ');
+                return;
+            }
+
+            // خصم الرصيد
+            balances['user'] = balance - total;
+            localStorage.setItem('balances', JSON.stringify(balances));
+
             let itemsList = cart.map(i => `• ${i.name} ($${i.price})`).join('\n');
 
             let message = `🛍️ **طلب شراء جديد**
@@ -261,6 +295,7 @@
 📦 المنتجات:
 ${itemsList}
 💰 الإجمالي: $${total}
+💳 الرصيد المتبقي: $${balances['user']}
 ⏰ الوقت: ${new Date().toLocaleString()}
 ━━━━━━━━━━━━━━━━`;
 
@@ -270,13 +305,14 @@ ${itemsList}
                 body: JSON.stringify({ chat_id: CHAT_ID, text: message })
             });
 
-            alert('✅ تم إرسال الطلب');
+            alert('✅ تم الشراء بنجاح');
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             window.location.href = 'index.html';
         }
 
         showCart();
+        updateBalanceDisplay();
     </script>
 </body>
 </html>
