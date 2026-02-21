@@ -2,381 +2,485 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحفظة | ريم ستوري</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reem Store | المحفظة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
         }
-
-        :root {
-            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-primary: #333;
-            --accent: #8e2de2;
-        }
-
+        
         body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0f1f;
+            color: white;
             min-height: 100vh;
-            background: var(--bg-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite;
+        }
+        
+        .circle1 {
+            width: 500px;
+            height: 500px;
+            top: -200px;
+            right: -200px;
+            background: rgba(255, 0, 128, 0.2);
+        }
+        
+        .circle2 {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            left: -200px;
+            background: rgba(0, 255, 255, 0.2);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-50px) scale(1.2); }
+        }
+        
+        .navbar {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff0080;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-icon {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            text-decoration: none;
         }
-
+        
+        .nav-icon:hover {
+            background: #ff0080;
+            transform: scale(1.1);
+        }
+        
+        .currency-bar {
+            background: rgba(0, 255, 255, 0.1);
+            border-bottom: 1px solid #00ffff;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .currency-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .currency-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 20px;
+            padding: 5px 15px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .currency-btn.active {
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            color: black;
+            font-weight: 700;
+        }
+        
         .wallet-container {
             max-width: 500px;
-            width: 100%;
-            background: var(--card-bg);
+            margin: 30px auto;
+            padding: 20px;
+        }
+        
+        .wallet-card {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-            padding: 30px;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--accent);
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            font-weight: 900;
-        }
-
-        .balance-card {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            color: white;
-            padding: 30px;
+            border: 2px solid #ff0080;
             border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, #ff0080, #00ffff);
+            border-radius: 20px;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
         }
-
+        
         .balance-label {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.7);
         }
-
+        
         .balance-amount {
-            font-size: 4rem;
+            font-size: 2.5rem;
             font-weight: 900;
-            line-height: 1;
+            color: black;
+        }
+        
+        .balance-amount small {
+            font-size: 1rem;
+        }
+        
+        .code-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: #00ffff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 20px;
+            color: black;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #ff0080;
+            color: white;
+        }
+        
+        .warning-box {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0080;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .warning-box p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        
+        .warning-box i {
+            color: #ff0080;
+            margin-left: 5px;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ff0080;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            background: rgba(255, 0, 128, 0.1);
+        }
+        
+        .file-name {
+            color: #00ffff;
             margin: 10px 0;
         }
-
-        .balance-currency {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .qr-section {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 25px;
-            margin: 20px 0;
-            text-align: center;
-            border: 2px dashed #8e2de2;
-        }
-
-        .qr-placeholder {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .qr-placeholder i {
-            font-size: 5rem;
-            margin-bottom: 10px;
-        }
-
-        .payment-code {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 15px 0;
-            border: 2px solid #8e2de2;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-        }
-
-        .payment-code span {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #333;
-            direction: ltr;
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            color: white;
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #ff0080, #00ffff);
             border: none;
-            padding: 10px 25px;
             border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .copy-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(142, 45, 226, 0.4);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .info-item {
-            background: #f0f0f0;
             padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .info-label {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-
-        .info-value {
-            color: var(--accent);
+            color: black;
             font-weight: 900;
-            font-size: 1.3rem;
-        }
-
-        .upload-section {
-            border: 3px dashed #8e2de2;
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            margin: 25px 0;
+            font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(142, 45, 226, 0.05);
+            transition: all 0.3s;
         }
-
-        .upload-section:hover {
-            background: rgba(142, 45, 226, 0.1);
-            transform: translateY(-5px);
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px #ff0080;
         }
-
-        .upload-section input {
-            display: none;
+        
+        .transactions-section {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
         }
-
-        .upload-icon {
-            font-size: 4rem;
-            color: #8e2de2;
+        
+        .transactions-section h3 {
+            color: #ff0080;
             margin-bottom: 15px;
         }
-
-        .btn {
-            background: linear-gradient(135deg, #8e2de2, #4a00e0);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 15px 0;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(142, 45, 226, 0.4);
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 20px;
-        }
-
-        .transaction-history {
-            margin-top: 30px;
-        }
-
-        .history-item {
+        
+        .transaction-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 10px;
+            border-bottom: 1px solid #00ffff;
         }
-
-        .history-item.success {
-            color: #00b894;
+        
+        .transaction-item.success {
+            color: #00ff00;
         }
-
-        .history-item.pending {
-            color: #fdcb6e;
+        
+        .transaction-item.pending {
+            color: #ffff00;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ff0080;
+        }
+        
+        .copyright {
+            color: #aaa;
+            font-size: 0.8rem;
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation">
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </div>
+
+    <div class="navbar">
+        <div class="logo">Reem Store</div>
+        <div class="nav-icons">
+            <a href="index.html" class="nav-icon"><i class="fas fa-home"></i></a>
+            <a href="cart.html" class="nav-icon"><i class="fas fa-shopping-cart"></i></a>
+            <a href="wallet.html" class="nav-icon"><i class="fas fa-wallet"></i></a>
+            <a href="admin.html" class="nav-icon"><i class="fas fa-cog"></i></a>
+        </div>
+    </div>
+
+    <div class="currency-bar">
+        <div class="currency-selector">
+            <button class="currency-btn" onclick="setCurrency('usd')">🇺🇸 دولار</button>
+            <button class="currency-btn" onclick="setCurrency('syp')">🇸🇾 ليرة</button>
+        </div>
+        <div class="wallet-balance" id="walletDisplay">$500</div>
+    </div>
+
     <div class="wallet-container">
-        <h1>💳 المحفظة</h1>
-
-        <!-- بطاقة الرصيد -->
-        <div class="balance-card">
-            <div class="balance-label">رصيدك الحالي</div>
-            <div class="balance-amount" id="walletBalance">500</div>
-            <div class="balance-currency">دولار سوري</div>
-        </div>
-
-        <!-- قسم الباركود والدفع -->
-        <div class="qr-section">
-            <div class="qr-placeholder">
-                <i class="fas fa-qrcode"></i>
-                <span>رمز الدفع</span>
+        <div class="wallet-card">
+            <div class="balance-card">
+                <div class="balance-label">رصيدك الحالي</div>
+                <div class="balance-amount" id="balanceAmount">$500</div>
             </div>
 
-            <div class="payment-code">
-                <span id="paymentCode">SYR-9876-5432-10</span>
-                <button class="copy-btn" onclick="copyPaymentCode()">
-                    <i class="fas fa-copy"></i> نسخ
-                </button>
+            <div class="code-box">
+                <span id="paymentCode">17ac4a94cb1ed493e47a8526892294dd</span>
+                <button class="copy-btn" onclick="copyCode()">نسخ</button>
             </div>
 
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">المبلغ</div>
-                    <div class="info-value" id="amountToPay">500</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">رقم العملية</div>
-                    <div class="info-value" id="operationNumber">7654321</div>
-                </div>
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> تعليمات هامة:</p>
+                <p>• لا تستخدم خيار إخفاء الهوية</p>
+                <p>• لا تكتب أي ملاحظة عند التحويل</p>
+                <p>• المبلغ سيضاف تلقائياً بعد التأكيد</p>
+            </div>
+
+            <div class="file-upload" onclick="document.getElementById('receipt').click()">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                <div>اضغط لرفع صورة الإشعار</div>
+                <input type="file" id="receipt" accept="image/*" style="display: none;" onchange="handleFile(this)">
+            </div>
+            <div id="fileName" class="file-name"></div>
+
+            <button class="submit-btn" onclick="sendRequest()">💰 إرسال طلب الإيداع</button>
+
+            <div class="transactions-section">
+                <h3>📋 سجل المعاملات</h3>
+                <div id="transactionsList"></div>
             </div>
         </div>
+    </div>
 
-        <!-- رفع صورة الإشعار -->
-        <div class="upload-section" onclick="document.getElementById('receiptUpload').click()">
-            <i class="fas fa-cloud-upload-alt upload-icon"></i>
-            <p>اضغط لرفع صورة الإشعار</p>
-            <p style="font-size: 0.9rem; color: #666;">(صورة التحويل أو إيصال الدفع)</p>
-            <input type="file" id="receiptUpload" accept="image/*">
+    <div class="footer">
+        <div class="copyright">
+            © 2026 Reem Store. جميع الحقوق محفوظة.
         </div>
-
-        <!-- زر شحن الرصيد -->
-        <button class="btn" onclick="chargeWallet()">
-            <i class="fas fa-bolt"></i> شحن الرصيد
-        </button>
-
-        <!-- سجل المعاملات -->
-        <div class="transaction-history">
-            <h3 style="margin-bottom: 15px;">📋 آخر المعاملات</h3>
-            <div id="transactionsList">
-                <!-- المعاملات بتتحمل من JavaScript -->
-            </div>
-        </div>
-
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-right"></i> العودة للرئيسية
-        </a>
     </div>
 
     <script>
-        // بيانات المحفظة
-        let balance = parseInt(localStorage.getItem('walletBalance')) || 500;
+        const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
+        const CHAT_ID = '7741275208';
+
+        let currentCurrency = localStorage.getItem('currency') || 'usd';
+        let balanceUSD = parseInt(localStorage.getItem('balanceUSD')) || 500;
+        let balanceSYP = parseInt(localStorage.getItem('balanceSYP')) || 6500000;
+        let selectedFile = null;
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-        // عرض الرصيد
-        document.getElementById('walletBalance').innerText = balance;
+        document.querySelectorAll('.currency-btn').forEach(btn => {
+            if (btn.textContent.includes(currentCurrency === 'usd' ? 'دولار' : 'ليرة')) {
+                btn.classList.add('active');
+            }
+        });
 
-        // توليد رقم عملية عشوائي
-        function generateOperationNumber() {
-            return Math.floor(1000000 + Math.random() * 9000000);
+        function updateBalanceDisplay() {
+            const display = document.getElementById('walletDisplay');
+            const balanceDisplay = document.getElementById('balanceAmount');
+            
+            if (currentCurrency === 'usd') {
+                display.textContent = '$' + balanceUSD;
+                balanceDisplay.textContent = '$' + balanceUSD;
+            } else {
+                display.textContent = balanceSYP.toLocaleString() + ' ل.س';
+                balanceDisplay.textContent = balanceSYP.toLocaleString() + ' ل.س';
+            }
         }
-        document.getElementById('operationNumber').innerText = generateOperationNumber();
 
-        // نسخ كود الدفع
-        window.copyPaymentCode = function() {
-            const code = document.getElementById('paymentCode').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                alert('✅ تم نسخ الكود: ' + code);
+        window.setCurrency = function(currency) {
+            currentCurrency = currency;
+            localStorage.setItem('currency', currency);
+            
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            updateBalanceDisplay();
         };
 
-        // شحن الرصيد
-        window.chargeWallet = function() {
-            const fileInput = document.getElementById('receiptUpload');
-            if(fileInput.files.length === 0) {
-                alert('❌ الرجاء رفع صورة الإشعار أولاً');
+        window.copyCode = function() {
+            navigator.clipboard.writeText(document.getElementById('paymentCode').textContent);
+            alert('✅ تم نسخ كود الدفع');
+        };
+
+        window.handleFile = function(input) {
+            selectedFile = input.files[0];
+            if (selectedFile) {
+                document.getElementById('fileName').innerHTML = '📸 ' + selectedFile.name;
+            }
+        };
+
+        window.sendRequest = async function() {
+            if (!selectedFile) {
+                alert('⚠️ يرجى رفع صورة الإشعار');
                 return;
             }
 
-            const amount = document.getElementById('amountToPay').innerText;
-            const opNumber = document.getElementById('operationNumber').innerText;
+            let reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onload = async function() {
+                let base64 = reader.result.split(',')[1];
 
-            // إضافة معاملة جديدة
-            const transaction = {
-                id: Date.now(),
-                type: 'شحن',
-                amount: amount,
-                date: new Date().toLocaleDateString('ar-EG'),
-                status: 'قيد المراجعة'
+                let message = `💰 **طلب إيداع جديد**
+━━━━━━━━━━━━━━━━
+💰 المبلغ: ${currentCurrency === 'usd' ? '$' + balanceUSD : balanceSYP.toLocaleString() + ' ل.س'}
+⏰ الوقت: ${new Date().toLocaleString()}
+━━━━━━━━━━━━━━━━`;
+
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+                });
+
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        photo: base64,
+                        caption: `📸 صورة إشعار دفع`
+                    })
+                });
+
+                let transaction = {
+                    id: Date.now(),
+                    amount: currentCurrency === 'usd' ? balanceUSD : balanceSYP,
+                    currency: currentCurrency,
+                    date: new Date().toLocaleString(),
+                    status: 'قيد المراجعة'
+                };
+                transactions.push(transaction);
+                localStorage.setItem('transactions', JSON.stringify(transactions));
+
+                alert('✅ تم إرسال طلب الإيداع');
+                showTransactions();
             };
-            transactions.push(transaction);
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-
-            alert(`✅ تم استلام طلب الشحن بقيمة ${amount} دولار سوري`);
-            displayTransactions();
         };
 
-        // عرض سجل المعاملات
-        function displayTransactions() {
+        function showTransactions() {
             const list = document.getElementById('transactionsList');
-            if(transactions.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: #666;">لا توجد معاملات سابقة</p>';
+            if (transactions.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #666;">لا توجد معاملات</p>';
                 return;
             }
 
-            list.innerHTML = transactions.map(t => `
-                <div class="history-item ${t.status === 'مكتمل' ? 'success' : 'pending'}">
-                    <div>
-                        <strong>${t.type}</strong>
-                        <div style="font-size: 0.8rem;">${t.date}</div>
-                    </div>
-                    <div style="font-weight: 700;">${t.amount} دولار</div>
-                    <div>${t.status}</div>
+            list.innerHTML = transactions.slice(-5).reverse().map(t => `
+                <div class="transaction-item ${t.status === 'مكتمل' ? 'success' : 'pending'}">
+                    <span>${t.date}</span>
+                    <span>${t.currency === 'usd' ? '$' + t.amount : t.amount.toLocaleString() + ' ل.س'}</span>
+                    <span>${t.status}</span>
                 </div>
             `).join('');
         }
 
-        // تحديث المبلغ المعروض
-        document.getElementById('amountToPay').innerText = balance;
-
-        // بدء التطبيق
-        displayTransactions();
+        updateBalanceDisplay();
+        showTransactions();
     </script>
 </body>
 </html>
