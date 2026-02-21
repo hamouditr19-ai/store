@@ -187,7 +187,7 @@
             top: 0;
             left: -100%;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             height: 100vh;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(15px);
@@ -200,6 +200,60 @@
         
         .cart-sidebar.open {
             left: 0;
+        }
+        
+        /* حقل رفع الصورة */
+        .file-input {
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed #06b6d4;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .file-input:hover {
+            background: rgba(6, 182, 212, 0.1);
+        }
+        
+        /* كود الدفع */
+        .payment-code-box {
+            background: #1e293b;
+            border: 2px solid #06b6d4;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .payment-code {
+            font-family: monospace;
+            font-size: 16px;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #06b6d4;
+            color: #06b6d4;
+            letter-spacing: 2px;
+        }
+        
+        .copy-btn {
+            background: #06b6d4;
+            color: black;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #0891b2;
+            transform: scale(1.05);
         }
         
         /* المودالات */
@@ -248,7 +302,7 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        /* الفوتر - أيقونات أصغر */
+        /* الفوتر */
         .footer {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
@@ -292,9 +346,8 @@
     <div class="ticker-wrap">
         <div class="ticker-content">
             <span>🔥🔥 مرحباً بكم في Reem Store | ريم ستور 🔥🔥</span>
-            <span>🎮 شحن جميع الألعاب: PUBG - Free Fire - Roblox 🎮</span>
-            <span>💳 بطاقات Google Play - Apple - Steam 💳</span>
-            <span>⚡ توصيل فوري خلال دقائق ⚡</span>
+            <span>💰 الدفع عبر شام كاش - كود المحفظة: 17ac4a94cb1ed493e47a8526892294dd</span>
+            <span>📸 بعد التحويل أرسل صورة الإشعار</span>
         </div>
     </div>
 
@@ -324,7 +377,7 @@
         </div>
     </div>
 
-    <!-- السلة الجانبية -->
+    <!-- السلة الجانبية - مع نظام المحفظة -->
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold cyan-text">🛍️ سلتك</h2>
@@ -340,12 +393,50 @@
                 <span>$</span>
             </div>
             
+            <!-- بيانات العميل -->
             <input type="text" id="cust-name" placeholder="👤 اسمك الكامل" class="w-full p-3 mb-3 rounded-xl bg-slate-800 border border-cyan-500 text-white">
             <input type="text" id="cust-id" placeholder="🎮 معرف اللعبة / الحساب" class="w-full p-3 mb-4 rounded-xl bg-slate-800 border border-cyan-500 text-white">
+            
+            <!-- نظام المحفظة -->
+            <div class="glass-card p-4 rounded-xl mb-4">
+                <p class="text-cyan-400 font-bold mb-3">💰 الدفع عبر شام كاش</p>
+                
+                <!-- كود المحفظة -->
+                <div class="payment-code-box">
+                    <span class="payment-code" id="wallet-code">17ac4a94cb1ed493e47a8526892294dd</span>
+                    <button class="copy-btn" onclick="copyWalletCode()">نسخ</button>
+                </div>
+                
+                <!-- الباركود المؤقت -->
+                <div class="text-center mb-3">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=17ac4a94cb1ed493e47a8526892294dd" 
+                         alt="QR Code" 
+                         class="w-32 h-32 mx-auto rounded-lg border-2 border-cyan-500 p-1 bg-white">
+                    <p class="text-xs text-slate-400 mt-1">امسح QR للدفع</p>
+                </div>
+                
+                <!-- المبلغ المطلوب -->
+                <div class="bg-slate-900 p-3 rounded-lg mb-3">
+                    <span class="text-sm text-slate-400">المبلغ المطلوب:</span>
+                    <span class="text-xl font-bold cyan-text block" id="payment-amount">$0</span>
+                </div>
+                
+                <!-- رقم عملية الدفع -->
+                <input type="text" id="transaction-id" placeholder="🔢 رقم عملية الدفع" class="w-full p-3 mb-3 rounded-xl bg-slate-900 border border-cyan-500 text-white">
+                
+                <!-- رفع صورة الإشعار -->
+                <div class="file-input" onclick="document.getElementById('receipt-file').click()">
+                    <i class="fas fa-cloud-upload-alt text-2xl mb-2 block"></i>
+                    <span class="text-sm">اضغط لرفع صورة الإشعار</span>
+                    <input type="file" id="receipt-file" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                </div>
+                <div id="file-name" class="text-xs text-green-400 mt-1"></div>
+            </div>
             
             <button onclick="sendOrder()" class="w-full bg-gradient-to-l from-green-500 to-green-400 text-white font-bold py-3 rounded-xl text-lg shadow-lg">
                 ✅ تأكيد وإرسال الطلب
             </button>
+            <button onclick="clearCart()" class="w-full mt-2 text-red-400 text-sm">تفريغ السلة</button>
         </div>
     </div>
 
@@ -377,7 +468,7 @@
         <div class="swiper-pagination"></div>
     </div>
 
-    <!-- لوحة التحكم (مخفية) -->
+    <!-- لوحة التحكم -->
     <div id="admin-panel" class="hidden glass-card p-6 rounded-2xl mx-4 mb-10 border-2 border-pink-500 relative">
         <button onclick="closeAdmin()" class="absolute top-4 left-4 bg-red-500 text-white w-8 h-8 rounded-full">✕</button>
         <h2 class="text-xl font-bold mb-4 text-pink-400">👑 لوحة التحكم</h2>
@@ -402,7 +493,7 @@
         </div>
     </div>
 
-    <!-- أزرار الأقسام (Tabs) -->
+    <!-- أزرار الأقسام -->
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap gap-2 mb-8 justify-center" id="category-tabs">
             <button class="category-tab active" onclick="filterByCategory('all')">الكل 🏠</button>
@@ -415,7 +506,6 @@
     <!-- الفوتر -->
     <footer class="footer">
         <div class="container mx-auto">
-            <!-- أيقونات أصغر -->
             <div class="flex justify-center gap-3 mb-8">
                 <a href="https://www.instagram.com/reem216179?igsh=eXV5NnkyczV6bzVo" target="_blank" class="social-icon">
                     <i class="fab fa-instagram"></i>
@@ -467,24 +557,10 @@
                 { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400' }
             ]},
             { id: 'cat2', name: '📱 تطبيقات', products: [
-                { id: 3, name: 'اشتراك نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' },
-                { id: 4, name: 'اشتراك شاهد VIP', price: 12, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
+                { id: 3, name: 'اشتراك نتفلكس شهر', price: 15, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
             ]},
             { id: 'cat3', name: '🔑 أكواد', products: [
-                { id: 5, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' },
-                { id: 6, name: 'كود iTunes 10$', price: 11, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
-            ]},
-            { id: 'cat4', name: '🤖 خدمات تيليجرام', products: [
-                { id: 7, name: 'عضوية قنوات (1000)', price: 20, img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=400' }
-            ]},
-            { id: 'cat5', name: '💳 رصيد وبطاقات', products: [
-                { id: 8, name: 'رصيد STC 50', price: 13, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
-            ]},
-            { id: 'cat6', name: '📱 سوشل ميديا', products: [
-                { id: 9, name: 'متابعين انستا (500)', price: 25, img: 'https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=400' }
-            ]},
-            { id: 'cat7', name: '👥 حسابات', products: [
-                { id: 10, name: 'حساب نتفلكس بريميوم', price: 35, img: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400' }
+                { id: 4, name: 'كود Google Play 5$', price: 5.5, img: 'https://images.unsplash.com/photo-1557853113-99a97f5d4590?w=400' }
             ]}
         ];
 
@@ -492,68 +568,126 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
         let currentFilter = 'all';
+        let selectedFile = null;
 
-        // عرض الأقسام في التبويبات
-        function renderTabs() {
-            const tabsContainer = document.getElementById('category-tabs');
-            tabsContainer.innerHTML = '<button class="category-tab active" onclick="filterByCategory(\'all\')">الكل 🏠</button>';
-            
-            storeData.forEach(cat => {
-                tabsContainer.innerHTML += `<button class="category-tab" onclick="filterByCategory('${cat.id}')">${cat.name}</button>`;
-            });
+        // نسخ كود المحفظة
+        function copyWalletCode() {
+            const code = document.getElementById('wallet-code').innerText;
+            navigator.clipboard.writeText(code);
+            showToast('✅ تم نسخ كود المحفظة');
         }
 
-        // تصفية حسب القسم
-        function filterByCategory(catId) {
-            currentFilter = catId;
-            
-            // تحديث شكل التبويبات
-            document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            renderStore();
-        }
-
-        // عرض المنتجات حسب التصفية
-        function renderStore() {
-            const isAdmin = !document.getElementById('admin-panel').classList.contains('hidden');
-            const content = document.getElementById('store-content');
-            
-            let filteredData = [];
-            
-            if (currentFilter === 'all') {
-                filteredData = storeData;
-            } else {
-                const category = storeData.find(c => c.id === currentFilter);
-                filteredData = category ? [category] : [];
+        // رفع الصورة
+        function handleFileSelect(event) {
+            selectedFile = event.target.files[0];
+            if (selectedFile) {
+                document.getElementById('file-name').innerHTML = `📸 ${selectedFile.name}`;
+                showToast('✅ تم رفع الصورة');
             }
+        }
 
-            content.innerHTML = filteredData.map(cat => `
-                <div class="mb-12">
-                    <h2 class="text-xl font-bold mb-4 border-r-4 border-cyan-500 pr-3">${cat.name}</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        ${cat.products.map(p => `
-                            <div class="glass-card p-3 rounded-2xl neon-border relative">
-                                ${isAdmin ? `
-                                    <button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-xs px-2 py-1 rounded-full z-10">
-                                        ✕
-                                    </button>
-                                ` : ''}
-                                <img src="${p.img}" class="w-full h-32 object-cover rounded-xl mb-3">
-                                <h3 class="font-bold text-sm mb-1">${p.name}</h3>
-                                <p class="text-lg font-black cyan-text mb-3">$${p.price}</p>
-                                <button onclick="addToCart('${p.name}', ${p.price})" class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-white py-2 rounded-xl text-xs font-bold hover:scale-105 transition">
-                                    🛒 إضافة للسلة
-                                </button>
-                            </div>
-                        `).join('')}
-                        ${cat.products.length === 0 ? '<p class="text-slate-500 col-span-4">لا توجد منتجات</p>' : ''}
+        // تحديث المبلغ في السلة
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            
+            const items = document.getElementById('cart-items');
+            items.innerHTML = cart.map((item, i) => `
+                <div class="flex justify-between items-center bg-slate-800 p-3 rounded-xl border border-cyan-500/30">
+                    <span class="text-sm">${item.name}</span>
+                    <div>
+                        <span class="cyan-text font-bold ml-2">$${item.price}</span>
+                        <button onclick="removeFromCart(${i})" class="text-red-500 text-sm">✕</button>
                     </div>
                 </div>
             `).join('');
+
+            const total = cart.reduce((sum, i) => sum + i.price, 0);
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+            document.getElementById('payment-amount').innerText = '$' + total.toFixed(2);
         }
 
-        // باقي الدوال (بدون تغيير)
+        // إرسال الطلب مع الصورة
+        async function sendOrder() {
+            const name = document.getElementById('cust-name').value;
+            const gameId = document.getElementById('cust-id').value;
+            const transactionId = document.getElementById('transaction-id').value;
+
+            if (!name || !gameId || cart.length === 0 || !transactionId) {
+                showToast('⚠️ املأ جميع البيانات');
+                return;
+            }
+
+            if (!selectedFile) {
+                showToast('⚠️ يرجى رفع صورة الإشعار');
+                return;
+            }
+
+            const total = cart.reduce((sum, i) => sum + i.price, 0);
+            const productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('\n');
+
+            // تحويل الصورة إلى Base64
+            const reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onload = async function() {
+                const base64Image = reader.result.split(',')[1];
+                
+                // إرسال البيانات للبوت
+                const message = `🛍️ **طلب جديد - Reem Store**
+━━━━━━━━━━━━━━━━
+👤 الاسم: ${name}
+🎮 الآيدي: ${gameId}
+🔢 رقم العملية: ${transactionId}
+📦 المنتجات:
+${productsList}
+💰 المبلغ: $${total.toFixed(2)}
+💳 كود المحفظة: 17ac4a94cb1ed493e47a8526892294dd
+━━━━━━━━━━━━━━━━`;
+
+                try {
+                    // إرسال النص
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+
+                    // إرسال الصورة
+                    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            photo: base64Image,
+                            caption: `📸 صورة إشعار الدفع - طلب من ${name}`
+                        })
+                    });
+                    
+                    showToast('✅ تم إرسال الطلب مع الصورة');
+                    
+                    // تفريغ السلة
+                    cart = [];
+                    localStorage.removeItem('cart');
+                    selectedFile = null;
+                    document.getElementById('file-name').innerHTML = '';
+                    document.getElementById('receipt-file').value = '';
+                    updateCartUI();
+                    toggleCart();
+                    
+                    document.getElementById('cust-name').value = '';
+                    document.getElementById('cust-id').value = '';
+                    document.getElementById('transaction-id').value = '';
+                    
+                } catch (error) {
+                    showToast('❌ فشل الإرسال');
+                }
+            };
+        }
+
+        // باقي الدوال (كما هي من الكود السابق)
         function showToast(msg) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -574,98 +708,8 @@
             document.getElementById(id).style.display = 'none';
         }
 
-        function checkAdminPass() {
-            const pass = document.getElementById('admin-pass').value;
-            if (pass === '1234') {
-                document.getElementById('admin-panel').classList.remove('hidden');
-                closeModal('password-modal');
-                updateCategorySelect();
-                renderStore();
-                showToast('🔓 أهلاً بك في لوحة التحكم');
-            } else {
-                showToast('❌ كلمة سر خطأ');
-            }
-        }
-
-        function closeAdmin() {
-            document.getElementById('admin-panel').classList.add('hidden');
-            renderStore();
-        }
-
-        function addNewCategory() {
-            const name = document.getElementById('new-cat-name').value;
-            if (!name) return showToast('⚠️ اكتب اسم القسم');
-            
-            storeData.push({
-                id: 'cat_' + Date.now(),
-                name: name,
-                products: []
-            });
-            
-            saveData();
-            updateCategorySelect();
-            renderTabs();
-            renderStore();
-            document.getElementById('new-cat-name').value = '';
-            showToast('✅ تم إضافة القسم');
-        }
-
-        function addNewProduct() {
-            const name = document.getElementById('new-prod-name').value;
-            const price = parseFloat(document.getElementById('new-prod-price').value);
-            const img = document.getElementById('new-prod-img').value;
-            const catId = document.getElementById('new-prod-cat').value;
-
-            if (!name || !price || !img || !catId) {
-                return showToast('⚠️ املأ جميع الحقول');
-            }
-
-            const catIndex = storeData.findIndex(c => c.id === catId);
-            storeData[catIndex].products.push({
-                id: Date.now(),
-                name: name,
-                price: price,
-                img: img
-            });
-
-            saveData();
-            renderStore();
-            document.getElementById('new-prod-name').value = '';
-            document.getElementById('new-prod-price').value = '';
-            document.getElementById('new-prod-img').value = '';
-            showToast('✅ تم إضافة المنتج');
-        }
-
-        function deleteProduct(catId, prodId) {
-            if (!confirm('حذف المنتج؟')) return;
-            const catIndex = storeData.findIndex(c => c.id === catId);
-            storeData[catIndex].products = storeData[catIndex].products.filter(p => p.id !== prodId);
-            saveData();
-            renderStore();
-            showToast('🗑️ تم حذف المنتج');
-        }
-
-        function deleteCategory(catId) {
-            if (!confirm('حذف القسم بالكامل؟')) return;
-            storeData = storeData.filter(c => c.id !== catId);
-            saveData();
-            updateCategorySelect();
-            renderTabs();
-            if (currentFilter === catId) {
-                currentFilter = 'all';
-                document.querySelectorAll('.category-tab')[0].classList.add('active');
-            }
-            renderStore();
-            showToast('🗑️ تم حذف القسم');
-        }
-
-        function updateCategorySelect() {
-            const select = document.getElementById('new-prod-cat');
-            select.innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
-        }
-
-        function saveData() {
-            localStorage.setItem('reemStoreMaster', JSON.stringify(storeData));
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
         }
 
         function addToCart(name, price) {
@@ -681,71 +725,122 @@
             updateCartUI();
         }
 
-        function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
+        function clearCart() {
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+            showToast('🗑️ تم تفريغ السلة');
+        }
+
+        function checkAdminPass() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === '1234') {
+                document.getElementById('admin-panel').classList.remove('hidden');
+                closeModal('password-modal');
+                updateCategorySelect();
+                showToast('🔓 أهلاً بك');
+            } else {
+                showToast('❌ كلمة سر خطأ');
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+
+        function addNewCategory() {
+            const name = document.getElementById('new-cat-name').value;
+            if (!name) return showToast('⚠️ اكتب اسم القسم');
             
-            const items = document.getElementById('cart-items');
-            items.innerHTML = cart.map((item, i) => `
-                <div class="flex justify-between items-center bg-slate-800 p-3 rounded-xl border border-cyan-500/30">
-                    <span class="text-sm">${item.name}</span>
-                    <div>
-                        <span class="cyan-text font-bold ml-2">$${item.price}</span>
-                        <button onclick="removeFromCart(${i})" class="text-red-500 text-sm">✕</button>
+            storeData.push({
+                id: 'cat_' + Date.now(),
+                name: name,
+                products: []
+            });
+            
+            localStorage.setItem('reemStoreMaster', JSON.stringify(storeData));
+            updateCategorySelect();
+            renderTabs();
+            renderStore();
+            document.getElementById('new-cat-name').value = '';
+            showToast('✅ تم إضافة القسم');
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('new-prod-name').value;
+            const price = parseFloat(document.getElementById('new-prod-price').value);
+            const img = document.getElementById('new-prod-img').value;
+            const catId = document.getElementById('new-prod-cat').value;
+
+            if (!name || !price || !img || !catId) return showToast('⚠️ املأ الحقول');
+
+            const catIndex = storeData.findIndex(c => c.id === catId);
+            storeData[catIndex].products.push({
+                id: Date.now(),
+                name, price, img
+            });
+
+            localStorage.setItem('reemStoreMaster', JSON.stringify(storeData));
+            renderStore();
+            document.getElementById('new-prod-name').value = '';
+            document.getElementById('new-prod-price').value = '';
+            document.getElementById('new-prod-img').value = '';
+            showToast('✅ تم إضافة المنتج');
+        }
+
+        function updateCategorySelect() {
+            const select = document.getElementById('new-prod-cat');
+            select.innerHTML = storeData.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+        }
+
+        function renderTabs() {
+            const tabs = document.getElementById('category-tabs');
+            tabs.innerHTML = '<button class="category-tab active" onclick="filterByCategory(\'all\')">الكل 🏠</button>';
+            storeData.forEach(cat => {
+                tabs.innerHTML += `<button class="category-tab" onclick="filterByCategory('${cat.id}')">${cat.name}</button>`;
+            });
+        }
+
+        function filterByCategory(catId) {
+            currentFilter = catId;
+            document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderStore();
+        }
+
+        function renderStore() {
+            const isAdmin = !document.getElementById('admin-panel').classList.contains('hidden');
+            const content = document.getElementById('store-content');
+            
+            let filteredData = currentFilter === 'all' ? storeData : storeData.filter(c => c.id === currentFilter);
+
+            content.innerHTML = filteredData.map(cat => `
+                <div class="mb-12">
+                    <h2 class="text-xl font-bold mb-4 border-r-4 border-cyan-500 pr-3">${cat.name}</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        ${cat.products.map(p => `
+                            <div class="glass-card p-3 rounded-2xl neon-border relative">
+                                ${isAdmin ? `<button onclick="deleteProduct('${cat.id}', ${p.id})" class="absolute top-2 left-2 bg-red-600 text-xs px-2 py-1 rounded-full">✕</button>` : ''}
+                                <img src="${p.img}" class="w-full h-32 object-cover rounded-xl mb-3">
+                                <h3 class="font-bold text-sm mb-1">${p.name}</h3>
+                                <p class="text-lg font-black cyan-text mb-3">$${p.price}</p>
+                                <button onclick="addToCart('${p.name}', ${p.price})" class="w-full bg-gradient-to-l from-cyan-500 to-pink-500 text-white py-2 rounded-xl text-xs font-bold hover:scale-105 transition">
+                                    🛒 إضافة للسلة
+                                </button>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `).join('');
-
-            const total = cart.reduce((sum, i) => sum + i.price, 0);
-            document.getElementById('cart-total').innerText = total.toFixed(2);
         }
 
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('open');
-        }
-
-        async function sendOrder() {
-            const name = document.getElementById('cust-name').value;
-            const gameId = document.getElementById('cust-id').value;
-
-            if (!name || !gameId || cart.length === 0) {
-                showToast('⚠️ املأ جميع البيانات');
-                return;
-            }
-
-            const total = cart.reduce((sum, i) => sum + i.price, 0);
-            const productsList = cart.map(i => `- ${i.name} ($${i.price})`).join('\n');
-
-            const message = `🛍️ طلب جديد من Reem Store
-━━━━━━━━━━━━━━━━
-👤 الاسم: ${name}
-🎮 الآيدي: ${gameId}
-📦 المنتجات:
-${productsList}
-💰 المجموع: $${total.toFixed(2)}
-⏰ الوقت: ${new Date().toLocaleString()}
-━━━━━━━━━━━━━━━━`;
-
-            try {
-                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: CHAT_ID,
-                        text: message
-                    })
-                });
-                
-                showToast('✅ تم إرسال الطلب');
-                cart = [];
-                localStorage.removeItem('cart');
-                updateCartUI();
-                toggleCart();
-                document.getElementById('cust-name').value = '';
-                document.getElementById('cust-id').value = '';
-                
-            } catch (error) {
-                showToast('❌ فشل الإرسال');
-            }
+        function deleteProduct(catId, prodId) {
+            if (!confirm('حذف المنتج؟')) return;
+            const catIndex = storeData.findIndex(c => c.id === catId);
+            storeData[catIndex].products = storeData[catIndex].products.filter(p => p.id !== prodId);
+            localStorage.setItem('reemStoreMaster', JSON.stringify(storeData));
+            renderStore();
+            showToast('🗑️ تم الحذف');
         }
 
         function showPrivacyPolicy() {
@@ -763,4 +858,4 @@ ${productsList}
         updateCategorySelect();
     </script>
 </body>
-</html>
+    </html>
