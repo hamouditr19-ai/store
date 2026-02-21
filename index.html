@@ -54,12 +54,22 @@
             100% { transform: translateX(-100%); }
         }
         
-        /* شريط الشعار */
+        /* شريط الشعار مع صورة */
         .hero {
             background: #0f172a;
             padding: 20px;
             text-align: center;
             border-bottom: 4px solid var(--accent);
+        }
+        
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            padding: 5px;
+            background: white;
         }
         
         .hero h1 {
@@ -123,13 +133,13 @@
             z-index: 100;
         }
         
-        .logo {
+        .logo-text {
             font-size: 1.5rem;
             font-weight: 900;
             cursor: pointer;
         }
         
-        .logo span { color: var(--accent); }
+        .logo-text span { color: var(--accent); }
         
         .nav-buttons {
             display: flex;
@@ -145,17 +155,24 @@
             cursor: pointer;
         }
         
-        /* الأقسام - مكبرة للجوال */
+        /* الأقسام */
         .category-tab {
-            padding: 14px 25px;
+            padding: 12px 22px;
             background: var(--card);
             border-radius: 40px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            border: 3px solid var(--accent);
-            margin: 6px;
+            border: 2px solid var(--accent);
+            margin: 5px;
             cursor: pointer;
             display: inline-block;
+            transition: 0.3s;
+        }
+        
+        .category-tab:hover {
+            background: var(--accent);
+            color: black;
+            box-shadow: 0 0 20px var(--accent);
         }
         
         .category-tab.active {
@@ -165,8 +182,8 @@
         
         @media (max-width: 640px) {
             .category-tab {
-                padding: 12px 20px;
-                font-size: 1.1rem;
+                padding: 10px 18px;
+                font-size: 1rem;
             }
         }
         
@@ -289,7 +306,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        /* المحفظة - مع تحسينات نيون */
+        /* المحفظة */
         .wallet-container {
             max-width: 500px;
             margin: 0 auto;
@@ -299,7 +316,37 @@
             border: 2px solid var(--accent);
         }
         
-        /* أزرار نيون جديدة */
+        .footer {
+            background: #0f172a;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 2px solid var(--accent);
+            text-align: center;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--card);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--accent);
+        }
+        
+        /* زر نيون */
         .btn-primary {
             width: 100%;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
@@ -340,36 +387,6 @@
             color: black;
             box-shadow: 0 0 25px var(--accent);
         }
-        
-        .footer {
-            background: #0f172a;
-            padding: 20px;
-            margin-top: 30px;
-            border-top: 2px solid var(--accent);
-            text-align: center;
-        }
-        
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background: var(--card);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-size: 1.3rem;
-            transition: 0.3s;
-        }
-        
-        .social-link:hover {
-            background: var(--accent);
-            color: black;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--accent);
-        }
     </style>
 </head>
 <body>
@@ -381,12 +398,13 @@
             <span>🎮 شحن PUBG - Free Fire - Roblox 🎮</span>
             <span>💳 Google Play - Apple - Steam 💳</span>
             <span>⚡ توصيل فوري خلال دقائق ⚡</span>
-            <span>💰 خصومات تصل لـ 30% 💰</span>
         </div>
     </div>
 
-    <!-- شريط الشعار -->
+    <!-- شريط الشعار مع صورة -->
     <div class="hero">
+        <!-- ضع رابط صورة الشعار هنا 👇 -->
+        <img src="https://i.ibb.co/YXvq9gM/58441.jpg" alt="Reem Store Logo" class="logo-img">
         <h1>✨ Reem Store | ريم ستور ✨</h1>
         <p class="text-gray-400 mt-1">متجرك الأول لشحن الألعاب</p>
     </div>
@@ -411,7 +429,7 @@
 
     <!-- شريط التنقل -->
     <div class="navbar">
-        <div class="logo" onclick="openAdminModal()"><span>Reem</span> Store</div>
+        <div class="logo-text" onclick="openAdminModal()"><span>Reem</span> Store</div>
         <div class="nav-buttons">
             <div class="nav-btn" onclick="showPage('home')">🏠 الرئيسية</div>
             <div class="nav-btn" onclick="showPage('cart')">🛒 السلة (<span id="cart-count">0</span>)</div>
@@ -419,18 +437,18 @@
         </div>
     </div>
 
-    <!-- الإحصائيات -->
+    <!-- الإحصائيات (مصفرة من الأول) -->
     <div class="grid grid-cols-4 gap-2 p-4 text-center">
         <div class="bg-[#1e293b] p-3 rounded-xl border border-cyan-500">
-            <div class="text-2xl font-black text-cyan-400" id="visitor-count">1,247</div>
+            <div class="text-2xl font-black text-cyan-400" id="visitor-count">0</div>
             <div class="text-xs">زائر</div>
         </div>
         <div class="bg-[#1e293b] p-3 rounded-xl border border-cyan-500">
-            <div class="text-2xl font-black text-cyan-400" id="orders-count">156</div>
+            <div class="text-2xl font-black text-cyan-400" id="orders-count">0</div>
             <div class="text-xs">طلب</div>
         </div>
         <div class="bg-[#1e293b] p-3 rounded-xl border border-cyan-500">
-            <div class="text-2xl font-black text-cyan-400" id="sales-total">$3.2K</div>
+            <div class="text-2xl font-black text-cyan-400" id="sales-total">$0</div>
             <div class="text-xs">مبيعات</div>
         </div>
         <div class="bg-[#1e293b] p-3 rounded-xl border border-cyan-500">
@@ -445,7 +463,7 @@
         <h2 class="text-xl font-bold mb-3 text-cyan-400">🔥 الأكثر مبيعاً</h2>
         <div class="products-grid" id="best-sellers-container"></div>
 
-        <!-- الأقسام مكبرة -->
+        <!-- الأقسام -->
         <h2 class="text-xl font-bold mt-5 mb-3 text-cyan-400">📂 الأقسام</h2>
         <div class="flex flex-wrap justify-center gap-2 mb-4" id="category-tabs"></div>
 
@@ -454,6 +472,7 @@
         <div class="products-grid" id="products-container"></div>
     </div>
 
+    <!-- صفحة السلة -->
     <div id="cart-page" class="page hidden p-4">
         <div class="max-w-md mx-auto">
             <h2 class="text-2xl font-bold mb-4 text-center text-cyan-400">🛒 سلة المشتريات</h2>
@@ -462,30 +481,38 @@
             <input type="text" id="customer-name" class="cart-input" placeholder="👤 اسمك">
             <input type="text" id="customer-id" class="cart-input" placeholder="🎮 معرف الحساب">
             <button class="btn-primary" onclick="sendOrder()">✅ تأكيد الطلب</button>
+            <button class="btn-secondary" onclick="showPage('home')">🔙 رجوع</button>
         </div>
     </div>
 
+    <!-- صفحة المحفظة -->
     <div id="wallet-page" class="page hidden p-4">
         <div class="wallet-container">
             <h2 class="text-2xl font-bold text-center text-cyan-400 mb-4">💰 محفظة شام كاش</h2>
             
-            <!-- كود المحفظة -->
             <div class="bg-[#0f172a] p-3 rounded-lg flex justify-between items-center border border-cyan-500 mb-4">
                 <span class="font-mono text-sm break-all" id="wallet-code">17ac4a94cb1ed493e47a8526892294dd</span>
                 <button class="bg-cyan-500 text-black px-3 py-1 rounded-lg font-bold" onclick="copyWalletCode()">نسخ</button>
             </div>
             
-            <!-- الباركود حقك هنا -->
             <div class="text-center mb-4">
                 <img src="https://i.ibb.co/YXvq9gM/58441.jpg" class="inline-block bg-white p-2 rounded-lg" style="max-width: 200px;">
             </div>
 
-            <!-- مبلغ مخصص -->
-            <input type="number" id="custom-amount" class="cart-input" placeholder="💰 المبلغ بالدولار">
-            <input type="text" id="transaction-number" class="cart-input" placeholder="🔢 رقم عملية الدفع">
+            <input type="text" id="recharge-name" class="cart-input" placeholder="👤 اسمك">
+            <input type="text" id="recharge-id" class="cart-input" placeholder="🎮 آيدي الحساب">
+            <input type="number" id="recharge-amount" class="cart-input" placeholder="💰 المبلغ بالدولار">
+            <input type="text" id="recharge-trans" class="cart-input" placeholder="🔢 رقم عملية الدفع">
+            
+            <div class="border-2 border-dashed border-cyan-500 p-4 text-center rounded-lg cursor-pointer mb-4" onclick="document.getElementById('receipt').click()">
+                <i class="fas fa-cloud-upload-alt text-2xl"></i>
+                <div>اضغط لرفع صورة الإشعار</div>
+                <input type="file" id="receipt" accept="image/*" class="hidden" onchange="handleReceipt(this)">
+            </div>
+            <div id="receipt-name" class="text-green-400 text-sm mb-3"></div>
 
-            <!-- زر تأكيد الدفع (بدون صورة) -->
-            <button class="btn-primary" onclick="sendWalletOrder()">💳 إرسال طلب التعبئة</button>
+            <button class="btn-primary" onclick="sendRecharge()">💳 إرسال طلب التعبئة</button>
+            <button class="btn-secondary" onclick="showPage('home')">🔙 رجوع</button>
         </div>
     </div>
 
@@ -503,7 +530,7 @@
     <!-- الإشعارات -->
     <div class="toast-container" id="toast-container"></div>
 
-    <!-- لوحة التحكم -->
+    <!-- مودال لوحة التحكم -->
     <div id="admin-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;">
         <div style="background: #1e293b; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 2px solid #06b6d4;">
             <h2 style="font-size: 2rem; font-weight: 900; color: #06b6d4; margin-bottom: 20px; text-align: center;">👑 لوحة التحكم</h2>
@@ -512,28 +539,35 @@
         </div>
     </div>
 
+    <!-- لوحة التحكم -->
     <div id="admin-panel" style="position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(10px); z-index: 2001; padding: 20px; overflow-y: auto; display: none;">
-        <!-- محتوى لوحة التحكم -->
         <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: #1e293b; padding: 15px; border-radius: 12px;">
             <h2 style="font-size: 1.8rem; font-weight: 900; color: #06b6d4;">👑 لوحة التحكم</h2>
             <button style="background: #ef4444; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer;" onclick="closeAdminPanel()">✕</button>
         </div>
         
         <div style="max-width: 600px; margin: 0 auto;">
+            <!-- إضافة قسم -->
+            <div style="background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">➕ إضافة قسم جديد</h3>
+                <input type="text" id="new-cat-name" placeholder="اسم القسم (مثال: ألعاب جديدة)" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
+                <button style="width: 100%; background: #10b981; color: white; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="addCategory()">➕ إضافة قسم</button>
+            </div>
+
+            <!-- الأقسام الحالية -->
+            <div style="background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">📂 الأقسام الحالية</h3>
+                <div id="categories-list"></div>
+            </div>
+            
             <!-- إضافة منتج -->
             <div style="background: #1e293b; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 2px solid #06b6d4;">
                 <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #ec4899;">➕ إضافة منتج جديد</h3>
                 <input type="text" id="new-prod-name" placeholder="اسم المنتج" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
                 <input type="number" id="new-prod-price" placeholder="السعر $" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
                 <input type="text" id="new-prod-img" placeholder="رابط الصورة" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
-                <select id="new-prod-cat" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;">
-                    <option value="games">🎮 ألعاب</option>
-                    <option value="apps">📱 تطبيقات</option>
-                    <option value="codes">🔑 أكواد</option>
-                    <option value="telegram">🤖 تيليجرام</option>
-                    <option value="balance">💳 رصيد</option>
-                </select>
-                <button style="width: 100%; background: #06b6d4; color: black; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="addNewProduct()">إضافة منتج</button>
+                <select id="new-prod-cat" style="width: 100%; padding: 15px; margin-bottom: 15px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 10px; color: white;"></select>
+                <button style="width: 100%; background: #06b6d4; color: black; padding: 15px; border: none; border-radius: 10px; font-weight: bold;" onclick="addNewProduct()">➕ إضافة منتج</button>
             </div>
 
             <!-- المنتجات الحالية -->
@@ -545,7 +579,15 @@
     </div>
 
     <script>
-        // المنتجات
+        // ================== البيانات ==================
+        let categories = [
+            { id: 'games', name: '🎮 ألعاب' },
+            { id: 'apps', name: '📱 تطبيقات' },
+            { id: 'codes', name: '🔑 أكواد' },
+            { id: 'telegram', name: '🤖 تيليجرام' },
+            { id: 'balance', name: '💳 رصيد' }
+        ];
+
         let products = [
             { id: 1, name: '60 UC PUBG', price: 5, img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400', category: 'games', sales: 45 },
             { id: 2, name: '100 جوهرة فري فاير', price: 4, img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400', category: 'games', sales: 38 },
@@ -558,11 +600,14 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         let currentFilter = 'all';
-        let visitors = 1247;
+        let selectedFile = null;
+        let visitors = 0; // مصفر
+        let userBalance = 0;
 
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
+        // ================== التوست ==================
         function showToast(msg) {
             let container = document.getElementById('toast-container');
             let toast = document.createElement('div');
@@ -575,27 +620,22 @@
             }, 3000);
         }
 
-        // تحديث الإحصائيات
+        // ================== تحديث الإحصائيات ==================
         function updateStats() {
             visitors++;
             document.getElementById('visitor-count').innerText = visitors;
             document.getElementById('orders-count').innerText = orders.length;
+            
             let totalSales = orders.reduce((sum, order) => sum + (order.total || 0), 0);
-            document.getElementById('sales-total').innerText = '$' + (totalSales/1000).toFixed(1) + 'K';
+            document.getElementById('sales-total').innerText = '$' + totalSales;
             document.getElementById('products-count').innerText = products.length;
         }
 
-        // أقسام
+        // ================== الأقسام ==================
         function renderTabs() {
             let tabs = document.getElementById('category-tabs');
-            let categories = [
-                { id: 'games', name: '🎮 ألعاب' },
-                { id: 'apps', name: '📱 تطبيقات' },
-                { id: 'codes', name: '🔑 أكواد' },
-                { id: 'telegram', name: '🤖 تيليجرام' },
-                { id: 'balance', name: '💳 رصيد' }
-            ];
             tabs.innerHTML = '<button class="category-tab active" onclick="filterProducts(\'all\')">الكل 🏠</button>';
+            
             categories.forEach(c => {
                 tabs.innerHTML += `<button class="category-tab" onclick="filterProducts('${c.id}')">${c.name}</button>`;
             });
@@ -608,9 +648,11 @@
             renderProducts();
         }
 
+        // ================== المنتجات ==================
         function renderProducts() {
             let container = document.getElementById('products-container');
             let filtered = currentFilter === 'all' ? products : products.filter(p => p.category === currentFilter);
+            
             container.innerHTML = filtered.map(p => `
                 <div class="product-card">
                     <img src="${p.img}">
@@ -624,6 +666,7 @@
         function renderBestSellers() {
             let best = [...products].sort((a,b) => b.sales - a.sales).slice(0,4);
             let container = document.getElementById('best-sellers-container');
+            
             container.innerHTML = best.map(p => `
                 <div class="product-card">
                     <img src="${p.img}">
@@ -642,6 +685,7 @@
             showToast('✅ تمت الإضافة للسلة');
         }
 
+        // ================== الصفحات ==================
         function showPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
@@ -650,6 +694,7 @@
 
         function updateCartDisplay() {
             let container = document.getElementById('cart-items-container');
+            
             if (cart.length === 0) {
                 container.innerHTML = '<p class="text-center text-gray-400">السلة فارغة</p>';
             } else {
@@ -660,6 +705,7 @@
                     </div>
                 `).join('');
             }
+            
             let total = cart.reduce((s,i) => s + i.price, 0);
             document.getElementById('cart-total-display').innerHTML = `الإجمالي: $${total.toFixed(2)}`;
         }
@@ -672,78 +718,116 @@
             showToast('🗑️ تم الحذف');
         }
 
+        // ================== المحفظة ==================
         function copyWalletCode() {
             navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd');
             showToast('✅ تم نسخ الكود');
         }
 
-        // إرسال طلب تعبئة بدون صورة
-        async function sendWalletOrder() {
-            let amount = document.getElementById('custom-amount').value;
-            let trans = document.getElementById('transaction-number').value;
+        function handleReceipt(input) {
+            selectedFile = input.files[0];
+            if (selectedFile) {
+                document.getElementById('receipt-name').innerHTML = `📸 ${selectedFile.name}`;
+            }
+        }
 
-            if (!amount || amount <= 0 || !trans) {
+        async function sendRecharge() {
+            let name = document.getElementById('recharge-name').value;
+            let gameId = document.getElementById('recharge-id').value;
+            let amount = document.getElementById('recharge-amount').value;
+            let trans = document.getElementById('recharge-trans').value;
+
+            if (!name || !gameId || !amount || amount <= 0 || !trans || !selectedFile) {
                 showToast('⚠️ أكمل جميع الحقول');
                 return;
             }
 
-            // رسالة أفخم
-            let msg = `╔══════════════════════╗
-     💰 طلب تعبئة رصيد 💰
-╠══════════════════════╣
-  💵 المبلغ: $${amount}
-  🔢 رقم العملية: ${trans}
-  ✨ شكراً لثقتك ✨
-╚══════════════════════╝`;
+            let reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onload = async function() {
+                let base64 = reader.result.split(',')[1];
+                
+                let msg = `💰 طلب تعبئة رصيد
+━━━━━━━━━━━━━━━━
+👤 الاسم: ${name}
+🎮 الآيدي: ${gameId}
+💵 المبلغ: $${amount}
+🔢 رقم العملية: ${trans}
+━━━━━━━━━━━━━━━━
+✨ شكراً لثقتك ✨`;
 
-            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-            });
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+                });
 
-            showToast('✅ تم إرسال طلب التعبئة');
-            
-            // إضافة الرصيد (محاكاة)
-            let userBalance = parseFloat(localStorage.getItem('userBalance') || 0);
-            userBalance += parseFloat(amount);
-            localStorage.setItem('userBalance', userBalance);
-            
-            // تفريغ الحقول
-            document.getElementById('custom-amount').value = '';
-            document.getElementById('transaction-number').value = '';
-            
-            showPage('home');
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: CHAT_ID, photo: base64 })
+                });
+
+                showToast('✅ تم إرسال طلب التعبئة');
+                
+                // إضافة الرصيد
+                userBalance += parseFloat(amount);
+                
+                // تفريغ الحقول
+                document.getElementById('recharge-name').value = '';
+                document.getElementById('recharge-id').value = '';
+                document.getElementById('recharge-amount').value = '';
+                document.getElementById('recharge-trans').value = '';
+                document.getElementById('receipt-name').innerHTML = '';
+                selectedFile = null;
+                
+                showPage('home');
+            };
         }
 
+        // ================== إرسال طلب شراء ==================
         async function sendOrder() {
             let name = document.getElementById('customer-name').value;
             let gameId = document.getElementById('customer-id').value;
+            
             if (!name || !gameId || cart.length === 0) {
                 showToast('⚠️ أكمل البيانات');
                 return;
             }
+            
             let total = cart.reduce((s,i) => s + i.price, 0);
             let list = cart.map(i => `- ${i.name}`).join('\n');
-            let msg = `🛍️ طلب جديد\n👤 ${name}\n🎮 ${gameId}\n📦\n${list}\n💰 $${total}`;
             
+            let orderId = 'ORD' + Date.now();
+            let msg = `🛍️ طلب جديد
+━━━━━━━━━━━━━━━━
+👤 الاسم: ${name}
+🎮 الآيدي: ${gameId}
+📦 المنتجات:
+${list}
+💰 المبلغ: $${total}
+━━━━━━━━━━━━━━━━`;
+
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
             });
-            
+
             showToast('✅ تم إرسال الطلب');
+            
+            orders.push({ id: orderId, name, total });
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
             cart = [];
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = '0';
-            orders.push({ total: total });
-            localStorage.setItem('orders', JSON.stringify(orders));
+            
             updateStats();
             showPage('home');
         }
 
-        // لوحة التحكم
+        // ================== لوحة التحكم ==================
         function openAdminModal() {
             document.getElementById('admin-modal').style.display = 'flex';
         }
@@ -756,26 +840,92 @@
             if (document.getElementById('admin-password').value === '1234') {
                 document.getElementById('admin-modal').style.display = 'none';
                 document.getElementById('admin-panel').style.display = 'block';
+                renderAdminCategories();
                 renderAdminProducts();
-                showToast('🔓 أهلاً بك');
+                updateCategorySelect();
             } else {
                 showToast('❌ كلمة سر خطأ');
             }
         }
 
-        function renderAdminProducts() {
-            let list = document.getElementById('admin-products-list');
-            list.innerHTML = products.map(p => `
-                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px; border-radius: 8px; margin-bottom: 8px;">
-                    <div>
-                        <img src="${p.img}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; display: inline-block; vertical-align: middle; margin-left: 10px;">
-                        <span>${p.name} - $${p.price}</span>
-                    </div>
-                    <button style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="deleteProduct(${p.id})">حذف</button>
+        // عرض الأقسام في لوحة التحكم
+        function renderAdminCategories() {
+            let container = document.getElementById('categories-list');
+            container.innerHTML = categories.map((cat, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+                    <span style="font-size: 1.1rem; font-weight: bold;">${cat.name}</span>
+                    <button style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="deleteCategory(${index})">🗑️ حذف</button>
                 </div>
             `).join('');
         }
 
+        // حذف قسم
+        function deleteCategory(index) {
+            if (confirm('هل أنت متأكد من حذف هذا القسم؟')) {
+                let catId = categories[index].id;
+                categories.splice(index, 1);
+                
+                // حذف منتجات القسم
+                products = products.filter(p => p.category !== catId);
+                
+                renderAdminCategories();
+                renderAdminProducts();
+                renderTabs();
+                renderProducts();
+                renderBestSellers();
+                updateCategorySelect();
+                updateStats();
+                
+                showToast('🗑️ تم حذف القسم');
+            }
+        }
+
+        // إضافة قسم
+        function addCategory() {
+            let name = document.getElementById('new-cat-name').value;
+            if (!name) {
+                showToast('⚠️ أدخل اسم القسم');
+                return;
+            }
+            
+            let newId = 'cat' + Date.now();
+            categories.push({ id: newId, name: name });
+            
+            renderAdminCategories();
+            renderTabs();
+            updateCategorySelect();
+            document.getElementById('new-cat-name').value = '';
+            showToast('✅ تم إضافة القسم');
+        }
+
+        // عرض المنتجات في لوحة التحكم
+        function renderAdminProducts() {
+            let container = document.getElementById('admin-products-list');
+            
+            container.innerHTML = products.map(p => `
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 8px;">
+                    <div>
+                        <img src="${p.img}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 5px; display: inline-block; vertical-align: middle; margin-left: 10px;">
+                        <span>${p.name} - $${p.price}</span>
+                    </div>
+                    <button style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="deleteProduct(${p.id})">🗑️ حذف</button>
+                </div>
+            `).join('');
+        }
+
+        // حذف منتج
+        function deleteProduct(id) {
+            if (confirm('حذف المنتج؟')) {
+                products = products.filter(p => p.id !== id);
+                renderAdminProducts();
+                renderProducts();
+                renderBestSellers();
+                updateStats();
+                showToast('🗑️ تم الحذف');
+            }
+        }
+
+        // إضافة منتج
         function addNewProduct() {
             let name = document.getElementById('new-prod-name').value;
             let price = parseFloat(document.getElementById('new-prod-price').value);
@@ -810,23 +960,19 @@
             showToast('✅ تمت الإضافة');
         }
 
-        function deleteProduct(id) {
-            if (confirm('حذف المنتج؟')) {
-                products = products.filter(p => p.id !== id);
-                renderProducts();
-                renderBestSellers();
-                renderAdminProducts();
-                updateStats();
-                showToast('🗑️ تم الحذف');
-            }
+        // تحديث قائمة الأقسام في حقل الإضافة
+        function updateCategorySelect() {
+            let select = document.getElementById('new-prod-cat');
+            select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
-        // التهيئة
+        // ================== التهيئة ==================
         renderTabs();
         renderProducts();
         renderBestSellers();
         document.getElementById('cart-count').innerText = cart.length;
         updateStats();
+        updateCategorySelect();
     </script>
 </body>
 </html>
