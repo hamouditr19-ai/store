@@ -214,42 +214,6 @@
             margin-left: 5px;
         }
         
-        .currency-selector {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        .currency-option {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #ff0080;
-            border-radius: 50px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .currency-option.active {
-            background: linear-gradient(90deg, #ff0080, #00ffff);
-            border-color: transparent;
-            color: black;
-            font-weight: 700;
-        }
-        
-        .amount-input {
-            width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #00ffff;
-            border-radius: 15px;
-            color: white;
-            font-size: 1.2rem;
-            margin: 20px 0;
-        }
-        
         .file-upload {
             border: 2px dashed #ff0080;
             border-radius: 15px;
@@ -400,7 +364,7 @@
         <div class="wallet-card">
             <div class="balance-card">
                 <div class="balance-label">رصيدك الحالي</div>
-                <div class="balance-amount" id="balanceAmount">$0</div>
+                <div class="balance-amount" id="balanceAmount">$500</div>
             </div>
 
             <div class="code-box">
@@ -412,21 +376,8 @@
                 <p><i class="fas fa-exclamation-triangle"></i> تعليمات هامة:</p>
                 <p>• لا تستخدم خيار إخفاء الهوية</p>
                 <p>• لا تكتب أي ملاحظة عند التحويل</p>
-                <p>• المبلغ سيضاف بعد التأكيد</p>
+                <p>• المبلغ سيضاف تلقائياً بعد التأكيد</p>
             </div>
-
-            <!-- اختيار العملة -->
-            <div class="currency-selector">
-                <div class="currency-option active" onclick="selectCurrency('usd')" id="usdOption">
-                    <i class="fas fa-dollar-sign"></i> دولار ($)
-                </div>
-                <div class="currency-option" onclick="selectCurrency('syp')" id="sypOption">
-                    <i class="fas fa-coins"></i> ليرة (ل.س)
-                </div>
-            </div>
-
-            <!-- إدخال المبلغ -->
-            <input type="number" id="amountInput" class="amount-input" placeholder="أدخل المبلغ" min="1">
 
             <div class="file-upload" onclick="document.getElementById('receipt').click()">
                 <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; margin-bottom: 10px;"></i>
@@ -464,36 +415,12 @@
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
 
-        let selectedCurrency = 'usd';
-        let selectedFile = null;
-        
-        // الرصيد يبدأ من 0 حتى يشحن
-        let balanceUSD = parseInt(localStorage.getItem('balanceUSD')) || 0;
-        let balanceSYP = parseInt(localStorage.getItem('balanceSYP')) || 0;
+        let balance = parseInt(localStorage.getItem('balance')) || 500;
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-        // تحديث عدد السلة
+        document.getElementById('balanceAmount').textContent = '$' + balance;
         document.getElementById('cartCount').textContent = cart.length;
-
-        // عرض الرصيد
-        function updateBalanceDisplay() {
-            const balanceElement = document.getElementById('balanceAmount');
-            if (selectedCurrency === 'usd') {
-                balanceElement.textContent = '$' + balanceUSD;
-            } else {
-                balanceElement.textContent = balanceSYP.toLocaleString() + ' ل.س';
-            }
-        }
-
-        // اختيار العملة
-        window.selectCurrency = function(currency) {
-            selectedCurrency = currency;
-            document.getElementById('usdOption').classList.remove('active');
-            document.getElementById('sypOption').classList.remove('active');
-            document.getElementById(currency + 'Option').classList.add('active');
-            updateBalanceDisplay();
-        };
 
         window.copyCode = function() {
             navigator.clipboard.writeText(document.getElementById('paymentCode').textContent);
@@ -508,13 +435,6 @@
         };
 
         window.sendRequest = async function() {
-            const amount = document.getElementById('amountInput').value;
-            
-            if (!amount || amount <= 0) {
-                alert('⚠️ الرجاء إدخال المبلغ');
-                return;
-            }
-
             if (!selectedFile) {
                 alert('⚠️ يرجى رفع صورة الإشعار');
                 return;
@@ -527,7 +447,6 @@
 
                 let message = `💰 **طلب إيداع جديد**
 ━━━━━━━━━━━━━━━━
-💵 المبلغ: ${amount} ${selectedCurrency === 'usd' ? 'دولار' : 'ليرة سورية'}
 ⏰ الوقت: ${new Date().toLocaleString()}
 ━━━━━━━━━━━━━━━━`;
 
@@ -549,8 +468,7 @@
 
                 let transaction = {
                     id: Date.now(),
-                    amount: amount,
-                    currency: selectedCurrency,
+                    amount: 0,
                     date: new Date().toLocaleString(),
                     status: 'قيد المراجعة'
                 };
@@ -559,9 +477,6 @@
 
                 alert('✅ تم إرسال طلب الإيداع');
                 showTransactions();
-                document.getElementById('amountInput').value = '';
-                document.getElementById('fileName').innerHTML = '';
-                selectedFile = null;
             };
         };
 
@@ -575,13 +490,11 @@
             list.innerHTML = transactions.slice(-5).reverse().map(t => `
                 <div class="transaction-item ${t.status === 'مكتمل' ? 'success' : 'pending'}">
                     <span>${t.date}</span>
-                    <span>${t.currency === 'usd' ? '$' + t.amount : t.amount.toLocaleString() + ' ل.س'}</span>
                     <span>${t.status}</span>
                 </div>
             `).join('');
         }
 
-        // ===== لوحة التحكم بالضغط المطول =====
         const logo = document.getElementById('mainLogo');
         const adminOverlay = document.getElementById('adminOverlay');
         let pressTimer;
@@ -604,19 +517,18 @@
 
         window.hideAdminPanel = function() {
             adminOverlay.style.display = 'none';
+            document.getElementById('adminPass').value = '';
         };
 
         window.checkAdminPass = function() {
             const pass = document.getElementById('adminPass').value;
             if (pass === '1234') {
-                alert('✅ تم الدخول إلى لوحة التحكم');
                 window.location.href = 'admin.html';
             } else {
                 alert('❌ كلمة سر خاطئة');
             }
         };
 
-        updateBalanceDisplay();
         showTransactions();
     </script>
 </body>
