@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reem Store | السلة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #0a0f1f;
+            color: white;
+            padding: 10px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #0f172a;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid #06b6d4;
+            margin-bottom: 15px;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .nav-btn {
+            background: #1e293b;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid #06b6d4;
+            color: white;
+            text-decoration: none;
+        }
+        .cart-item {
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #06b6d4;
+            display: flex;
+            justify-content: space-between;
+        }
+        .total {
+            background: #06b6d4;
+            color: black;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #1e293b;
+            border: 1px solid #06b6d4;
+            border-radius: 6px;
+            color: white;
+        }
+        button {
+            width: 100%;
+            background: linear-gradient(90deg, #06b6d4, #ec4899);
+            color: black;
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .back-btn {
+            background: transparent;
+            border: 1px solid #06b6d4;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛒 سلة المشتريات</h1>
+    </div>
 
+    <div class="nav-buttons">
+        <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+        <a href="wallet.html" class="nav-btn">💰 المحفظة</a>
+    </div>
+
+    <div class="container" id="cart-container"></div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function showCart() {
+            let html = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                html = '<p class="text-center">السلة فارغة</p>';
+            } else {
+                cart.forEach((item, i) => {
+                    total += item.price;
+                    html += `
+                        <div class="cart-item">
+                            <span>${item.name}</span>
+                            <span>$${item.price} <button onclick="removeItem(${i})" style="width:auto; background:#ef4444; padding:2px 8px;">✕</button></span>
+                        </div>
+                    `;
+                });
+                html += `<div class="total">المجموع: $${total}</div>`;
+                html += `<input type="text" id="userId" placeholder="🎮 ID الحساب">`;
+                html += `<button onclick="buy()">💳 اشتري بالرصيد</button>`;
+            }
+            html += `<button class="back-btn" onclick="window.location='index.html'">رجوع</button>`;
+            document.getElementById('cart-container').innerHTML = html;
+        }
+
+        function removeItem(i) {
+            cart.splice(i, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showCart();
+        }
+
+        function buy() {
+            let userId = document.getElementById('userId').value;
+            if (!userId) {
+                alert('⚠️ أدخل ID الحساب');
+                return;
+            }
+            let total = cart.reduce((s, i) => s + i.price, 0);
+            let list = cart.map(i => i.name).join('، ');
+            let msg = `🛍️ طلب شراء\n👤 ID: ${userId}\n📦 ${list}\n💰 $${total}`;
+            alert('✅ تم إرسال الطلب');
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location = 'index.html';
+        }
+
+        showCart();
+    </script>
+</body>
+</html>
