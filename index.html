@@ -31,7 +31,7 @@
         /* الشريط المتحرك */
         .ticker-wrap {
             background: linear-gradient(90deg, #06b6d4, #ec4899);
-            padding: 12px 0;
+            padding: 10px 0;
             overflow: hidden;
             white-space: nowrap;
             border-bottom: 2px solid white;
@@ -40,13 +40,13 @@
         .ticker {
             display: inline-block;
             animation: ticker 25s linear infinite;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             color: black;
         }
         
         .ticker span {
-            margin: 0 25px;
+            margin: 0 20px;
         }
         
         @keyframes ticker {
@@ -54,22 +54,12 @@
             100% { transform: translateX(-100%); }
         }
         
-        /* شريط الشعار مع صورة */
+        /* شريط الشعار */
         .hero {
             background: #0f172a;
             padding: 15px;
             text-align: center;
             border-bottom: 3px solid var(--accent);
-        }
-        
-        .logo-img {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 5px;
-            border-radius: 50%;
-            border: 2px solid var(--accent);
-            padding: 3px;
-            background: white;
         }
         
         .hero h1 {
@@ -85,7 +75,7 @@
         .slider {
             width: 100%;
             overflow: hidden;
-            margin: 8px 0;
+            margin: 5px 0;
         }
         
         .slider-container {
@@ -96,7 +86,7 @@
         
         .slide {
             width: 25%;
-            height: 150px;
+            height: 130px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -109,7 +99,7 @@
             display: flex;
             align-items: center;
             padding: 0 15px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 900;
         }
         
@@ -121,52 +111,52 @@
             100% { transform: translateX(0); }
         }
         
-        /* الإحصائيات تحت الشريط */
+        /* الإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            padding: 12px;
+            gap: 5px;
+            padding: 10px;
             background: #0f172a;
             border-bottom: 2px solid var(--accent);
         }
         
         .stat-card {
             background: #1e293b;
-            padding: 8px 5px;
-            border-radius: 10px;
+            padding: 5px 3px;
+            border-radius: 8px;
             text-align: center;
             border: 1px solid var(--accent);
         }
         
         .stat-number {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 900;
             color: var(--accent);
         }
         
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             color: #94a3b8;
         }
         
-        /* أزرار التنقل تحت الإحصائيات */
+        /* أزرار التنقل صغيرة */
         .nav-row {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 12px;
+            gap: 10px;
+            padding: 8px;
             background: #0f172a;
             border-bottom: 2px solid var(--accent);
         }
         
         .nav-icon-btn {
             background: #1e293b;
-            padding: 10px 25px;
-            border-radius: 40px;
-            border: 2px solid var(--accent);
-            font-size: 1.1rem;
-            font-weight: 700;
+            padding: 6px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
             color: white;
@@ -175,35 +165,28 @@
         .nav-icon-btn:hover {
             background: var(--accent);
             color: black;
-            box-shadow: 0 0 20px var(--accent);
         }
         
-        /* الأقسام بشكل أفقي */
+        /* الأقسام */
         .categories-row {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
-            padding: 12px;
+            gap: 5px;
+            padding: 8px;
             background: #0f172a;
             border-bottom: 2px solid var(--accent);
         }
         
         .category-btn {
             background: #1e293b;
-            padding: 8px 16px;
-            border-radius: 30px;
+            padding: 5px 10px;
+            border-radius: 20px;
             border: 1px solid var(--accent);
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
             white-space: nowrap;
-        }
-        
-        .category-btn:hover {
-            background: var(--accent);
-            color: black;
         }
         
         .category-btn.active {
@@ -211,37 +194,225 @@
             color: black;
         }
         
-        /* شبكة المنتجات */
+        /* المحفظة - مطابقة للصورة */
+        .wallet-container {
+            max-width: 400px;
+            margin: 10px auto;
+            background: var(--card);
+            border-radius: 15px;
+            padding: 15px;
+            border: 2px solid var(--accent);
+        }
+        
+        .wallet-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .wallet-subtitle {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+        
+        .wallet-code-box {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--accent);
+            font-family: monospace;
+            font-size: 0.8rem;
+            word-break: break-all;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .copy-btn {
+            background: var(--accent);
+            color: black;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            color: #fecaca;
+        }
+        
+        .warning-box i {
+            color: #ef4444;
+            margin-left: 5px;
+        }
+        
+        .warning-title {
+            color: #ef4444;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .input-group {
+            margin-bottom: 10px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 3px;
+        }
+        
+        .wallet-input {
+            width: 100%;
+            padding: 8px 10px;
+            background: #0f172a;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            color: white;
+            font-size: 0.85rem;
+        }
+        
+        .currency-select {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .currency-option {
+            flex: 1;
+            background: #0f172a;
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+        
+        .currency-option.selected {
+            background: var(--accent);
+            color: black;
+        }
+        
+        .file-upload {
+            border: 1px dashed var(--accent);
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: black;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            background: transparent;
+            color: white;
+            border: 1px solid var(--accent);
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        
+        /* السلة */
+        .cart-container {
+            max-width: 400px;
+            margin: 10px auto;
+        }
+        
+        .cart-item {
+            background: var(--card);
+            padding: 8px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            border: 1px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+        
+        .cart-total {
+            background: var(--accent);
+            color: black;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .cart-input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            background: var(--card);
+            border: 1px solid var(--accent);
+            border-radius: 6px;
+            color: white;
+            font-size: 0.85rem;
+        }
+        
+        /* المنتجات */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            padding: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+            padding: 8px;
         }
         
         .product-card {
             background: var(--card);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 8px;
             border: 1px solid var(--accent);
         }
         
         .product-card img {
             width: 100%;
-            height: 100px;
+            height: 80px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         
         .product-card h3 {
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             margin: 5px 0;
             font-weight: 700;
         }
         
         .price {
             color: var(--accent);
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 900;
         }
         
@@ -250,109 +421,32 @@
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             color: black;
             border: none;
-            padding: 8px;
-            border-radius: 20px;
+            padding: 5px;
+            border-radius: 6px;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             margin-top: 5px;
-            cursor: pointer;
-        }
-        
-        /* المحفظة */
-        .wallet-container {
-            max-width: 450px;
-            margin: 15px auto;
-            background: var(--card);
-            border-radius: 20px;
-            padding: 20px;
-            border: 2px solid var(--accent);
-        }
-        
-        .wallet-balance {
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            color: black;
-            padding: 15px;
-            border-radius: 15px;
-            font-weight: 900;
-            font-size: 1.3rem;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        /* السلة */
-        .cart-container {
-            max-width: 450px;
-            margin: 15px auto;
-        }
-        
-        .cart-item {
-            background: var(--card);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            border: 1px solid var(--accent);
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .cart-total {
-            background: var(--accent);
-            color: black;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            margin: 10px 0;
-        }
-        
-        .cart-input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            background: var(--card);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            color: white;
-        }
-        
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            color: black;
-            border: none;
-            padding: 12px;
-            border-radius: 30px;
-            font-weight: 900;
-            font-size: 1rem;
-            margin: 5px 0;
-            cursor: pointer;
-        }
-        
-        .btn-secondary {
-            width: 100%;
-            background: transparent;
-            color: white;
-            border: 2px solid var(--accent);
-            padding: 10px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1rem;
-            margin: 5px 0;
             cursor: pointer;
         }
         
         .footer {
             background: #0f172a;
-            padding: 15px;
-            margin-top: 20px;
+            padding: 10px;
+            margin-top: 15px;
             border-top: 2px solid var(--accent);
             text-align: center;
         }
         
+        .footer-text {
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
+        
         .toast-container {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -362,12 +456,12 @@
         .toast {
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             color: black;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-size: 1rem;
-            font-weight: 900;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
             margin-bottom: 5px;
-            border: 2px solid white;
+            border: 1px solid white;
         }
     </style>
 </head>
@@ -376,16 +470,15 @@
     <!-- الشريط المتحرك -->
     <div class="ticker-wrap">
         <div class="ticker">
-            <span>🔥🔥 Reem Store | ريم ستور 🔥🔥</span>
-            <span>🎮 شحن PUBG - Free Fire - Roblox 🎮</span>
-            <span>💳 Google Play - Apple - Steam 💳</span>
-            <span>⚡ توصيل فوري خلال دقائق ⚡</span>
+            <span>🔥 Reem Store | ريم ستور 🔥</span>
+            <span>🎮 شحن PUBG - Free Fire</span>
+            <span>💳 Google Play - Apple</span>
+            <span>⚡ توصيل فوري</span>
         </div>
     </div>
 
     <!-- شريط الشعار (Reem Store تفتح لوحة التحكم) -->
     <div class="hero">
-        <img src="https://i.ibb.co/YXvq9gM/58441.jpg" alt="Reem Store Logo" class="logo-img">
         <h1 onclick="openAdminModal()">✨ Reem Store | ريم ستور ✨</h1>
     </div>
 
@@ -407,7 +500,7 @@
         </div>
     </div>
 
-    <!-- الإحصائيات تحت الشريط -->
+    <!-- الإحصائيات -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-number" id="visitor-count">0</div>
@@ -427,68 +520,85 @@
         </div>
     </div>
 
-    <!-- أزرار التنقل (المحفظة، السلة، الرئيسية) -->
+    <!-- أزرار التنقل الصغيرة -->
     <div class="nav-row">
-        <div class="nav-icon-btn" onclick="showPage('wallet')">💰 المحفظة</div>
-        <div class="nav-icon-btn" onclick="showPage('cart')">🛒 السلة (<span id="cart-count">0</span>)</div>
-        <div class="nav-icon-btn" onclick="showPage('home')">🏠 الرئيسية</div>
+        <div class="nav-icon-btn" onclick="showPage('wallet')">💰</div>
+        <div class="nav-icon-btn" onclick="showPage('cart')">🛒 <span id="cart-count">0</span></div>
+        <div class="nav-icon-btn" onclick="showPage('home')">🏠</div>
     </div>
 
-    <!-- الأقسام بشكل أفقي -->
+    <!-- الأقسام -->
     <div class="categories-row" id="category-tabs"></div>
 
     <!-- الصفحات -->
     <div id="home-page" class="page block">
-        <!-- المنتجات -->
         <div class="products-grid" id="products-container"></div>
     </div>
 
-    <!-- صفحة السلة (فيها فقط ID) -->
+    <!-- صفحة السلة -->
     <div id="cart-page" class="page hidden">
         <div class="cart-container">
-            <h2 class="text-xl font-bold mb-3 text-center text-cyan-400">🛒 سلة المشتريات</h2>
+            <h2 class="text-lg font-bold mb-2 text-center text-cyan-400">🛒 السلة</h2>
             <div id="cart-items-container"></div>
-            <div class="cart-total" id="cart-total-display">الإجمالي: $0</div>
+            <div class="cart-total" id="cart-total-display">المجموع: $0</div>
             <input type="text" id="customer-id" class="cart-input" placeholder="🎮 ID الحساب">
-            <button class="btn-primary" onclick="sendOrder()">✅ تأكيد الطلب</button>
-            <button class="btn-secondary" onclick="showPage('home')">🔙 رجوع</button>
+            <button class="btn-primary" onclick="sendOrder()">✅ تأكيد</button>
+            <button class="btn-secondary" onclick="showPage('home')">رجوع</button>
         </div>
     </div>
 
-    <!-- صفحة المحفظة (حساب خاص لكل مستخدم) -->
+    <!-- صفحة المحفظة - مطابقة للصور -->
     <div id="wallet-page" class="page hidden">
         <div class="wallet-container">
-            <h2 class="text-xl font-bold text-center text-cyan-400 mb-2">💰 محفظتي</h2>
+            <h2 class="wallet-title">💰 إيداع شام كاش</h2>
             
-            <div class="wallet-balance" id="user-balance">$0</div>
-            
-            <div class="bg-[#0f172a] p-2 rounded-lg flex justify-between items-center border border-cyan-500 mb-3">
-                <span class="font-mono text-xs break-all">17ac4a94cb1ed493e47a8526892294dd</span>
-                <button class="bg-cyan-500 text-black px-2 py-1 rounded-lg text-xs font-bold" onclick="copyWalletCode()">نسخ</button>
+            <div class="wallet-subtitle">عنوان المحفظة</div>
+            <div class="wallet-code-box">
+                <span>7ee806564d3aa36d87667cad636b6788</span>
+                <button class="copy-btn" onclick="copyWalletCode()">نسخ</button>
             </div>
             
-            <div class="text-center mb-2">
-                <img src="https://i.ibb.co/YXvq9gM/58441.jpg" style="width: 120px; height: 120px;" class="inline-block bg-white p-1 rounded-lg">
+            <div class="warning-box">
+                <div class="warning-title"><i class="fas fa-exclamation-triangle"></i> تنبيهات ماسة</div>
+                <p class="text-xs">• الرجاء عدم استخدام خيار إخفاء الهوية عند التحويل.</p>
+                <p class="text-xs">• الرجاء عدم كتابة أي ملاحظة عند إرسال المبلغ.</p>
             </div>
-
-            <input type="number" id="recharge-amount" class="cart-input" placeholder="💰 المبلغ بالدولار">
-            <input type="text" id="recharge-trans" class="cart-input" placeholder="🔢 رقم عملية الدفع">
             
-            <div class="border-2 border-dashed border-cyan-500 p-3 text-center rounded-lg cursor-pointer mb-2" onclick="document.getElementById('receipt').click()">
+            <div class="wallet-subtitle">بيانات التحويل</div>
+            
+            <div class="input-group">
+                <div class="input-label">العملة</div>
+                <div class="currency-select">
+                    <div class="currency-option selected" onclick="selectCurrency('USD')">USD</div>
+                    <div class="currency-option" onclick="selectCurrency('SYP')">SYP</div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-label">المبلغ المدفوع</div>
+                <input type="number" id="recharge-amount" class="wallet-input" placeholder="أدخل المبلغ">
+            </div>
+            
+            <div class="input-group">
+                <div class="input-label">رقم عملية الدفع</div>
+                <input type="text" id="recharge-trans" class="wallet-input" placeholder="رقم العملية (7-10 أرقام)">
+            </div>
+            
+            <div class="file-upload" onclick="document.getElementById('receipt').click()">
                 <i class="fas fa-cloud-upload-alt"></i>
-                <span class="text-sm mr-1">رفع الإشعار</span>
+                <span class="mr-1">إرفاق صورة الإشعار</span>
                 <input type="file" id="receipt" accept="image/*" class="hidden" onchange="handleReceipt(this)">
             </div>
             <div id="receipt-name" class="text-green-400 text-xs mb-2"></div>
 
-            <button class="btn-primary" onclick="sendRecharge()">💰 إضافة رصيد</button>
-            <button class="btn-secondary" onclick="showPage('home')">🔙 رجوع</button>
+            <button class="btn-primary" onclick="sendRecharge()">💰 تأكيد الإيداع</button>
+            <button class="btn-secondary" onclick="showPage('home')">رجوع</button>
         </div>
     </div>
 
     <!-- الفوتر -->
     <div class="footer">
-        <p class="text-gray-500 text-xs">© 2026 Reem Store</p>
+        <p class="footer-text">© 2026 Reem Store</p>
     </div>
 
     <!-- الإشعارات -->
@@ -496,48 +606,42 @@
 
     <!-- مودال لوحة التحكم -->
     <div id="admin-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000;">
-        <div style="background: #1e293b; padding: 20px; border-radius: 20px; width: 90%; max-width: 350px; border: 2px solid #06b6d4;">
-            <h2 style="font-size: 1.5rem; font-weight: 900; color: #06b6d4; margin-bottom: 15px; text-align: center;">👑 لوحة التحكم</h2>
-            <input type="password" id="admin-password" placeholder="كلمة السر" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;">
-            <button style="width: 100%; background: #06b6d4; color: black; padding: 10px; border: none; border-radius: 8px; font-weight: bold;" onclick="checkAdminPassword()">دخول</button>
+        <div style="background: #1e293b; padding: 20px; border-radius: 15px; width: 90%; max-width: 300px; border: 2px solid #06b6d4;">
+            <h2 style="font-size: 1.3rem; font-weight: 900; color: #06b6d4; margin-bottom: 15px; text-align: center;">👑 لوحة التحكم</h2>
+            <input type="password" id="admin-password" placeholder="كلمة السر" style="width: 100%; padding: 8px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 6px; color: white;">
+            <button style="width: 100%; background: #06b6d4; color: black; padding: 8px; border: none; border-radius: 6px; font-weight: bold;" onclick="checkAdminPassword()">دخول</button>
         </div>
     </div>
 
     <!-- لوحة التحكم -->
     <div id="admin-panel" style="position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(10px); z-index: 2001; padding: 15px; overflow-y: auto; display: none;">
-        <div style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #1e293b; padding: 10px; border-radius: 10px;">
-            <h2 style="font-size: 1.3rem; font-weight: 900; color: #06b6d4;">👑 لوحة التحكم</h2>
-            <button style="background: #ef4444; color: white; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer;" onclick="closeAdminPanel()">✕</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #1e293b; padding: 10px; border-radius: 8px;">
+            <h2 style="font-size: 1.2rem; font-weight: 900; color: #06b6d4;">👑 لوحة التحكم</h2>
+            <button style="background: #ef4444; color: white; border: none; width: 30px; height: 30px; border-radius: 50%;" onclick="closeAdminPanel()">✕</button>
         </div>
         
         <div style="max-width: 500px; margin: 0 auto;">
             <!-- إضافة قسم -->
-            <div style="background: #1e293b; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 2px solid #06b6d4;">
-                <h3 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #ec4899;">➕ إضافة قسم</h3>
-                <input type="text" id="new-cat-name" placeholder="اسم القسم" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;">
-                <button style="width: 100%; background: #10b981; color: white; padding: 10px; border: none; border-radius: 8px; font-weight: bold;" onclick="addCategory()">➕ إضافة</button>
+            <div style="background: #1e293b; border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1rem; font-weight: bold; margin-bottom: 8px; color: #ec4899;">➕ إضافة قسم</h3>
+                <input type="text" id="new-cat-name" placeholder="اسم القسم" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 5px; color: white;">
+                <button style="width: 100%; background: #10b981; color: white; padding: 8px; border: none; border-radius: 5px; font-weight: bold;" onclick="addCategory()">إضافة</button>
             </div>
 
             <!-- الأقسام الحالية -->
-            <div style="background: #1e293b; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 2px solid #06b6d4;">
-                <h3 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #ec4899;">📂 الأقسام</h3>
+            <div style="background: #1e293b; border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1rem; font-weight: bold; margin-bottom: 8px; color: #ec4899;">📂 الأقسام</h3>
                 <div id="categories-list"></div>
             </div>
             
             <!-- إضافة منتج -->
-            <div style="background: #1e293b; border-radius: 15px; padding: 15px; margin-bottom: 15px; border: 2px solid #06b6d4;">
-                <h3 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #ec4899;">➕ إضافة منتج</h3>
-                <input type="text" id="new-prod-name" placeholder="الاسم" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;">
-                <input type="number" id="new-prod-price" placeholder="السعر $" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;">
-                <input type="text" id="new-prod-img" placeholder="رابط الصورة" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;">
-                <select id="new-prod-cat" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 8px; color: white;"></select>
-                <button style="width: 100%; background: #06b6d4; color: black; padding: 10px; border: none; border-radius: 8px; font-weight: bold;" onclick="addNewProduct()">➕ إضافة</button>
-            </div>
-
-            <!-- المنتجات الحالية -->
-            <div style="background: #1e293b; border-radius: 15px; padding: 15px; border: 2px solid #06b6d4;">
-                <h3 style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; color: #ec4899;">📦 المنتجات</h3>
-                <div id="admin-products-list"></div>
+            <div style="background: #1e293b; border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 2px solid #06b6d4;">
+                <h3 style="font-size: 1rem; font-weight: bold; margin-bottom: 8px; color: #ec4899;">➕ إضافة منتج</h3>
+                <input type="text" id="new-prod-name" placeholder="الاسم" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 5px; color: white;">
+                <input type="number" id="new-prod-price" placeholder="السعر $" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 5px; color: white;">
+                <input type="text" id="new-prod-img" placeholder="رابط الصورة" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 5px; color: white;">
+                <select id="new-prod-cat" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #0f172a; border: 1px solid #06b6d4; border-radius: 5px; color: white;"></select>
+                <button style="width: 100%; background: #06b6d4; color: black; padding: 8px; border: none; border-radius: 5px; font-weight: bold;" onclick="addNewProduct()">إضافة</button>
             </div>
         </div>
     </div>
@@ -567,6 +671,7 @@
         let currentFilter = 'all';
         let selectedFile = null;
         let visitors = parseInt(localStorage.getItem('visitors')) || 0;
+        let selectedCurrency = 'USD';
 
         const BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
         const CHAT_ID = '7741275208';
@@ -601,14 +706,12 @@
             let tabs = document.getElementById('category-tabs');
             tabs.innerHTML = '';
             
-            // زر الكل
             let allBtn = document.createElement('button');
             allBtn.className = 'category-btn active';
-            allBtn.innerText = 'الكل 🏠';
+            allBtn.innerText = 'الكل';
             allBtn.onclick = function() { filterProducts('all'); };
             tabs.appendChild(allBtn);
             
-            // باقي الأقسام
             categories.forEach(c => {
                 let btn = document.createElement('button');
                 btn.className = 'category-btn';
@@ -635,7 +738,7 @@
                     <img src="${p.img}">
                     <h3>${p.name}</h3>
                     <div class="price">$${p.price}</div>
-                    <button class="add-btn" onclick="addToCart(${p.id})">➕ إضافة</button>
+                    <button class="add-btn" onclick="addToCart(${p.id})">➕</button>
                 </div>
             `).join('');
         }
@@ -653,26 +756,25 @@
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById(page + '-page').classList.remove('hidden');
             if (page === 'cart') updateCartDisplay();
-            if (page === 'wallet') updateWalletDisplay();
         }
 
-        // ================== السلة (بس ID) ==================
+        // ================== السلة ==================
         function updateCartDisplay() {
             let container = document.getElementById('cart-items-container');
             
             if (cart.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-400 text-sm">السلة فارغة</p>';
+                container.innerHTML = '<p class="text-center text-gray-400 text-xs">فارغة</p>';
             } else {
                 container.innerHTML = cart.map((item, i) => `
                     <div class="cart-item">
-                        <span class="text-sm">${item.name}</span>
-                        <span class="text-sm">$${item.price} <button onclick="removeFromCart(${i})" class="text-red-500 mr-1">✕</button></span>
+                        <span>${item.name}</span>
+                        <span>$${item.price} <button onclick="removeFromCart(${i})" class="text-red-500">✕</button></span>
                     </div>
                 `).join('');
             }
             
             let total = cart.reduce((s,i) => s + i.price, 0);
-            document.getElementById('cart-total-display').innerHTML = `الإجمالي: $${total.toFixed(2)}`;
+            document.getElementById('cart-total-display').innerHTML = `المجموع: $${total.toFixed(2)}`;
         }
 
         function removeFromCart(i) {
@@ -680,7 +782,7 @@
             localStorage.setItem('cart', JSON.stringify(cart));
             document.getElementById('cart-count').innerText = cart.length;
             updateCartDisplay();
-            showToast('🗑️ تم الحذف');
+            showToast('🗑️ تم');
         }
 
         async function sendOrder() {
@@ -694,14 +796,12 @@
             let total = cart.reduce((s,i) => s + i.price, 0);
             let list = cart.map(i => `- ${i.name}`).join('\n');
             
-            let orderId = 'ORD' + Date.now();
             let msg = `🛍️ طلب جديد
 ━━━━━━━━━━━━━━━━
-🎮 الآيدي: ${gameId}
+🎮 ID: ${gameId}
 📦 المنتجات:
 ${list}
-💰 المبلغ: $${total}
-━━━━━━━━━━━━━━━━`;
+💰 المبلغ: $${total}`;
 
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
@@ -709,9 +809,9 @@ ${list}
                 body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
             });
 
-            showToast('✅ تم إرسال الطلب');
+            showToast('✅ تم الإرسال');
             
-            orders.push({ id: orderId, total });
+            orders.push({ total });
             localStorage.setItem('orders', JSON.stringify(orders));
             
             cart = [];
@@ -722,16 +822,16 @@ ${list}
             showPage('home');
         }
 
-        // ================== المحفظة (حساب خاص) ==================
-        function updateWalletDisplay() {
-            let currentUser = localStorage.getItem('currentUser') || 'default';
-            let balance = userBalances[currentUser] || 0;
-            document.getElementById('user-balance').innerText = '$' + balance;
+        // ================== المحفظة ==================
+        function selectCurrency(currency) {
+            selectedCurrency = currency;
+            document.querySelectorAll('.currency-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
         }
 
         function copyWalletCode() {
-            navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd');
-            showToast('✅ تم النسخ');
+            navigator.clipboard.writeText('7ee806564d3aa36d87667cad636b6788');
+            showToast('✅ تم نسخ العنوان');
         }
 
         function handleReceipt(input) {
@@ -742,12 +842,11 @@ ${list}
         }
 
         async function sendRecharge() {
-            let currentUser = localStorage.getItem('currentUser') || 'default';
             let amount = document.getElementById('recharge-amount').value;
             let trans = document.getElementById('recharge-trans').value;
 
             if (!amount || amount <= 0 || !trans || !selectedFile) {
-                showToast('⚠️ أكمل الحقول');
+                showToast('⚠️ أكمل البيانات');
                 return;
             }
 
@@ -756,10 +855,9 @@ ${list}
             reader.onload = async function() {
                 let base64 = reader.result.split(',')[1];
                 
-                let msg = `💰 طلب تعبئة رصيد
+                let msg = `💰 طلب إيداع
 ━━━━━━━━━━━━━━━━
-👤 المستخدم: ${currentUser}
-💵 المبلغ: $${amount}
+💵 المبلغ: ${amount} ${selectedCurrency}
 🔢 رقم العملية: ${trans}
 ━━━━━━━━━━━━━━━━`;
 
@@ -775,19 +873,13 @@ ${list}
                     body: JSON.stringify({ chat_id: CHAT_ID, photo: base64 })
                 });
 
-                // إضافة الرصيد للمستخدم الحالي
-                if (!userBalances[currentUser]) userBalances[currentUser] = 0;
-                userBalances[currentUser] += parseFloat(amount);
-                localStorage.setItem('userBalances', JSON.stringify(userBalances));
-                
-                showToast('✅ تم إضافة الرصيد');
+                showToast('✅ تم الإرسال');
                 
                 document.getElementById('recharge-amount').value = '';
                 document.getElementById('recharge-trans').value = '';
                 document.getElementById('receipt-name').innerHTML = '';
                 selectedFile = null;
                 
-                updateWalletDisplay();
                 showPage('home');
             };
         }
@@ -809,24 +901,22 @@ ${list}
                 renderAdminProducts();
                 updateCategorySelect();
             } else {
-                showToast('❌ كلمة سر خطأ');
+                showToast('❌ غلط');
             }
         }
 
-        // عرض الأقسام في لوحة التحكم
         function renderAdminCategories() {
             let container = document.getElementById('categories-list');
             container.innerHTML = categories.map((cat, index) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 8px; border-radius: 6px; margin-bottom: 5px;">
-                    <span>${cat.name}</span>
-                    <button style="background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;" onclick="deleteCategory(${index})">🗑️</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 5px; border-radius: 4px; margin-bottom: 4px;">
+                    <span style="font-size:0.8rem;">${cat.name}</span>
+                    <button style="background: #ef4444; color: white; border: none; padding: 2px 6px; border-radius: 3px;" onclick="deleteCategory(${index})">🗑️</button>
                 </div>
             `).join('');
         }
 
-        // حذف قسم
         function deleteCategory(index) {
-            if (confirm('حذف القسم؟')) {
+            if (confirm('حذف؟')) {
                 let catId = categories[index].id;
                 categories.splice(index, 1);
                 products = products.filter(p => p.category !== catId);
@@ -838,11 +928,10 @@ ${list}
                 updateCategorySelect();
                 updateStats();
                 
-                showToast('🗑️ تم الحذف');
+                showToast('🗑️ تم');
             }
         }
 
-        // إضافة قسم
         function addCategory() {
             let name = document.getElementById('new-cat-name').value;
             if (!name) return showToast('⚠️ أدخل اسم');
@@ -853,43 +942,40 @@ ${list}
             renderTabs();
             updateCategorySelect();
             document.getElementById('new-cat-name').value = '';
-            showToast('✅ تمت الإضافة');
+            showToast('✅ تمت');
         }
 
-        // عرض المنتجات في لوحة التحكم
         function renderAdminProducts() {
             let container = document.getElementById('admin-products-list');
             
             container.innerHTML = products.map(p => `
-                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 8px; border-radius: 6px; margin-bottom: 5px;">
-                    <div class="flex items-center">
-                        <img src="${p.img}" style="width: 30px; height: 30px; object-fit: cover; border-radius: 4px; margin-left: 5px;">
-                        <span class="text-sm">${p.name}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 5px; border-radius: 4px; margin-bottom: 4px;">
+                    <div style="display: flex; align-items: center;">
+                        <img src="${p.img}" style="width: 25px; height: 25px; border-radius: 3px; margin-left: 5px;">
+                        <span style="font-size:0.8rem;">${p.name}</span>
                     </div>
-                    <button style="background: #ef4444; color: white; border: none; padding: 3px 8px; border-radius: 4px; cursor: pointer;" onclick="deleteProduct(${p.id})">🗑️</button>
+                    <button style="background: #ef4444; color: white; border: none; padding: 2px 6px; border-radius: 3px;" onclick="deleteProduct(${p.id})">🗑️</button>
                 </div>
             `).join('');
         }
 
-        // حذف منتج
         function deleteProduct(id) {
-            if (confirm('حذف المنتج؟')) {
+            if (confirm('حذف؟')) {
                 products = products.filter(p => p.id !== id);
                 renderAdminProducts();
                 renderProducts();
                 updateStats();
-                showToast('🗑️ تم الحذف');
+                showToast('🗑️ تم');
             }
         }
 
-        // إضافة منتج
         function addNewProduct() {
             let name = document.getElementById('new-prod-name').value;
             let price = parseFloat(document.getElementById('new-prod-price').value);
             let img = document.getElementById('new-prod-img').value;
             let cat = document.getElementById('new-prod-cat').value;
 
-            if (!name || !price || !img) return showToast('⚠️ أكمل الحقول');
+            if (!name || !price || !img) return showToast('⚠️ أكمل');
 
             let newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
             
@@ -910,10 +996,9 @@ ${list}
             document.getElementById('new-prod-price').value = '';
             document.getElementById('new-prod-img').value = '';
             
-            showToast('✅ تمت الإضافة');
+            showToast('✅ تمت');
         }
 
-        // تحديث قائمة الأقسام
         function updateCategorySelect() {
             let select = document.getElementById('new-prod-cat');
             select.innerHTML = categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
@@ -927,4 +1012,4 @@ ${list}
         updateCategorySelect();
     </script>
 </body>
-    </html>
+</html>
