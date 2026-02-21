@@ -110,45 +110,6 @@
             padding: 20px;
         }
         
-        .login-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid #ff0080;
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 0 40px rgba(255, 0, 128, 0.3);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        .login-card h2 {
-            text-align: center;
-            color: #ff0080;
-            margin-bottom: 20px;
-        }
-        
-        .admin-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #00ffff;
-            border-radius: 10px;
-            color: white;
-        }
-        
-        .admin-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(90deg, #ff0080, #00ffff);
-            border: none;
-            border-radius: 30px;
-            color: black;
-            font-weight: 700;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -183,7 +144,7 @@
             margin-bottom: 15px;
         }
         
-        .admin-select {
+        .admin-input, .admin-select {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -191,6 +152,23 @@
             border: 1px solid #00ffff;
             border-radius: 10px;
             color: white;
+        }
+        
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, #ff0080, #00ffff);
+            border: none;
+            border-radius: 30px;
+            color: black;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px #ff0080;
         }
         
         .orders-list {
@@ -236,73 +214,63 @@
     </div>
 
     <div class="admin-container">
-        <div id="loginSection" class="login-card">
-            <h2>🔐 دخول الأدمن</h2>
-            <input type="password" id="adminPass" class="admin-input" placeholder="كلمة السر">
-            <button class="admin-btn" onclick="checkAdminPass()">دخول</button>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVisitors">0</div>
+                <div>الزوار</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalOrders">0</div>
+                <div>الطلبات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalSales">$0</div>
+                <div>المبيعات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalProducts">0</div>
+                <div>المنتجات</div>
+            </div>
         </div>
 
-        <div id="adminPanel" style="display: none;">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="totalVisitors">0</div>
-                    <div>الزوار</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalOrders">0</div>
-                    <div>الطلبات</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalSales">$0</div>
-                    <div>المبيعات</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="totalProducts">0</div>
-                    <div>المنتجات</div>
-                </div>
-            </div>
+        <div class="admin-section">
+            <h3>➕ إضافة منتج</h3>
+            <input type="text" id="productName" class="admin-input" placeholder="اسم المنتج">
+            <input type="number" id="productPriceUSD" class="admin-input" placeholder="السعر بالدولار">
+            <input type="number" id="productPriceSYP" class="admin-input" placeholder="السعر بالليرة">
+            <input type="text" id="productImage" class="admin-input" placeholder="رابط الصورة">
+            <select id="productCategory" class="admin-select"></select>
+            <button class="admin-btn" onclick="addProduct()">إضافة منتج</button>
+        </div>
 
-            <div class="admin-section">
-                <h3>➕ إضافة منتج</h3>
-                <input type="text" id="productName" class="admin-input" placeholder="اسم المنتج">
-                <input type="number" id="productPriceUSD" class="admin-input" placeholder="السعر بالدولار">
-                <input type="number" id="productPriceSYP" class="admin-input" placeholder="السعر بالليرة">
-                <input type="text" id="productImage" class="admin-input" placeholder="رابط الصورة">
-                <select id="productCategory" class="admin-select"></select>
-                <button class="admin-btn" onclick="addProduct()">إضافة منتج</button>
-            </div>
+        <div class="admin-section">
+            <h3>🗑️ حذف منتج</h3>
+            <select id="deleteProductSelect" class="admin-select"></select>
+            <button class="admin-btn" onclick="deleteProduct()">حذف المنتج</button>
+        </div>
 
-            <div class="admin-section">
-                <h3>🗑️ حذف منتج</h3>
-                <select id="deleteProductSelect" class="admin-select"></select>
-                <button class="admin-btn" onclick="deleteProduct()">حذف المنتج</button>
-            </div>
+        <div class="admin-section">
+            <h3>📁 إضافة قسم</h3>
+            <input type="text" id="categoryName" class="admin-input" placeholder="اسم القسم">
+            <input type="text" id="categoryIcon" class="admin-input" placeholder="أيقونة (🎮)">
+            <button class="admin-btn" onclick="addCategory()">إضافة قسم</button>
+        </div>
 
-            <div class="admin-section">
-                <h3>📁 إضافة قسم</h3>
-                <input type="text" id="categoryName" class="admin-input" placeholder="اسم القسم">
-                <input type="text" id="categoryIcon" class="admin-input" placeholder="أيقونة (🎮)">
-                <button class="admin-btn" onclick="addCategory()">إضافة قسم</button>
-            </div>
+        <div class="admin-section">
+            <h3>🗑️ حذف قسم</h3>
+            <select id="deleteCategorySelect" class="admin-select"></select>
+            <button class="admin-btn" onclick="deleteCategory()">حذف القسم</button>
+        </div>
 
-            <div class="admin-section">
-                <h3>🗑️ حذف قسم</h3>
-                <select id="deleteCategorySelect" class="admin-select"></select>
-                <button class="admin-btn" onclick="deleteCategory()">حذف القسم</button>
-            </div>
+        <div class="admin-section">
+            <h3>📋 الطلبات الحديثة</h3>
+            <div id="ordersList" class="orders-list"></div>
+        </div>
 
-            <div class="admin-section">
-                <h3>📋 الطلبات الحديثة</h3>
-                <div id="ordersList" class="orders-list"></div>
-            </div>
-
-            <div class="admin-section">
-                <h3>⚙️ الإعدادات</h3>
-                <input type="text" id="botToken" class="admin-input" placeholder="توكن البوت">
-                <input type="text" id="chatId" class="admin-input" placeholder="معرف الدردشة">
-                <input type="password" id="newAdminPass" class="admin-input" placeholder="كلمة سر جديدة">
-                <button class="admin-btn" onclick="saveSettings()">حفظ الإعدادات</button>
-            </div>
+        <div class="admin-section">
+            <h3>⚙️ الإعدادات</h3>
+            <input type="password" id="newAdminPass" class="admin-input" placeholder="تغيير كلمة السر">
+            <button class="admin-btn" onclick="saveSettings()">حفظ كلمة السر</button>
         </div>
     </div>
 
@@ -314,24 +282,10 @@
 
     <script>
         let adminPass = localStorage.getItem('adminPass') || '1234';
-        let botToken = localStorage.getItem('botToken') || '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74';
-        let chatId = localStorage.getItem('chatId') || '7741275208';
-
         let visitors = parseInt(localStorage.getItem('visitors')) || 0;
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         let products = JSON.parse(localStorage.getItem('products')) || [];
         let categories = JSON.parse(localStorage.getItem('categories')) || [];
-
-        window.checkAdminPass = function() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === adminPass) {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadAdminData();
-            } else {
-                alert('❌ كلمة سر خاطئة');
-            }
-        };
 
         function loadAdminData() {
             document.getElementById('totalVisitors').textContent = visitors;
@@ -341,7 +295,6 @@
             document.getElementById('totalSales').textContent = '$' + totalSales;
             document.getElementById('totalProducts').textContent = products.length;
 
-            // تحميل الأقسام في القوائم
             const categorySelect = document.getElementById('productCategory');
             const categoryDeleteSelect = document.getElementById('deleteCategorySelect');
             
@@ -352,13 +305,11 @@
             categorySelect.innerHTML = categoryOptions;
             categoryDeleteSelect.innerHTML = categoryOptions;
 
-            // تحميل المنتجات
             const deleteProductSelect = document.getElementById('deleteProductSelect');
             deleteProductSelect.innerHTML = products.map(p => 
                 `<option value="${p.id}">${p.name}</option>`
             ).join('');
 
-            // تحميل الطلبات
             const ordersList = document.getElementById('ordersList');
             if (orders.length === 0) {
                 ordersList.innerHTML = '<p>لا توجد طلبات</p>';
@@ -371,9 +322,6 @@
                     </div>
                 `).join('');
             }
-
-            document.getElementById('botToken').value = botToken;
-            document.getElementById('chatId').value = chatId;
         }
 
         window.addProduct = function() {
@@ -445,25 +393,15 @@
         };
 
         window.saveSettings = function() {
-            const newBotToken = document.getElementById('botToken').value;
-            const newChatId = document.getElementById('chatId').value;
             const newPass = document.getElementById('newAdminPass').value;
-
-            if (newBotToken) {
-                localStorage.setItem('botToken', newBotToken);
-                botToken = newBotToken;
-            }
-            if (newChatId) {
-                localStorage.setItem('chatId', newChatId);
-                chatId = newChatId;
-            }
             if (newPass) {
                 localStorage.setItem('adminPass', newPass);
                 adminPass = newPass;
+                alert('✅ تم تغيير كلمة السر');
             }
-
-            alert('✅ تم حفظ الإعدادات');
         };
+
+        loadAdminData();
     </script>
 </body>
-  </html>
+</html>
