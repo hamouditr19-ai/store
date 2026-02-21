@@ -80,6 +80,7 @@
             padding: 30px;
             box-shadow: 0 0 40px rgba(255,0,128,0.3);
         }
+        /* الرصيد أول شي فوق */
         .balance-card {
             background: linear-gradient(135deg, #ff0080, #00ffff);
             border-radius: 20px; padding: 20px; text-align: center;
@@ -87,6 +88,22 @@
         }
         .balance-label { font-size: 0.9rem; color: rgba(0,0,0,0.7); }
         .balance-amount { font-size: 2.5rem; font-weight: 900; color: black; }
+        
+        /* صورة الباركود تحت الرصيد */
+        .qr-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .qr-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 20px;
+            border: 3px solid #ff0080;
+            background: white;
+            padding: 10px;
+        }
+        
+        /* كود الدفع تحت الباركود */
         .code-box {
             background: rgba(0,0,0,0.3);
             border: 1px solid #00ffff;
@@ -101,35 +118,67 @@
             cursor: pointer; transition: 0.3s; min-width: 60px; text-align: center;
         }
         .copy-btn:hover { background: #ff0080; }
-        .input-field {
-            width: 100%; background: rgba(0,0,0,0.3);
-            border: 1px solid #00ffff; border-radius: 10px;
-            padding: 12px; color: white; font-size: 1rem; margin: 10px 0;
+        
+        /* المبلغ دولار / سوري تحت الكود */
+        .amount-row {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            align-items: center;
         }
-        .amount-row { display: flex; gap: 10px; margin: 15px 0; align-items: center; }
         .amount-input {
-            flex: 2; background: rgba(0,0,0,0.3);
-            border: 1px solid #00ffff; border-radius: 10px;
-            padding: 12px; color: white; font-size: 1rem;
+            flex: 2;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
         }
         .currency-select {
-            flex: 1; background: rgba(0,0,0,0.3);
-            border: 1px solid #ff0080; border-radius: 10px;
-            padding: 12px; color: white; font-size: 1rem;
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #ff0080;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
         }
+        
+        /* رقم عملية الدفع تحت المبلغ */
+        .input-field {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+        
+        /* رفع الصورة تحت رقم العملية */
+        .file-upload {
+            border: 2px dashed #ff0080;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .file-upload:hover { background: rgba(255,0,128,0.1); }
+        
         .warning-box {
             background: rgba(255,0,0,0.1);
-            border: 1px solid #ff0080; border-radius: 15px;
-            padding: 15px; margin: 20px 0;
+            border: 1px solid #ff0080;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
         }
         .warning-box p { margin: 5px 0; font-size: 0.9rem; }
         .warning-box i { color: #ff0080; margin-left: 5px; }
-        .file-upload {
-            border: 2px dashed #ff0080; border-radius: 15px;
-            padding: 20px; text-align: center; margin: 20px 0;
-            cursor: pointer; transition: 0.3s;
-        }
-        .file-upload:hover { background: rgba(255,0,128,0.1); }
+        
         .submit-btn {
             width: 100%;
             background: linear-gradient(90deg, #ff0080, #00ffff);
@@ -138,6 +187,7 @@
             font-size: 1.1rem; cursor: pointer; transition: 0.3s;
         }
         .submit-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px #ff0080; }
+        
         .footer {
             margin-top: 50px; padding: 20px; text-align: center;
             border-top: 1px solid #ff0080;
@@ -162,15 +212,24 @@
 
     <div class="wallet-container">
         <div class="wallet-card">
+            <!-- 1. الرصيد أول شي فوق -->
             <div class="balance-card">
                 <div class="balance-label">رصيدك الحالي</div>
                 <div class="balance-amount" id="userBalance">$0</div>
             </div>
+
+            <!-- 2. صورة الباركود تحت الرصيد -->
+            <div class="qr-image">
+                <img src="https://i.ibb.co/YXvq9gM/58441.jpg" alt="باركود المحفظة">
+            </div>
+
+            <!-- 3. كود الدفع تحت الباركود -->
             <div class="code-box">
                 <span>17ac4a94cb1ed493e47a8526892294dd</span>
                 <button class="copy-btn" onclick="copyCode()">نسخ</button>
             </div>
-            <input type="text" id="transId" class="input-field" placeholder="🔢 رقم عملية الدفع">
+
+            <!-- 4. المبلغ دولار / سوري تحت الكود -->
             <div class="amount-row">
                 <input type="number" id="amount" class="amount-input" placeholder="المبلغ">
                 <select id="currency" class="currency-select">
@@ -178,17 +237,25 @@
                     <option value="SYP">SYP</option>
                 </select>
             </div>
-            <div class="warning-box">
-                <p><i class="fas fa-exclamation-triangle"></i> تعليمات هامة:</p>
-                <p>• لا تستخدم خيار إخفاء الهوية</p>
-                <p>• لا تكتب أي ملاحظة عند التحويل</p>
-            </div>
+
+            <!-- 5. رقم عملية الدفع تحت المبلغ -->
+            <input type="text" id="transId" class="input-field" placeholder="🔢 رقم عملية الدفع (7-10 أرقام)">
+
+            <!-- 6. رفع الصورة تحت رقم العملية -->
             <div class="file-upload" onclick="document.getElementById('receipt').click()">
                 <i class="fas fa-cloud-upload-alt" style="font-size:2rem; margin-bottom:10px;"></i>
                 <div>اضغط لرفع صورة الإشعار</div>
                 <input type="file" id="receipt" accept="image/*" style="display:none;" onchange="handleFile(this)">
             </div>
             <div id="fileName" style="color:#00ffff; margin:10px 0;"></div>
+
+            <!-- التنبيهات وزر الإرسال -->
+            <div class="warning-box">
+                <p><i class="fas fa-exclamation-triangle"></i> تعليمات هامة:</p>
+                <p>• لا تستخدم خيار إخفاء الهوية</p>
+                <p>• لا تكتب أي ملاحظة عند التحويل</p>
+            </div>
+
             <button class="submit-btn" onclick="sendRequest()">💰 إرسال طلب الإيداع</button>
         </div>
     </div>
@@ -202,33 +269,57 @@
         const CHAT_ID = '7741275208';
         let selectedFile = null;
         let balances = JSON.parse(localStorage.getItem('balances')) || {};
-        function updateBalance() { document.getElementById('userBalance').textContent = '$' + (balances['user'] || 0); }
-        function copyCode() { navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd'); alert('✅ تم نسخ كود الدفع'); }
-        function handleFile(i) { selectedFile = i.files[0]; if(selectedFile) document.getElementById('fileName').innerHTML = '📸 ' + selectedFile.name; }
+        
+        function updateBalance() { 
+            document.getElementById('userBalance').textContent = '$' + (balances['user'] || 0); 
+        }
+        
+        function copyCode() { 
+            navigator.clipboard.writeText('17ac4a94cb1ed493e47a8526892294dd'); 
+            alert('✅ تم نسخ كود الدفع'); 
+        }
+        
+        function handleFile(i) { 
+            selectedFile = i.files[0]; 
+            if(selectedFile) document.getElementById('fileName').innerHTML = '📸 ' + selectedFile.name; 
+        }
+        
         async function sendRequest() {
             let amount = document.getElementById('amount').value;
             let currency = document.getElementById('currency').value;
             let transId = document.getElementById('transId').value;
-            if(!amount||amount<=0) return alert('⚠️ أدخل المبلغ');
+            
+            if(!amount || amount <= 0) return alert('⚠️ أدخل المبلغ');
             if(!transId) return alert('⚠️ أدخل رقم عملية الدفع');
             if(!selectedFile) return alert('⚠️ ارفع صورة الإشعار');
+            
             let reader = new FileReader();
             reader.readAsDataURL(selectedFile);
             reader.onload = async function() {
                 let base64 = reader.result.split(',')[1];
                 let message = `💰 **طلب إيداع جديد**\n━━━━━━━━━━━━━━━━\n💵 المبلغ: ${amount} ${currency}\n🔢 رقم العملية: ${transId}\n⏰ الوقت: ${new Date().toLocaleString()}\n━━━━━━━━━━━━━━━━`;
+                
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                    method:'POST', headers:{'Content-Type':'application/json'},
+                    method:'POST', 
+                    headers:{'Content-Type':'application/json'},
                     body:JSON.stringify({chat_id:CHAT_ID, text:message})
                 });
+                
                 await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                    method:'POST', headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({chat_id:CHAT_ID, photo:base64, caption:`📸 صورة إشعار دفع - ${amount} ${currency} - عملية: ${transId}`})
+                    method:'POST', 
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        chat_id:CHAT_ID, 
+                        photo:base64, 
+                        caption:`📸 صورة إشعار دفع - ${amount} ${currency} - عملية: ${transId}`
+                    })
                 });
+                
                 alert('✅ تم إرسال طلب الإيداع');
                 window.location.href = 'index.html';
             };
         }
+        
         updateBalance();
     </script>
 </body>
