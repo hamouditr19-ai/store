@@ -12,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // ===== إعدادات بوت تلجرام =====
-const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // استبدل هذا بالتوكن الحقيقي لبوتك
-const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID'; // استبدل بمعرف الدردشة الخاص بك
+const TELEGRAM_BOT_TOKEN = '8222212068:AAH935nM61iSGrGGcXo_H2I6mB13Ws2QE74'; // استبدل هذا بالتوكن الحقيقي لبوتك
+const TELEGRAM_CHAT_ID = '7741275208'; // استبدل بمعرف الدردشة الخاص بك
 
 async function sendToTelegram(message) {
     try {
