@@ -132,6 +132,7 @@
             justify-content: center;
         }
         
+        /* شريط الإعلانات المتحرك */
         .ticker-wrap {
             background: linear-gradient(90deg, #ff0080, #00ffff);
             padding: 12px 0;
@@ -155,6 +156,7 @@
             100% { transform: translateX(-100%); }
         }
         
+        /* البنرات المتحركة */
         .slider {
             width: 100%;
             height: 200px;
@@ -212,6 +214,36 @@
         .slide3 { background-image: url('https://images.unsplash.com/photo-1614680376593-902f74cc0d41?w=1200'); }
         .slide4 { background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200'); }
         
+        /* الإحصائيات */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #ff0080;
+            border-radius: 15px;
+            padding: 12px 20px;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #00ffff;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+        
+        /* أزرار التصنيفات */
         .categories {
             display: flex;
             flex-wrap: wrap;
@@ -241,6 +273,7 @@
             color: black;
         }
         
+        /* المنتجات */
         .products {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -268,6 +301,7 @@
         .product-card:hover {
             transform: translateY(-5px);
             border-color: #00ffff;
+            box-shadow: 0 0 30px #00ffff;
         }
         
         .product-card img {
@@ -304,34 +338,7 @@
         
         .add-btn:hover {
             transform: scale(1.05);
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #ff0080;
-            border-radius: 15px;
-            padding: 12px 20px;
-            min-width: 100px;
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #00ffff;
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: #aaa;
+            box-shadow: 0 0 20px #ff0080;
         }
         
         /* لوحة التحكم المخفية */
@@ -357,6 +364,7 @@
             width: 90%;
             max-width: 400px;
             color: white;
+            box-shadow: 0 0 50px #ff0080;
         }
         
         .admin-panel h2 {
@@ -364,7 +372,7 @@
             margin-bottom: 20px;
         }
         
-        .admin-input, .admin-select {
+        .admin-input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -383,8 +391,10 @@
             color: black;
             font-weight: 700;
             cursor: pointer;
+            margin: 5px 0;
         }
         
+        /* الفوتر */
         .footer {
             margin-top: 50px;
             padding: 30px 20px;
@@ -499,7 +509,7 @@
             <h2>🔐 لوحة التحكم</h2>
             <input type="password" id="adminPass" class="admin-input" placeholder="كلمة السر">
             <button class="admin-btn" onclick="checkAdminPass()">دخول</button>
-            <button class="admin-btn" onclick="hideAdminPanel()" style="background: #ff0080; margin-top: 10px;">إلغاء</button>
+            <button class="admin-btn" onclick="hideAdminPanel()" style="background: #ff0080;">إلغاء</button>
         </div>
     </div>
 
@@ -635,4 +645,4 @@
         showProducts();
     </script>
 </body>
-    </html>
+</html>
