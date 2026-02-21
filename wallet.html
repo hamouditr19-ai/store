@@ -71,9 +71,6 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #ff0080;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .logo {
@@ -86,7 +83,7 @@
         
         .nav-icons {
             display: flex;
-            gap: 12px;
+            gap: 15px;
         }
         
         .nav-icon {
@@ -106,8 +103,7 @@
         
         .nav-icon:hover {
             background: #ff0080;
-            transform: translateY(-3px);
-            box-shadow: 0 0 20px #ff0080;
+            transform: scale(1.1);
         }
         
         /* المحفظة */
@@ -174,6 +170,17 @@
         
         .copy-btn:hover {
             background: #ff0080;
+        }
+        
+        .input-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
+            margin: 10px 0;
         }
         
         .amount-row {
@@ -293,6 +300,9 @@
                 <button class="copy-btn" onclick="copyCode()">نسخ</button>
             </div>
 
+            <!-- حقل رقم عملية الدفع (جديد) -->
+            <input type="text" id="transId" class="input-field" placeholder="🔢 رقم عملية الدفع (7-10 أرقام)">
+
             <div class="amount-row">
                 <input type="number" id="amount" class="amount-input" placeholder="المبلغ">
                 <select id="currency" class="currency-select">
@@ -351,9 +361,15 @@
         async function sendRequest() {
             let amount = document.getElementById('amount').value;
             let currency = document.getElementById('currency').value;
+            let transId = document.getElementById('transId').value;
 
             if (!amount || amount <= 0) {
                 alert('⚠️ أدخل المبلغ');
+                return;
+            }
+
+            if (!transId) {
+                alert('⚠️ أدخل رقم عملية الدفع');
                 return;
             }
 
@@ -370,6 +386,7 @@
                 let message = `💰 **طلب إيداع جديد**
 ━━━━━━━━━━━━━━━━
 💵 المبلغ: ${amount} ${currency}
+🔢 رقم العملية: ${transId}
 ⏰ الوقت: ${new Date().toLocaleString()}
 ━━━━━━━━━━━━━━━━`;
 
@@ -385,7 +402,7 @@
                     body: JSON.stringify({
                         chat_id: CHAT_ID,
                         photo: base64,
-                        caption: `📸 صورة إشعار دفع - ${amount} ${currency}`
+                        caption: `📸 صورة إشعار دفع - ${amount} ${currency} - عملية: ${transId}`
                     })
                 });
 
